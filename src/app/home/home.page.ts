@@ -3,7 +3,8 @@ import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
 import { GameService } from '../game.service';
-import { GameState, IGameTown } from '../states/gamestate';
+import { GameState } from '../states';
+import { IGameTown } from '../interfaces';
 
 @Component({
   selector: 'app-home',

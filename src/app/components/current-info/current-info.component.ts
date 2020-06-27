@@ -1,5 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IGameTown } from '../../states/gamestate';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+
+import { IGameTown } from '../../interfaces';
+import { GameState } from '../../states';
 
 @Component({
   selector: 'app-current-info',
@@ -9,6 +13,8 @@ import { IGameTown } from '../../states/gamestate';
 export class CurrentInfoComponent implements OnInit {
 
   @Input() public town: IGameTown;
+
+  @Select(GameState.currentInfoWindow) currentInfo$: Observable<string>;
 
   constructor() { }
 

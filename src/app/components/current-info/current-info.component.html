@@ -1,3 +1,4 @@
-<p>
-  current-info works!
-</p>
+
+<ng-container *ngIf="currentInfo$ | async as window" [ngSwitch]="window">
+  <app-townhall [town]="town" *ngSwitchCase="'townhall'"></app-townhall>
+</ng-container>

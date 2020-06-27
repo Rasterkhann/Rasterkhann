@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { CurrentMapComponent } from '../components/current-map/current-map.component';
 import { CurrentTownComponent } from '../components/current-town/current-town.component';
 import { CurrentInfoComponent } from '../components/current-info/current-info.component';
+import { TownHallComponent } from '../components/windows/townhall/townhall.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CurrentInfoComponent } from '../components/current-info/current-info.co
     HomePage,
     CurrentMapComponent,
     CurrentTownComponent,
-    CurrentInfoComponent
+    CurrentInfoComponent,
+    TownHallComponent
   ]
 })
 export class HomePageModule {}

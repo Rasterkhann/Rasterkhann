@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-import { IGameTown } from '../../states/gamestate';
+import { IGameTown } from '../../interfaces';
 
 @Component({
   selector: 'app-current-town',

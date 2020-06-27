@@ -2,9 +2,26 @@
 :host, .container {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .town {
   width: 100%;
   height: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.building-container {
+  position: relative;
+
+  .building {
+    position: absolute;
+    z-index: 50;
+    object-fit: none;
+  }
 }

@@ -1,4 +1,15 @@
 
 <div class="container">
   <img class="town" src="assets/game/town/Rasterkhann.png" />
+
+  <div class="building-container" *ngIf="town">
+    <img class="building" 
+         *ngFor="let building of availableBuildings" 
+         src="assets/game/town/buildings.png"
+         [style.left]="buildingData[building].x + 'px'" 
+         [style.top]="buildingData[building].y + 'px'"
+         [style.width]="(buildingData[building].width || 16) + 'px'"
+         [style.height]="(buildingData[building].height || 16) + 'px'"
+         [style.object-position]="buildingData[building].position" />
+  </div>
 </div>
