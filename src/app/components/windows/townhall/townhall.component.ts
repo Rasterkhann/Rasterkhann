@@ -10,6 +10,8 @@ export class TownHallComponent implements OnInit {
 
   @Input() town: IGameTown;
 
+  public allBuildings;
+
   constructor() { }
 
   ngOnInit() {}

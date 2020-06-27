@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextobjectid="40">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextobjectid="42">
  <tileset firstgid="1" name="Tiles" tilewidth="16" tileheight="16" tilecount="1520" columns="40">
   <image source="tileset.png" width="640" height="608"/>
  </tileset>
@@ -82,5 +82,11 @@
     <property name="aboveText" value="Cave of Adventure"/>
    </properties>
   </object>
+  <object id="40" name="watchtower" gid="492" x="400" y="64" width="16" height="16">
+   <properties>
+    <property name="aboveText" value="Watchtower"/>
+   </properties>
+  </object>
+  <object id="41" name="watchtower" gid="532" x="400" y="80" width="16" height="16"/>
  </objectgroup>
 </map>

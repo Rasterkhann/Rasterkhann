@@ -3,8 +3,28 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext, ImmutableSelector } from '@ngxs-labs/immer-adapter';
 
-import { GainCurrentGold, GainGold, SpendGold, ChooseInfo } from '../actions';
+import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop } from '../actions';
 import { IGameTown, IGameState, Building } from '../interfaces';
+
+// TODO: pipe for bigints/etc
+
+function calculateOfflineGold(state): bigint {
+  const goldGainPerTick = GameState.currentTownGoldGain(state);
+  const now = Date.now();
+  const prev = state.lastTimestamp;
+
+  const diffSeconds = ((now - prev) / 1000);
+  return goldGainPerTick * BigInt(Math.floor(diffSeconds));
+}
+
+function getCurrentTownFromState(state: IGameState): IGameTown {
+  return { name: state.currentTown, ...state.towns[state.currentTown] };
+}
+
+function calculateGoldGain(state: IGameState): bigint {
+  const town = getCurrentTownFromState(state);
+  return BigInt(town.buildings.house.level) + town.goldPerTick;
+}
 
 export function beforeSerialize(obj) {
 
@@ -30,13 +50,23 @@ export function beforeSerialize(obj) {
 
 export function afterDeserialize(obj) {
 
-  // if there's a gamestate, deserialize the bigints
-  if (obj.towns) {
-    Object.keys(obj.towns).forEach(townName => {
-      const town = obj.towns[townName];
-      town.gold = BigInt(town.gold);
-      town.goldPerTick = BigInt(town.goldPerTick);
-    });
+  try {
+    // if there's a gamestate, deserialize the bigints
+    if (obj.towns) {
+      Object.keys(obj.towns).forEach(townName => {
+        const town = obj.towns[townName];
+        town.gold = BigInt(town.gold);
+        town.goldPerTick = BigInt(town.goldPerTick);
+      });
+    }
+
+    if (obj.lastTimestamp) {
+      const bonusGold = calculateOfflineGold(obj);
+      obj.towns[obj.currentTown].gold += bonusGold;
+    }
+
+  } catch (e) {
+    alert(`Your savefile could not be loaded correctly, the error is: ` + e);
   }
 
   return obj;
@@ -52,6 +82,10 @@ function createBasicTown(): Partial<IGameTown> {
         level: 1
       },
 
+      [Building.Watchtower]: {
+        level: 1
+      },
+
       [Building.House]: {
         level: 3
       }
@@ -59,13 +93,10 @@ function createBasicTown(): Partial<IGameTown> {
   };
 }
 
-function getCurrentTownFromState(state: IGameState): IGameTown {
-  return { name: state.currentTown, ...state.towns[state.currentTown] };
-}
-
 @State<IGameState>({
   name: 'gamestate',
   defaults: {
+    lastTimestamp: 0,
     currentInfo: Building.TownHall,
     currentTown: 'Rasterkhann',
     towns: {
@@ -84,18 +115,34 @@ export class GameState {
 
   @Selector()
   @ImmutableSelector()
+  public static currentTownGoldGain(state: IGameState): bigint {
+    return calculateGoldGain(state);
+  }
+
+  @Selector()
+  @ImmutableSelector()
   public static currentInfoWindow(state: IGameState): string {
     return state.currentInfo;
   }
 
   constructor(private store: Store) {}
 
+  // misc functions
+  @Action(GameLoop)
+  @ImmutableContext()
+  updateTimestamp({ setState }: StateContext<IGameState>) {
+    setState((state: IGameState) => {
+      state.lastTimestamp = Date.now();
+      return state;
+    });
+  }
+
   // gold functions
+  @Action(GameLoop)
   @Action(GainCurrentGold)
   gainCurrentGold(ctx: StateContext<IGameState>) {
     const state = ctx.getState();
-    const town = getCurrentTownFromState(state);
-    this.store.dispatch(new GainGold(town.goldPerTick));
+    this.store.dispatch(new GainGold(GameState.currentTownGoldGain(state)));
   }
 
   @Action(SpendGold)

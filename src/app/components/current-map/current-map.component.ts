@@ -3,8 +3,6 @@ import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges } fro
 import { IGameTown, Building } from '../../interfaces';
 import { GameService } from '../../game.service';
 
-// const pos = (x: number) => x * 16;
-
 @Component({
   selector: 'app-current-map',
   templateUrl: './current-map.component.html',
@@ -58,18 +56,20 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
           const isVisible = !!this.town.buildings[obj.name];
           if (!obj.name || !isVisible) { obj.visible = false; }
 
-          if (obj.name && obj.properties && obj.properties.aboveText) {
+          if (obj.name) {
 
             if (!this.spriteMap[obj.name]) { this.spriteMap[obj.name] = []; }
             this.spriteMap[obj.name].push(obj);
 
-            this.textMap[obj.name] = new (window as any).PIXI.Text(obj.properties.aboveText, textStyle);
-            this.textMap[obj.name].x = obj.x + 8;
-            this.textMap[obj.name].y = obj.y - 16;
-            this.textMap[obj.name].anchor.set(0.5, 0);
-            this.textMap[obj.name].visible = isVisible;
+            if (obj.properties && obj.properties.aboveText) {
+              this.textMap[obj.name] = new (window as any).PIXI.Text(obj.properties.aboveText, textStyle);
+              this.textMap[obj.name].x = obj.x + 8;
+              this.textMap[obj.name].y = obj.y - 16;
+              this.textMap[obj.name].anchor.set(0.5, 0);
+              this.textMap[obj.name].visible = isVisible;
 
-            this.tileMap.addChild(this.textMap[obj.name]);
+              this.tileMap.addChild(this.textMap[obj.name]);
+            }
           }
         });
 

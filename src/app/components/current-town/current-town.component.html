@@ -11,7 +11,7 @@
       Your town has {{ town.gold.toString() | number }} gold.
     </ion-item>
     <ion-item>
-      Your town earns {{ town.goldPerTick.toString() | number }} gold per second.
+      Your town earns {{ (currentTownGoldGain$ | async).toString() | number }} gold per second.
     </ion-item>
   </ion-list>
 </div>

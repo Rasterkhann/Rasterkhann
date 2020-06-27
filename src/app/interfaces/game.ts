@@ -11,6 +11,7 @@ export interface IGameTown {
 }
 
 export interface IGameState {
+  lastTimestamp: number;
   currentInfo: string;
   currentTown: string;
   towns: Record<string, IGameTown>;
