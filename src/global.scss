@@ -24,3 +24,30 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+  font-family: "VT323";
+  src: url("assets/font/VT323.svg") format("svg"),
+       url("assets/font/VT323.ttf") format("truetype"),
+       url("assets/font/VT323.woff") format("woff"),
+       url("assets/font/VT323.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --ion-font-family: "VT323", Roboto, "Helvetica Neue", sans-serif !important;
+  --ion-padding: 8px;
+}
+
+* {
+  letter-spacing: 1px !important;
+}
+
+ion-toolbar {
+  --min-height: 36px;
+}
+
+ion-item {
+  --min-height: 26px;
+}

@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+
+import { GameService } from '../game.service';
+import { GameState, IGameTown } from '../states/gamestate';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +12,8 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  @Select(GameState.currentTown) currentTown$: Observable<IGameTown>;
+
+  constructor(public game: GameService) {}
 
 }

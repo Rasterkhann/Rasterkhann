@@ -1,20 +1,14 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid class="ion-no-padding" *ngIf="(currentTown$ | async) as town">
+    <ion-row class="ion-no-padding">
+      <ion-col class="ion-no-padding" size="8">
+        <app-current-map [town]="town"></app-current-map>
+      </ion-col>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+      <ion-col class="ion-no-padding" size="4">
+        <app-current-town [town]="town"></app-current-town>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

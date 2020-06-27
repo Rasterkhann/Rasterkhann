@@ -1,0 +1,19 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ town.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-padding">
+  <ion-list>
+    <ion-item>
+      Your town has {{ town.gold.toString() | number }} gold.
+    </ion-item>
+    <ion-item>
+      Your town earns {{ town.goldPerTick.toString() | number }} gold per second.
+    </ion-item>
+  </ion-list>
+</div>
+
+<app-current-info [town]="town"></app-current-info>

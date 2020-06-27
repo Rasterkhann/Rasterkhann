@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { CurrentMapComponent } from '../components/current-map/current-map.component';
+import { CurrentTownComponent } from '../components/current-town/current-town.component';
+import { CurrentInfoComponent } from '../components/current-info/current-info.component';
 
 
 @NgModule({
@@ -14,6 +17,11 @@ import { HomePageRoutingModule } from './home-routing.module';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [
+    HomePage,
+    CurrentMapComponent,
+    CurrentTownComponent,
+    CurrentInfoComponent
+  ]
 })
 export class HomePageModule {}
