@@ -1,19 +1,19 @@
 
-<ion-header>
+<ion-header class="header">
   <ion-toolbar>
     <ion-title>{{ town.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<div class="ion-padding">
+<div class="ion-padding info">
   <ion-list>
-    <ion-item>
+    <ion-item class="no-cursor">
       Your town has {{ town.gold.toString() | number }} gold.
     </ion-item>
-    <ion-item>
+    <ion-item class="no-cursor">
       Your town earns {{ (currentTownGoldGain$ | async).toString() | number }} gold per second.
     </ion-item>
   </ion-list>
 </div>
 
-<app-current-info [town]="town"></app-current-info>
+<app-current-info [town]="town" class="filler"></app-current-info>

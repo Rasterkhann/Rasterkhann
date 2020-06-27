@@ -50,4 +50,8 @@ ion-toolbar {
 
 ion-item {
   --min-height: 26px;
+
+  &:not(.no-cursor) {
+    cursor: pointer;
+  }
 }

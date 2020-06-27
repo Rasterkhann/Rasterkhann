@@ -2,3 +2,20 @@
 .container {
   padding-left: 10px;
 }
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header, .info {
+  flex: 0 1 auto;
+}
+
+.filler {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}

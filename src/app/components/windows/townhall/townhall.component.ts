@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IGameTown } from '../../../interfaces';
+import { IGameTown, BuildingData, Building } from '../../../interfaces';
+import { GameService } from '../../../game.service';
 
 @Component({
   selector: 'app-townhall',
@@ -10,10 +11,23 @@ export class TownHallComponent implements OnInit {
 
   @Input() town: IGameTown;
 
-  public allBuildings;
+  public allBuildingInfos = Object.keys(BuildingData).map(x => ({ id: x, ...BuildingData[x] }));
 
-  constructor() { }
+  constructor(public game: GameService) { }
 
   ngOnInit() {}
+
+  public isBuildingAvailable(building: Building) {
+    if (this.town.buildings[building]) { return true; }
+    if (!BuildingData[building].requires) { return true; }
+
+    return Object.keys(BuildingData[building].requires)
+      .every(x => this.town.buildings[building] && this.town.buildings[building].level >= BuildingData[building].requires[x]);
+  }
+
+  public goToBuilding(building: Building) {
+    if (!this.town.buildings[building]) { return; }
+    this.game.changeInfo(building);
+  }
 
 }

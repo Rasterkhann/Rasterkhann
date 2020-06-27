@@ -1,5 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Buildings</ion-title>
+    <ion-title>Town Hall (Buildings Hub)</ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-list>
+  <ion-item *ngFor="let building of allBuildingInfos" 
+            (click)="goToBuilding(building.id)" 
+            [class.no-cursor]="!town.buildings[building.id]"
+            [class.ion-hide]="!isBuildingAvailable(building.id)">
+    <ion-label class="ion-text-wrap">
+      <h2>{{ building.name }}</h2>
+      <p>{{ building.description }}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
