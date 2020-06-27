@@ -15,6 +15,7 @@ WIP Design [in this Google Doc](https://docs.google.com/document/d/1Pecc--sRZj-D
 
 ## TODO
 
+* Consider using a Tiled renderer and hiding object buildings that aren't built (maybe just suck it up and use tmx)
 * Browser zoom messes up building placement
 * Squishing map image does not appropriately squish building placement 
 

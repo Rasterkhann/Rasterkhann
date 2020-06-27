@@ -25,6 +25,7 @@ export class GameService {
   }
 
   public changeInfo(newWindow: string) {
+    if (!newWindow) { return; }
     this.store.dispatch(new ChooseInfo(newWindow));
   }
 

@@ -40,7 +40,14 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": [
+              {
+                "input": "node_modules/pixi.js/dist/pixi.min.js"
+              },
+              {
+                "input": "node_modules/@seiyria/pixi-tiledmap/dist/pixi-tiledmap.min.js"
+              }
+            ]
           },
           "configurations": {
             "production": {

@@ -7,7 +7,7 @@ export interface IGameTown {
   gold: bigint;
   goldPerTick: bigint;
 
-  buildings: Record<Building, BuildingInfo>;
+  buildings: Partial<Record<Building, BuildingInfo>>;
 }
 
 export interface IGameState {
