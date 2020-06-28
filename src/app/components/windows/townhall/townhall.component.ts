@@ -22,7 +22,8 @@ export class TownHallComponent implements OnInit {
     if (!BuildingData[building].requires) { return true; }
 
     return Object.keys(BuildingData[building].requires)
-      .every(x => this.town.buildings[building] && this.town.buildings[building].level >= BuildingData[building].requires[x]);
+      .every(x => this.town.buildings[x]
+               && this.town.buildings[x].level >= BuildingData[building].requires[x]);
   }
 
   public goToBuilding(building: Building) {

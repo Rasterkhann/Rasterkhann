@@ -44,7 +44,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     name: 'Workshop',
     description: 'Manage your automation settings for your town.',
     upgradeTime: () => 0,
-    levelCost: (x) => x === 1 ? 100000n : 0n
+    levelCost: (x) => x === 1 ? 5000n : 0n
   },
 
   [Building.House]: {
