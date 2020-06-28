@@ -10,8 +10,10 @@
             [class.no-cursor]="!town.buildings[building.id]"
             [class.ion-hide]="!isBuildingAvailable(building.id)">
     <ion-label class="ion-text-wrap">
-      <h2>{{ building.name }}</h2>
+      <h2>{{ building.name }} (Level {{ town.buildings[building.id]?.level || 0 }})</h2>
       <p>{{ building.description }}</p>
     </ion-label>
+
+    <ion-button slot="end" *ngIf="!town.buildings[building.id]" (click)="build(building.id)">Build</ion-button>
   </ion-item>
 </ion-list>

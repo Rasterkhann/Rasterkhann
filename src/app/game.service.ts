@@ -4,6 +4,7 @@ import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
 import { ChooseInfo, GameLoop } from './actions';
+import { Building, BuildingData } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class GameService {
   public changeInfo(newWindow: string) {
     if (!newWindow) { return; }
     this.store.dispatch(new ChooseInfo(newWindow));
+  }
+
+  public buildingCost(building: Building, level = 1): bigint {
+    return BuildingData[building].levelCost(level);
   }
 
 }

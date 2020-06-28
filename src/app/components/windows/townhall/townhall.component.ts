@@ -30,4 +30,8 @@ export class TownHallComponent implements OnInit {
     this.game.changeInfo(building);
   }
 
+  public build(building: Building) {
+    
+  }
+
 }

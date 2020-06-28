@@ -20,6 +20,7 @@ import { InnComponent } from '../components/windows/inn/inn.component';
 import { TownHallComponent } from '../components/windows/townhall/townhall.component';
 import { WatchtowerComponent } from '../components/windows/watchtower/watchtower.component';
 import { WorkshopComponent } from '../components/windows/workshop/workshop.component';
+import { BignumPipe } from '../bignum.pipe';
 
 
 @NgModule({
@@ -44,7 +45,9 @@ import { WorkshopComponent } from '../components/windows/workshop/workshop.compo
     InnComponent,
     TownHallComponent,
     WatchtowerComponent,
-    WorkshopComponent
+    WorkshopComponent,
+
+    BignumPipe
   ]
 })
 export class HomePageModule {}

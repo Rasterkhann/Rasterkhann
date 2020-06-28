@@ -27,13 +27,13 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.TownHall]: {
     name: 'Town Hall',
     description: 'Build or upgrade your town.',
-    levelCost: (x) => 0n
+    levelCost: () => 0n
   },
 
   [Building.Watchtower]: {
     name: 'Watchtower',
     description: 'Manage town settings here.',
-    levelCost: (x) => 0n
+    levelCost: () => 0n
   },
 
   [Building.Workshop]: {

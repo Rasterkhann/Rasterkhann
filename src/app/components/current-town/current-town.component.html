@@ -8,10 +8,10 @@
 <div class="ion-padding info">
   <ion-list>
     <ion-item class="no-cursor">
-      Your town has {{ town.gold.toString() | number }} gold.
+      Your town has {{ town.gold | bignum }} gold.
     </ion-item>
     <ion-item class="no-cursor">
-      Your town earns {{ (currentTownGoldGain$ | async).toString() | number }} gold per second.
+      Your town earns {{ (currentTownGoldGain$ | async) | bignum }} gold per second.
     </ion-item>
   </ion-list>
 </div>
