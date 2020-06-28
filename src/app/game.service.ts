@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
-import { ChooseInfo, GameLoop } from './actions';
-import { Building, BuildingData } from './interfaces';
+import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding } from './actions';
+import { Building, BuildingData, IGameTown } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +25,38 @@ export class GameService {
     });
   }
 
+  // ui functions
   public changeInfo(newWindow: string) {
     if (!newWindow) { return; }
     this.store.dispatch(new ChooseInfo(newWindow));
   }
 
+  // building functions
   public buildingCost(building: Building, level = 1): bigint {
     return BuildingData[building].levelCost(level);
+  }
+
+  public nextLevelForBuilding(town: IGameTown, building: Building): number {
+    return town.buildings[building] ? town.buildings[building].level + 1 : 1;
+  }
+
+  public canUpgradeBuilding(town: IGameTown, building: Building): boolean {
+    if (town.buildings[building]) {
+      const isConstructing = town.buildings[building].constructionDoneAt;
+      if (isConstructing) { return false; }
+    }
+
+    const nextLevelCost = this.buildingCost(building, this.nextLevelForBuilding(town, building));
+    if (nextLevelCost === 0n) { return false; }
+
+    return town.gold >= nextLevelCost;
+  }
+
+  public upgradeBuilding(town: IGameTown, building: Building) {
+    if (!this.canUpgradeBuilding(town, building)) { return; }
+
+    this.store.dispatch(new SpendGold(this.buildingCost(building, this.nextLevelForBuilding(town, building))));
+    this.store.dispatch(new UpgradeBuilding(building));
   }
 
 }

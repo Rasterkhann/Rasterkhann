@@ -6,14 +6,20 @@
 
 <ion-list>
   <ion-item *ngFor="let building of allBuildingInfos" 
-            (click)="goToBuilding(building.id)" 
             [class.no-cursor]="!town.buildings[building.id]"
             [class.ion-hide]="!isBuildingAvailable(building.id)">
-    <ion-label class="ion-text-wrap">
+    <ion-label class="ion-text-wrap cursor" (click)="goToBuilding(building.id)">
       <h2>{{ building.name }} (Level {{ town.buildings[building.id]?.level || 0 }})</h2>
       <p>{{ building.description }}</p>
+      <p *ngIf="!town.buildings[building.id]?.constructionDoneAt && game.buildingCost(building.id, game.nextLevelForBuilding(town, building.id)) > 0">
+        Next Level Cost: {{ game.buildingCost(building.id, game.nextLevelForBuilding(town, building.id)) | bignum }} gold
+      </p>
+      <p *ngIf="town.buildings[building.id]?.constructionDoneAt">
+        Construction done in <countdown [config]="{ stopTime: town.buildings[building.id].constructionDoneAt }"></countdown>
+      </p>
     </ion-label>
 
-    <ion-button slot="end" *ngIf="!town.buildings[building.id]" (click)="build(building.id)">Build</ion-button>
+    <ion-button slot="end" *ngIf="!town.buildings[building.id]" (click)="build(building.id)" [disabled]="!game.canUpgradeBuilding(town, building.id)">Build</ion-button>
+    <ion-button slot="end" *ngIf="town.buildings[building.id] && game.canUpgradeBuilding(town, building.id)" (click)="build(building.id)">Upgrade</ion-button>
   </ion-item>
 </ion-list>

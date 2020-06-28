@@ -3,10 +3,8 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext, ImmutableSelector } from '@ngxs-labs/immer-adapter';
 
-import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop } from '../actions';
-import { IGameTown, IGameState, Building } from '../interfaces';
-
-// TODO: pipe for bigints/etc
+import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding } from '../actions';
+import { IGameTown, IGameState, Building, BuildingData } from '../interfaces';
 
 function calculateOfflineGold(state): bigint {
   const goldGainPerTick = GameState.currentTownGoldGain(state);
@@ -161,6 +159,40 @@ export class GameState {
 
       state.towns[state.currentTown] = town;
 
+      return state;
+    });
+  }
+
+  // building functions
+  @Action(GameLoop)
+  @ImmutableContext()
+  validateBuildingConstructions({ setState }: StateContext<IGameState>) {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const now = Date.now();
+
+      Object.keys(town.buildings).forEach(building => {
+        const constructionDoneAt = town.buildings[building].constructionDoneAt;
+        if (!constructionDoneAt || constructionDoneAt > now) { return; }
+
+        town.buildings[building].constructionDoneAt = 0;
+        town.buildings[building].level += 1;
+      });
+
+      return state;
+    });
+  }
+
+  @Action(UpgradeBuilding)
+  @ImmutableContext()
+  upgradeBuilding({ setState }: StateContext<IGameState>, { building }: UpgradeBuilding) {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+
+      town.buildings[building] = town.buildings[building] || { level: 0 };
+      const buildingRef = town.buildings[building];
+
+      buildingRef.constructionDoneAt = Date.now() + 1000 * BuildingData[building].upgradeTime(buildingRef.level + 1);
       return state;
     });
   }

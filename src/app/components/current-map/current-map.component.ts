@@ -79,7 +79,11 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes) {
     if (changes.town) {
-      const currentBuildings = Object.fromEntries(Object.keys(changes.town.currentValue.buildings).map(x => [x, true]));
+      const currentBuildings = Object.fromEntries(Object.keys(changes.town.currentValue.buildings).map(x => {
+        if (!changes.town.currentValue.buildings[x] || !changes.town.currentValue.buildings[x].level) { return []; }
+        return [x, true];
+      }));
+
       Object.keys(this.spriteMap).forEach(buildingName => {
         this.toggleVisible(buildingName, false);
         if (!currentBuildings[buildingName]) { return; }

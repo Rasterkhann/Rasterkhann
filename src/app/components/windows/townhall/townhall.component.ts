@@ -31,7 +31,7 @@ export class TownHallComponent implements OnInit {
   }
 
   public build(building: Building) {
-    
+    this.game.upgradeBuilding(this.town, building);
   }
 
 }

@@ -14,8 +14,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
+
 import { migrations } from './migrations';
 import { GameState, beforeSerialize, afterDeserialize } from './states';
+import { DecimalPipe } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +43,8 @@ import { GameState, beforeSerialize, afterDeserialize } from './states';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    DecimalPipe
   ],
   bootstrap: [AppComponent]
 })

@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+
+import { CountdownModule } from 'ngx-countdown';
+
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
@@ -20,6 +23,7 @@ import { InnComponent } from '../components/windows/inn/inn.component';
 import { TownHallComponent } from '../components/windows/townhall/townhall.component';
 import { WatchtowerComponent } from '../components/windows/watchtower/watchtower.component';
 import { WorkshopComponent } from '../components/windows/workshop/workshop.component';
+
 import { BignumPipe } from '../bignum.pipe';
 
 
@@ -28,7 +32,9 @@ import { BignumPipe } from '../bignum.pipe';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+
+    CountdownModule
   ],
   declarations: [
     HomePage,
