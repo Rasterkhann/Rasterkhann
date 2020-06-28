@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
-import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding } from './actions';
-import { Building, BuildingData, IGameTown } from './interfaces';
+import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData } from './actions';
+import { Building, BuildingData, IGameTown, IGameState } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,10 @@ export class GameService {
   public changeInfo(newWindow: string) {
     if (!newWindow) { return; }
     this.store.dispatch(new ChooseInfo(newWindow));
+  }
+
+  public loadState(state: IGameState) {
+    this.store.dispatch(new LoadSaveData(state));
   }
 
   // building functions

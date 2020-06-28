@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext, ImmutableSelector } from '@ngxs-labs/immer-adapter';
 
-import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding } from '../actions';
+import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding, LoadSaveData } from '../actions';
 import { IGameTown, IGameState, Building, BuildingData } from '../interfaces';
 
 function calculateOfflineGold(state): bigint {
@@ -64,13 +64,13 @@ export function afterDeserialize(obj) {
     }
 
   } catch (e) {
-    alert(`Your savefile could not be loaded correctly, the error is: ` + e);
+    alert(`Your savefile could not be loaded correctly, the error is: ${e}`);
   }
 
   return obj;
 }
 
-function createBasicTown(): Partial<IGameTown> {
+export function createBasicTown(): Partial<IGameTown> {
   return {
     gold: 0n,
     goldPerTick: 0n,
@@ -91,19 +91,29 @@ function createBasicTown(): Partial<IGameTown> {
   };
 }
 
-@State<IGameState>({
-  name: 'gamestate',
-  defaults: {
+export function createDefaultSavefile(): IGameState {
+  return {
     lastTimestamp: 0,
     currentInfo: Building.TownHall,
     currentTown: 'Rasterkhann',
     towns: {
       Rasterkhann: createBasicTown() as IGameTown
     }
-  }
+  };
+}
+
+@State<IGameState>({
+  name: 'gamestate',
+  defaults: createDefaultSavefile()
 })
 @Injectable()
 export class GameState {
+
+  @Selector()
+  @ImmutableSelector()
+  public static entireSavefile(state: IGameState): IGameState {
+    return state;
+  }
 
   @Selector()
   @ImmutableSelector()
@@ -132,6 +142,14 @@ export class GameState {
     setState((state: IGameState) => {
       state.lastTimestamp = Date.now();
       return state;
+    });
+  }
+
+  @Action(LoadSaveData)
+  @ImmutableContext()
+  loadSaveData({ setState }: StateContext<IGameState>, { gamestate }: LoadSaveData) {
+    setState(() => {
+      return gamestate;
     });
   }
 

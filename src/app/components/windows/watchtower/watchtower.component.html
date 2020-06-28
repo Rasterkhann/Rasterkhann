@@ -3,3 +3,27 @@
     <ion-title>Watchtower</ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-list>
+  <ion-item>
+    <input type="file" id="file-selector" accept=".sav" class="ion-hide" (change)="import($event)" #fileLoad>
+    <ion-label class="ion-text-wrap" (click)="fileLoad.click()">
+      <h2>Import Savefile</h2>
+      <p>You can import another save file, but you might want to back up your existing one first in case the one you import isn't compatible.</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="ion-text-wrap" (click)="export()">
+      <h2>Export Savefile</h2>
+      <p>Export your save file to back it up or share it for debugging purposes.</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="ion-text-wrap" (click)="delete()">
+      <h2>Delete Savefile</h2>
+      <p>If you want to start your game over entirely, this is the action you want to take. Just make sure you really, really want to.</p>
+    </ion-label>
+  </ion-item>
+</ion-list>

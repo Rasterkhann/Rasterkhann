@@ -43,7 +43,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.Workshop]: {
     name: 'Workshop',
     description: 'Manage your automation settings for your town.',
-    upgradeTime: () => 0,
+    upgradeTime: () => 30,
     levelCost: (x) => x === 1 ? 5000n : 0n
   },
 
@@ -103,7 +103,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   },
 
   [Building.Cave]: {
-    name: 'Cave',
+    name: 'Cave of Adventure',
     description: 'Allow your heroes to go on adventures.',
     requires: {
       [Building.GuildHall]: 1
