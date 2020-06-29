@@ -5,6 +5,11 @@ export class ChooseInfo {
   constructor(public window: string) {}
 }
 
+export class OptionToggleUpgradeVisibility {
+  static readonly type = '[Option] Toggle Upgrade Visibility';
+  constructor() {}
+}
+
 export class LoadSaveData {
   static readonly type = '[SaveData] Load Save';
   constructor(public gamestate: IGameState) {}

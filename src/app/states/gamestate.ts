@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext, ImmutableSelector } from '@ngxs-labs/immer-adapter';
 
-import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding, LoadSaveData } from '../actions';
-import { IGameTown, IGameState, Building, BuildingData } from '../interfaces';
+import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding, LoadSaveData, OptionToggleUpgradeVisibility } from '../actions';
+import { IGameTown, IGameState, Building, BuildingData, GameOption } from '../interfaces';
 
 function calculateOfflineGold(state): bigint {
   const goldGainPerTick = GameState.currentTownGoldGain(state);
@@ -98,7 +98,8 @@ export function createDefaultSavefile(): IGameState {
     currentTown: 'Rasterkhann',
     towns: {
       Rasterkhann: createBasicTown() as IGameTown
-    }
+    },
+    options: {}
   };
 }
 
@@ -221,6 +222,15 @@ export class GameState {
   chooseInfo({ setState }: StateContext<IGameState>, { window }: ChooseInfo) {
     setState((state: IGameState) => {
       state.currentInfo = window;
+      return state;
+    });
+  }
+
+  @Action(OptionToggleUpgradeVisibility)
+  @ImmutableContext()
+  toggleUpgradeVisiblity({ setState }: StateContext<IGameState>) {
+    setState((state: IGameState) => {
+      state.options[GameOption.ToggleUpgradeVisiblity] = !state.options[GameOption.ToggleUpgradeVisiblity];
       return state;
     });
   }

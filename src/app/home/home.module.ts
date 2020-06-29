@@ -25,6 +25,7 @@ import { WatchtowerComponent } from '../components/windows/watchtower/watchtower
 import { WorkshopComponent } from '../components/windows/workshop/workshop.component';
 
 import { BignumPipe } from '../bignum.pipe';
+import { BuildingInfoComponent } from '../components/shared/building-info/building-info.component';
 
 
 @NgModule({
@@ -52,6 +53,8 @@ import { BignumPipe } from '../bignum.pipe';
     TownHallComponent,
     WatchtowerComponent,
     WorkshopComponent,
+
+    BuildingInfoComponent,
 
     BignumPipe
   ]

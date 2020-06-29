@@ -5,6 +5,19 @@
 </ion-header>
 
 <ion-list>
+  <ion-list-header>
+    <h4>Options</h4>
+  </ion-list-header>
+
+  <ion-item>
+    <ion-label>Show Purchased Upgrades</ion-label>
+    <ion-toggle [checked]="!(upgradeVisibility$ | async)" (click)="game.toggleUpgradeVisibility()"></ion-toggle>
+  </ion-item>
+
+  <ion-list-header>
+    <h4>Savefile Operations</h4>
+  </ion-list-header>
+
   <ion-item>
     <input type="file" id="file-selector" accept=".sav" class="ion-hide" (change)="import($event)" #fileLoad>
     <ion-label class="ion-text-wrap" (click)="fileLoad.click()">
@@ -24,6 +37,30 @@
     <ion-label class="ion-text-wrap" (click)="delete()">
       <h2>Delete Savefile</h2>
       <p>If you want to start your game over entirely, this is the action you want to take. Just make sure you really, really want to.</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-list-header>
+    <h4>Support & Credits</h4>
+  </ion-list-header>
+
+  <ion-item target="_blank" rel="noopener noreferrer" href="https://patreon.com/seiyria">
+    <ion-label class="ion-text-wrap">
+      <h2>Support me on Patreon!</h2>
+    </ion-label>
+  </ion-item>
+  
+  <ion-item target="_blank" rel="noopener noreferrer" href="https://discord.gg/ZyuntJ4">
+    <ion-label class="ion-text-wrap">
+      <h2>Join the Discord! (#rasterkhann-dev)</h2>
+    </ion-label>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label class="ion-text-wrap">
+      <h2>Credits</h2>
+      <p>7Soul (Humble Bundle): Hero sprites, weapon sprites, armor sprites, skill sprites, potion sprites</p>
+      <p>Wonderdot (Humble Bundle): Town sprites</p>
     </ion-label>
   </ion-item>
 </ion-list>

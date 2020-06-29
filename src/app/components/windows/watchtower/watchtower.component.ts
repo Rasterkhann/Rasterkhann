@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 
-import { IGameTown, IGameState } from '../../../interfaces';
+import { IGameTown, IGameState, GameOption } from '../../../interfaces';
 import { GameState, beforeSerialize, createDefaultSavefile, afterDeserialize } from '../../../states';
 import { GameService } from '../../../game.service';
 
@@ -24,6 +24,7 @@ export class WatchtowerComponent implements OnInit {
   @Input() town: IGameTown;
 
   @Select(GameState.entireSavefile) gameState$: Observable<IGameState>;
+  @Select(state => state.gamestate.options[GameOption.ToggleUpgradeVisiblity]) upgradeVisibility$: Observable<boolean>;
 
   constructor(private alert: AlertController, private game: GameService) { }
 

@@ -1,0 +1,17 @@
+
+<ion-item [class.no-cursor]="!town.buildings[buildingId]"
+          [class.ion-hide]="!isBuildingAvailable()">
+  <ion-label class="ion-text-wrap cursor" (click)="goToBuilding()">
+    <h2>{{ buildingName }} (Level {{ town.buildings[buildingId]?.level || 0 }})</h2>
+    <p>{{ buildingDescription }}</p>
+    <p *ngIf="!town.buildings[buildingId]?.constructionDoneAt && game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) > 0">
+    Next Level Cost: {{ game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) | bignum }} gold
+    </p>
+    <p *ngIf="town.buildings[buildingId]?.constructionDoneAt">
+    Construction done in <countdown [config]="{ stopTime: town.buildings[buildingId].constructionDoneAt }"></countdown>
+    </p>
+  </ion-label>
+
+  <ion-button slot="end" *ngIf="!town.buildings[buildingId]" (click)="build()" [disabled]="!game.canUpgradeBuilding(town, buildingId)">Build</ion-button>
+  <ion-button slot="end" *ngIf="town.buildings[buildingId] && game.canUpgradeBuilding(town, buildingId)" (click)="build(buildingId)">Upgrade</ion-button>
+</ion-item>

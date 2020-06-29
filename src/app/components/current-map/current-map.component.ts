@@ -34,7 +34,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
     this.renderer.view.style.width = '100%';
     this.renderer.view.style.height = '100%';
 
-    this.renderer.resolution = 2;
+    this.renderer.resolution = 1;
 
     (window as any).PIXI.loader
       .add('assets/game/town/Rasterkhann.tmx')

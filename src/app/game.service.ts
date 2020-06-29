@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
-import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData } from './actions';
+import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData, OptionToggleUpgradeVisibility } from './actions';
 import { Building, BuildingData, IGameTown, IGameState } from './interfaces';
 
 @Injectable({
@@ -33,6 +33,10 @@ export class GameService {
 
   public loadState(state: IGameState) {
     this.store.dispatch(new LoadSaveData(state));
+  }
+
+  public toggleUpgradeVisibility() {
+    this.store.dispatch(new OptionToggleUpgradeVisibility());
   }
 
   // building functions
