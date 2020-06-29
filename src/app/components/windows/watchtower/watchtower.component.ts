@@ -26,7 +26,7 @@ export class WatchtowerComponent implements OnInit {
   @Select(GameState.entireSavefile) gameState$: Observable<IGameState>;
   @Select(state => state.gamestate.options[GameOption.ToggleUpgradeVisiblity]) upgradeVisibility$: Observable<boolean>;
 
-  constructor(private alert: AlertController, private game: GameService) { }
+  constructor(private alert: AlertController, public game: GameService) { }
 
   ngOnInit() {}
 

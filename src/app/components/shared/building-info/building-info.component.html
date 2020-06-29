@@ -13,5 +13,5 @@
   </ion-label>
 
   <ion-button slot="end" *ngIf="!town.buildings[buildingId]" (click)="build()" [disabled]="!game.canUpgradeBuilding(town, buildingId)">Build</ion-button>
-  <ion-button slot="end" *ngIf="town.buildings[buildingId] && game.canUpgradeBuilding(town, buildingId)" (click)="build(buildingId)">Upgrade</ion-button>
+  <ion-button slot="end" *ngIf="town.buildings[buildingId] && game.canUpgradeBuilding(town, buildingId)" (click)="build()">Upgrade</ion-button>
 </ion-item>
