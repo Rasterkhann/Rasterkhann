@@ -17,7 +17,7 @@
     </ion-label>
 
     <ion-button slot="end"  
-                (click)="game.upgradeBuildingFeature(building, feature)" 
+                (click)="game.upgradeBuildingFeature(town, buildingId, feature)" 
                 [disabled]="!game.canUpgradeBuildingFeature(town, buildingId, feature.name)">Purchase</ion-button>
   </ion-item>
 </ion-list>
