@@ -9,10 +9,12 @@ import { saveAs } from 'file-saver';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
+import { environment } from '../../../../environments/environment';
 
 import { IGameTown, IGameState, GameOption } from '../../../interfaces';
 import { GameState, beforeSerialize, createDefaultSavefile, afterDeserialize } from '../../../states';
 import { GameService } from '../../../game.service';
+
 
 @Component({
   selector: 'app-watchtower',
@@ -25,6 +27,10 @@ export class WatchtowerComponent implements OnInit {
 
   @Select(GameState.entireSavefile) gameState$: Observable<IGameState>;
   @Select(state => state.gamestate.options[GameOption.ToggleUpgradeVisiblity]) upgradeVisibility$: Observable<boolean>;
+
+  public get version(): string {
+    return `${environment.versions.version}-${environment.versions.branch}-${environment.versions.revision}`;
+  }
 
   constructor(private alert: AlertController, public game: GameService) { }
 
