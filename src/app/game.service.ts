@@ -73,7 +73,7 @@ export class GameService {
   }
 
   public canUpgradeBuildingFeature(town: IGameTown, building: Building, feature: string): boolean {
-    if (town.buildings[building]) {
+    if (town.buildings[building].featureConstruction) {
       const isConstructing = town.buildings[building].featureConstruction[feature];
       if (isConstructing) { return false; }
     }
@@ -83,6 +83,12 @@ export class GameService {
 
     const nextLevelCost = this.buildingFeatureCost(building, feature);
     if (nextLevelCost === 0n) { return false; }
+
+    if (featureRef.requiresFeature) {
+      const allPreFeatures = Object.keys(featureRef.requiresFeature)
+        .every(feat => town.buildings[building].features && town.buildings[building].features[feat]);
+      if (!allPreFeatures) { return false; }
+    }
 
     return town.gold >= nextLevelCost;
   }

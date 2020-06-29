@@ -1,6 +1,23 @@
 
-<ion-list>
+<ion-list *ngIf="allFeatures.length > 0">
   <ion-list-header>
     <h4>Features</h4>
   </ion-list-header>
+
+  <ion-item *ngFor="let feature of allFeatures" [class.ion-hide]="!isFeatureAvailable(feature)">
+    <ion-label class="ion-text-wrap">
+      <h2>{{ feature.name }}</h2>
+      <p>{{ feature.description }}</p>
+      <p *ngIf="!town.buildings[buildingId].featureConstruction || !town.buildings[buildingId].featureConstruction[feature.name]">
+        Next Level Cost: {{ game.buildingFeatureCost(buildingId, feature.name) | bignum }} gold
+      </p>
+      <p *ngIf="town.buildings[buildingId].featureConstruction && town.buildings[buildingId].featureConstruction[feature.name]">
+        Feature done in <countdown [config]="{ stopTime: town.buildings[buildingId].featureConstruction[feature.name] }"></countdown>
+      </p>
+    </ion-label>
+
+    <ion-button slot="end"  
+                (click)="game.upgradeBuildingFeature(building, feature)" 
+                [disabled]="!game.canUpgradeBuildingFeature(town, buildingId, feature.name)">Purchase</ion-button>
+  </ion-item>
 </ion-list>

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { GameService } from '../../../game.service';
-import { IGameTown, Building } from '../../../interfaces';
+import { IGameTown, Building, BuildingData, BuildingFeature } from '../../../interfaces';
 
 @Component({
   selector: 'app-feature-list',
@@ -13,10 +13,16 @@ export class FeatureListComponent implements OnInit {
   @Input() town: IGameTown;
   @Input() buildingId: Building;
 
+  public get allFeatures(): BuildingFeature[] {
+    return BuildingData[this.buildingId].features || [];
+  }
+
   constructor(public game: GameService) { }
 
   ngOnInit() {}
 
-  // upgradeBuildingFeature(building, feature);
+  isFeatureAvailable(feature: BuildingFeature): boolean {
+    return true;
+  }
 
 }

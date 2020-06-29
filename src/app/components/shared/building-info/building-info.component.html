@@ -5,10 +5,10 @@
     <h2>{{ buildingName }} (Level {{ town.buildings[buildingId]?.level || 0 }})</h2>
     <p>{{ buildingDescription }}</p>
     <p *ngIf="!town.buildings[buildingId]?.constructionDoneAt && game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) > 0">
-    Next Level Cost: {{ game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) | bignum }} gold
+      Next Level Cost: {{ game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) | bignum }} gold
     </p>
     <p *ngIf="town.buildings[buildingId]?.constructionDoneAt">
-    Construction done in <countdown [config]="{ stopTime: town.buildings[buildingId].constructionDoneAt }"></countdown>
+      Construction done in <countdown [config]="{ stopTime: town.buildings[buildingId].constructionDoneAt }"></countdown>
     </p>
   </ion-label>
 
