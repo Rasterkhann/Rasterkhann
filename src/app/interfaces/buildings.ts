@@ -1,3 +1,4 @@
+import { HouseFeatures } from '../features';
 
 export enum Building {
   TownHall = 'townhall',
@@ -15,6 +16,16 @@ export enum Building {
 export interface BuildingInfo {
   level: number;
   constructionDoneAt?: number;
+  features?: Record<string, boolean>;
+  featureConstruction?: Record<string, number>;
+}
+
+export interface BuildingFeature {
+  name: string;
+  description: string;
+  cost: bigint;
+  requiresLevel?: number;
+  requiresFeature?: Record<string, number>;
 }
 
 export interface BuildingStatic {
@@ -23,6 +34,7 @@ export interface BuildingStatic {
   requires?: Partial<Record<Building, number>>;
   upgradeTime: (level: number) => number;
   levelCost: (level: number) => bigint;
+  features?: Array<BuildingFeature>;
 }
 
 export const BuildingData: Record<Building, BuildingStatic> = {
@@ -51,7 +63,8 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     name: 'House',
     description: 'Acquire more citizens to increase your gold gain.',
     upgradeTime: (level) => level * 5,
-    levelCost: (x) => BigInt(Math.floor((15 * x) + (2 * (1.1 ** x))))
+    levelCost: (x) => BigInt(Math.floor((15 * x) + (2 * (1.1 ** x)))),
+    features: HouseFeatures
   },
 
   [Building.GuildHall]: {

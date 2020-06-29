@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext, ImmutableSelector } from '@ngxs-labs/immer-adapter';
 
-import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding, LoadSaveData, OptionToggleUpgradeVisibility } from '../actions';
+import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding, LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature } from '../actions';
 import { IGameTown, IGameState, Building, BuildingData, GameOption } from '../interfaces';
 
 function calculateOfflineGold(state): bigint {
@@ -212,6 +212,14 @@ export class GameState {
       const buildingRef = town.buildings[building];
 
       buildingRef.constructionDoneAt = Date.now() + 1000 * BuildingData[building].upgradeTime(buildingRef.level + 1);
+      return state;
+    });
+  }
+
+  @Action(UpgradeBuildingFeature)
+  @ImmutableContext()
+  upgradeBuildingFeature({ setState }: StateContext<IGameState>, { building, feature }: UpgradeBuildingFeature) {
+    setState((state: IGameState) => {
       return state;
     });
   }
