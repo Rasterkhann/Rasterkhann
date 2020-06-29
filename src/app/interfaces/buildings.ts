@@ -1,4 +1,5 @@
-import { HouseFeatures } from '../features';
+import { HouseFeatures, GuildHallFeatures, ArmoryFeatures,
+  AlchemistFeatures, InnFeatures, CaveFeatures, BazaarFeatures } from '../features';
 
 export enum Building {
   TownHall = 'townhall',
@@ -24,6 +25,7 @@ export interface BuildingFeature {
   name: string;
   description: string;
   cost: bigint;
+  upgradeTime: number;
   requiresLevel?: number;
   requiresFeature?: Record<string, number>;
 }
@@ -71,7 +73,8 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     name: 'Guild Hall',
     description: 'Recruit heroes to your cause.',
     upgradeTime: (level) => level * 20,
-    levelCost: (x) => BigInt(Math.floor((500 * x) + (1.5 * (1.3 ** x))))
+    levelCost: (x) => BigInt(Math.floor((500 * x) + (1.5 * (1.3 ** x)))),
+    features: GuildHallFeatures
   },
 
   [Building.Armory]: {
@@ -81,7 +84,8 @@ export const BuildingData: Record<Building, BuildingStatic> = {
       [Building.GuildHall]: 1
     },
     upgradeTime: (level) => level * 20,
-    levelCost: (x) => BigInt(Math.floor((250 * x) + (3 * (1.25 ** x))))
+    levelCost: (x) => BigInt(Math.floor((250 * x) + (3 * (1.25 ** x)))),
+    features: ArmoryFeatures
   },
 
   [Building.Alchemist]: {
@@ -91,7 +95,8 @@ export const BuildingData: Record<Building, BuildingStatic> = {
       [Building.GuildHall]: 1
     },
     upgradeTime: (level) => level * 15,
-    levelCost: (x) => BigInt(Math.floor((350 * x) + (2 * (1.25 ** x))))
+    levelCost: (x) => BigInt(Math.floor((350 * x) + (2 * (1.25 ** x)))),
+    features: AlchemistFeatures
   },
 
   [Building.Inn]: {
@@ -101,7 +106,8 @@ export const BuildingData: Record<Building, BuildingStatic> = {
       [Building.GuildHall]: 1
     },
     upgradeTime: (level) => level * 60,
-    levelCost: (x) => BigInt(Math.floor((650 * x) + (1.5 * (1.32 ** x))))
+    levelCost: (x) => BigInt(Math.floor((650 * x) + (1.5 * (1.32 ** x)))),
+    features: InnFeatures
   },
 
   [Building.Bazaar]: {
@@ -112,7 +118,8 @@ export const BuildingData: Record<Building, BuildingStatic> = {
       [Building.Alchemist]: 1,
     },
     upgradeTime: (level) => level * 30,
-    levelCost: (x) => BigInt(Math.floor((875 * x) + (5 * (1.2 ** x))))
+    levelCost: (x) => BigInt(Math.floor((875 * x) + (5 * (1.2 ** x)))),
+    features: BazaarFeatures
   },
 
   [Building.Cave]: {
@@ -122,6 +129,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
       [Building.GuildHall]: 1
     },
     upgradeTime: (level) => level * 15,
-    levelCost: (x) => BigInt(Math.floor((500 * x) + (1.2 * (1.35 ** x))))
+    levelCost: (x) => BigInt(Math.floor((500 * x) + (1.2 * (1.35 ** x)))),
+    features: CaveFeatures
   }
 };

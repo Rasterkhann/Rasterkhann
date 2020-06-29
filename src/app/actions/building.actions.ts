@@ -8,5 +8,5 @@ export class UpgradeBuilding {
 
 export class UpgradeBuildingFeature {
   static readonly type = '[Building] Upgrade Building Feature';
-  constructor(public building: Building, public feature: string) {}
+  constructor(public building: Building, public feature: string, public constructionTime: number) {}
 }

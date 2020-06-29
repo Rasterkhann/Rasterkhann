@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
-import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData, OptionToggleUpgradeVisibility } from './actions';
-import { Building, BuildingData, IGameTown, IGameState } from './interfaces';
+import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature } from './actions';
+import { Building, BuildingData, IGameTown, IGameState, BuildingFeature } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -40,8 +40,20 @@ export class GameService {
   }
 
   // building functions
+  public featureByName(building: Building, feature: string): BuildingFeature {
+    return BuildingData[building].features.find(x => x.name === feature);
+  }
+
   public buildingCost(building: Building, level = 1): bigint {
     return BuildingData[building].levelCost(level);
+  }
+
+  public buildingFeatureCost(building: Building, feature: string): bigint {
+    return this.featureByName(building, feature).cost;
+  }
+
+  public buildingFeatureTime(building: Building, feature: string): number {
+    return this.featureByName(building, feature).upgradeTime;
   }
 
   public nextLevelForBuilding(town: IGameTown, building: Building): number {
@@ -60,11 +72,33 @@ export class GameService {
     return town.gold >= nextLevelCost;
   }
 
+  public canUpgradeBuildingFeature(town: IGameTown, building: Building, feature: string): boolean {
+    if (town.buildings[building]) {
+      const isConstructing = town.buildings[building].featureConstruction[feature];
+      if (isConstructing) { return false; }
+    }
+
+    const featureRef: BuildingFeature = this.featureByName(building, feature);
+    if (!featureRef) { return false; }
+
+    const nextLevelCost = this.buildingFeatureCost(building, feature);
+    if (nextLevelCost === 0n) { return false; }
+
+    return town.gold >= nextLevelCost;
+  }
+
   public upgradeBuilding(town: IGameTown, building: Building) {
     if (!this.canUpgradeBuilding(town, building)) { return; }
 
     this.store.dispatch(new SpendGold(this.buildingCost(building, this.nextLevelForBuilding(town, building))));
     this.store.dispatch(new UpgradeBuilding(building));
+  }
+
+  public upgradeBuildingFeature(town: IGameTown, building: Building, feature: string) {
+    if (!this.canUpgradeBuildingFeature(town, building, feature)) { return; }
+
+    this.store.dispatch(new SpendGold(this.buildingFeatureCost(building, feature)));
+    this.store.dispatch(new UpgradeBuildingFeature(building, feature, this.buildingFeatureTime(building, feature)));
   }
 
 }

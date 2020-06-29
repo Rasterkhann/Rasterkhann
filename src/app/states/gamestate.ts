@@ -218,7 +218,7 @@ export class GameState {
 
   @Action(UpgradeBuildingFeature)
   @ImmutableContext()
-  upgradeBuildingFeature({ setState }: StateContext<IGameState>, { building, feature }: UpgradeBuildingFeature) {
+  upgradeBuildingFeature({ setState }: StateContext<IGameState>, { building, feature, constructionTime }: UpgradeBuildingFeature) {
     setState((state: IGameState) => {
       return state;
     });

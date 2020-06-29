@@ -26,6 +26,7 @@ import { WorkshopComponent } from '../components/windows/workshop/workshop.compo
 
 import { BignumPipe } from '../bignum.pipe';
 import { BuildingInfoComponent } from '../components/shared/building-info/building-info.component';
+import { FeatureListComponent } from '../components/shared/feature-list/feature-list.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { BuildingInfoComponent } from '../components/shared/building-info/buildi
     WorkshopComponent,
 
     BuildingInfoComponent,
+    FeatureListComponent,
 
     BignumPipe
   ]
