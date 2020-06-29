@@ -1,8 +1,8 @@
 
-import { versions } from './versions';
+import { version } from './versions';
 
 export const environment = {
   production: true,
 
-  versions
+  version
 };

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  versions: {
+  version: {
     revision: 'dev',
     branch: 'branch',
     version: 'local'
