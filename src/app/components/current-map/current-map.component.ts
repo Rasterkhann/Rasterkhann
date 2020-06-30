@@ -26,7 +26,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
   constructor(public game: GameService) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     (window as any).PIXI.utils.skipHello();
     this.renderer = (window as any).PIXI.autoDetectRenderer(480, 480);
     this.container.nativeElement.appendChild(this.renderer.view);
@@ -77,7 +77,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
       });
   }
 
-  ngOnChanges(changes) {
+  ngOnChanges(changes): void {
     if (changes.town) {
       const currentBuildings = Object.fromEntries(Object.keys(changes.town.currentValue.buildings).map(x => {
         if (!changes.town.currentValue.buildings[x] || !changes.town.currentValue.buildings[x].level) { return []; }
@@ -93,7 +93,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  private toggleVisible(buildingName: string, visible: boolean) {
+  private toggleVisible(buildingName: string, visible: boolean): void {
     const allObjs = this.spriteMap[buildingName];
     (allObjs || []).forEach(obj => obj.setVisibility(visible));
     if (this.textMap[buildingName]) {
@@ -103,7 +103,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
     this.render();
   }
 
-  private render() {
+  private render(): void {
     this.renderer.render(this.tileMap);
   }
 

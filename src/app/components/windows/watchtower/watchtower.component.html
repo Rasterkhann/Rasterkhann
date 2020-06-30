@@ -11,7 +11,7 @@
 
   <ion-item>
     <ion-label>Show Purchased Upgrades</ion-label>
-    <ion-toggle [checked]="!(upgradeVisibility$ | async)" (click)="game.toggleUpgradeVisibility()"></ion-toggle>
+    <ion-toggle [checked]="(upgradeVisibility$ | async) === false" (click)="game.toggleUpgradeVisibility()"></ion-toggle>
   </ion-item>
 
   <ion-list-header>

@@ -2,7 +2,7 @@
 import { Building, IGameTown, IGameState } from '../interfaces';
 import { calculateOfflineGold } from './town';
 
-export function beforeSerialize(obj) {
+export function beforeSerialize(obj): IGameState {
 
   obj = { ...obj };
 
@@ -24,7 +24,7 @@ export function beforeSerialize(obj) {
   return obj;
 }
 
-export function afterDeserialize(obj) {
+export function afterDeserialize(obj): IGameState {
 
   try {
     // if there's a gamestate, deserialize the bigints

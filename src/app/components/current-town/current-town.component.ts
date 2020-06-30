@@ -18,6 +18,6 @@ export class CurrentTownComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit(): void { }
 
 }

@@ -12,6 +12,6 @@ export class HouseComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
 }

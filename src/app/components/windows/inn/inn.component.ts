@@ -12,6 +12,6 @@ export class InnComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
 }

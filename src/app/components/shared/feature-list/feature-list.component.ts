@@ -19,7 +19,7 @@ export class FeatureListComponent implements OnInit {
 
   constructor(public game: GameService) { }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
   isFeatureAvailable(feature: BuildingFeature): boolean {
     return true;

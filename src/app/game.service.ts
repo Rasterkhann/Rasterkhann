@@ -16,27 +16,27 @@ export class GameService {
     this.init();
   }
 
-  private init() {
+  private init(): void {
     this.startGameLoop();
   }
 
-  private startGameLoop() {
+  private startGameLoop(): void {
     timer(0, 1000).subscribe(() => {
       this.store.dispatch(new GameLoop());
     });
   }
 
   // ui functions
-  public changeInfo(newWindow: string) {
+  public changeInfo(newWindow: string): void {
     if (!newWindow) { return; }
     this.store.dispatch(new ChooseInfo(newWindow));
   }
 
-  public loadState(state: IGameState) {
+  public loadState(state: IGameState): void {
     this.store.dispatch(new LoadSaveData(state));
   }
 
-  public toggleUpgradeVisibility() {
+  public toggleUpgradeVisibility(): void {
     this.store.dispatch(new OptionToggleUpgradeVisibility());
   }
 
@@ -98,14 +98,14 @@ export class GameService {
     return town.gold >= nextLevelCost;
   }
 
-  public upgradeBuilding(town: IGameTown, building: Building) {
+  public upgradeBuilding(town: IGameTown, building: Building): void {
     if (!this.canUpgradeBuilding(town, building)) { return; }
 
     this.store.dispatch(new SpendGold(this.buildingCost(building, this.nextLevelForBuilding(town, building))));
     this.store.dispatch(new UpgradeBuilding(building));
   }
 
-  public upgradeBuildingFeature(town: IGameTown, building: Building, feature: string) {
+  public upgradeBuildingFeature(town: IGameTown, building: Building, feature: string): void {
     if (!this.canUpgradeBuildingFeature(town, building, feature)) { return; }
 
     this.store.dispatch(new SpendGold(this.buildingFeatureCost(building, feature)));

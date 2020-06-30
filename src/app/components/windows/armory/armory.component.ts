@@ -12,6 +12,6 @@ export class ArmoryComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
 }

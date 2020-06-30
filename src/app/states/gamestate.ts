@@ -45,7 +45,7 @@ export class GameState {
   // misc functions
   @Action(GameLoop)
   @ImmutableContext()
-  updateTimestamp({ setState }: StateContext<IGameState>) {
+  updateTimestamp({ setState }: StateContext<IGameState>): void {
     setState((state: IGameState) => {
       state.lastTimestamp = Date.now();
       return state;
@@ -54,7 +54,7 @@ export class GameState {
 
   @Action(LoadSaveData)
   @ImmutableContext()
-  loadSaveData({ setState }: StateContext<IGameState>, { gamestate }: LoadSaveData) {
+  loadSaveData({ setState }: StateContext<IGameState>, { gamestate }: LoadSaveData): void {
     setState(() => {
       return gamestate;
     });
@@ -63,19 +63,19 @@ export class GameState {
   // gold functions
   @Action(GameLoop)
   @Action(GainCurrentGold)
-  gainCurrentGold(ctx: StateContext<IGameState>) {
+  gainCurrentGold(ctx: StateContext<IGameState>): void {
     const state = ctx.getState();
     this.store.dispatch(new GainGold(GameState.currentTownGoldGain(state)));
   }
 
   @Action(SpendGold)
-  spendGold(ctx: StateContext<IGameState>, { gold }: SpendGold) {
+  spendGold(ctx: StateContext<IGameState>, { gold }: SpendGold): void {
     this.store.dispatch(new GainGold(-gold));
   }
 
   @Action(GainGold)
   @ImmutableContext()
-  gainGold({ setState }: StateContext<IGameState>, { gold }: GainGold) {
+  gainGold({ setState }: StateContext<IGameState>, { gold }: GainGold): void {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
@@ -91,7 +91,7 @@ export class GameState {
   // building functions
   @Action(GameLoop)
   @ImmutableContext()
-  validateBuildingConstructions({ setState }: StateContext<IGameState>) {
+  validateBuildingConstructions({ setState }: StateContext<IGameState>): void {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
       const now = Date.now();
@@ -110,7 +110,7 @@ export class GameState {
 
   @Action(UpgradeBuilding)
   @ImmutableContext()
-  upgradeBuilding({ setState }: StateContext<IGameState>, { building }: UpgradeBuilding) {
+  upgradeBuilding({ setState }: StateContext<IGameState>, { building }: UpgradeBuilding): void {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
@@ -124,7 +124,7 @@ export class GameState {
 
   @Action(UpgradeBuildingFeature)
   @ImmutableContext()
-  upgradeBuildingFeature({ setState }: StateContext<IGameState>, { building, feature, constructionTime }: UpgradeBuildingFeature) {
+  upgradeBuildingFeature({ setState }: StateContext<IGameState>, { building, feature, constructionTime }: UpgradeBuildingFeature): void {
     setState((state: IGameState) => {
       return state;
     });
@@ -133,7 +133,7 @@ export class GameState {
   // ui functions
   @Action(ChooseInfo)
   @ImmutableContext()
-  chooseInfo({ setState }: StateContext<IGameState>, { window }: ChooseInfo) {
+  chooseInfo({ setState }: StateContext<IGameState>, { window }: ChooseInfo): void {
     setState((state: IGameState) => {
       state.currentInfo = window;
       return state;
@@ -142,7 +142,7 @@ export class GameState {
 
   @Action(OptionToggleUpgradeVisibility)
   @ImmutableContext()
-  toggleUpgradeVisiblity({ setState }: StateContext<IGameState>) {
+  toggleUpgradeVisiblity({ setState }: StateContext<IGameState>): void {
     setState((state: IGameState) => {
       state.options[GameOption.ToggleUpgradeVisiblity] = !state.options[GameOption.ToggleUpgradeVisiblity];
       return state;

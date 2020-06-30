@@ -12,6 +12,6 @@ export class WorkshopComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
 }

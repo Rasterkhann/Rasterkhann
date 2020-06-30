@@ -12,6 +12,6 @@ export class GuildHallComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
 }

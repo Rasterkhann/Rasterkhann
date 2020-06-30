@@ -15,6 +15,6 @@ export class TownHallComponent implements OnInit {
 
   constructor(public game: GameService) { }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
 }

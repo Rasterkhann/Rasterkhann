@@ -35,9 +35,9 @@ export class WatchtowerComponent implements OnInit {
 
   constructor(private alert: AlertController, public game: GameService) { }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  import($event) {
+  import($event): void {
     const file: File = $event.target.files[0];
     const reader: FileReader = new FileReader();
     reader.onloadend = async () => {
@@ -74,7 +74,7 @@ export class WatchtowerComponent implements OnInit {
     reader.readAsText(file);
   }
 
-  export() {
+  export(): void {
     this.gameState$
       .pipe(first())
       .subscribe(async savefile => {
@@ -85,7 +85,7 @@ export class WatchtowerComponent implements OnInit {
       });
   }
 
-  async delete() {
+  async delete(): Promise<void> {
     const alert = await this.alert.create({
       header: 'Delete Save Data',
       message: 'Are you sure you want to reset your current game? This is irreversible and instantaneous and you will not be able to get your data back.',

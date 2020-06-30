@@ -24,9 +24,9 @@ export class BuildingInfoComponent implements OnInit {
 
   constructor(public game: GameService) { }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  public isBuildingAvailable() {
+  public isBuildingAvailable(): boolean {
     const building = this.buildingId;
 
     if (this.town.buildings[building]) { return true; }
@@ -37,14 +37,14 @@ export class BuildingInfoComponent implements OnInit {
                && this.town.buildings[x].level >= BuildingData[building].requires[x]);
   }
 
-  public goToBuilding() {
+  public goToBuilding(): void {
     const building = this.buildingId;
 
     if (!this.town.buildings[building]) { return; }
     this.game.changeInfo(building);
   }
 
-  public build() {
+  public build(): void {
     const building = this.buildingId;
 
     this.game.upgradeBuilding(this.town, building);
