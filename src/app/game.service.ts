@@ -65,6 +65,10 @@ export class GameService {
     const featureRef: BuildingFeature = this.featureByName(building, feature);
     if (!featureRef) { return false; }
 
+    if (town.buildings[building].features[feature]) { return false; }
+
+    if (featureRef.requiresLevel && town.buildings[building].level < featureRef.requiresLevel) { return false; }
+
     if (featureRef.requiresFeature) {
       const allPreFeatures = Object.keys(featureRef.requiresFeature)
         .every(feat => town.buildings[building].features && town.buildings[building].features[feat]);
