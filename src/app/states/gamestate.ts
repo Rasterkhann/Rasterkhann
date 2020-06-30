@@ -9,6 +9,10 @@ import { IGameTown, IGameState, BuildingData, GameOption } from '../interfaces';
 import { GameService } from '../game.service';
 import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain } from '../helpers';
 
+import { environment } from '../../environments/environment';
+
+const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
+
 @State<IGameState>({
   name: 'gamestate',
   defaults: createDefaultSavefile()
@@ -98,10 +102,20 @@ export class GameState {
 
       Object.keys(town.buildings).forEach(building => {
         const constructionDoneAt = town.buildings[building].constructionDoneAt;
-        if (!constructionDoneAt || constructionDoneAt > now) { return; }
+        if (constructionDoneAt && constructionDoneAt < now) {
+          town.buildings[building].constructionDoneAt = 0;
+          town.buildings[building].level += 1;
+        }
 
-        town.buildings[building].constructionDoneAt = 0;
-        town.buildings[building].level += 1;
+        Object.keys(town.buildings[building].featureConstruction || {}).forEach(feature => {
+          const featureDoneAt = town.buildings[building].featureConstruction[feature];
+          if (featureDoneAt && featureDoneAt < now) {
+            delete town.buildings[building].featureConstruction[feature];
+            town.buildings[building].features = town.buildings[building].features || {};
+            town.buildings[building].features[feature] = town.buildings[building].features[feature] || 0;
+            town.buildings[building].features[feature]++;
+          }
+        });
       });
 
       return state;
@@ -117,7 +131,7 @@ export class GameState {
       town.buildings[building] = town.buildings[building] || { level: 0 };
       const buildingRef = town.buildings[building];
 
-      buildingRef.constructionDoneAt = Date.now() + 1000 * BuildingData[building].upgradeTime(buildingRef.level + 1);
+      buildingRef.constructionDoneAt = Date.now() + (GLOBAL_TIME_MULTIPLIER * BuildingData[building].upgradeTime(buildingRef.level + 1));
       return state;
     });
   }
@@ -126,6 +140,11 @@ export class GameState {
   @ImmutableContext()
   upgradeBuildingFeature({ setState }: StateContext<IGameState>, { building, feature, constructionTime }: UpgradeBuildingFeature): void {
     setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+
+      town.buildings[building].featureConstruction = town.buildings[building].featureConstruction || {};
+      town.buildings[building].featureConstruction[feature] = Date.now() + (GLOBAL_TIME_MULTIPLIER * constructionTime);
+
       return state;
     });
   }

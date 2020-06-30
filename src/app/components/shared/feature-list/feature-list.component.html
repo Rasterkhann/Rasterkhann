@@ -4,7 +4,11 @@
     <h4>Features</h4>
   </ion-list-header>
 
-  <ion-item *ngFor="let feature of allFeatures" [class.ion-hide]="!isFeatureAvailable(feature)">
+  <ion-item *ngIf="allFeatures.length === 0">
+    No features available for purchase.
+  </ion-item>
+
+  <ion-item *ngFor="let feature of allFeatures">
     <ion-label class="ion-text-wrap">
       <h2>{{ feature.name }}</h2>
       <p>{{ feature.description }}</p>
@@ -17,7 +21,7 @@
     </ion-label>
 
     <ion-button slot="end"  
-                (click)="game.upgradeBuildingFeature(town, buildingId, feature)" 
-                [disabled]="!game.canUpgradeBuildingFeature(town, buildingId, feature.name)">Purchase</ion-button>
+                (click)="game.upgradeBuildingFeature(town, buildingId, feature.name)" 
+                *ngIf="game.canUpgradeBuildingFeature(town, buildingId, feature.name)">Purchase</ion-button>
   </ion-item>
 </ion-list>

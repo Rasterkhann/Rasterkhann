@@ -1,18 +1,21 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Watchtower</ion-title>
+    <ion-title>Watchtower ({{ version }})</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-list>
-  <ion-list-header>
-    <h4>Options ({{ version }})</h4>
-  </ion-list-header>
 
+  <!--
+  <ion-list-header>
+    <h4>Options </h4>
+  </ion-list-header>
+  
   <ion-item>
     <ion-label>Show Purchased Upgrades</ion-label>
     <ion-toggle [checked]="(upgradeVisibility$ | async) === false" (click)="game.toggleUpgradeVisibility()"></ion-toggle>
   </ion-item>
+  -->
 
   <ion-list-header>
     <h4>Savefile Operations</h4>

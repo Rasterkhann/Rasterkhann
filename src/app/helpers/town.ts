@@ -5,7 +5,7 @@ import { IGameState, IGameTown, Building, BuildingData } from '../interfaces';
 // also serves to dupe-check names
 const featureNameToBuildingHash = {};
 Object.keys(BuildingData).forEach((building: Building) => {
-  (BuildingData[building].features || []).forEach(feature => {
+  Object.values(BuildingData[building].features || {}).forEach(feature => {
     if (featureNameToBuildingHash[feature.name]) {
       throw new Error(`${feature.name} already exists for building ${featureNameToBuildingHash[feature.name]}. Cannot also add it under ${building}.`);
     }
@@ -16,11 +16,6 @@ Object.keys(BuildingData).forEach((building: Building) => {
 
 export function getCurrentTownFromState(state: IGameState): IGameTown {
   return { name: state.currentTown, ...state.towns[state.currentTown] };
-}
-
-export function calculateGoldGain(state: IGameState): bigint {
-  const town = getCurrentTownFromState(state);
-  return BigInt(town.buildings.house.level) + town.goldPerTick;
 }
 
 export function calculateOfflineGold(state: IGameState): bigint {
@@ -34,5 +29,17 @@ export function calculateOfflineGold(state: IGameState): bigint {
 
 export function doesTownHaveFeature(town: IGameTown, feature: string): boolean {
   if (!featureNameToBuildingHash[feature]) { throw new Error(`Feature ${feature} does not exist.`); }
+  if (!town.buildings[featureNameToBuildingHash[feature]].features) { return false; }
   return town.buildings[featureNameToBuildingHash[feature]].features[feature];
+}
+
+export function calculateGoldGain(state: IGameState): bigint {
+  const town = getCurrentTownFromState(state);
+
+  let goldMultiplier = 1n;
+  if (doesTownHaveFeature(town, 'Children'))        { goldMultiplier += 1n; }
+  if (doesTownHaveFeature(town, 'Another Child'))   { goldMultiplier += 1n; }
+  if (doesTownHaveFeature(town, 'Grown Children'))  { goldMultiplier += 2n; }
+
+  return (BigInt(town.buildings.house.level) * goldMultiplier) + town.goldPerTick;
 }

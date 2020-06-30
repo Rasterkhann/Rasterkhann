@@ -1,6 +1,8 @@
 import { HouseFeatures, GuildHallFeatures, ArmoryFeatures,
   AlchemistFeatures, InnFeatures, CaveFeatures, BazaarFeatures } from '../features';
 
+const featuresArrayToHash = (array) => array.reduce((prev, cur) => ({ ...prev, [cur.name]: cur }), {});
+
 export enum Building {
   TownHall = 'townhall',
   Watchtower = 'watchtower',
@@ -36,7 +38,7 @@ export interface BuildingStatic {
   requires?: Partial<Record<Building, number>>;
   upgradeTime: (level: number) => number;
   levelCost: (level: number) => bigint;
-  features?: Array<BuildingFeature>;
+  features?: Record<string, BuildingFeature>;
 }
 
 export const BuildingData: Record<Building, BuildingStatic> = {
@@ -66,7 +68,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     description: 'Acquire more citizens to increase your gold gain.',
     upgradeTime: (level) => level * 5,
     levelCost: (x) => BigInt(Math.floor((15 * x) + (2 * (1.1 ** x)))),
-    features: HouseFeatures
+    features: featuresArrayToHash(HouseFeatures)
   },
 
   [Building.GuildHall]: {
@@ -74,7 +76,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     description: 'Recruit heroes to your cause.',
     upgradeTime: (level) => level * 20,
     levelCost: (x) => BigInt(Math.floor((500 * x) + (1.5 * (1.3 ** x)))),
-    features: GuildHallFeatures
+    features: featuresArrayToHash(GuildHallFeatures)
   },
 
   [Building.Armory]: {
@@ -85,7 +87,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     },
     upgradeTime: (level) => level * 20,
     levelCost: (x) => BigInt(Math.floor((250 * x) + (3 * (1.25 ** x)))),
-    features: ArmoryFeatures
+    features: featuresArrayToHash(ArmoryFeatures)
   },
 
   [Building.Alchemist]: {
@@ -96,7 +98,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     },
     upgradeTime: (level) => level * 15,
     levelCost: (x) => BigInt(Math.floor((350 * x) + (2 * (1.25 ** x)))),
-    features: AlchemistFeatures
+    features: featuresArrayToHash(AlchemistFeatures)
   },
 
   [Building.Inn]: {
@@ -107,7 +109,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     },
     upgradeTime: (level) => level * 60,
     levelCost: (x) => BigInt(Math.floor((650 * x) + (1.5 * (1.32 ** x)))),
-    features: InnFeatures
+    features: featuresArrayToHash(InnFeatures)
   },
 
   [Building.Bazaar]: {
@@ -119,7 +121,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     },
     upgradeTime: (level) => level * 30,
     levelCost: (x) => BigInt(Math.floor((875 * x) + (5 * (1.2 ** x)))),
-    features: BazaarFeatures
+    features: featuresArrayToHash(BazaarFeatures)
   },
 
   [Building.Cave]: {
@@ -130,6 +132,6 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     },
     upgradeTime: (level) => level * 15,
     levelCost: (x) => BigInt(Math.floor((500 * x) + (1.2 * (1.35 ** x)))),
-    features: CaveFeatures
+    features: featuresArrayToHash(CaveFeatures)
   }
 };
