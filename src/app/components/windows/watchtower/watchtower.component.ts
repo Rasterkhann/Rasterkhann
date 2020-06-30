@@ -12,8 +12,9 @@ import { first } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
 import { IGameTown, IGameState, GameOption } from '../../../interfaces';
-import { GameState, beforeSerialize, createDefaultSavefile, afterDeserialize } from '../../../states';
+import { GameState } from '../../../states';
 import { GameService } from '../../../game.service';
+import { afterDeserialize, beforeSerialize, createDefaultSavefile } from '../../../helpers';
 
 
 @Component({

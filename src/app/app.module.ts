@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -16,8 +17,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 
 import { migrations } from './migrations';
-import { GameState, beforeSerialize, afterDeserialize } from './states';
-import { DecimalPipe } from '@angular/common';
+import { GameState } from './states';
+import { beforeSerialize, afterDeserialize } from './helpers';
 
 @NgModule({
   declarations: [AppComponent],

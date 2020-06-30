@@ -5,104 +5,9 @@ import { ImmutableContext, ImmutableSelector } from '@ngxs-labs/immer-adapter';
 
 import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature } from '../actions';
-import { IGameTown, IGameState, Building, BuildingData, GameOption } from '../interfaces';
-
-function calculateOfflineGold(state): bigint {
-  const goldGainPerTick = GameState.currentTownGoldGain(state);
-  const now = Date.now();
-  const prev = state.lastTimestamp;
-
-  const diffSeconds = ((now - prev) / 1000);
-  return goldGainPerTick * BigInt(Math.floor(diffSeconds));
-}
-
-function getCurrentTownFromState(state: IGameState): IGameTown {
-  return { name: state.currentTown, ...state.towns[state.currentTown] };
-}
-
-function calculateGoldGain(state: IGameState): bigint {
-  const town = getCurrentTownFromState(state);
-  return BigInt(town.buildings.house.level) + town.goldPerTick;
-}
-
-export function beforeSerialize(obj) {
-
-  obj = { ...obj };
-
-  if (!obj.version) { obj.version = 1; }
-
-  // if there's a gamestate, serialize the bigints and do another bunch of immutable-juggling
-  if (obj.towns) {
-    obj.towns = { ...obj.towns };
-
-    Object.keys(obj.towns).forEach(townName => {
-      const town = { ...obj.towns[townName] };
-      town.gold = town.gold.toString();
-      town.goldPerTick = town.goldPerTick.toString();
-
-      obj.towns[townName] = town;
-    });
-  }
-
-  return obj;
-}
-
-export function afterDeserialize(obj) {
-
-  try {
-    // if there's a gamestate, deserialize the bigints
-    if (obj.towns) {
-      Object.keys(obj.towns).forEach(townName => {
-        const town = obj.towns[townName];
-        town.gold = BigInt(town.gold);
-        town.goldPerTick = BigInt(town.goldPerTick);
-      });
-    }
-
-    if (obj.lastTimestamp) {
-      const bonusGold = calculateOfflineGold(obj);
-      obj.towns[obj.currentTown].gold += bonusGold;
-    }
-
-  } catch (e) {
-    alert(`Your savefile could not be loaded correctly, the error is: ${e}`);
-  }
-
-  return obj;
-}
-
-export function createBasicTown(): Partial<IGameTown> {
-  return {
-    gold: 0n,
-    goldPerTick: 0n,
-
-    buildings: {
-      [Building.TownHall]: {
-        level: 1
-      },
-
-      [Building.Watchtower]: {
-        level: 1
-      },
-
-      [Building.House]: {
-        level: 3
-      }
-    }
-  };
-}
-
-export function createDefaultSavefile(): IGameState {
-  return {
-    lastTimestamp: 0,
-    currentInfo: Building.TownHall,
-    currentTown: 'Rasterkhann',
-    towns: {
-      Rasterkhann: createBasicTown() as IGameTown
-    },
-    options: {}
-  };
-}
+import { IGameTown, IGameState, BuildingData, GameOption } from '../interfaces';
+import { GameService } from '../game.service';
+import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain } from '../helpers';
 
 @State<IGameState>({
   name: 'gamestate',
@@ -135,7 +40,7 @@ export class GameState {
     return state.currentInfo;
   }
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private game: GameService) {}
 
   // misc functions
   @Action(GameLoop)

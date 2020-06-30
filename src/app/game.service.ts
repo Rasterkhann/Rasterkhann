@@ -5,6 +5,7 @@ import { timer } from 'rxjs';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature } from './actions';
 import { Building, BuildingData, IGameTown, IGameState, BuildingFeature } from './interfaces';
+import { doesTownHaveFeature } from './helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,10 @@ export class GameService {
   // building functions
   public featureByName(building: Building, feature: string): BuildingFeature {
     return BuildingData[building].features.find(x => x.name === feature);
+  }
+
+  public doesTownHaveFeature(town: IGameTown, feature: string): boolean {
+    return doesTownHaveFeature(town, feature);
   }
 
   public buildingCost(building: Building, level = 1): bigint {
