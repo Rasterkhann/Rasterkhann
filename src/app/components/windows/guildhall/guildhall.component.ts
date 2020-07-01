@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IGameTown } from '../../../interfaces';
+import { HeroService } from '../../../hero.service';
 
 @Component({
   selector: 'app-guildhall',
@@ -10,7 +11,7 @@ export class GuildHallComponent implements OnInit {
 
   @Input() town: IGameTown;
 
-  constructor() { }
+  constructor(public hero: HeroService) { }
 
   ngOnInit(): void {}
 

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
-import { IGameTown, BuildingData, Building } from '../../../interfaces';
+import { IGameTown, Building } from '../../../interfaces';
 import { GameService } from '../../../game.service';
+import { BuildingData } from '../../../static';
 
 @Component({
   selector: 'app-building-info',

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { GameService } from '../../../game.service';
-import { IGameTown, Building, BuildingData, BuildingFeature } from '../../../interfaces';
+import { IGameTown, Building, BuildingFeature } from '../../../interfaces';
+import { BuildingData } from '../../../static';
 
 @Component({
   selector: 'app-feature-list',

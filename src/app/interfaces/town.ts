@@ -1,5 +1,6 @@
 
 import { Building, BuildingInfo } from './buildings';
+import { Hero } from './hero';
 
 export interface IGameTown {
   name: string;
@@ -8,4 +9,6 @@ export interface IGameTown {
   goldPerTick: bigint;
 
   buildings: Partial<Record<Building, BuildingInfo>>;
+
+  heroes: Hero[];
 }

@@ -4,8 +4,9 @@ import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature } from './actions';
-import { Building, BuildingData, IGameTown, IGameState, BuildingFeature } from './interfaces';
+import { Building, IGameTown, IGameState, BuildingFeature } from './interfaces';
 import { doesTownHaveFeature } from './helpers';
+import { BuildingData } from './static';
 
 @Injectable({
   providedIn: 'root'

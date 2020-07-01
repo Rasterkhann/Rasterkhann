@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IGameTown, BuildingData } from '../../../interfaces';
+import { IGameTown } from '../../../interfaces';
 import { GameService } from '../../../game.service';
+import { BuildingData } from '../../../static';
 
 @Component({
   selector: 'app-townhall',

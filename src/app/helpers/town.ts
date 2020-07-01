@@ -1,18 +1,6 @@
 
-import { IGameState, IGameTown, Building, BuildingData } from '../interfaces';
-
-// get a hash of feature->building for easy lookup later
-// also serves to dupe-check names
-const featureNameToBuildingHash = {};
-Object.keys(BuildingData).forEach((building: Building) => {
-  Object.values(BuildingData[building].features || {}).forEach(feature => {
-    if (featureNameToBuildingHash[feature.name]) {
-      throw new Error(`${feature.name} already exists for building ${featureNameToBuildingHash[feature.name]}. Cannot also add it under ${building}.`);
-    }
-
-    featureNameToBuildingHash[feature.name] = building;
-  });
-});
+import { IGameState, IGameTown } from '../interfaces';
+import { featureNameToBuildingHash } from './building';
 
 export function getCurrentTownFromState(state: IGameState): IGameTown {
   return { name: state.currentTown, ...state.towns[state.currentTown] };

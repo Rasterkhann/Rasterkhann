@@ -5,11 +5,12 @@ import { ImmutableContext, ImmutableSelector } from '@ngxs-labs/immer-adapter';
 
 import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature } from '../actions';
-import { IGameTown, IGameState, BuildingData, GameOption } from '../interfaces';
+import { IGameTown, IGameState, GameOption } from '../interfaces';
 import { GameService } from '../game.service';
 import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain } from '../helpers';
 
 import { environment } from '../../environments/environment';
+import { BuildingData } from '../static';
 
 const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
 
