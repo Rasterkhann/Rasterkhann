@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 
 import { Hero, IGameTown } from '../../../interfaces';
 import { GameService } from '../../../game.service';
+import { calculateProspectiveHeroMaxTotal } from '../../../helpers';
 
 @Component({
   selector: 'app-hero',
@@ -15,10 +16,7 @@ export class HeroComponent implements OnInit {
   @Input() hero: Hero;
   @Input() rating?: number;
   @Input() cost?: bigint;
-
-  public get canBuyHero(): boolean {
-    return this.town.gold >= this.cost;
-  }
+  @Input() canBuyHero?: boolean;
 
   public get stars(): string[] {
     if (!this.rating) { return []; }
@@ -43,5 +41,9 @@ export class HeroComponent implements OnInit {
 
   recruit(): void {
     this.game.recruitHero(this.town, { hero: this.hero, cost: this.cost, rating: this.rating });
+  }
+
+  dismiss(): void {
+    this.game.dismissHero(this.town, this.hero);
   }
 }

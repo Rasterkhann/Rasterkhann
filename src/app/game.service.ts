@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
-  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero } from './actions';
+  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero } from './actions';
 import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero } from './interfaces';
 import { doesTownHaveFeature } from './helpers';
 import { BuildingData } from './static';
@@ -148,6 +148,10 @@ export class GameService {
     this.store.dispatch(new RecruitHero(prosHero)).subscribe(() => {
       this.store.dispatch(new SpendGold(prosHero.cost));
     });
+  }
+
+  public dismissHero(town: IGameTown, hero: Hero): void {
+    this.store.dispatch(new DismissHero(hero));
   }
 
 }

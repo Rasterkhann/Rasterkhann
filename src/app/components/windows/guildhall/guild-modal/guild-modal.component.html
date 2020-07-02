@@ -17,7 +17,7 @@
     <ion-list-header>Recruited Heroes</ion-list-header>
 
     <ion-item *ngIf="(recruitedHeroes$ | async).length === 0">You have no recruited heroes.</ion-item>
-    <app-hero *ngFor="let hero of recruitedHeroes$ | async" [hero]="hero"></app-hero>
+    <app-hero *ngFor="let hero of recruitedHeroes$ | async" [town]="town" [hero]="hero"></app-hero>
 
     <ion-list-header class="ion-margin-top">
       <ion-label>Potential Hero Recruits</ion-label>
@@ -28,7 +28,8 @@
     <app-hero *ngFor="let prospectiveHero of prospectiveHeroes$ | async" 
               [town]="town" 
               [hero]="prospectiveHero.hero" 
-              [cost]="prospectiveHero.cost" 
+              [cost]="prospectiveHero.cost"
+              [canBuyHero]="canHeroBeBought(prospectiveHero)"
               [rating]="prospectiveHero.rating"></app-hero>
   </ion-list>
 </ion-content>

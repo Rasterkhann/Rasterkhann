@@ -2,15 +2,14 @@
 <ion-item>
   <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="hero.sprite"></app-hero-sprite>
   <ion-button slot="start" *ngIf="cost" (click)="recruit()" [disabled]="!canBuyHero">Recruit</ion-button>
+  <ion-button slot="start" *ngIf="!cost" (click)="dismiss()">Dismiss</ion-button>
 
   <ion-label class="ion-text-wrap">
     <h3>
-      {{ hero.name }}
-      <br>
-      Level {{ hero.stats.lvl }} {{ hero.job }}
+      {{ hero.name }} ({{ hero.job.substring(0, 3).toUpperCase() }} Lv.{{ hero.stats.lvl }})
     </h3>
 
-    <p>Recruitment Fee: {{ cost | bignum }} gold</p>
+    <p *ngIf="cost">Recruitment Fee: {{ cost | bignum }} gold</p>
 
     <div class="icons" *ngIf="stars.length > 0">
       <ion-icon [name]="icon" *ngFor="let icon of stars"></ion-icon>

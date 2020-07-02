@@ -181,6 +181,10 @@ export class GameState {
   @ImmutableContext()
   recruitHero({ setState }: StateContext<IGameState>, { hero }: RecruitHero): void {
     setState((state: IGameState) => {
+      state.towns[state.currentTown].recruitedHeroes.push(hero.hero);
+      state.towns[state.currentTown].prospectiveHeroes = state.towns[state.currentTown].prospectiveHeroes
+        .filter(x => x.hero.name !== hero.hero.name);
+
       return state;
     });
   }
@@ -189,6 +193,8 @@ export class GameState {
   @ImmutableContext()
   dismissHero({ setState }: StateContext<IGameState>, { hero }: DismissHero): void {
     setState((state: IGameState) => {
+      state.towns[state.currentTown].recruitedHeroes = state.towns[state.currentTown].recruitedHeroes
+        .filter(x => x.name !== hero.name);
       return state;
     });
   }

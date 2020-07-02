@@ -61,6 +61,7 @@ export class HeroService {
       gear: {}
     };
 
+    // make sure heroes have at least a base of stats before they get ruined by traits
     ensureHeroStatValue(hero, HeroStat.LVL,  1);
     ensureHeroStatValue(hero, HeroStat.ATK,  1);
     ensureHeroStatValue(hero, HeroStat.DEF,  1);
