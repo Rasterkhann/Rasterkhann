@@ -1,5 +1,5 @@
 
-import { IGameState, IGameTown } from '../interfaces';
+import { IGameState, IGameTown, Hero, ProspectiveHero } from '../interfaces';
 import { featureNameToBuildingHash } from './building';
 
 export function getCurrentTownFromState(state: IGameState): IGameTown {
@@ -30,4 +30,14 @@ export function calculateGoldGain(state: IGameState): bigint {
   if (doesTownHaveFeature(town, 'Grown Children'))  { goldMultiplier += 2n; }
 
   return (BigInt(town.buildings.house.level) * goldMultiplier) + town.goldPerTick;
+}
+
+export function getTownRecruitedHeroes(state: IGameState): Hero[] {
+  const town = getCurrentTownFromState(state);
+  return town.recruitedHeroes;
+}
+
+export function getTownProspectiveHeroes(state: IGameState): ProspectiveHero[] {
+  const town = getCurrentTownFromState(state);
+  return town.prospectiveHeroes;
 }

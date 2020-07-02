@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
-import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature } from './actions';
+import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
+  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes } from './actions';
 import { Building, IGameTown, IGameState, BuildingFeature } from './interfaces';
 import { doesTownHaveFeature } from './helpers';
 import { BuildingData } from './static';
@@ -123,6 +124,22 @@ export class GameService {
       .subscribe(() => {
         this.store.dispatch(new SpendGold(this.buildingFeatureCost(building, feature)));
       });
+  }
+
+  // guild hall functions
+  public heroRerollCost(town: IGameTown): bigint {
+    return BigInt(town.buildings[Building.GuildHall].level * 100);
+  }
+
+  public rerollProspectiveHeroes(town: IGameTown, doesCost = true): void {
+    if (doesCost) {
+      const cost = this.heroRerollCost(town);
+      if (town.gold < cost) { return; }
+
+      this.store.dispatch(new SpendGold(cost));
+    }
+
+    this.store.dispatch(new RerollHeroes());
   }
 
 }

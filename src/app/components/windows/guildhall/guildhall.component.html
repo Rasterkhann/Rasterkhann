@@ -8,6 +8,16 @@
   <app-building-info [town]="town"
                      buildingId="guildhall">
   </app-building-info>
+
+  <ion-list-header>Actions</ion-list-header>
+
+  <ion-item (click)="openGuildWindow()">
+    <ion-label>
+      View Guild Recruits
+    </ion-label>
+
+    <ion-button slot="end">View</ion-button>
+  </ion-item>
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="guildhall"></app-feature-list>

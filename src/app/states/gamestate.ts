@@ -4,13 +4,15 @@ import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext, ImmutableSelector } from '@ngxs-labs/immer-adapter';
 
 import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
-  LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero } from '../actions';
-import { IGameTown, IGameState, GameOption } from '../interfaces';
+  LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero } from '../actions';
+import { IGameTown, IGameState, GameOption, ProspectiveHero, Hero } from '../interfaces';
 import { GameService } from '../game.service';
-import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain } from '../helpers';
+import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
+  getTownProspectiveHeroes, getTownRecruitedHeroes, calculateProspectiveHeroMaxTotal } from '../helpers';
 
 import { environment } from '../../environments/environment';
 import { BuildingData } from '../static';
+import { HeroService } from '../hero.service';
 
 const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
 
@@ -22,30 +24,36 @@ const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
 export class GameState {
 
   @Selector()
-  @ImmutableSelector()
   public static entireSavefile(state: IGameState): IGameState {
     return state;
   }
 
   @Selector()
-  @ImmutableSelector()
   public static currentTown(state: IGameState): IGameTown {
     return getCurrentTownFromState(state);
   }
 
   @Selector()
-  @ImmutableSelector()
   public static currentTownGoldGain(state: IGameState): bigint {
     return calculateGoldGain(state);
   }
 
   @Selector()
-  @ImmutableSelector()
   public static currentInfoWindow(state: IGameState): string {
     return state.currentInfo;
   }
 
-  constructor(private store: Store, private game: GameService) {}
+  @Selector()
+  public static currentTownProspectiveHeroes(state: IGameState): ProspectiveHero[] {
+    return getTownProspectiveHeroes(state);
+  }
+
+  @Selector()
+  public static currentTownRecruitedHeroes(state: IGameState): Hero[] {
+    return getTownRecruitedHeroes(state);
+  }
+
+  constructor(private store: Store, private heroCreator: HeroService, private game: GameService) {}
 
   // misc functions
   @Action(GameLoop)
@@ -155,6 +163,16 @@ export class GameState {
   @ImmutableContext()
   rerollHeroes({ setState }: StateContext<IGameState>): void {
     setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const prospectiveHeroes = [];
+
+      const totalProspects = calculateProspectiveHeroMaxTotal(town);
+      for (let i = 0; i < totalProspects; i++) {
+        prospectiveHeroes.push(this.heroCreator.generateProspectiveHero(town));
+      }
+
+      state.towns[state.currentTown].prospectiveHeroes = prospectiveHeroes;
+
       return state;
     });
   }
@@ -162,6 +180,14 @@ export class GameState {
   @Action(RecruitHero)
   @ImmutableContext()
   recruitHero({ setState }: StateContext<IGameState>, { hero }: RecruitHero): void {
+    setState((state: IGameState) => {
+      return state;
+    });
+  }
+
+  @Action(DismissHero)
+  @ImmutableContext()
+  dismissHero({ setState }: StateContext<IGameState>, { hero }: DismissHero): void {
     setState((state: IGameState) => {
       return state;
     });
