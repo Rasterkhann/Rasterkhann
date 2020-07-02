@@ -32,6 +32,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   constructor(private modalCtrl: ModalController, public game: GameService, private heroCreator: HeroService) { }
 
   ngOnInit(): void {
+    console.log(this.heroCreator.generateProspectiveHero(this.town))
     this.prospectiveHeroes$$ = this.prospectiveHeroes$.subscribe(d => {
       this.prospectiveHeroes = d || [];
     });

@@ -1,8 +1,16 @@
 
-img {
+div {
   object-fit: none;
   width: 16px;
   height: 16px;
 
   transform: scale(4);
+
+  animation: moving 1s steps(4) infinite;
+}
+
+@keyframes moving {
+  100% {
+    background-position: -64px;
+  }
 }

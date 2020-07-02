@@ -81,29 +81,38 @@ export class HeroService {
     return {
       hero,
       cost: hero.stats[HeroStat.LVL] * guildHallLevel * guildHallLevel * JobEffects[hero.job].statGrowth[HeroStat.GOLD](),
-      rating: this.getRatingForHero(hero)
+      rating: this.getRatingForHero(town, hero)
     };
   }
 
-  private getRatingForHero(hero: Hero): number {
+  private getRatingForHero(town: IGameTown, hero: Hero): number {
+    const guildHallLevel = town.buildings[Building.GuildHall].level || 1;
+
     const maxStats = {};
 
     const jobStatic: HeroJobStatic = JobEffects[hero.job];
 
+    // these stats contribute to the star rating
     const contributingStats = [HeroStat.ATK, HeroStat.DEF, HeroStat.HP, HeroStat.SP, HeroStat.STA];
 
+    // calculate the max for each stat
     Object.values(contributingStats).forEach(stat => {
       if (maxStats[stat]) { return; }
       maxStats[stat] = hero.stats[HeroStat.LVL] * jobStatic.statGrowth[stat]() * jobStatic.statBaseMultiplier[stat];
     });
 
+    // normalize the stats between 1-5 (if it goes over, that's ok)
     const pctStats = {};
     Object.keys(maxStats).forEach(stat => {
       pctStats[stat] = hero.stats[stat] / maxStats[stat] * 5;
     });
 
+    // average the stat values that are normalized
     const avgStatPct = Math.max(1, sum(Object.values(pctStats)) / contributingStats.length);
 
-    return avgStatPct;
+    // normalize the stars to the guild hall level
+    const statPctComparedToGuildHallLevel = avgStatPct * (hero.stats[HeroStat.LVL] / guildHallLevel);
+
+    return statPctComparedToGuildHallLevel;
   }
 }
