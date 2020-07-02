@@ -1,17 +1,21 @@
-import { IGameState, Trait, HeroJob } from '../interfaces';
+import { Trait, HeroJob, IGameTown } from '../interfaces';
 
-export function calculateMaxNumberOfTraits(state: IGameState): number {
+export function calculateMaxNumberOfTraits(town: IGameTown): number {
   return 1;
 }
 
-export function calculateAvailableJobs(state: IGameState): HeroJob[] {
+export function calculateAvailableJobs(town: IGameTown): HeroJob[] {
   return [HeroJob.Adventurer];
 }
 
-export function calculateAvailableTraits(state: IGameState): Trait[] {
-  return ['Weak', 'Frail', 'Ill', 'Clumsy', 'Reclusive', 'Sedentary', 'Poor'];
+export function calculateAvailableTraits(town: IGameTown): Trait[] {
+  return ['Weak', 'Frail', 'Ill', 'Clumsy', 'Reclusive', 'Sedentary', 'Poor', 'Inexperienced'];
 }
 
-export function calculateHeroMaxTotal(state: IGameState): number {
+export function calculateProspectiveHeroMaxTotal(town: IGameTown): number {
+  return 3;
+}
+
+export function calculateHeroMaxTotal(town: IGameTown): number {
   return 3;
 }

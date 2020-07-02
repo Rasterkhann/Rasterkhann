@@ -3,11 +3,11 @@ import { Trait, TraitTrigger, TraitTriggerFunction } from './trait';
 import { HeroItem } from './item';
 
 export enum HeroJob {
-  Adventurer = 'adventurer',
-  Warrior = 'warrior',
-  Cleric = 'cleric',
-  Thief = 'thief',
-  Mage = 'mage'
+  Adventurer = 'Adventurer',
+  Warrior = 'Warrior',
+  Cleric = 'Cleric',
+  Thief = 'Thief',
+  Mage = 'Mage'
 }
 
 export enum HeroStat {
@@ -29,8 +29,10 @@ export enum HeroGearSlot {
 
 export interface HeroJobStatic {
   description: string;
+  chooseName: () => string;
+  sprites: string[];
   statBaseMultiplier: Record<HeroStat, number>;
-  statGrowth: Partial<Record<HeroStat, (hero: Hero) => number>>;
+  statGrowth: Record<HeroStat, (hero?: Hero) => number>;
   triggers: Partial<Record<TraitTrigger, TraitTriggerFunction>>;
 }
 
@@ -43,5 +45,11 @@ export interface Hero {
 
   stats: Record<HeroStat, number>;
   currentStats: Record<HeroStat, number>;
-  gear: Record<HeroGearSlot, HeroItem[]>;
+  gear: Partial<Record<HeroGearSlot, HeroItem[]>>;
+}
+
+export interface ProspectiveHero {
+  cost: number;
+  rating: number;
+  hero: Hero;
 }

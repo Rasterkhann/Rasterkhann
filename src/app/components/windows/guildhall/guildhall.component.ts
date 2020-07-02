@@ -13,6 +13,8 @@ export class GuildHallComponent implements OnInit {
 
   constructor(public hero: HeroService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.hero.generateProspectiveHero(this.town));
+  }
 
 }

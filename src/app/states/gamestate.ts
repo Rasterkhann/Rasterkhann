@@ -4,7 +4,7 @@ import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext, ImmutableSelector } from '@ngxs-labs/immer-adapter';
 
 import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
-  LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature } from '../actions';
+  LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero } from '../actions';
 import { IGameTown, IGameState, GameOption } from '../interfaces';
 import { GameService } from '../game.service';
 import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain } from '../helpers';
@@ -146,6 +146,23 @@ export class GameState {
       town.buildings[building].featureConstruction = town.buildings[building].featureConstruction || {};
       town.buildings[building].featureConstruction[feature] = Date.now() + (GLOBAL_TIME_MULTIPLIER * constructionTime);
 
+      return state;
+    });
+  }
+
+  // hero functions
+  @Action(RerollHeroes)
+  @ImmutableContext()
+  rerollHeroes({ setState }: StateContext<IGameState>): void {
+    setState((state: IGameState) => {
+      return state;
+    });
+  }
+
+  @Action(RecruitHero)
+  @ImmutableContext()
+  recruitHero({ setState }: StateContext<IGameState>, { hero }: RecruitHero): void {
+    setState((state: IGameState) => {
       return state;
     });
   }

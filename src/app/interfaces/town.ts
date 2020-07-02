@@ -1,6 +1,6 @@
 
 import { Building, BuildingInfo } from './buildings';
-import { Hero } from './hero';
+import { Hero, ProspectiveHero } from './hero';
 
 export interface IGameTown {
   name: string;
@@ -10,5 +10,6 @@ export interface IGameTown {
 
   buildings: Partial<Record<Building, BuildingInfo>>;
 
-  heroes: Hero[];
+  recruitedHeroes: Hero[];
+  prospectiveHeroes: ProspectiveHero[];
 }

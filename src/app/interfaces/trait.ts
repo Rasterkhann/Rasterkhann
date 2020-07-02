@@ -2,8 +2,14 @@
 export type Trait =
   'Weak' | 'Frail' | 'Ill' | 'Clumsy' | 'Reclusive' | 'Sedentary' | 'Poor' | 'Inexperienced';
 
-export type TraitTrigger =
-  'onSpawn' | 'onPreCombat' | 'onVictory' | 'onDeath' | 'onPreAdventure';
+export enum TraitTrigger {
+  Spawn = 'onSpawn',
+  LevelUp = 'onLevelUp',
+  PreCombat = 'onPreCombat',
+  Victory = 'onVictory',
+  Death = 'onDeath',
+  PreAdventure = 'onPreAdventure'
+}
 
 export enum TraitPriority {
   Any = 'any',

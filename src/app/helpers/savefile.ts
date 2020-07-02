@@ -53,6 +53,9 @@ export function createBasicTown(): Partial<IGameTown> {
     gold: 0n,
     goldPerTick: 0n,
 
+    recruitedHeroes: [],
+    prospectiveHeroes: [],
+
     buildings: {
       [Building.TownHall]: {
         level: 1
