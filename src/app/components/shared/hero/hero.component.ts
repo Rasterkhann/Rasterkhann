@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
-import { Hero, IGameTown } from '../../../interfaces';
+import { Hero, IGameTown, HeroStat } from '../../../interfaces';
 import { GameService } from '../../../game.service';
-import { calculateProspectiveHeroMaxTotal } from '../../../helpers';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-hero',
@@ -35,15 +35,50 @@ export class HeroComponent implements OnInit {
     return this.rating - this.numStars >= 0.5;
   }
 
-  constructor(private game: GameService) { }
+  constructor(private alert: AlertController, private game: GameService) { }
 
   ngOnInit(): void {}
 
-  recruit(): void {
-    this.game.recruitHero(this.town, { hero: this.hero, cost: this.cost, rating: this.rating });
+  async recruit(): Promise<void> {
+
+    const alert = await this.alert.create({
+      header: 'Recruit Hero',
+      message: `Are you sure you want to recruit ${this.hero.name}, the level ${this.hero.stats[HeroStat.LVL]} ${this.hero.job}?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Yes, Recruit',
+          handler: async () => {
+            this.game.recruitHero(this.town, { hero: this.hero, cost: this.cost, rating: this.rating });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
-  dismiss(): void {
-    this.game.dismissHero(this.town, this.hero);
+  async dismiss(): Promise<void> {
+    const alert = await this.alert.create({
+      header: 'Dismiss Hero',
+      message: `Are you sure you want to dismiss ${this.hero.name}, the level ${this.hero.stats[HeroStat.LVL]} ${this.hero.job}?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Yes, Dismiss',
+          handler: async () => {
+            this.game.dismissHero(this.town, this.hero);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

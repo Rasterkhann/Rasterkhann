@@ -41,12 +41,26 @@ h3 {
 }
 
 app-hero-sprite {
-  margin-bottom: 50px;
+  align-self: start;
+  margin-top: 36px;
 }
 
 ion-button {
   position: absolute;
-  left: 13px;
-  bottom: 16px;
-  width: 55px;
+
+  &.recruit {
+    left: 13px;
+    bottom: 16px;
+    width: 55px;
+  }
+
+  &.dismiss {
+    top: 10px;
+    left: 56px;
+    --border-radius: 50%;
+    --padding-start: 0;
+    --padding-end: 0;
+    width: 17px;
+    height: 17px;
+  }
 }
