@@ -16,15 +16,19 @@
   <ion-list>
     <ion-list-header>Recruited Heroes</ion-list-header>
 
-    <ion-item *ngIf="recruitedHeroes.length === 0">You have no recruited heroes.</ion-item>
-    <app-hero *ngFor="let hero of recruitedHeroes" [hero]="hero"></app-hero>
+    <ion-item *ngIf="(recruitedHeroes$ | async).length === 0">You have no recruited heroes.</ion-item>
+    <app-hero *ngFor="let hero of recruitedHeroes$ | async" [hero]="hero"></app-hero>
 
     <ion-list-header class="ion-margin-top">
       <ion-label>Potential Hero Recruits</ion-label>
-      <ion-button class="ion-margin-end thin-button" fill="outline">Reroll for {{ game.heroRerollCost(town) | bignum }} gold</ion-button>
+      <ion-button class="ion-margin-end thin-button" fill="outline" (click)="game.rerollProspectiveHeroes(town, true)">Reroll for {{ game.heroRerollCost(town) | bignum }} gold</ion-button>
     </ion-list-header>
 
-    <ion-item *ngIf="prospectiveHeroes.length === 0">There are no prospective heroes.</ion-item>
-    <app-prospective-hero *ngFor="let prospectiveHero of prospectiveHeroes" [prospectiveHero]="prospectiveHero"></app-prospective-hero>
+    <ion-item *ngIf="(prospectiveHeroes$ | async).length === 0">There are no prospective heroes.</ion-item>
+    <app-hero *ngFor="let prospectiveHero of prospectiveHeroes$ | async" 
+              [town]="town" 
+              [hero]="prospectiveHero.hero" 
+              [cost]="prospectiveHero.cost" 
+              [rating]="prospectiveHero.rating"></app-hero>
   </ion-list>
 </ion-content>

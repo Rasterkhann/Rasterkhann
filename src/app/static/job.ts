@@ -6,7 +6,7 @@ import { HeroJobStatic, HeroJob, HeroStat } from '../interfaces';
 export const JobEffects: Record<HeroJob, HeroJobStatic> = {
   [HeroJob.Adventurer]: {
     description: 'Standard adventuring class. Balanced stats.',
-    chooseName: () => species.human(),
+    chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: [
       'adventurer_f1', 'adventurer_f2', 'adventurer_f3', 'adventurer_f4',
       'adventurer_m1', 'adventurer_m2', 'adventurer_m3', 'adventurer_m4'
@@ -36,7 +36,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
 
   [HeroJob.Cleric]: {
     description: 'Combat healer. Post-combat revives.',
-    chooseName: () => species.human(),
+    chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['cleric1', 'cleric2', 'cleric3', 'cleric4'],
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,
@@ -63,7 +63,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
 
   [HeroJob.Mage]: {
     description: 'AoE specialist. Pre-combat spread.',
-    chooseName: () => species.human(),
+    chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['mage1', 'mage2', 'mage3', 'mage4'],
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,
@@ -90,7 +90,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
 
   [HeroJob.Thief]: {
     description: 'Sneaky robber. Post-combat gold.',
-    chooseName: () => species.human(),
+    chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['thief1', 'thief2', 'thief3', 'thief4'],
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,
@@ -117,7 +117,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
 
   [HeroJob.Warrior]: {
     description: 'Powerful damager. Pre-combat nukes.',
-    chooseName: () => species.human(),
+    chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['warrior1', 'warrior2', 'warrior3', 'warrior4'],
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,

@@ -49,7 +49,7 @@ export interface Hero {
 }
 
 export interface ProspectiveHero {
-  cost: number;
+  cost: bigint;
   rating: number;
   hero: Hero;
 }

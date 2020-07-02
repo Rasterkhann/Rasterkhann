@@ -1,4 +1,25 @@
 
 <ion-item>
-  {{ hero | json }}
+  <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="hero.sprite"></app-hero-sprite>
+  <ion-button slot="start" *ngIf="cost" (click)="recruit()" [disabled]="!canBuyHero">Recruit</ion-button>
+
+  <ion-label class="ion-text-wrap">
+    <h3>
+      {{ hero.name }}
+      <br>
+      Level {{ hero.stats.lvl }} {{ hero.job }}
+    </h3>
+
+    <p>Recruitment Fee: {{ cost | bignum }} gold</p>
+
+    <div class="icons" *ngIf="stars.length > 0">
+      <ion-icon [name]="icon" *ngFor="let icon of stars"></ion-icon>
+    </div>
+
+    <ion-row class="stat-block">
+      <ion-col class="stat" size="4" *ngFor="let stat of ['hp', 'sp', 'sta', 'atk', 'def', 'gold']">
+        {{ stat | uppercase }} {{ hero.stats[stat] | bignum }}
+      </ion-col>
+    </ion-row>
+  </ion-label>
 </ion-item>

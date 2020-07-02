@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { Select } from '@ngxs/store';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { HeroService } from '../../../../hero.service';
@@ -16,7 +16,7 @@ import { GameService } from '../../../../game.service';
   templateUrl: './guild-modal.component.html',
   styleUrls: ['./guild-modal.component.scss'],
 })
-export class GuildModalComponent implements OnDestroy, OnInit {
+export class GuildModalComponent implements OnInit {
 
   @Select(GameState.currentTownProspectiveHeroes) prospectiveHeroes$: Observable<ProspectiveHero[]>;
   @Select(GameState.currentTownRecruitedHeroes) recruitedHeroes$: Observable<Hero[]>;
@@ -26,20 +26,9 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   public recruitedHeroes: Hero[] = [];
   public prospectiveHeroes: ProspectiveHero[] = [];
 
-  private recruitedHeroes$$: Subscription;
-  private prospectiveHeroes$$: Subscription;
-
   constructor(private modalCtrl: ModalController, public game: GameService, private heroCreator: HeroService) { }
 
   ngOnInit(): void {
-    console.log(this.heroCreator.generateProspectiveHero(this.town))
-    this.prospectiveHeroes$$ = this.prospectiveHeroes$.subscribe(d => {
-      this.prospectiveHeroes = d || [];
-    });
-
-    this.recruitedHeroes$$ = this.recruitedHeroes$.subscribe(d => {
-      this.recruitedHeroes = d || [];
-    });
 
     // if we have no potential heroes, let's add some
     this.prospectiveHeroes$.pipe(first()).subscribe(d => {
@@ -47,11 +36,6 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
       this.game.rerollProspectiveHeroes(this.town, false);
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.prospectiveHeroes$$) { this.prospectiveHeroes$$.unsubscribe(); }
-    if (this.recruitedHeroes$$) { this.recruitedHeroes$$.unsubscribe(); }
   }
 
   dismiss(): void {

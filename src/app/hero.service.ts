@@ -4,7 +4,7 @@ import { shuffle, take, random, sum } from 'lodash';
 
 import { Hero, IGameTown, ProspectiveHero, TraitPriority,
   HeroStat, Building, HeroJobStatic, TraitEffect, TraitTrigger } from './interfaces';
-import { calculateAvailableJobs, calculateMaxNumberOfTraits, calculateAvailableTraits } from './helpers';
+import { calculateAvailableJobs, calculateMaxNumberOfTraits, calculateAvailableTraits, ensureHeroStatValue } from './helpers';
 import { JobEffects, TraitEffects } from './static';
 
 @Injectable({
@@ -61,6 +61,15 @@ export class HeroService {
       gear: {}
     };
 
+    ensureHeroStatValue(hero, HeroStat.LVL,  1);
+    ensureHeroStatValue(hero, HeroStat.ATK,  1);
+    ensureHeroStatValue(hero, HeroStat.DEF,  1);
+    ensureHeroStatValue(hero, HeroStat.HP,   50);
+    ensureHeroStatValue(hero, HeroStat.SP,   10);
+    ensureHeroStatValue(hero, HeroStat.STA,  10);
+    ensureHeroStatValue(hero, HeroStat.GOLD, 0);
+    ensureHeroStatValue(hero, HeroStat.EXP,  100);
+
     // do onSpawn for all traits
     traits.forEach(trait => {
       const traitEff: TraitEffect = TraitEffects[trait];
@@ -77,11 +86,14 @@ export class HeroService {
     const guildHallLevel = town.buildings[Building.GuildHall].level || 1;
 
     const hero = this.generateHero(town);
+    const rating = this.getRatingForHero(town, hero);
+
+    const baseCost = rating * hero.stats[HeroStat.LVL] * guildHallLevel * guildHallLevel * JobEffects[hero.job].statGrowth[HeroStat.GOLD]();
 
     return {
       hero,
-      cost: hero.stats[HeroStat.LVL] * guildHallLevel * guildHallLevel * JobEffects[hero.job].statGrowth[HeroStat.GOLD](),
-      rating: this.getRatingForHero(town, hero)
+      cost: BigInt(Math.floor(baseCost)),
+      rating
     };
   }
 

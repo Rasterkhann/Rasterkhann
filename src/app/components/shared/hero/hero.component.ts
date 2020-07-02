@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
-import { Hero } from '../../../interfaces';
+import { Hero, IGameTown } from '../../../interfaces';
+import { GameService } from '../../../game.service';
 
 @Component({
   selector: 'app-hero',
@@ -10,10 +11,37 @@ import { Hero } from '../../../interfaces';
 })
 export class HeroComponent implements OnInit {
 
+  @Input() town: IGameTown;
   @Input() hero: Hero;
+  @Input() rating?: number;
+  @Input() cost?: bigint;
 
-  constructor() { }
+  public get canBuyHero(): boolean {
+    return this.town.gold >= this.cost;
+  }
+
+  public get stars(): string[] {
+    if (!this.rating) { return []; }
+
+    const base = Array(this.numStars).fill('star');
+    if (this.hasHalfStar) { base.push('star-half'); }
+    if (base.length === 0) { base.push('star-half'); }
+    return base;
+  }
+
+  private get numStars(): number {
+    return Math.floor(this.rating);
+  }
+
+  private get hasHalfStar(): boolean {
+    return this.rating - this.numStars >= 0.5;
+  }
+
+  constructor(private game: GameService) { }
 
   ngOnInit(): void {}
 
+  recruit(): void {
+    this.game.recruitHero(this.town, { hero: this.hero, cost: this.cost, rating: this.rating });
+  }
 }

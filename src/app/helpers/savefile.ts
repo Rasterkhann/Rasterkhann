@@ -17,6 +17,8 @@ export function beforeSerialize(obj): IGameState {
       town.gold = town.gold.toString();
       town.goldPerTick = town.goldPerTick.toString();
 
+      town.prospectiveHeroes = town.prospectiveHeroes.map(hero => ({ ...hero, cost: hero.cost.toString() }));
+
       obj.towns[townName] = town;
     });
   }
@@ -33,6 +35,8 @@ export function afterDeserialize(obj): IGameState {
         const town = obj.towns[townName];
         town.gold = BigInt(town.gold);
         town.goldPerTick = BigInt(town.goldPerTick);
+
+        town.prospectiveHeroes.forEach(hero => hero.cost = BigInt(hero.cost));
       });
     }
 

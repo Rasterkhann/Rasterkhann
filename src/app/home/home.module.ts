@@ -29,7 +29,6 @@ import { BuildingInfoComponent } from '../components/shared/building-info/buildi
 import { FeatureListComponent } from '../components/shared/feature-list/feature-list.component';
 import { GuildModalComponent } from '../components/windows/guildhall/guild-modal/guild-modal.component';
 import { HeroComponent } from '../components/shared/hero/hero.component';
-import { ProspectiveHeroComponent } from '../components/shared/prospective-hero/prospective-hero.component';
 import { HeroSpriteComponent } from '../components/shared/hero-sprite/hero-sprite.component';
 
 
@@ -62,7 +61,6 @@ import { HeroSpriteComponent } from '../components/shared/hero-sprite/hero-sprit
     BuildingInfoComponent,
     FeatureListComponent,
     HeroComponent,
-    ProspectiveHeroComponent,
     HeroSpriteComponent,
 
     GuildModalComponent,

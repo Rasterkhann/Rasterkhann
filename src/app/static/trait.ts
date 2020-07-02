@@ -34,7 +34,7 @@ export const TraitEffects: Record<Trait, TraitEffect> = {
     triggers: {
       onSpawn: ({ hero }) => {
         hero.stats[HeroStat.HP] /= 2;
-        ensureHeroStatValue(hero, HeroStat.HP, 1);
+        ensureHeroStatValue(hero, HeroStat.HP, 25);
       }
     }
   },
@@ -46,7 +46,7 @@ export const TraitEffects: Record<Trait, TraitEffect> = {
     triggers: {
       onSpawn: ({ hero }) => {
         hero.stats[HeroStat.SP] /= 2;
-        ensureHeroStatValue(hero, HeroStat.SP, 1);
+        ensureHeroStatValue(hero, HeroStat.SP, 5);
       }
     }
   },
@@ -70,7 +70,7 @@ export const TraitEffects: Record<Trait, TraitEffect> = {
     triggers: {
       onSpawn: ({ hero }) => {
         hero.stats[HeroStat.STA] /= 2;
-        ensureHeroStatValue(hero, HeroStat.STA, 1);
+        ensureHeroStatValue(hero, HeroStat.STA, 10);
       }
     }
   },
@@ -94,7 +94,7 @@ export const TraitEffects: Record<Trait, TraitEffect> = {
     triggers: {
       onSpawn: ({ hero }) => {
         hero.stats[HeroStat.EXP] *= 2;
-        ensureHeroStatValue(hero, HeroStat.EXP, 1);
+        ensureHeroStatValue(hero, HeroStat.EXP, 150);
       }
     }
   },
