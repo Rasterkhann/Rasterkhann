@@ -1,3 +1,4 @@
+import { Hero } from './hero';
 
 export type Trait =
   'Weak' | 'Frail' | 'Ill' | 'Clumsy' | 'Reclusive' | 'Sedentary' | 'Poor' | 'Inexperienced';
@@ -16,7 +17,7 @@ export enum TraitPriority {
   Last = 'last'
 }
 
-export type TraitTriggerFunction = ({ hero: Hero }) => void;
+export type TraitTriggerFunction = ({ hero }: { hero: Hero }) => void;
 
 export enum TraitValueProp {
   VeryBad = -5,

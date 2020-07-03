@@ -15,7 +15,7 @@ export enum Building {
 export interface BuildingInfo {
   level: number;
   constructionDoneAt?: number;
-  features: Record<string, boolean>;
+  features: Record<string, number>;
   featureConstruction: Record<string, number>;
 }
 

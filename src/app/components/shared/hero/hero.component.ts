@@ -18,6 +18,11 @@ export class HeroComponent implements OnInit {
   @Input() cost?: bigint;
   @Input() canBuyHero?: boolean;
 
+  public readonly statOrder: HeroStat[] = [
+    HeroStat.HP, HeroStat.SP, HeroStat.STA,
+    HeroStat.ATK, HeroStat.DEF, HeroStat.GOLD
+  ];
+
   public get stars(): string[] {
     if (!this.rating) { return []; }
 
@@ -40,6 +45,10 @@ export class HeroComponent implements OnInit {
   constructor(private alert: AlertController, private game: GameService) { }
 
   ngOnInit(): void {}
+
+  public getStat(stat: HeroStat): number {
+    return this.hero.stats[stat];
+  }
 
   async recruit(): Promise<void> {
 

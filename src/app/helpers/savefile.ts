@@ -1,8 +1,8 @@
 
-import { Building, IGameTown, IGameState, BuildingInfo } from '../interfaces';
+import { Building, IGameTown, IGameState, BuildingInfo, ProspectiveHero } from '../interfaces';
 import { calculateOfflineGold } from './town';
 
-export function beforeSerialize(obj): IGameState {
+export function beforeSerialize(obj: any): IGameState {
 
   obj = { ...obj };
 
@@ -17,7 +17,7 @@ export function beforeSerialize(obj): IGameState {
       town.gold = town.gold.toString();
       town.goldPerTick = town.goldPerTick.toString();
 
-      town.prospectiveHeroes = town.prospectiveHeroes.map(hero => ({ ...hero, cost: hero.cost.toString() }));
+      town.prospectiveHeroes = town.prospectiveHeroes.map((hero: ProspectiveHero) => ({ ...hero, cost: hero.cost.toString() }));
 
       obj.towns[townName] = town;
     });
@@ -26,7 +26,7 @@ export function beforeSerialize(obj): IGameState {
   return obj;
 }
 
-export function afterDeserialize(obj): IGameState {
+export function afterDeserialize(obj: IGameState): IGameState {
 
   try {
     // if there's a gamestate, deserialize the bigints
@@ -81,6 +81,7 @@ export function createBasicTown(): Partial<IGameTown> {
 
 export function createDefaultSavefile(): IGameState {
   return {
+    version: 1,
     lastTimestamp: 0,
     currentInfo: Building.TownHall,
     currentTown: 'Rasterkhann',

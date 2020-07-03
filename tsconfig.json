@@ -12,6 +12,7 @@
     "importHelpers": true,
     "target": "es2020",
     "strictNullChecks": true,
+    "noImplicitAny": true,
     "lib": [
       "es2018",
       "es2020",

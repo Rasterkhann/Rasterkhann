@@ -6,6 +6,7 @@ export enum GameOption {
 }
 
 export interface IGameState {
+  version: number;
   lastTimestamp: number;
   currentInfo: string;
   currentTown: string;

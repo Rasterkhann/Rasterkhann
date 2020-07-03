@@ -38,7 +38,7 @@ export class HeroService {
     // pick a hero level
     const heroLevel = random(1, guildHallLevel);
 
-    const stats = {
+    const stats: Partial<Record<HeroStat, number>> = {
       [HeroStat.LVL]: heroLevel
     };
 
@@ -103,7 +103,16 @@ export class HeroService {
 
     if (guildHallLevel < 5) { return 0.5; }
 
-    const maxStats = {};
+    const maxStats: Record<HeroStat, number> = {
+      [HeroStat.LVL]: 0,
+      [HeroStat.EXP]: 0,
+      [HeroStat.GOLD]: 0,
+      [HeroStat.ATK]: 0,
+      [HeroStat.DEF]: 0,
+      [HeroStat.HP]: 0,
+      [HeroStat.SP]: 0,
+      [HeroStat.STA]: 0
+    };
 
     const jobStatic: HeroJobStatic = JobEffects[hero.job];
 
@@ -117,8 +126,8 @@ export class HeroService {
     });
 
     // normalize the stats between 1-5 (if it goes over, that's ok)
-    const pctStats = {};
-    Object.keys(maxStats).forEach(stat => {
+    const pctStats: Partial<Record<HeroStat, number>> = {};
+    Object.keys(maxStats).forEach((stat: HeroStat) => {
       pctStats[stat] = hero.stats[stat] / maxStats[stat] * 5;
     });
 

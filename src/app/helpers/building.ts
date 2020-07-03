@@ -4,7 +4,7 @@ import { Building } from '../interfaces';
 
 // get a hash of feature->building for easy lookup later
 // also serves to dupe-check names
-export const featureNameToBuildingHash = {};
+export const featureNameToBuildingHash: Record<string, Building> = {};
 Object.keys(BuildingData).forEach((building: Building) => {
   Object.values(BuildingData[building].features || {}).forEach(feature => {
     if (featureNameToBuildingHash[feature.name]) {

@@ -18,7 +18,7 @@ export function calculateOfflineGold(state: IGameState): bigint {
 export function doesTownHaveFeature(town: IGameTown, feature: string): boolean {
   if (!featureNameToBuildingHash[feature]) { throw new Error(`Feature ${feature} does not exist.`); }
   if (!town.buildings[featureNameToBuildingHash[feature]].features) { return false; }
-  return town.buildings[featureNameToBuildingHash[feature]].features[feature];
+  return !!town.buildings[featureNameToBuildingHash[feature]].features[feature];
 }
 
 export function calculateGoldGain(state: IGameState): bigint {

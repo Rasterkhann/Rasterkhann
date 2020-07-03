@@ -22,8 +22,8 @@
     </div>
 
     <ion-row class="stat-block">
-      <ion-col class="stat" size="4" *ngFor="let stat of ['hp', 'sp', 'sta', 'atk', 'def', 'gold']">
-        {{ stat | uppercase }} {{ hero.stats[stat] | bignum }}
+      <ion-col class="stat" size="4" *ngFor="let stat of statOrder">
+        {{ stat | uppercase }} {{ getStat(stat) | bignum }}
       </ion-col>
     </ion-row>
   </ion-label>

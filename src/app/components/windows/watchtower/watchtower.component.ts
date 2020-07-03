@@ -27,7 +27,7 @@ export class WatchtowerComponent implements OnInit {
   @Input() town: IGameTown;
 
   @Select(GameState.entireSavefile) gameState$: Observable<IGameState>;
-  @Select(state => state.gamestate.options[GameOption.ToggleUpgradeVisiblity]) upgradeVisibility$: Observable<boolean>;
+  @Select((state: any) => state.gamestate.options[GameOption.ToggleUpgradeVisiblity]) upgradeVisibility$: Observable<boolean>;
 
   public get version(): string {
     return `${environment.version.version}-${environment.version.branch}-${environment.version.revision}`;
@@ -37,7 +37,7 @@ export class WatchtowerComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  import($event): void {
+  import($event: any): void {
     const file: File = $event.target.files[0];
     const reader: FileReader = new FileReader();
     reader.onloadend = async () => {

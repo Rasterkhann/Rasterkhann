@@ -2,7 +2,7 @@ import { Building, BuildingStatic } from '../interfaces';
 import { HouseFeatures, GuildHallFeatures, ArmoryFeatures,
   AlchemistFeatures, InnFeatures, CaveFeatures, BazaarFeatures } from '../features';
 
-const featuresArrayToHash = (array) => array.reduce((prev, cur) => ({ ...prev, [cur.name]: cur }), {});
+const featuresArrayToHash = (array: any[]) => array.reduce((prev, cur) => ({ ...prev, [cur.name]: cur }), {});
 
 export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.TownHall]: {

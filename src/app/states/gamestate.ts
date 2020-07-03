@@ -5,7 +5,7 @@ import { ImmutableContext } from '@ngxs-labs/immer-adapter';
 
 import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero } from '../actions';
-import { IGameTown, IGameState, GameOption, ProspectiveHero, Hero } from '../interfaces';
+import { IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building } from '../interfaces';
 import { GameService } from '../game.service';
 import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
   getTownProspectiveHeroes, getTownRecruitedHeroes, calculateProspectiveHeroMaxTotal } from '../helpers';
@@ -109,7 +109,7 @@ export class GameState {
       const town = getCurrentTownFromState(state);
       const now = Date.now();
 
-      Object.keys(town.buildings).forEach(building => {
+      Object.keys(town.buildings).forEach((building: Building) => {
         const constructionDoneAt = town.buildings[building].constructionDoneAt;
         if (constructionDoneAt && constructionDoneAt < now) {
           town.buildings[building].constructionDoneAt = 0;

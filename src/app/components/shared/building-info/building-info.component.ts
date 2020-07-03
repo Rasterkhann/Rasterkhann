@@ -30,12 +30,13 @@ export class BuildingInfoComponent implements OnInit {
   public isBuildingAvailable(): boolean {
     const building = this.buildingId;
 
-    if (this.town.buildings[building]) { return true; }
+    if (this.town.buildings[building].level > 0) { return true; }
     if (!BuildingData[building].requires) { return true; }
 
-    return Object.keys(BuildingData[building].requires || {})
-      .every(x => this.town.buildings[x]
-               && this.town.buildings[x].level >= (BuildingData[building].requires || {})[x]);
+    const requiredBuildings = BuildingData[building].requires || {};
+
+    return Object.keys(requiredBuildings)
+      .every((x: Building) => this.town.buildings[x].level >= (requiredBuildings[x] || 0));
   }
 
   public goToBuilding(): void {
