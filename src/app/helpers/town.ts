@@ -1,5 +1,5 @@
 
-import { IGameState, IGameTown, Hero, ProspectiveHero, Building } from '../interfaces';
+import { IGameState, IGameTown, Hero, ProspectiveHero, Building, Adventure } from '../interfaces';
 import { featureNameToBuildingHash } from './building';
 
 export function getCurrentTownFromState(state: IGameState): IGameTown {
@@ -40,4 +40,14 @@ export function getTownRecruitedHeroes(state: IGameState): Hero[] {
 export function getTownProspectiveHeroes(state: IGameState): ProspectiveHero[] {
   const town = getCurrentTownFromState(state);
   return town.prospectiveHeroes;
+}
+
+export function getTownActiveAdventures(state: IGameState): Adventure[] {
+  const town = getCurrentTownFromState(state);
+  return town.activeAdventures;
+}
+
+export function getTownPotentialAdventures(state: IGameState): Adventure[] {
+  const town = getCurrentTownFromState(state);
+  return town.potentialAdventures;
 }

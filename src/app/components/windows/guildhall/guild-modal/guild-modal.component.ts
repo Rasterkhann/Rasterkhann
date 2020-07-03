@@ -30,14 +30,6 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   constructor(private modalCtrl: ModalController, public game: GameService) { }
 
   ngOnInit(): void {
-
-    // if we have no potential heroes, let's add some
-    this.prospectiveHeroes$.pipe(first()).subscribe(d => {
-      if (d && d.length > 0) { return; }
-
-      this.game.rerollProspectiveHeroes(this.town, false);
-    });
-
     this.activeHeroes$ = this.recruitedHeroes$.subscribe(d => {
       this.canBuyHeroes = d.length < calculateProspectiveHeroMaxTotal(this.town);
     });

@@ -1,6 +1,7 @@
 
 import { Building, BuildingInfo } from './buildings';
 import { Hero, ProspectiveHero } from './hero';
+import { Adventure } from './adventure';
 
 export interface IGameTown {
   name: string;
@@ -12,4 +13,7 @@ export interface IGameTown {
 
   recruitedHeroes: Hero[];
   prospectiveHeroes: ProspectiveHero[];
+
+  activeAdventures: Adventure[];
+  potentialAdventures: Adventure[];
 }

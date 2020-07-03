@@ -40,6 +40,8 @@ export interface Hero {
   name: string;
   sprite: string;
 
+  onAdventure?: boolean;
+
   job: HeroJob;
   traits: Trait[];
 

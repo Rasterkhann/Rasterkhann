@@ -1,4 +1,5 @@
 
+export * from './adventure';
 export * from './buildings';
 export * from './hero';
 export * from './item';

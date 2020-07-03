@@ -4,8 +4,8 @@ import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
-  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero } from './actions';
-import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero } from './interfaces';
+  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures } from './actions';
+import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure } from './interfaces';
 import { doesTownHaveFeature } from './helpers';
 import { BuildingData } from './static';
 
@@ -152,6 +152,22 @@ export class GameService {
 
   public dismissHero(town: IGameTown, hero: Hero): void {
     this.store.dispatch(new DismissHero(hero));
+  }
+
+  // cave functions
+  public adventureRerollCost(town: IGameTown): bigint {
+    return BigInt(town.buildings[Building.Cave].level * 100);
+  }
+
+  public rerollAdventures(town: IGameTown, doesCost = true): void {
+    if (doesCost) {
+      const cost = this.adventureRerollCost(town);
+      if (town.gold < cost) { return; }
+
+      this.store.dispatch(new SpendGold(cost));
+    }
+
+    this.store.dispatch(new RerollAdventures());
   }
 
 }

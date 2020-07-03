@@ -1,4 +1,5 @@
 
+export * from './adventure.actions';
 export * from './building.actions';
 export * from './game.actions';
 export * from './gold.actions';

@@ -4,11 +4,12 @@ import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext } from '@ngxs-labs/immer-adapter';
 
 import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
-  LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero } from '../actions';
-import { IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building } from '../interfaces';
+  LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes,
+  RecruitHero, DismissHero, RerollAdventures } from '../actions';
+import { IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure } from '../interfaces';
 import { GameService } from '../game.service';
 import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
-  getTownProspectiveHeroes, getTownRecruitedHeroes, calculateProspectiveHeroMaxTotal } from '../helpers';
+  getTownProspectiveHeroes, getTownRecruitedHeroes, calculateProspectiveHeroMaxTotal, getTownActiveAdventures, getTownPotentialAdventures } from '../helpers';
 
 import { environment } from '../../environments/environment';
 import { BuildingData } from '../static';
@@ -51,6 +52,16 @@ export class GameState {
   @Selector()
   public static currentTownRecruitedHeroes(state: IGameState): Hero[] {
     return getTownRecruitedHeroes(state);
+  }
+
+  @Selector()
+  public static currentTownActiveAdventures(state: IGameState): Adventure[] {
+    return getTownActiveAdventures(state);
+  }
+
+  @Selector()
+  public static currentTownPotentialAdventures(state: IGameState): Adventure[] {
+    return getTownPotentialAdventures(state);
   }
 
   constructor(private store: Store, private heroCreator: HeroService, private game: GameService) {}
@@ -193,6 +204,16 @@ export class GameState {
     setState((state: IGameState) => {
       state.towns[state.currentTown].recruitedHeroes = state.towns[state.currentTown].recruitedHeroes
         .filter(x => x.name !== hero.name);
+      return state;
+    });
+  }
+
+  // adventure functions
+  @Action(RerollAdventures)
+  @ImmutableContext()
+  rerollAdventures({ setState }: StateContext<IGameState>): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
       return state;
     });
   }

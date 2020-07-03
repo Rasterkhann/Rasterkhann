@@ -1,4 +1,5 @@
 
+export * from './adventure';
 export * from './building';
 export * from './hero';
 export * from './savefile';
