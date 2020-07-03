@@ -8,6 +8,7 @@
     "ng": "ng",
     "start": "ng serve -o --port 9983 --host=0.0.0.0",
     "prebuild": "node scripts/git.version",
+    "postinstall": "node scripts/git.version",
     "build": "ng build --prod",
     "test": "npm run lint && npm run build",
     "lint": "ng lint"
