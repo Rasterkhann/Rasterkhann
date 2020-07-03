@@ -28,6 +28,7 @@ import { BignumPipe } from '../bignum.pipe';
 import { BuildingInfoComponent } from '../components/shared/building-info/building-info.component';
 import { FeatureListComponent } from '../components/shared/feature-list/feature-list.component';
 import { GuildModalComponent } from '../components/windows/guildhall/guild-modal/guild-modal.component';
+import { AdventureModalComponent } from '../components/windows/cave/adventure-modal/adventure-modal.component';
 import { HeroComponent } from '../components/shared/hero/hero.component';
 import { HeroSpriteComponent } from '../components/shared/hero-sprite/hero-sprite.component';
 
@@ -64,11 +65,13 @@ import { HeroSpriteComponent } from '../components/shared/hero-sprite/hero-sprit
     HeroSpriteComponent,
 
     GuildModalComponent,
+    AdventureModalComponent,
 
     BignumPipe
   ],
   entryComponents: [
-    GuildModalComponent
+    GuildModalComponent,
+    AdventureModalComponent
   ]
 })
 export class HomePageModule {}

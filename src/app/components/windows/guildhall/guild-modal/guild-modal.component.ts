@@ -27,7 +27,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   private canBuyHeroes: boolean;
   private activeHeroes$: Subscription;
 
-  constructor(private modalCtrl: ModalController, public game: GameService, private heroCreator: HeroService) { }
+  constructor(private modalCtrl: ModalController, public game: GameService) { }
 
   ngOnInit(): void {
 

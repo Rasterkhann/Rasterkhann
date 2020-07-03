@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { IGameTown } from '../../../interfaces';
-import { HeroService } from '../../../hero.service';
 import { GuildModalComponent } from './guild-modal/guild-modal.component';
 
 @Component({
@@ -14,7 +13,7 @@ export class GuildHallComponent implements OnInit {
 
   @Input() town: IGameTown;
 
-  constructor(private modalCtrl: ModalController, public hero: HeroService) { }
+  constructor(private modalCtrl: ModalController) { }
 
   ngOnInit(): void {}
 

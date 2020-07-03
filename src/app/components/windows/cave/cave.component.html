@@ -8,6 +8,16 @@
   <app-building-info [town]="town"
                      buildingId="cave">
   </app-building-info>
+
+  <ion-list-header>Actions</ion-list-header>
+
+  <ion-item (click)="openAdventureWindow()">
+    <ion-label>
+      View Adventures
+    </ion-label>
+
+    <ion-button slot="end">View</ion-button>
+  </ion-item>
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="cave"></app-feature-list>
