@@ -28,10 +28,12 @@ export class HeroComponent implements OnInit {
   }
 
   private get numStars(): number {
+    if (!this.rating) { return 0; }
     return Math.floor(this.rating);
   }
 
   private get hasHalfStar(): boolean {
+    if (!this.rating) { return false; }
     return this.rating - this.numStars >= 0.5;
   }
 
@@ -52,6 +54,7 @@ export class HeroComponent implements OnInit {
         }, {
           text: 'Yes, Recruit',
           handler: async () => {
+            if (!this.rating || !this.cost) { return; }
             this.game.recruitHero(this.town, { hero: this.hero, cost: this.cost, rating: this.rating });
           }
         }

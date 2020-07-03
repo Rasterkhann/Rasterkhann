@@ -8,7 +8,7 @@ export interface IGameTown {
   gold: bigint;
   goldPerTick: bigint;
 
-  buildings: Partial<Record<Building, BuildingInfo>>;
+  buildings: Record<Building, BuildingInfo>;
 
   recruitedHeroes: Hero[];
   prospectiveHeroes: ProspectiveHero[];

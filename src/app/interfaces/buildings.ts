@@ -15,8 +15,8 @@ export enum Building {
 export interface BuildingInfo {
   level: number;
   constructionDoneAt?: number;
-  features?: Record<string, boolean>;
-  featureConstruction?: Record<string, number>;
+  features: Record<string, boolean>;
+  featureConstruction: Record<string, number>;
 }
 
 export interface BuildingFeature {
@@ -34,5 +34,5 @@ export interface BuildingStatic {
   requires?: Partial<Record<Building, number>>;
   upgradeTime: (level: number) => number;
   levelCost: (level: number) => bigint;
-  features?: Record<string, BuildingFeature>;
+  features: Record<string, BuildingFeature>;
 }

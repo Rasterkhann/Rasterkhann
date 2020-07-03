@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { shuffle, take, random, sum } from 'lodash';
+import { shuffle, take, random, sum, noop } from 'lodash';
 
 import { Hero, IGameTown, ProspectiveHero, TraitPriority,
-  HeroStat, Building, HeroJobStatic, TraitEffect, TraitTrigger } from './interfaces';
+  HeroStat, Building, HeroJobStatic, TraitEffect, TraitTrigger, Trait } from './interfaces';
 import { calculateAvailableJobs, calculateMaxNumberOfTraits, calculateAvailableTraits, ensureHeroStatValue } from './helpers';
 import { JobEffects, TraitEffects } from './static';
 
@@ -24,7 +24,7 @@ export class HeroService {
 
     const job = take(shuffle(allJobs))[0];
     const numTraits = random(1, maxTraits);
-    const traits = [];
+    const traits: Trait[] = [];
 
     const jobStatic: HeroJobStatic = JobEffects[job];
 
@@ -76,7 +76,7 @@ export class HeroService {
       const traitEff: TraitEffect = TraitEffects[trait];
       if (!traitEff.triggers || !traitEff.triggers[TraitTrigger.Spawn]) { return; }
 
-      traitEff.triggers[TraitTrigger.Spawn]({ hero });
+      (traitEff.triggers[TraitTrigger.Spawn] || noop)({ hero });
     });
 
     return hero;

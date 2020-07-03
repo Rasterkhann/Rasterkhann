@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
-import { ImmutableContext, ImmutableSelector } from '@ngxs-labs/immer-adapter';
+import { ImmutableContext } from '@ngxs-labs/immer-adapter';
 
 import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero } from '../actions';
@@ -137,9 +137,7 @@ export class GameState {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
-      town.buildings[building] = town.buildings[building] || { level: 0 };
       const buildingRef = town.buildings[building];
-
       buildingRef.constructionDoneAt = Date.now() + (GLOBAL_TIME_MULTIPLIER * BuildingData[building].upgradeTime(buildingRef.level + 1));
       return state;
     });
@@ -164,7 +162,7 @@ export class GameState {
   rerollHeroes({ setState }: StateContext<IGameState>): void {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
-      const prospectiveHeroes = [];
+      const prospectiveHeroes: ProspectiveHero[] = [];
 
       const totalProspects = calculateProspectiveHeroMaxTotal(town);
       for (let i = 0; i < totalProspects; i++) {

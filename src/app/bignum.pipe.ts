@@ -10,7 +10,8 @@ export class BignumPipe implements PipeTransform {
 
   constructor(private decimalPipe: DecimalPipe) {}
 
-  transform(value: bigint, ...args: unknown[]): string {
+  transform(value: bigint | null, ...args: unknown[]): string | null {
+    if (!value) { return ''; }
     if (value < 1_000_000n) { return this.decimalPipe.transform(value.toString()); }
     return NumberFormat.format(value.toString(), { flavor: 'short', sigfigs: 3 });
   }

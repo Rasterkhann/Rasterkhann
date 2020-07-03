@@ -1,5 +1,5 @@
 
-import { Building, IGameTown, IGameState } from '../interfaces';
+import { Building, IGameTown, IGameState, BuildingInfo } from '../interfaces';
 import { calculateOfflineGold } from './town';
 
 export function beforeSerialize(obj): IGameState {
@@ -52,6 +52,10 @@ export function afterDeserialize(obj): IGameState {
   return obj;
 }
 
+export function createBuildingAtLevel(level: number): BuildingInfo {
+  return { level, features: {}, featureConstruction: {} };
+}
+
 export function createBasicTown(): Partial<IGameTown> {
   return {
     gold: 0n,
@@ -61,17 +65,16 @@ export function createBasicTown(): Partial<IGameTown> {
     prospectiveHeroes: [],
 
     buildings: {
-      [Building.TownHall]: {
-        level: 1
-      },
-
-      [Building.Watchtower]: {
-        level: 1
-      },
-
-      [Building.House]: {
-        level: 3
-      }
+      [Building.TownHall]: createBuildingAtLevel(1),
+      [Building.Watchtower]: createBuildingAtLevel(1),
+      [Building.House]: createBuildingAtLevel(3),
+      [Building.Alchemist]: createBuildingAtLevel(0),
+      [Building.Armory]: createBuildingAtLevel(0),
+      [Building.Bazaar]: createBuildingAtLevel(0),
+      [Building.Cave]: createBuildingAtLevel(0),
+      [Building.GuildHall]: createBuildingAtLevel(0),
+      [Building.Inn]: createBuildingAtLevel(0),
+      [Building.Workshop]: createBuildingAtLevel(0)
     }
   };
 }

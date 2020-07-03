@@ -9,21 +9,24 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     name: 'Town Hall',
     description: 'Build or upgrade your town.',
     upgradeTime: () => 0,
-    levelCost: () => 0n
+    levelCost: () => 0n,
+    features: {}
   },
 
   [Building.Watchtower]: {
     name: 'Watchtower',
     description: 'Manage town settings here.',
     upgradeTime: () => 0,
-    levelCost: () => 0n
+    levelCost: () => 0n,
+    features: {}
   },
 
   [Building.Workshop]: {
     name: 'Workshop',
     description: 'Manage your automation settings for your town.',
     upgradeTime: () => 30,
-    levelCost: (x) => x === 1 ? 5000n : 0n
+    levelCost: (x) => x === 1 ? 5000n : 0n,
+    features: {}
   },
 
   [Building.House]: {

@@ -33,9 +33,9 @@ export class BuildingInfoComponent implements OnInit {
     if (this.town.buildings[building]) { return true; }
     if (!BuildingData[building].requires) { return true; }
 
-    return Object.keys(BuildingData[building].requires)
+    return Object.keys(BuildingData[building].requires || {})
       .every(x => this.town.buildings[x]
-               && this.town.buildings[x].level >= BuildingData[building].requires[x]);
+               && this.town.buildings[x].level >= (BuildingData[building].requires || {})[x]);
   }
 
   public goToBuilding(): void {
