@@ -101,6 +101,8 @@ export class HeroService {
   private getRatingForHero(town: IGameTown, hero: Hero): number {
     const guildHallLevel = town.buildings[Building.GuildHall].level || 1;
 
+    if (guildHallLevel < 5) { return 0.5; }
+
     const maxStats = {};
 
     const jobStatic: HeroJobStatic = JobEffects[hero.job];

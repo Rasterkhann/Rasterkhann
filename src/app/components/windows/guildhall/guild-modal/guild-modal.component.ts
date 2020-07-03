@@ -33,7 +33,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
     // if we have no potential heroes, let's add some
     this.prospectiveHeroes$.pipe(first()).subscribe(d => {
-      if (d) { return; }
+      if (d && d.length > 0) { return; }
 
       this.game.rerollProspectiveHeroes(this.town, false);
     });
