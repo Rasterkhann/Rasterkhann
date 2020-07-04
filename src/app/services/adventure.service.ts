@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { random } from 'lodash';
 
-import { IGameTown, Adventure } from '../interfaces';
+import { IGameTown, Adventure, Building } from '../interfaces';
 import { calculateMaxNumberAdventureEncounters } from '../helpers';
 
 @Injectable({
@@ -19,7 +19,10 @@ export class AdventureService {
     const adventure: Adventure = {
       name: 'Wild Adventure',
       duration: encounterCount * 600,
-      encounterCount
+      encounterLevel: random(1, town.buildings[Building.Cave].level),
+      encounterTicks: Array(encounterCount).fill(600),
+      encounterCount,
+      activeHeroes: []
     };
 
     return adventure;

@@ -132,7 +132,8 @@ export class HeroService {
     });
 
     // average the stat values that are normalized
-    const avgStatPct = Math.max(1, sum(Object.values(pctStats)) / contributingStats.length);
+    const contributingStatTotal = contributingStats.map(x => pctStats[x]);
+    const avgStatPct = Math.max(1, sum(contributingStatTotal) / contributingStats.length);
 
     // normalize the stars to the guild hall level
     const statPctComparedToGuildHallLevel = avgStatPct * (hero.stats[HeroStat.LVL] / guildHallLevel);

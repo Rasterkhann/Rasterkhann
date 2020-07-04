@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
 import { IGameTown, Adventure } from '../../../interfaces';
@@ -7,6 +7,7 @@ import { IGameTown, Adventure } from '../../../interfaces';
   selector: 'app-adventure',
   templateUrl: './adventure.component.html',
   styleUrls: ['./adventure.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdventureComponent implements OnInit {
 

@@ -17,7 +17,9 @@
     <ion-list-header>Active Adventures</ion-list-header>
 
     <ion-item *ngIf="(activeAdventures$ | async)?.length === 0">You have no active adventures.</ion-item>
-    <app-adventure *ngFor="let adv of activeAdventures$ | async" [town]="town" [adventure]="adv"></app-adventure>
+    <app-adventure *ngFor="let adv of activeAdventures$ | async" 
+                   [town]="town" 
+                   [adventure]="adv"></app-adventure>
 
     <ion-list-header class="ion-margin-top">
       <ion-label>Possible Adventures</ion-label>
@@ -25,6 +27,9 @@
     </ion-list-header>
 
     <ion-item *ngIf="(potentialAdventures$ | async)?.length === 0">There are no potential adventures.</ion-item>
-    <app-adventure *ngFor="let adv of potentialAdventures$ | async" [town]="town" [adventure]="adv" [canDoAdventure]="canDoAdventure(adv)"></app-adventure>
+    <app-adventure *ngFor="let adv of potentialAdventures$ | async" 
+                   [town]="town" 
+                   [adventure]="adv" 
+                   [canDoAdventure]="canDoAdventures$ | async"></app-adventure>
   </ion-list>
 </ion-content>
