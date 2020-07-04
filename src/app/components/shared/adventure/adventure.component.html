@@ -1,0 +1,15 @@
+
+<ion-item>
+  <ion-label class="ion-text-wrap">
+    <h3>
+      {{ adventure.name }}
+    </h3>
+
+    <p>Duration: {{ adventure.duration }}</p>
+    <p>Encounters: {{ adventure.encounterCount }}</p>
+  </ion-label>
+
+  <ion-button class="go" slot="end" (click)="go()" [disabled]="!canDoAdventure">
+    Adventure, Ho!
+  </ion-button>
+</ion-item>

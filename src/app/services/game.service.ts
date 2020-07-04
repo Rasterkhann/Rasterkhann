@@ -4,10 +4,10 @@ import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
-  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures } from './actions';
-import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure } from './interfaces';
-import { doesTownHaveFeature } from './helpers';
-import { BuildingData } from './static';
+  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures } from '../actions';
+import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero } from '../interfaces';
+import { doesTownHaveFeature } from '../helpers';
+import { BuildingData } from '../static';
 
 @Injectable({
   providedIn: 'root'

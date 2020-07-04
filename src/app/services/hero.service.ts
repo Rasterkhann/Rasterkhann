@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { shuffle, take, random, sum, noop } from 'lodash';
 
 import { Hero, IGameTown, ProspectiveHero, TraitPriority,
-  HeroStat, Building, HeroJobStatic, TraitEffect, TraitTrigger, Trait } from './interfaces';
-import { calculateAvailableJobs, calculateMaxNumberOfTraits, calculateAvailableTraits, ensureHeroStatValue } from './helpers';
-import { JobEffects, TraitEffects } from './static';
+  HeroStat, Building, HeroJobStatic, TraitEffect, TraitTrigger, Trait } from '../interfaces';
+import { calculateAvailableJobs, calculateMaxNumberOfTraits, calculateAvailableTraits, ensureHeroStatValue } from '../helpers';
+import { JobEffects, TraitEffects } from '../static';
 
 @Injectable({
   providedIn: 'root'

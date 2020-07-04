@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { Hero, IGameTown, HeroStat } from '../../../interfaces';
-import { GameService } from '../../../game.service';
+import { GameService } from '../../../services/game.service';
 import { AlertController } from '@ionic/angular';
 
 @Component({

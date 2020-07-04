@@ -7,13 +7,15 @@ import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuil
   LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes,
   RecruitHero, DismissHero, RerollAdventures } from '../actions';
 import { IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure } from '../interfaces';
-import { GameService } from '../game.service';
 import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
-  getTownProspectiveHeroes, getTownRecruitedHeroes, calculateProspectiveHeroMaxTotal, getTownActiveAdventures, getTownPotentialAdventures } from '../helpers';
+  getTownProspectiveHeroes, getTownRecruitedHeroes, calculateProspectiveHeroMaxTotal,
+  getTownActiveAdventures, getTownPotentialAdventures, calculateMaxPotentialAdventures,
+  getTownCanDoAnyAdventures } from '../helpers';
 
 import { environment } from '../../environments/environment';
 import { BuildingData } from '../static';
-import { HeroService } from '../hero.service';
+import { HeroService } from '../services/hero.service';
+import { AdventureService } from '../services/adventure.service';
 
 const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
 
@@ -45,6 +47,11 @@ export class GameState {
   }
 
   @Selector()
+  public static currentTownCanDoAdventures(state: IGameState): boolean {
+    return getTownCanDoAnyAdventures(state);
+  }
+
+  @Selector()
   public static currentTownProspectiveHeroes(state: IGameState): ProspectiveHero[] {
     return getTownProspectiveHeroes(state);
   }
@@ -64,7 +71,11 @@ export class GameState {
     return getTownPotentialAdventures(state);
   }
 
-  constructor(private store: Store, private heroCreator: HeroService, private game: GameService) {}
+  constructor(
+    private store: Store,
+    private heroCreator: HeroService,
+    private advCreator: AdventureService
+  ) {}
 
   // misc functions
   @Action(GameLoop)
@@ -214,6 +225,13 @@ export class GameState {
   rerollAdventures({ setState }: StateContext<IGameState>): void {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
+      const potentialAdventures: Adventure[] = [];
+
+      const totalProspects = calculateMaxPotentialAdventures(town);
+      for (let i = 0; i < totalProspects; i++) {
+        potentialAdventures.push(this.advCreator.generateAdventure(town));
+      }
+      state.towns[state.currentTown].potentialAdventures = potentialAdventures;
       return state;
     });
   }

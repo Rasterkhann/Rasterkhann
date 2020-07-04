@@ -31,6 +31,7 @@ import { GuildModalComponent } from '../components/windows/guildhall/guild-modal
 import { AdventureModalComponent } from '../components/windows/cave/adventure-modal/adventure-modal.component';
 import { HeroComponent } from '../components/shared/hero/hero.component';
 import { HeroSpriteComponent } from '../components/shared/hero-sprite/hero-sprite.component';
+import { AdventureComponent } from '../components/shared/adventure/adventure.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { HeroSpriteComponent } from '../components/shared/hero-sprite/hero-sprit
     FeatureListComponent,
     HeroComponent,
     HeroSpriteComponent,
+    AdventureComponent,
 
     GuildModalComponent,
     AdventureModalComponent,

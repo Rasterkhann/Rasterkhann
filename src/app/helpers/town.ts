@@ -1,6 +1,7 @@
 
 import { IGameState, IGameTown, Hero, ProspectiveHero, Building, Adventure } from '../interfaces';
 import { featureNameToBuildingHash } from './building';
+import { calculateMaxActiveAdventures } from './adventure';
 
 export function getCurrentTownFromState(state: IGameState): IGameTown {
   return { name: state.currentTown, ...state.towns[state.currentTown] };
@@ -50,4 +51,14 @@ export function getTownActiveAdventures(state: IGameState): Adventure[] {
 export function getTownPotentialAdventures(state: IGameState): Adventure[] {
   const town = getCurrentTownFromState(state);
   return town.potentialAdventures;
+}
+
+export function getTownAnyHeroesFree(state: IGameState): boolean {
+  const town = getCurrentTownFromState(state);
+  return town.recruitedHeroes.some((h: Hero) => !h.onAdventure);
+}
+
+export function getTownCanDoAnyAdventures(state: IGameState): boolean {
+  const town = getCurrentTownFromState(state);
+  return getTownAnyHeroesFree(state) && getTownActiveAdventures(state).length < calculateMaxActiveAdventures(town);
 }

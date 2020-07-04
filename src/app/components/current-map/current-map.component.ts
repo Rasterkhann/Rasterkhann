@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges } from '@angular/core';
 
 import { IGameTown, Building } from '../../interfaces';
-import { GameService } from '../../game.service';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-current-map',

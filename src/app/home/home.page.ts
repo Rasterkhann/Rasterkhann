@@ -3,7 +3,7 @@ import { Select } from '@ngxs/store';
 import { Observable, forkJoin } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { GameService } from '../game.service';
+import { GameService } from '../services/game.service';
 import { GameState } from '../states';
 import { IGameTown, ProspectiveHero, Adventure } from '../interfaces';
 

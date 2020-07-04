@@ -6,10 +6,10 @@ import { Select } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { HeroService } from '../../../../hero.service';
+import { HeroService } from '../../../../services/hero.service';
 import { GameState } from '../../../../states';
 import { ProspectiveHero, Hero, IGameTown } from '../../../../interfaces';
-import { GameService } from '../../../../game.service';
+import { GameService } from '../../../../services/game.service';
 import { calculateProspectiveHeroMaxTotal } from '../../../../helpers';
 
 @Component({

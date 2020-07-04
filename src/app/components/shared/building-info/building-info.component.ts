@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { IGameTown, Building } from '../../../interfaces';
-import { GameService } from '../../../game.service';
+import { GameService } from '../../../services/game.service';
 import { BuildingData } from '../../../static';
 
 @Component({
