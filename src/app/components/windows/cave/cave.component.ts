@@ -13,12 +13,12 @@ export class CaveComponent implements OnInit {
 
   @Input() town: IGameTown;
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modal: ModalController) { }
 
   ngOnInit(): void {}
 
   async openAdventureWindow(): Promise<void> {
-    const modal = await this.modalCtrl.create({
+    const modal = await this.modal.create({
       component: AdventureModalComponent,
       componentProps: {
         town: this.town

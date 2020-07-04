@@ -13,12 +13,12 @@ export class GuildHallComponent implements OnInit {
 
   @Input() town: IGameTown;
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modal: ModalController) { }
 
   ngOnInit(): void {}
 
   async openGuildWindow(): Promise<void> {
-    const modal = await this.modalCtrl.create({
+    const modal = await this.modal.create({
       component: GuildModalComponent,
       componentProps: {
         town: this.town

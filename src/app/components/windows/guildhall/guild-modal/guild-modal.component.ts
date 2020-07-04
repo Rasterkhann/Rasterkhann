@@ -27,7 +27,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   private canBuyHeroes: boolean;
   private activeHeroes$: Subscription;
 
-  constructor(private modalCtrl: ModalController, public game: GameService) { }
+  constructor(private modal: ModalController, public game: GameService) { }
 
   ngOnInit(): void {
     this.activeHeroes$ = this.recruitedHeroes$.subscribe(d => {
@@ -40,7 +40,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   }
 
   dismiss(): void {
-    this.modalCtrl.dismiss();
+    this.modal.dismiss();
   }
 
   canHeroBeBought(prosHero: ProspectiveHero): boolean {

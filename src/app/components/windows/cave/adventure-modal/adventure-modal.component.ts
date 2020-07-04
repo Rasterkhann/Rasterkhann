@@ -21,12 +21,12 @@ export class AdventureModalComponent implements OnInit {
 
   @Input() public town: IGameTown;
 
-  constructor(private modalCtrl: ModalController, public game: GameService) { }
+  constructor(private modal: ModalController, public game: GameService) { }
 
   ngOnInit(): void {}
 
   dismiss(): void {
-    this.modalCtrl.dismiss();
+    this.modal.dismiss();
   }
 
 }
