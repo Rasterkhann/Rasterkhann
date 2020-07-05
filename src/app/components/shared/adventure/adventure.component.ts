@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 import { AlertController } from '@ionic/angular';
 
 import { IGameTown, Adventure } from '../../../interfaces';
+import { GameService } from '../../../services/game.service';
 
 @Component({
   selector: 'app-adventure',
@@ -15,9 +16,13 @@ export class AdventureComponent implements OnInit {
   @Input() adventure: Adventure;
   @Input() canDoAdventure: boolean;
 
-  constructor(private alert: AlertController) { }
+  constructor(private alert: AlertController, private game: GameService) { }
 
   ngOnInit(): void {}
+
+  formatPreDuration(text: string): string {
+    return text.split(':').join('h ') + 'm';
+  }
 
   async go(): Promise<void> {
 
@@ -32,6 +37,7 @@ export class AdventureComponent implements OnInit {
         }, {
           text: 'Yes, Embark',
           handler: async () => {
+            this.game.startAdventure(this.town, this.adventure);
           }
         }
       ]

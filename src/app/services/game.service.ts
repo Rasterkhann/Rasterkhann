@@ -4,17 +4,21 @@ import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
-  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures } from '../actions';
-import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero } from '../interfaces';
+  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures, StartAdventure } from '../actions';
+import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure } from '../interfaces';
 import { doesTownHaveFeature } from '../helpers';
 import { BuildingData } from '../static';
+import { AdventureService } from './adventure.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
-  constructor(private store: Store) {
+  constructor(
+    private store: Store,
+    private advCreator: AdventureService
+  ) {
     this.init();
   }
 
@@ -168,6 +172,13 @@ export class GameService {
     }
 
     this.store.dispatch(new RerollAdventures());
+  }
+
+  public startAdventure(town: IGameTown, adventure: Adventure): void {
+    const heroes = this.advCreator.pickHeroesForAdventure(adventure);
+    if (heroes.length === 0) { return; }
+
+    this.store.dispatch(new StartAdventure(adventure, heroes));
   }
 
 }

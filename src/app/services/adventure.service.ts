@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { random } from 'lodash';
 
-import { IGameTown, Adventure, Building } from '../interfaces';
+import { IGameTown, Adventure, Building, Hero } from '../interfaces';
 import { calculateMaxNumberAdventureEncounters } from '../helpers';
 
 @Injectable({
@@ -26,6 +26,10 @@ export class AdventureService {
     };
 
     return adventure;
+  }
+
+  pickHeroesForAdventure(adventure: Adventure): Hero[] {
+    return [];
   }
 
 }

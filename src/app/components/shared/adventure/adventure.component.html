@@ -5,7 +5,7 @@
       {{ adventure.name }}
     </h3>
 
-    <p>Duration: {{ adventure.duration }}</p>
+    <p>Duration: <countdown [config]="{ leftTime: adventure.duration * 6, demand: true, format: 'HH:mm', prettyText: formatPreDuration }"></countdown></p>
     <p>Encounter Level: {{ adventure.encounterLevel }}</p>
     <p>Encounters: {{ adventure.encounterCount }}</p>
   </ion-label>
