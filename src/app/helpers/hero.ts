@@ -1,4 +1,4 @@
-import { Trait, HeroJob, IGameTown } from '../interfaces';
+import { Trait, HeroJob, IGameTown, Hero } from '../interfaces';
 
 export function calculateMaxNumberOfTraits(town: IGameTown): number {
   return 1;
@@ -18,4 +18,12 @@ export function calculateProspectiveHeroMaxTotal(town: IGameTown): number {
 
 export function calculateHeroMaxTotal(town: IGameTown): number {
   return 3;
+}
+
+export function checkHeroLevelUp(hero: Hero): void {
+
+}
+
+export function getTownHeroByUUID(town: IGameTown, uuid: string): Hero | undefined {
+  return town.recruitedHeroes.find(h => h.uuid === uuid);
 }

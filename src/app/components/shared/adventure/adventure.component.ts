@@ -3,6 +3,7 @@ import { AlertController } from '@ionic/angular';
 
 import { IGameTown, Adventure } from '../../../interfaces';
 import { GameService } from '../../../services/game.service';
+import { getTownHeroByUUID } from '../../../helpers';
 
 @Component({
   selector: 'app-adventure',
@@ -15,13 +16,29 @@ export class AdventureComponent implements OnInit {
   @Input() town: IGameTown;
   @Input() adventure: Adventure;
   @Input() canDoAdventure: boolean;
+  @Input() isActive: boolean;
+
+  public heroNames: string[] = [];
 
   constructor(private alert: AlertController, private game: GameService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.heroNames = this.adventure.activeHeroes
+      .map(uuid => getTownHeroByUUID(this.town, uuid))
+      .map(h => {
+        if (!h) { return ''; }
+        return h.name;
+      })
+      .filter(Boolean);
+  }
 
   formatPreDuration(text: string): string {
-    return text.split(':').join('h ') + 'm';
+    const split = text.split(':');
+    if (split.length === 2) {
+      return `${split[0]}h ${split[1]}m`;
+    }
+
+    return `${split[0]}h ${split[1]}m ${split[2]}s`;
   }
 
   async go(): Promise<void> {

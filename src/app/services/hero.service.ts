@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { shuffle, take, random, sum, noop } from 'lodash';
+import { v4 as uuid } from 'uuid';
 
 import { Hero, IGameTown, ProspectiveHero, TraitPriority,
   HeroStat, Building, HeroJobStatic, TraitEffect, TraitTrigger, Trait } from '../interfaces';
@@ -50,8 +51,10 @@ export class HeroService {
 
     // create the hero
     const hero: Hero = {
+      uuid: uuid(),
       name: jobStatic.chooseName(),
       sprite: take(shuffle(jobStatic.sprites))[0],
+      onAdventure: '',
 
       job,
       traits,

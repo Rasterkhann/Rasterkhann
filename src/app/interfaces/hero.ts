@@ -37,10 +37,11 @@ export interface HeroJobStatic {
 }
 
 export interface Hero {
+  uuid: string;
   name: string;
   sprite: string;
 
-  onAdventure?: boolean;
+  onAdventure: string;
 
   job: HeroJob;
   traits: Trait[];

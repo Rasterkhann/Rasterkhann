@@ -175,7 +175,7 @@ export class GameService {
   }
 
   public startAdventure(town: IGameTown, adventure: Adventure): void {
-    const heroes = this.advCreator.pickHeroesForAdventure(adventure);
+    const heroes = this.advCreator.pickHeroesForAdventure(town, adventure);
     if (heroes.length === 0) { return; }
 
     this.store.dispatch(new StartAdventure(adventure, heroes));

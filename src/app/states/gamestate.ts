@@ -5,12 +5,14 @@ import { ImmutableContext } from '@ngxs-labs/immer-adapter';
 
 import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes,
-  RecruitHero, DismissHero, RerollAdventures } from '../actions';
+  RecruitHero, DismissHero, RerollAdventures, StartAdventure } from '../actions';
 import { IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure } from '../interfaces';
 import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
   getTownProspectiveHeroes, getTownRecruitedHeroes, calculateProspectiveHeroMaxTotal,
   getTownActiveAdventures, getTownPotentialAdventures, calculateMaxPotentialAdventures,
-  getTownCanDoAnyAdventures } from '../helpers';
+  getTownCanDoAnyAdventures,
+  doAdventureEncounter,
+  finalizeAdventure} from '../helpers';
 
 import { environment } from '../../environments/environment';
 import { BuildingData } from '../static';
@@ -18,6 +20,7 @@ import { HeroService } from '../services/hero.service';
 import { AdventureService } from '../services/adventure.service';
 
 const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
+const ADVENTURE_TIME_MULTIPLIER = environment.production ? 1 : 0.01;
 
 @State<IGameState>({
   name: 'gamestate',
@@ -203,7 +206,7 @@ export class GameState {
     setState((state: IGameState) => {
       state.towns[state.currentTown].recruitedHeroes.push(hero.hero);
       state.towns[state.currentTown].prospectiveHeroes = state.towns[state.currentTown].prospectiveHeroes
-        .filter(x => x.hero.name !== hero.hero.name);
+        .filter(x => x.hero.uuid !== hero.hero.uuid);
 
       return state;
     });
@@ -214,7 +217,8 @@ export class GameState {
   dismissHero({ setState }: StateContext<IGameState>, { hero }: DismissHero): void {
     setState((state: IGameState) => {
       state.towns[state.currentTown].recruitedHeroes = state.towns[state.currentTown].recruitedHeroes
-        .filter(x => x.name !== hero.name);
+        .filter(x => x.uuid !== hero.uuid);
+
       return state;
     });
   }
@@ -232,6 +236,59 @@ export class GameState {
         potentialAdventures.push(this.advCreator.generateAdventure(town));
       }
       state.towns[state.currentTown].potentialAdventures = potentialAdventures;
+      return state;
+    });
+  }
+
+  @Action(StartAdventure)
+  @ImmutableContext()
+  startAdventure({ setState }: StateContext<IGameState>, { heroes, adventure }: StartAdventure): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      heroes.forEach(h => {
+        town.recruitedHeroes.forEach((rh, i) => {
+          if (h.uuid !== rh.uuid) { return; }
+
+          town.recruitedHeroes[i] = { ...rh };
+          town.recruitedHeroes[i].onAdventure = adventure.uuid;
+        });
+      });
+
+      const modAdventure = { ...adventure };
+
+      modAdventure.activeHeroes = heroes.map(h => h.uuid);
+
+      // scale these down for dev to make testing less painful
+      modAdventure.encounterTicks = modAdventure.encounterTicks.map(x => x * ADVENTURE_TIME_MULTIPLIER);
+
+      state.towns[state.currentTown].activeAdventures.push(modAdventure);
+      state.towns[state.currentTown].potentialAdventures = state.towns[state.currentTown].potentialAdventures
+        .filter(x => x.uuid !== adventure.uuid);
+
+      return state;
+    });
+  }
+
+  @Action(GameLoop)
+  @ImmutableContext()
+  adventureTick({ setState }: StateContext<IGameState>): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      town.activeAdventures.forEach(adv => {
+        adv.encounterTicks[0]--;
+        if (adv.encounterTicks[0] < 0) {
+          doAdventureEncounter(town, adv);
+          adv.encounterTicks.shift();
+          adv.encounterTicks = adv.encounterTicks.filter(Boolean);
+        }
+
+        if (adv.encounterTicks.length === 0) {
+          finalizeAdventure(town, adv);
+          state.towns[state.currentTown].activeAdventures = state.towns[state.currentTown]
+            .activeAdventures.filter(a => a.uuid !== adv.uuid);
+        }
+      });
+
       return state;
     });
   }

@@ -6,7 +6,7 @@
     Recruit
   </ion-button>
   
-  <ion-button class="dismiss" icon-only color="danger" slot="start" *ngIf="!cost" (click)="dismiss()">
+  <ion-button class="dismiss" icon-only color="danger" slot="start" *ngIf="!cost && !hero.onAdventure" (click)="dismiss()">
     <ion-icon name="close-circle-outline"></ion-icon>
   </ion-button>
 
