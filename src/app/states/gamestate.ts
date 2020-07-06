@@ -204,9 +204,16 @@ export class GameState {
   @ImmutableContext()
   recruitHero({ setState }: StateContext<IGameState>, { hero }: RecruitHero): void {
     setState((state: IGameState) => {
-      state.towns[state.currentTown].recruitedHeroes.push(hero.hero);
+      const heroRecruit = { ...hero.hero };
+      heroRecruit.currentStats = { ...heroRecruit.currentStats };
+      heroRecruit.currentStats.exp = 0;
+
+      heroRecruit.stats = { ...heroRecruit.stats };
+      heroRecruit.stats.gold = 0;
+
+      state.towns[state.currentTown].recruitedHeroes.push(heroRecruit);
       state.towns[state.currentTown].prospectiveHeroes = state.towns[state.currentTown].prospectiveHeroes
-        .filter(x => x.hero.uuid !== hero.hero.uuid);
+        .filter(x => x.hero.uuid !== heroRecruit.uuid);
 
       return state;
     });

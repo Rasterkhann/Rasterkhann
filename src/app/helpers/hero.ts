@@ -21,7 +21,7 @@ export function calculateHeroMaxTotal(town: IGameTown): number {
 }
 
 export function checkHeroLevelUp(hero: Hero): void {
-
+  // TODO: run traits on levelup - traits might need a hook for level up
 }
 
 export function getTownHeroByUUID(town: IGameTown, uuid: string): Hero | undefined {

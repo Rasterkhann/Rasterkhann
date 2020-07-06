@@ -5,6 +5,12 @@
       Guild Recruits
     </ion-title>
     <ion-buttons slot="end">
+      <ion-button *ngIf="viewingHero" color="secondary" (click)="viewingHero = null">
+        Back
+      </ion-button>
+      <ion-button *ngIf="viewingHero && !viewingHero.onAdventure" color="danger" (click)="dismissCurrentHero()">
+        Dismiss
+      </ion-button>
       <ion-button (click)="dismiss()">
         Close
       </ion-button>
@@ -13,11 +19,11 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <ion-list *ngIf="!viewingHero">
     <ion-list-header>Recruited Heroes</ion-list-header>
 
     <ion-item *ngIf="(recruitedHeroes$ | async)?.length === 0">You have no recruited heroes.</ion-item>
-    <app-hero *ngFor="let hero of recruitedHeroes$ | async" [town]="town" [hero]="hero"></app-hero>
+    <app-hero *ngFor="let hero of recruitedHeroes$ | async" [town]="town" [hero]="hero" (click)="viewingHero = hero"></app-hero>
 
     <ion-list-header class="ion-margin-top">
       <ion-label>Potential Hero Recruits</ion-label>
@@ -31,5 +37,44 @@
               [cost]="prospectiveHero.cost"
               [canBuyHero]="canHeroBeBought(prospectiveHero)"
               [rating]="prospectiveHero.rating"></app-hero>
+  </ion-list>
+
+  <ion-list *ngIf="viewingHero">
+    <ion-item>
+      <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="viewingHero.sprite"></app-hero-sprite>
+
+      <ion-label class="ion-text-wrap">
+        <h2>{{ viewingHero.name }}</h2>
+        <p>Lv.{{ viewingHero.stats.lvl }} {{ viewingHero.job }}</p>
+        <p>{{ viewingHero.currentStats.exp | bignum }} / {{ viewingHero.stats.exp | bignum }} EXP</p>
+        <p>{{ viewingHero.currentStats.gold | bignum }} GOLD</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-progress-bar color="success" [value]="viewingHero.currentStats.exp / viewingHero.stats.exp"></ion-progress-bar>
+    </ion-item>
+
+    <ion-list-header>Stats</ion-list-header>
+
+    <ion-item>
+      <ion-col class="hero-stat">{{ viewingHero.currentStats.hp | bignum }} / {{ viewingHero.stats.hp | bignum }} HP</ion-col>
+      <ion-col class="hero-stat">{{ viewingHero.currentStats.sp | bignum }} / {{ viewingHero.stats.sp | bignum }} SP</ion-col>
+      <ion-col class="hero-stat">{{ viewingHero.currentStats.sta | bignum }} / {{ viewingHero.stats.sta | bignum }} STA</ion-col>
+    </ion-item>
+
+    <ion-item>
+      <ion-col class="hero-stat">{{ viewingHero.stats.atk | bignum }} ATK</ion-col>
+      <ion-col class="hero-stat">{{ viewingHero.stats.def | bignum }} DEF</ion-col>
+    </ion-item>
+
+    <ion-list-header>Traits</ion-list-header>
+
+    <ion-item *ngFor="let trait of viewingHero.traits">
+      <ion-label>
+        <h3>{{ trait }}</h3>
+        <p>{{ getTraitData(trait) }}</p>
+      </ion-label>
+    </ion-item>
   </ion-list>
 </ion-content>

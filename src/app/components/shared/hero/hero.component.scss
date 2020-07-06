@@ -54,13 +54,13 @@ ion-button {
     width: 55px;
   }
 
-  &.dismiss {
+  &.info {
     top: 10px;
     left: 56px;
     --border-radius: 50%;
     --padding-start: 0;
     --padding-end: 0;
-    width: 17px;
-    height: 17px;
+    width: 15px;
+    height: 15px;
   }
 }

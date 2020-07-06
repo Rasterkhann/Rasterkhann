@@ -1,16 +1,15 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 
 import { Select } from '@ngxs/store';
 
 import { Observable, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
 
-import { HeroService } from '../../../../services/hero.service';
 import { GameState } from '../../../../states';
-import { ProspectiveHero, Hero, IGameTown } from '../../../../interfaces';
+import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait } from '../../../../interfaces';
 import { GameService } from '../../../../services/game.service';
 import { calculateProspectiveHeroMaxTotal } from '../../../../helpers';
+import { TraitEffects } from '../../../../static';
 
 @Component({
   selector: 'app-guild-modal',
@@ -27,7 +26,9 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   private canBuyHeroes: boolean;
   private activeHeroes$: Subscription;
 
-  constructor(private modal: ModalController, public game: GameService) { }
+  public viewingHero: Hero | null;
+
+  constructor(private modal: ModalController, private alert: AlertController, public game: GameService) { }
 
   ngOnInit(): void {
     this.activeHeroes$ = this.recruitedHeroes$.subscribe(d => {
@@ -45,6 +46,37 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   canHeroBeBought(prosHero: ProspectiveHero): boolean {
     return this.town.gold > prosHero.cost && this.canBuyHeroes;
+  }
+
+  getTraitData(trait: Trait): string {
+    return TraitEffects[trait].description;
+  }
+
+  dismissCurrentHero(): void {
+    if (!this.viewingHero) { return; }
+    this.dismissHero(this.viewingHero);
+  }
+
+  async dismissHero(hero: Hero): Promise<void> {
+    const alert = await this.alert.create({
+      header: 'Dismiss Hero',
+      message: `Are you sure you want to dismiss ${hero.name}, the level ${hero.stats[HeroStat.LVL]} ${hero.job}?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Yes, Dismiss',
+          handler: async () => {
+            this.game.dismissHero(this.town, hero);
+            this.viewingHero = null;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

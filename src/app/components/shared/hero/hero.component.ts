@@ -72,25 +72,4 @@ export class HeroComponent implements OnInit {
 
     await alert.present();
   }
-
-  async dismiss(): Promise<void> {
-    const alert = await this.alert.create({
-      header: 'Dismiss Hero',
-      message: `Are you sure you want to dismiss ${this.hero.name}, the level ${this.hero.stats[HeroStat.LVL]} ${this.hero.job}?`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Dismiss',
-          handler: async () => {
-            this.game.dismissHero(this.town, this.hero);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
 }
