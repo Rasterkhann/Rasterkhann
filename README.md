@@ -13,6 +13,10 @@ You can join [the Discord](https://discord.gg/MG8cNts) to suggest features, repo
 * `npm run build` to build a production copy of the game
 * `npm run test` to run any tests
 
+### Notes
+
+* Some imports are very specific to avoid circular import errors. If you get circular import errors, make your `helper`/`static` imports more specific.
+
 ## New Features
 
 Please run your feature ideas past me first! I would hate to have a fantastic PR but having it not be aligned with the games goals.

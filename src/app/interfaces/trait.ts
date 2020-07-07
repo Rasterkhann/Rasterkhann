@@ -1,4 +1,4 @@
-import { Hero } from './hero';
+import { Hero, HeroStat } from './hero';
 
 export type Trait =
   'Weak' | 'Frail' | 'Ill' | 'Clumsy' | 'Reclusive' | 'Sedentary' | 'Poor' | 'Inexperienced';
@@ -17,7 +17,7 @@ export enum TraitPriority {
   Last = 'last'
 }
 
-export type TraitTriggerFunction = ({ hero }: { hero: Hero }) => void;
+export type TraitTriggerFunction = ({ hero, statBlock }: { hero: Hero, statBlock?: Record<HeroStat, number> }) => void;
 
 export enum TraitValueProp {
   VeryBad = -5,
@@ -28,6 +28,16 @@ export enum TraitValueProp {
   Good = 3,
   VeryGood = 5
 }
+
+export const TraitValueMultipliers: Record<TraitValueProp, number> = {
+  [TraitValueProp.VeryBad]:       0.5,
+  [TraitValueProp.Bad]:           0.75,
+  [TraitValueProp.SlightlyBad]:   0.9,
+  [TraitValueProp.Neutral]:       1,
+  [TraitValueProp.SlightlyGood]:  1.1,
+  [TraitValueProp.Good]:          1.25,
+  [TraitValueProp.VeryGood]:      1.5
+};
 
 export interface TraitEffect {
   priority: TraitPriority;

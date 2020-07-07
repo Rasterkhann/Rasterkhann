@@ -2,3 +2,12 @@
 .hero-stat {
   text-align: center;
 }
+
+.exp-row {
+  display: flex;
+  align-items: center;
+
+  ion-button {
+    margin-left: 10px;
+  }
+}

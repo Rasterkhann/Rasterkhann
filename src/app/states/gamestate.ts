@@ -5,14 +5,15 @@ import { ImmutableContext } from '@ngxs-labs/immer-adapter';
 
 import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes,
-  RecruitHero, DismissHero, RerollAdventures, StartAdventure } from '../actions';
-import { IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure } from '../interfaces';
+  RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold } from '../actions';
+import { IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure, HeroStat } from '../interfaces';
 import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
-  getTownProspectiveHeroes, getTownRecruitedHeroes, calculateProspectiveHeroMaxTotal,
-  getTownActiveAdventures, getTownPotentialAdventures, calculateMaxPotentialAdventures,
-  getTownCanDoAnyAdventures,
+  getCurrentTownProspectiveHeroes, getCurrentTownRecruitedHeroes, calculateProspectiveHeroMaxTotal,
+  getCurrentTownActiveAdventures, getCurrentTownPotentialAdventures, calculateMaxPotentialAdventures,
+  getCurrentTownCanDoAnyAdventures,
   doAdventureEncounter,
-  finalizeAdventure} from '../helpers';
+  finalizeAdventure,
+  checkHeroLevelUp } from '../helpers';
 
 import { environment } from '../../environments/environment';
 import { BuildingData } from '../static';
@@ -51,27 +52,27 @@ export class GameState {
 
   @Selector()
   public static currentTownCanDoAdventures(state: IGameState): boolean {
-    return getTownCanDoAnyAdventures(state);
+    return getCurrentTownCanDoAnyAdventures(state);
   }
 
   @Selector()
   public static currentTownProspectiveHeroes(state: IGameState): ProspectiveHero[] {
-    return getTownProspectiveHeroes(state);
+    return getCurrentTownProspectiveHeroes(state);
   }
 
   @Selector()
   public static currentTownRecruitedHeroes(state: IGameState): Hero[] {
-    return getTownRecruitedHeroes(state);
+    return getCurrentTownRecruitedHeroes(state);
   }
 
   @Selector()
   public static currentTownActiveAdventures(state: IGameState): Adventure[] {
-    return getTownActiveAdventures(state);
+    return getCurrentTownActiveAdventures(state);
   }
 
   @Selector()
   public static currentTownPotentialAdventures(state: IGameState): Adventure[] {
-    return getTownPotentialAdventures(state);
+    return getCurrentTownPotentialAdventures(state);
   }
 
   constructor(
@@ -219,6 +220,36 @@ export class GameState {
     });
   }
 
+  @Action(HeroGainEXP)
+  @ImmutableContext()
+  heroGainExp({ setState }: StateContext<IGameState>, { hero, exp }: HeroGainEXP): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === hero.uuid);
+      if (!heroRef) { return state; }
+
+      heroRef.currentStats[HeroStat.EXP] += exp;
+      checkHeroLevelUp(heroRef);
+
+      return state;
+    });
+  }
+
+  @Action(HeroGainGold)
+  @ImmutableContext()
+  heroGainGold({ setState }: StateContext<IGameState>, { hero, gold }: HeroGainGold): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === hero.uuid);
+      if (!heroRef) { return state; }
+
+      heroRef.currentStats[HeroStat.GOLD] += gold;
+      checkHeroLevelUp(heroRef);
+
+      return state;
+    });
+  }
+
   @Action(DismissHero)
   @ImmutableContext()
   dismissHero({ setState }: StateContext<IGameState>, { hero }: DismissHero): void {
@@ -286,7 +317,6 @@ export class GameState {
         if (adv.encounterTicks[0] < 0) {
           doAdventureEncounter(town, adv);
           adv.encounterTicks.shift();
-          adv.encounterTicks = adv.encounterTicks.filter(Boolean);
         }
 
         if (adv.encounterTicks.length === 0) {

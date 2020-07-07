@@ -30,7 +30,7 @@ export class WatchtowerComponent implements OnInit {
   @Select((state: any) => state.gamestate.options[GameOption.ToggleUpgradeVisiblity]) upgradeVisibility$: Observable<boolean>;
 
   public get version(): string {
-    return `${environment.version.version}-${environment.version.branch}-${environment.version.revision}`;
+    return `${environment.version.version}-${environment.version.branch}-${environment.version.revision}-${environment.full ? 'FULL RELEASE' : 'DEMO RELEASE'}`;
   }
 
   constructor(private alert: AlertController, public game: GameService) { }

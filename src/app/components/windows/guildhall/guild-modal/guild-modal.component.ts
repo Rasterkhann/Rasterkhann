@@ -10,6 +10,7 @@ import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait } from '../../../../i
 import { GameService } from '../../../../services/game.service';
 import { calculateProspectiveHeroMaxTotal } from '../../../../helpers';
 import { TraitEffects } from '../../../../static';
+import { HeroService } from '../../../../services/hero.service';
 
 @Component({
   selector: 'app-guild-modal',
@@ -28,11 +29,21 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   public viewingHero: Hero | null;
 
-  constructor(private modal: ModalController, private alert: AlertController, public game: GameService) { }
+  constructor(
+    private modal: ModalController,
+    private alert: AlertController,
+    public game: GameService,
+    public heroCreator: HeroService
+  ) { }
 
   ngOnInit(): void {
     this.activeHeroes$ = this.recruitedHeroes$.subscribe(d => {
       this.canBuyHeroes = d.length < calculateProspectiveHeroMaxTotal(this.town);
+
+      d.forEach(h => {
+        if (!this.viewingHero || h.uuid !== this.viewingHero.uuid) { return; }
+        this.viewingHero = h;
+      });
     });
   }
 
@@ -55,6 +66,36 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   dismissCurrentHero(): void {
     if (!this.viewingHero) { return; }
     this.dismissHero(this.viewingHero);
+  }
+
+  trainCurrentHero(): void {
+    if (!this.viewingHero) { return; }
+    this.trainHero(this.viewingHero);
+  }
+
+  async trainHero(hero: Hero): Promise<void> {
+    const cost = this.heroCreator.heroTrainCost(this.town, hero);
+
+    // TODO: import bignum pipe and format cost
+    const alert = await this.alert.create({
+      header: 'Train Hero',
+      message: `Are you sure you want to train ${hero.name} to the level ${hero.stats[HeroStat.LVL] + 1} ${hero.job}?
+       It will cost ${cost} gold.`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Yes, Train',
+          handler: async () => {
+            this.game.trainHero(this.town, hero);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async dismissHero(hero: Hero): Promise<void> {

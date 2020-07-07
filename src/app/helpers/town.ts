@@ -1,7 +1,8 @@
 
-import { IGameState, IGameTown, Hero, ProspectiveHero, Building, Adventure } from '../interfaces';
+import { IGameState, IGameTown, Hero, ProspectiveHero, Building, Adventure, HeroStat } from '../interfaces';
 import { featureNameToBuildingHash } from './building';
 import { calculateMaxActiveAdventures } from './adventure';
+import { canHeroGoOnAdventure } from './hero';
 
 export function getCurrentTownFromState(state: IGameState): IGameTown {
   return { name: state.currentTown, ...state.towns[state.currentTown] };
@@ -33,32 +34,37 @@ export function calculateGoldGain(state: IGameState): bigint {
   return (BigInt(town.buildings[Building.House].level) * goldMultiplier) + town.goldPerTick;
 }
 
-export function getTownRecruitedHeroes(state: IGameState): Hero[] {
+export function getCurrentTownRecruitedHeroes(state: IGameState): Hero[] {
   const town = getCurrentTownFromState(state);
   return town.recruitedHeroes;
 }
 
-export function getTownProspectiveHeroes(state: IGameState): ProspectiveHero[] {
+export function getCurrentTownProspectiveHeroes(state: IGameState): ProspectiveHero[] {
   const town = getCurrentTownFromState(state);
   return town.prospectiveHeroes;
 }
 
-export function getTownActiveAdventures(state: IGameState): Adventure[] {
+export function getCurrentTownActiveAdventures(state: IGameState): Adventure[] {
   const town = getCurrentTownFromState(state);
   return town.activeAdventures;
 }
 
-export function getTownPotentialAdventures(state: IGameState): Adventure[] {
+export function getCurrentTownPotentialAdventures(state: IGameState): Adventure[] {
   const town = getCurrentTownFromState(state);
   return town.potentialAdventures;
 }
 
-export function getTownAnyHeroesFree(state: IGameState): boolean {
-  const town = getCurrentTownFromState(state);
-  return town.recruitedHeroes.some((h: Hero) => !h.onAdventure);
+// heroes are only free if they're not on an adventure and have full STA
+export function getTownAllHeroesFree(town: IGameTown): Hero[] {
+  return town.recruitedHeroes.filter((h: Hero) => canHeroGoOnAdventure(h));
 }
 
-export function getTownCanDoAnyAdventures(state: IGameState): boolean {
+export function getCurrentTownAnyHeroesFree(state: IGameState): boolean {
   const town = getCurrentTownFromState(state);
-  return getTownAnyHeroesFree(state) && getTownActiveAdventures(state).length < calculateMaxActiveAdventures(town);
+  return getTownAllHeroesFree(town).length > 0;
+}
+
+export function getCurrentTownCanDoAnyAdventures(state: IGameState): boolean {
+  const town = getCurrentTownFromState(state);
+  return getCurrentTownAnyHeroesFree(state) && getCurrentTownActiveAdventures(state).length < calculateMaxActiveAdventures(town);
 }

@@ -1,6 +1,6 @@
-import { IGameTown, Adventure, Hero } from '../interfaces';
+import { IGameTown, Adventure, Hero, AdventureDifficulty } from '../interfaces';
 import { getTownHeroByUUID, checkHeroLevelUp } from './hero';
-import { doCombat } from './combat';
+import { doCombat, getTownExpMultiplier, getTownGoldMultiplier } from './combat';
 
 export function calculateMaxActiveAdventures(town: IGameTown): number {
   return 1;
@@ -14,9 +14,17 @@ export function calculateMaxNumberAdventureEncounters(town: IGameTown): number {
   return 3;
 }
 
+export function calculateAvailableDifficulties(town: IGameTown): AdventureDifficulty[] {
+  return [
+    AdventureDifficulty.VeryEasy, AdventureDifficulty.Easy,
+    AdventureDifficulty.Normal,
+    AdventureDifficulty.Hard, AdventureDifficulty.VeryHard
+  ];
+}
+
 export function doAdventureEncounter(town: IGameTown, adventure: Adventure): void {
   const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean) as Hero[];
-  doCombat(chosenHeroes, adventure);
+  doCombat(town, chosenHeroes, adventure);
 
   // TODO: give xp, gold, lose stamina
   chosenHeroes.forEach(h => checkHeroLevelUp(h));
@@ -29,6 +37,9 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): void {
   chosenHeroes.forEach(h => {
     if (!h) { return; }
     h.onAdventure = '';
+
+    // TODO: exp mult, gold mult, reward based on adventure level, difficulty
+
     checkHeroLevelUp(h);
   });
 }

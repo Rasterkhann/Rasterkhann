@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
-import { IGameTown, Adventure } from '../../../interfaces';
+import { IGameTown, Adventure, AdventureDifficulty } from '../../../interfaces';
 import { GameService } from '../../../services/game.service';
 import { getTownHeroByUUID } from '../../../helpers';
 
@@ -39,6 +39,18 @@ export class AdventureComponent implements OnInit {
     }
 
     return `${split[0]}h ${split[1]}m ${split[2]}s`;
+  }
+
+  formatDifficulty(difficulty: AdventureDifficulty): string {
+    switch (difficulty) {
+      case AdventureDifficulty.VeryEasy:  return 'Very Easy';
+      case AdventureDifficulty.Easy:      return 'Easy';
+      case AdventureDifficulty.Normal:    return 'Normal';
+      case AdventureDifficulty.Hard:      return 'Hard';
+      case AdventureDifficulty.VeryHard:  return 'Very Hard';
+
+      default:                            return 'Unknown';
+    }
   }
 
   async go(): Promise<void> {

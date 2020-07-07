@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { random, sum } from 'lodash';
+import { random, sum, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 import { adventure as adventureName } from 'fantastical';
 
-import { IGameTown, Adventure, Building, Hero } from '../interfaces';
-import { calculateMaxNumberAdventureEncounters } from '../helpers';
+import { IGameTown, Adventure, Building, Hero, AdventureDifficulty } from '../interfaces';
+import { calculateMaxNumberAdventureEncounters, calculateAvailableDifficulties, getTownAllHeroesFree } from '../helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,14 @@ export class AdventureService {
   generateAdventure(town: IGameTown): Adventure {
 
     const encounterCount = random(1, calculateMaxNumberAdventureEncounters(town));
+    const difficulty = sample(calculateAvailableDifficulties(town)) as AdventureDifficulty;
 
     const ticks = Array(encounterCount).fill(600);
 
     const adventure: Adventure = {
       uuid: uuid(),
       name: adventureName(),
+      difficulty,
       duration: sum(ticks),
       encounterLevel: random(1, town.buildings[Building.Cave].level),
       encounterTicks: ticks,
@@ -34,7 +36,11 @@ export class AdventureService {
   }
 
   pickHeroesForAdventure(town: IGameTown, adventure: Adventure): Hero[] {
-    return town.recruitedHeroes.filter(h => !h.onAdventure).slice(0, 1);
+    const freeHeroes = getTownAllHeroesFree(town);
+    const mainHero = sample(freeHeroes);
+    if (!mainHero) { return []; }
+
+    return [mainHero];
   }
 
 }

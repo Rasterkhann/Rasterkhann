@@ -4,11 +4,12 @@ import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
-  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures, StartAdventure } from '../actions';
-import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure } from '../interfaces';
-import { doesTownHaveFeature } from '../helpers';
+  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP } from '../actions';
+import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure, HeroStat } from '../interfaces';
+import { doesTownHaveFeature, getCurrentStat } from '../helpers';
 import { BuildingData } from '../static';
 import { AdventureService } from './adventure.service';
+import { HeroService } from './hero.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class GameService {
 
   constructor(
     private store: Store,
-    private advCreator: AdventureService
+    private advCreator: AdventureService,
+    private heroCreator: HeroService
   ) {
     this.init();
   }
@@ -152,6 +154,31 @@ export class GameService {
     this.store.dispatch(new RecruitHero(prosHero)).subscribe(() => {
       this.store.dispatch(new SpendGold(prosHero.cost));
     });
+  }
+
+  public canTrainHero(town: IGameTown, hero: Hero): boolean {
+    if (!hero) { return false; }
+
+    if (hero.onAdventure) { return false; }
+
+    if (hero.stats[HeroStat.LVL] >= town.buildings[Building.GuildHall].level) { return false; }
+
+    const cost = this.heroCreator.heroTrainCost(town, hero);
+    if (town.gold < cost) { return false; }
+
+    return true;
+  }
+
+  public trainHero(town: IGameTown, hero: Hero): void {
+    if (!this.canTrainHero(town, hero)) { return; }
+
+    const expNeeded = hero.stats[HeroStat.EXP] - getCurrentStat(hero, HeroStat.EXP);
+    const cost = this.heroCreator.heroTrainCost(town, hero);
+
+    this.store.dispatch(new HeroGainEXP(hero, expNeeded))
+      .subscribe(() => {
+        this.store.dispatch(new SpendGold(cost));
+      });
   }
 
   public dismissHero(town: IGameTown, hero: Hero): void {

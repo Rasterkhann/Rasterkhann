@@ -46,7 +46,10 @@
       <ion-label class="ion-text-wrap">
         <h2>{{ viewingHero.name }}</h2>
         <p>Lv.{{ viewingHero.stats.lvl }} {{ viewingHero.job }}</p>
-        <p>{{ viewingHero.currentStats.exp | bignum }} / {{ viewingHero.stats.exp | bignum }} EXP</p>
+        <p class="exp-row">
+          {{ viewingHero.currentStats.exp | bignum }} / {{ viewingHero.stats.exp | bignum }} EXP
+          <ion-button class="inline-button" color="secondary" [disabled]="!game.canTrainHero(town, viewingHero)" (click)="trainCurrentHero()">Train</ion-button>
+        </p>
         <p>{{ viewingHero.currentStats.gold | bignum }} GOLD</p>
       </ion-label>
     </ion-item>

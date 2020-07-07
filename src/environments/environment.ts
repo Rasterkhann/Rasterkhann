@@ -2,11 +2,14 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { version } from './versions';
+
 export const environment = {
   production: false,
+  full: true,
 
   version: {
-    revision: 'dev',
+    revision: `${version.version}-dev`,
     branch: 'branch',
     version: 'local'
   }

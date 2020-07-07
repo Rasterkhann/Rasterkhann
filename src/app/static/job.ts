@@ -3,6 +3,8 @@ import { species } from 'fantastical';
 
 import { HeroJobStatic, HeroJob, HeroStat } from '../interfaces';
 
+import * as JobActions from './jobactions';
+
 export const JobEffects: Record<HeroJob, HeroJobStatic> = {
   [HeroJob.Adventurer]: {
     description: 'Standard adventuring class. Balanced stats.',
@@ -24,14 +26,15 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     statGrowth: {
       [HeroStat.LVL]: () => 1,
       [HeroStat.EXP]: () => 100,
-      [HeroStat.HP]: () => 20,
-      [HeroStat.SP]: () => 10,
-      [HeroStat.ATK]: () => 1,
-      [HeroStat.DEF]: () => 1,
-      [HeroStat.STA]: () => 5,
-      [HeroStat.GOLD]: () => 3
+      [HeroStat.HP]: () => 12,
+      [HeroStat.SP]: () => 4,
+      [HeroStat.ATK]: () => 2,
+      [HeroStat.DEF]: () => 2,
+      [HeroStat.STA]: () => 4,
+      [HeroStat.GOLD]: () => 50
     },
-    triggers: {}
+    triggers: {},
+    actions: [JobActions.Attack]
   },
 
   [HeroJob.Cleric]: {
@@ -51,14 +54,15 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     statGrowth: {
       [HeroStat.LVL]: () => 1,
       [HeroStat.EXP]: () => 125,
-      [HeroStat.HP]: () => 5,
+      [HeroStat.HP]: () => 10,
       [HeroStat.SP]: () => 3,
-      [HeroStat.ATK]: () => 1,
-      [HeroStat.DEF]: () => 2,
+      [HeroStat.ATK]: () => 2,
+      [HeroStat.DEF]: () => 3,
       [HeroStat.STA]: () => 5,
-      [HeroStat.GOLD]: () => 5
+      [HeroStat.GOLD]: () => 0
     },
-    triggers: {}
+    triggers: {},
+    actions: [JobActions.Attack]
   },
 
   [HeroJob.Mage]: {
@@ -67,7 +71,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     sprites: ['mage1', 'mage2', 'mage3', 'mage4'],
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,
-      [HeroStat.EXP]: 150,
+      [HeroStat.EXP]: 1,
       [HeroStat.HP]: 1,
       [HeroStat.SP]: 1,
       [HeroStat.ATK]: 1.4,
@@ -77,15 +81,16 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => 1,
+      [HeroStat.EXP]: () => 150,
       [HeroStat.HP]: () => 5,
-      [HeroStat.SP]: () => 1,
-      [HeroStat.ATK]: () => 3,
-      [HeroStat.DEF]: () => 1,
-      [HeroStat.STA]: () => 4,
-      [HeroStat.GOLD]: () => 10
+      [HeroStat.SP]: () => 3,
+      [HeroStat.ATK]: () => 5,
+      [HeroStat.DEF]: () => 2,
+      [HeroStat.STA]: () => 6,
+      [HeroStat.GOLD]: () => 0
     },
-    triggers: {}
+    triggers: {},
+    actions: [JobActions.Attack]
   },
 
   [HeroJob.Thief]: {
@@ -94,7 +99,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     sprites: ['thief1', 'thief2', 'thief3', 'thief4'],
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,
-      [HeroStat.EXP]: 110,
+      [HeroStat.EXP]: 1,
       [HeroStat.HP]: 1,
       [HeroStat.SP]: 1,
       [HeroStat.ATK]: 1,
@@ -104,15 +109,16 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => 1,
+      [HeroStat.EXP]: () => 110,
       [HeroStat.HP]: () => 7,
       [HeroStat.SP]: () => 5,
-      [HeroStat.ATK]: () => 2,
-      [HeroStat.DEF]: () => 1,
+      [HeroStat.ATK]: () => 4,
+      [HeroStat.DEF]: () => 2,
       [HeroStat.STA]: () => 3,
       [HeroStat.GOLD]: () => 100
     },
-    triggers: {}
+    triggers: {},
+    actions: [JobActions.Attack]
   },
 
   [HeroJob.Warrior]: {
@@ -134,11 +140,12 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [HeroStat.EXP]: () => 200,
       [HeroStat.HP]: () => 15,
       [HeroStat.SP]: () => 1,
-      [HeroStat.ATK]: () => 2,
-      [HeroStat.DEF]: () => 1,
+      [HeroStat.ATK]: () => 5,
+      [HeroStat.DEF]: () => 3,
       [HeroStat.STA]: () => 2,
       [HeroStat.GOLD]: () => 15
     },
-    triggers: {}
+    triggers: {},
+    actions: [JobActions.Attack]
   }
 };

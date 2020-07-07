@@ -49,7 +49,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     name: 'Armory',
     description: 'Create better gear for your heroes.',
     requires: {
-      [Building.GuildHall]: 1
+      [Building.GuildHall]: 10
     },
     upgradeTime: (level) => level * 20,
     levelCost: (x) => BigInt(Math.floor((250 * x) + (3 * (1.25 ** x)))),
@@ -60,7 +60,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     name: 'Alchemist',
     description: 'Create better potions for your heroes.',
     requires: {
-      [Building.GuildHall]: 1
+      [Building.GuildHall]: 20
     },
     upgradeTime: (level) => level * 15,
     levelCost: (x) => BigInt(Math.floor((350 * x) + (2 * (1.25 ** x)))),
@@ -71,7 +71,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     name: 'Inn',
     description: 'Allow your heroes to regain their stamina more quickly after an adventure.',
     requires: {
-      [Building.GuildHall]: 1
+      [Building.GuildHall]: 5
     },
     upgradeTime: (level) => level * 60,
     levelCost: (x) => BigInt(Math.floor((650 * x) + (1.5 * (1.32 ** x)))),
@@ -82,8 +82,8 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     name: 'Bazaar',
     description: 'Allow your heroes to buy items before an adventure.',
     requires: {
-      [Building.Armory]: 1,
-      [Building.Alchemist]: 1,
+      [Building.Armory]: 5,
+      [Building.Alchemist]: 10,
     },
     upgradeTime: (level) => level * 30,
     levelCost: (x) => BigInt(Math.floor((875 * x) + (5 * (1.2 ** x)))),

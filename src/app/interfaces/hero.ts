@@ -34,6 +34,19 @@ export interface HeroJobStatic {
   statBaseMultiplier: Record<HeroStat, number>;
   statGrowth: Record<HeroStat, (hero?: Hero) => number>;
   triggers: Partial<Record<TraitTrigger, TraitTriggerFunction>>;
+  actions: HeroJobAction[];
+}
+
+export interface HeroJobActionTargetting {
+  allAllies: Hero[];
+  livingEnemies: Hero[];
+}
+
+export interface HeroJobAction {
+  staCost: () => number;
+  spCost: () => number;
+  targets: (targetting: HeroJobActionTargetting) => Hero[];
+  act: (hero: Hero, targets: Hero[]) => void;
 }
 
 export interface Hero {

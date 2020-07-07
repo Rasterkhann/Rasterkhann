@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { shuffle, take, random, sum, noop } from 'lodash';
-import { v4 as uuid } from 'uuid';
+import { sum } from 'lodash';
 
-import { Hero, IGameTown, ProspectiveHero, TraitPriority,
-  HeroStat, Building, HeroJobStatic, TraitEffect, TraitTrigger, Trait } from '../interfaces';
-import { calculateAvailableJobs, calculateMaxNumberOfTraits, calculateAvailableTraits, ensureHeroStatValue } from '../helpers';
+import { Hero, IGameTown, ProspectiveHero, HeroStat, Building, HeroJobStatic, Adventure, Trait, TraitValueMultipliers } from '../interfaces';
+import { calculateHeroTrainingGoldPerXP, generateHero, generateMonster, getCurrentStat } from '../helpers';
 import { JobEffects, TraitEffects } from '../static';
 
 @Injectable({
@@ -15,74 +13,20 @@ export class HeroService {
 
   constructor() { }
 
+  generateMonster(town: IGameTown, adventure: Adventure): Hero {
+    return generateMonster(town, adventure);
+  }
+
   generateHero(town: IGameTown): Hero {
+    return generateHero(town);
+  }
 
-    const guildHallLevel = town.buildings[Building.GuildHall].level || 1;
-
-    const allJobs = calculateAvailableJobs(town);
-    const allTraits = calculateAvailableTraits(town);
-    const maxTraits = calculateMaxNumberOfTraits(town);
-
-    const job = take(shuffle(allJobs))[0];
-    const numTraits = random(1, maxTraits);
-    const traits: Trait[] = [];
-
-    const jobStatic: HeroJobStatic = JobEffects[job];
-
-    // pick traits
-    if (numTraits > 1) {
-      traits.push(...take(shuffle(allTraits.filter(t => TraitEffects[t].priority !== TraitPriority.Last)), numTraits - 1));
-    }
-
-    traits.push(...take(shuffle(allTraits.filter(t => TraitEffects[t].priority === TraitPriority.Last))));
-
-    // pick a hero level
-    const heroLevel = random(1, guildHallLevel);
-
-    const stats: Partial<Record<HeroStat, number>> = {
-      [HeroStat.LVL]: heroLevel
-    };
-
-    // create the random stat block
-    Object.values(HeroStat).forEach(stat => {
-      if (stats[stat]) { return; }
-      stats[stat] = random(1, heroLevel * jobStatic.statGrowth[stat]() * jobStatic.statBaseMultiplier[stat]);
-    });
-
-    // create the hero
-    const hero: Hero = {
-      uuid: uuid(),
-      name: jobStatic.chooseName(),
-      sprite: take(shuffle(jobStatic.sprites))[0],
-      onAdventure: '',
-
-      job,
-      traits,
-
-      stats: stats as Record<HeroStat, number>,
-      currentStats: stats as Record<HeroStat, number>,
-      gear: {}
-    };
-
-    // make sure heroes have at least a base of stats before they get ruined by traits
-    ensureHeroStatValue(hero, HeroStat.LVL,  1);
-    ensureHeroStatValue(hero, HeroStat.ATK,  1);
-    ensureHeroStatValue(hero, HeroStat.DEF,  1);
-    ensureHeroStatValue(hero, HeroStat.HP,   50);
-    ensureHeroStatValue(hero, HeroStat.SP,   10);
-    ensureHeroStatValue(hero, HeroStat.STA,  10);
-    ensureHeroStatValue(hero, HeroStat.GOLD, 0);
-    ensureHeroStatValue(hero, HeroStat.EXP,  100);
-
-    // do onSpawn for all traits
-    traits.forEach(trait => {
-      const traitEff: TraitEffect = TraitEffects[trait];
-      if (!traitEff.triggers || !traitEff.triggers[TraitTrigger.Spawn]) { return; }
-
-      (traitEff.triggers[TraitTrigger.Spawn] || noop)({ hero });
-    });
-
-    return hero;
+  // trait average value prop multiplier - all bad means the cost goes down, all good means it goes up
+  getTraitTotalMultiplier(traits: Trait[]): number {
+    return sum(traits.map(t => {
+      const trait = TraitEffects[t];
+      return TraitValueMultipliers[trait.valueProp];
+    })) / traits.length;
   }
 
   generateProspectiveHero(town: IGameTown): ProspectiveHero {
@@ -92,13 +36,21 @@ export class HeroService {
     const hero = this.generateHero(town);
     const rating = this.getRatingForHero(town, hero);
 
-    const baseCost = rating * hero.stats[HeroStat.LVL] * guildHallLevel * guildHallLevel * JobEffects[hero.job].statGrowth[HeroStat.GOLD]();
+    const baseCost = rating
+                   * hero.stats[HeroStat.LVL]
+                   * guildHallLevel
+                   * this.getTraitTotalMultiplier(hero.traits)
+                   * JobEffects[hero.job].statGrowth[HeroStat.GOLD]();
 
     return {
       hero,
       cost: BigInt(Math.floor(baseCost)),
       rating
     };
+  }
+
+  heroTrainCost(town: IGameTown, hero: Hero): bigint {
+    return BigInt(hero.stats[HeroStat.EXP] - getCurrentStat(hero, HeroStat.EXP)) * calculateHeroTrainingGoldPerXP(town);
   }
 
   private getRatingForHero(town: IGameTown, hero: Hero): number {
