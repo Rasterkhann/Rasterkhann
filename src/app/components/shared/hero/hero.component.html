@@ -15,6 +15,8 @@
       {{ hero.name }} ({{ hero.job.substring(0, 3).toUpperCase() }} Lv.{{ hero.stats.lvl }})
     </h3>
 
+    <p *ngIf="!cost">Status: {{ status }}</p>
+
     <p *ngIf="cost">Recruitment Fee: {{ cost | bignum }} gold</p>
 
     <div class="icons" *ngIf="stars.length > 0">
@@ -22,7 +24,10 @@
     </div>
 
     <ion-row class="stat-block">
-      <ion-col class="stat" size="4" *ngFor="let stat of statOrder">
+      <ion-col class="stat" size="4" *ngFor="let stat of topStats">
+        {{ stat | uppercase }} {{ getStat(stat) | bignum }} <span *ngIf="!cost">/ {{ getTotalStat(stat) | bignum }}</span>
+      </ion-col>
+      <ion-col class="stat" size="4" *ngFor="let stat of bottomStats">
         {{ stat | uppercase }} {{ getStat(stat) | bignum }}
       </ion-col>
     </ion-row>

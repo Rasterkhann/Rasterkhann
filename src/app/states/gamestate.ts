@@ -3,17 +3,21 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext } from '@ngxs-labs/immer-adapter';
 
-import { GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
+import {
+  GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes,
-  RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold } from '../actions';
-import { IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure, HeroStat } from '../interfaces';
-import { createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
+  RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold
+} from '../actions';
+import {
+  IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure, HeroStat
+} from '../interfaces';
+import {
+  createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
   getCurrentTownProspectiveHeroes, getCurrentTownRecruitedHeroes, calculateProspectiveHeroMaxTotal,
   getCurrentTownActiveAdventures, getCurrentTownPotentialAdventures, calculateMaxPotentialAdventures,
-  getCurrentTownCanDoAnyAdventures,
-  doAdventureEncounter,
-  finalizeAdventure,
-  checkHeroLevelUp } from '../helpers';
+  getCurrentTownCanDoAnyAdventures, doAdventureEncounter, finalizeAdventure, checkHeroLevelUp,
+  calculateRestingRate
+} from '../helpers';
 
 import { environment } from '../../environments/environment';
 import { BuildingData } from '../static';
@@ -183,6 +187,26 @@ export class GameState {
   }
 
   // hero functions
+  @Action(GameLoop)
+  @ImmutableContext()
+  restHeroes({ setState }: StateContext<IGameState>): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+
+      const restValue = calculateRestingRate(town);
+
+      town.recruitedHeroes.forEach(h => {
+        if (h.onAdventure) { return; }
+
+        [HeroStat.HP, HeroStat.SP, HeroStat.STA].forEach(stat => {
+          h.currentStats[stat] = Math.min(h.currentStats[stat] + restValue, h.stats[stat]);
+        });
+      });
+
+      return state;
+    });
+  }
+
   @Action(RerollHeroes)
   @ImmutableContext()
   rerollHeroes({ setState }: StateContext<IGameState>): void {

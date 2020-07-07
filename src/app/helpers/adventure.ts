@@ -25,8 +25,6 @@ export function calculateAvailableDifficulties(town: IGameTown): AdventureDiffic
 export function doAdventureEncounter(town: IGameTown, adventure: Adventure): void {
   const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean) as Hero[];
   doCombat(town, chosenHeroes, adventure);
-
-  // TODO: give xp, gold, lose stamina
   chosenHeroes.forEach(h => checkHeroLevelUp(h));
 }
 

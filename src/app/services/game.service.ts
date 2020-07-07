@@ -79,7 +79,7 @@ export class GameService {
 
     if (featureRef.requiresFeature) {
       const allPreFeatures = Object.keys(featureRef.requiresFeature)
-        .every(feat => town.buildings[building].features && town.buildings[building].features[feat]);
+        .every(feat => this.doesTownHaveFeature(town, feat));
       if (!allPreFeatures) { return false; }
     }
 

@@ -7,6 +7,10 @@ import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
 
+export function calculateRestingRate(town: IGameTown): number {
+  return 1;
+}
+
 export function calculateMaxNumberOfTraits(town: IGameTown): number {
   return 1;
 }
@@ -38,7 +42,8 @@ export function getCurrentStat(hero: Hero, stat: HeroStat): number {
 export function canHeroGoOnAdventure(hero: Hero): boolean {
   return !hero.onAdventure
       && getCurrentStat(hero, HeroStat.STA) === hero.stats[HeroStat.STA]
-      && getCurrentStat(hero, HeroStat.HP) === hero.stats[HeroStat.HP];
+      && getCurrentStat(hero, HeroStat.HP) === hero.stats[HeroStat.HP]
+      && getCurrentStat(hero, HeroStat.SP) === hero.stats[HeroStat.SP];
 }
 
 export function generateHero(town: IGameTown, level?: number): Hero {

@@ -17,7 +17,7 @@ function calculateDamage(atk: number, def: number): number {
 
 export const Attack: HeroJobAction = {
   staCost: () => 1,
-  spCost: () => 1,
+  spCost: () => 0,
   targets: (targetting: HeroJobActionTargetting) => {
     return [sample(targetting.livingEnemies)] as Hero[];
   },

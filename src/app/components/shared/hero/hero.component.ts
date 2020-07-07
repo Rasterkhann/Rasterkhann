@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 import { Hero, IGameTown, HeroStat } from '../../../interfaces';
 import { GameService } from '../../../services/game.service';
-import { AlertController } from '@ionic/angular';
+import { canHeroGoOnAdventure } from '../../../helpers';
 
 @Component({
   selector: 'app-hero',
@@ -18,10 +19,19 @@ export class HeroComponent implements OnInit {
   @Input() cost?: bigint;
   @Input() canBuyHero?: boolean;
 
-  public readonly statOrder: HeroStat[] = [
-    HeroStat.HP, HeroStat.SP, HeroStat.STA,
+  public readonly topStats: HeroStat[] = [
+    HeroStat.HP, HeroStat.SP, HeroStat.STA
+  ];
+
+  public readonly bottomStats: HeroStat[] = [
     HeroStat.ATK, HeroStat.DEF, HeroStat.GOLD
   ];
+
+  public get status(): string {
+    if (this.hero.onAdventure)            { return 'Adventuring'; }
+    if (!canHeroGoOnAdventure(this.hero)) { return 'Resting'; }
+    return 'Idle';
+  }
 
   public get stars(): string[] {
     if (!this.rating) { return []; }
@@ -46,8 +56,12 @@ export class HeroComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public getStat(stat: HeroStat): number {
+  public getTotalStat(stat: HeroStat): number {
     return this.hero.stats[stat];
+  }
+
+  public getStat(stat: HeroStat): number {
+    return this.hero.currentStats[stat];
   }
 
   async recruit(): Promise<void> {

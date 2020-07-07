@@ -68,21 +68,21 @@ export function doCombat(town: IGameTown, heroes: Hero[], adventure: Adventure):
   while (shouldCombatContinue(heroes, monsters)) {
     teamFightingMembers(heroes).forEach(h => takeTurn(h, { allAllies: heroes, livingEnemies: teamFightingMembers(monsters) }));
     teamFightingMembers(monsters).forEach(m => takeTurn(m, { allAllies: monsters, livingEnemies: teamFightingMembers(heroes) }));
-
-    console.log(heroes, monsters);
   }
 
-  const expMult = getTownExpMultiplier(town);
-  const goldMult = getTownGoldMultiplier(town);
+  // if they can still fight, they won
+  if (canTeamFight(heroes)) {
+    const expMult = getTownExpMultiplier(town);
+    const goldMult = getTownGoldMultiplier(town);
 
-  const earnedExp = sum(monsters.map(m => m.stats[HeroStat.EXP]));
-  const earnedGold = sum(monsters.map(m => m.stats[HeroStat.GOLD]));
+    const earnedExp = Math.floor(expMult * sum(monsters.map(m => m.stats[HeroStat.EXP])));
+    const earnedGold = Math.floor(goldMult * sum(monsters.map(m => m.stats[HeroStat.GOLD])));
 
-  console.log(earnedExp, earnedGold);
+    heroes.forEach(hero => {
+      hero.currentStats[HeroStat.EXP] += earnedExp;
+      hero.currentStats[HeroStat.GOLD] += earnedGold;
+    });
+  }
 
   // TODO: post-combat actions
-
-  // TODO: give EXP based on level difference * difficulty
-  // TODO: give gold based on enemy spawned gold
-  // TODO: inn should restore hp/sta at a rate of 1/sec - heroes should probably have a resting status if they're currently at the inn and it should be displayed in the list
 }
