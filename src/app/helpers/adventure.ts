@@ -1,6 +1,6 @@
-import { IGameTown, Adventure, Hero, AdventureDifficulty } from '../interfaces';
+import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroStat } from '../interfaces';
 import { getTownHeroByUUID, checkHeroLevelUp } from './hero';
-import { doCombat, getTownExpMultiplier, getTownGoldMultiplier } from './combat';
+import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
 
 export function calculateMaxActiveAdventures(town: IGameTown): number {
   return 1;
@@ -29,15 +29,23 @@ export function doAdventureEncounter(town: IGameTown, adventure: Adventure): voi
 }
 
 export function finalizeAdventure(town: IGameTown, adventure: Adventure): void {
-  const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean);
+  const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean) as Hero[];
 
-  // TODO: give loot, big xp reward, big gold reward
-  chosenHeroes.forEach(h => {
-    if (!h) { return; }
-    h.onAdventure = '';
+  const expMult = getTownExpMultiplier(town);
+  const goldMult = getTownGoldMultiplier(town);
 
-    // TODO: exp mult, gold mult, reward based on adventure level, difficulty
+  const baseReward = adventure.encounterCount * adventure.encounterLevel * adventure.difficulty;
+  const expReward = 10 * baseReward * expMult;
+  const goldReward = baseReward * goldMult;
 
-    checkHeroLevelUp(h);
-  });
+  if (canTeamFight(chosenHeroes)) {
+    chosenHeroes.forEach(h => {
+      h.onAdventure = '';
+
+      h.currentStats[HeroStat.EXP] += expReward;
+      h.currentStats[HeroStat.GOLD] += goldReward;
+
+      checkHeroLevelUp(h);
+    });
+  }
 }

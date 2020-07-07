@@ -14,19 +14,19 @@ export function getTownGoldMultiplier(town: IGameTown): number {
 }
 
 // team members can only fight if they have HP and STA > 0
-function canMemberFight(member: Hero): boolean {
+export function canMemberFight(member: Hero): boolean {
   return getCurrentStat(member, HeroStat.HP) > 0 && getCurrentStat(member, HeroStat.STA) > 0;
 }
 
-function canTeamFight(team: Hero[]): boolean {
+export function canTeamFight(team: Hero[]): boolean {
   return team.some(h => canMemberFight(h));
 }
 
-function teamFightingMembers(team: Hero[]): Hero[] {
+export function teamFightingMembers(team: Hero[]): Hero[] {
   return team.filter(h => canMemberFight(h));
 }
 
-function shouldCombatContinue(adventurers: Hero[], monsters: Hero[]): boolean {
+export function shouldCombatContinue(adventurers: Hero[], monsters: Hero[]): boolean {
   return canTeamFight(adventurers) && canTeamFight(monsters);
 }
 
