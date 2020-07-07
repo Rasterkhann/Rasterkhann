@@ -76,7 +76,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   async trainHero(hero: Hero): Promise<void> {
     const cost = this.heroCreator.heroTrainCost(this.town, hero);
 
-    // TODO: import bignum pipe and format cost
+    // TODO: import bignum pipe (to game service) and format cost
     const alert = await this.alert.create({
       header: 'Train Hero',
       message: `Are you sure you want to train ${hero.name} to the level ${hero.stats[HeroStat.LVL] + 1} ${hero.job}?

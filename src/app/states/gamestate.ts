@@ -240,6 +240,8 @@ export class GameState {
       state.towns[state.currentTown].prospectiveHeroes = state.towns[state.currentTown].prospectiveHeroes
         .filter(x => x.hero.uuid !== heroRecruit.uuid);
 
+      state.towns[state.currentTown].prospectiveHeroes.push(this.heroCreator.generateProspectiveHero(state.towns[state.currentTown]));
+
       return state;
     });
   }
@@ -326,6 +328,8 @@ export class GameState {
       state.towns[state.currentTown].activeAdventures.push(modAdventure);
       state.towns[state.currentTown].potentialAdventures = state.towns[state.currentTown].potentialAdventures
         .filter(x => x.uuid !== adventure.uuid);
+
+      state.towns[state.currentTown].potentialAdventures.push(this.advCreator.generateAdventure(town));
 
       return state;
     });
