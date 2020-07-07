@@ -56,13 +56,17 @@ export function createBuildingAtLevel(level: number): BuildingInfo {
   return { level, features: {}, featureConstruction: {} };
 }
 
-export function createBasicTown(): Partial<IGameTown> {
+export function createBasicTown(): IGameTown {
   return {
+    name: '',
     gold: 0n,
     goldPerTick: 0n,
 
     recruitedHeroes: [],
     prospectiveHeroes: [],
+
+    activeAdventures: [],
+    potentialAdventures: [],
 
     buildings: {
       [Building.TownHall]: createBuildingAtLevel(1),
