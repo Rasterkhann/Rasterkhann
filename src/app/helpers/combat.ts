@@ -2,7 +2,7 @@
 import { sample, sum } from 'lodash';
 
 import { Hero, Adventure, IGameTown, HeroStat, HeroJobActionTargetting, HeroJobAction } from '../interfaces';
-import { generateMonster, getCurrentStat } from './hero';
+import { generateMonster, getCurrentStat, giveHeroGold, giveHeroEXP } from './hero';
 import { JobEffects } from '../static';
 
 export function getTownExpMultiplier(town: IGameTown): number {
@@ -79,8 +79,8 @@ export function doCombat(town: IGameTown, heroes: Hero[], adventure: Adventure):
     const earnedGold = Math.floor(goldMult * sum(monsters.map(m => m.stats[HeroStat.GOLD])));
 
     heroes.forEach(hero => {
-      hero.currentStats[HeroStat.EXP] += earnedExp;
-      hero.currentStats[HeroStat.GOLD] += earnedGold;
+      giveHeroEXP(hero, earnedExp);
+      giveHeroGold(hero, earnedGold);
     });
   }
 

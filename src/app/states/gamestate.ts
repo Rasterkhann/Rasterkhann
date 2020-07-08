@@ -17,7 +17,9 @@ import {
   getCurrentTownActiveAdventures, getCurrentTownPotentialAdventures, calculateMaxPotentialAdventures,
   getCurrentTownCanDoAnyAdventures, doAdventureEncounter, finalizeAdventure, checkHeroLevelUp,
   calculateRestingRate,
-  canHeroGoOnAdventure
+  canHeroGoOnAdventure,
+  giveHeroEXP,
+  giveHeroGold
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -268,8 +270,7 @@ export class GameState {
       const heroRef = town.recruitedHeroes.find(h => h.uuid === hero.uuid);
       if (!heroRef) { return state; }
 
-      heroRef.currentStats[HeroStat.EXP] += exp;
-      checkHeroLevelUp(heroRef);
+      giveHeroEXP(heroRef, exp);
 
       return state;
     });
@@ -283,8 +284,7 @@ export class GameState {
       const heroRef = town.recruitedHeroes.find(h => h.uuid === hero.uuid);
       if (!heroRef) { return state; }
 
-      heroRef.currentStats[HeroStat.GOLD] += gold;
-      checkHeroLevelUp(heroRef);
+      giveHeroGold(heroRef, gold);
 
       return state;
     });

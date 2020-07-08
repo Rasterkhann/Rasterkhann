@@ -131,6 +131,15 @@ export function generateMonster(town: IGameTown, adventure: Adventure): Hero {
   return baseHero;
 }
 
+export function giveHeroEXP(hero: Hero, exp: number): void {
+  hero.currentStats[HeroStat.EXP] += exp;
+  checkHeroLevelUp(hero);
+}
+
+export function giveHeroGold(hero: Hero, gold: number): void {
+  hero.currentStats[HeroStat.GOLD] += gold;
+}
+
 export function checkHeroLevelUp(hero: Hero): void {
   if (getCurrentStat(hero, HeroStat.EXP) < hero.stats[HeroStat.EXP]) { return; }
 

@@ -1,5 +1,5 @@
 import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroStat } from '../interfaces';
-import { getTownHeroByUUID, checkHeroLevelUp } from './hero';
+import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
 
 export function calculateMaxActiveAdventures(town: IGameTown): number {
@@ -47,8 +47,8 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolea
   if (canTeamFight(chosenHeroes)) {
     didSucceed = true;
     chosenHeroes.forEach(h => {
-      h.currentStats[HeroStat.EXP] += expReward;
-      h.currentStats[HeroStat.GOLD] += goldReward;
+      giveHeroEXP(h, expReward);
+      giveHeroGold(h, goldReward);
 
       checkHeroLevelUp(h);
     });
