@@ -15,6 +15,7 @@ import { CurrentInfoComponent } from '../components/current-info/current-info.co
 import { CurrentNotificationComponent } from '../components/current-notification/current-notification.component';
 
 import { AlchemistComponent } from '../components/windows/alchemist/alchemist.component';
+import { ArchivesComponent } from '../components/windows/archives/archives.component';
 import { ArmoryComponent } from '../components/windows/armory/armory.component';
 import { BazaarComponent } from '../components/windows/bazaar/bazaar.component';
 import { CaveComponent } from '../components/windows/cave/cave.component';
@@ -52,6 +53,7 @@ import { AdventureComponent } from '../components/shared/adventure/adventure.com
     CurrentNotificationComponent,
 
     AlchemistComponent,
+    ArchivesComponent,
     ArmoryComponent,
     BazaarComponent,
     CaveComponent,

@@ -55,7 +55,11 @@
    </properties>
   </object>
   <object id="20" gid="531" x="336" y="320" width="16" height="16"/>
-  <object id="21" gid="569" x="256" y="240" width="16" height="16"/>
+  <object id="21" name="archives" gid="569" x="256" y="240" width="16" height="16">
+   <properties>
+    <property name="aboveText" value="Archives"/>
+   </properties>
+  </object>
   <object id="22" name="inn" gid="488" x="80" y="368" width="16" height="16">
    <properties>
     <property name="aboveText" value="Inn"/>

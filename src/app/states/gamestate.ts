@@ -392,12 +392,12 @@ export class GameState {
   @ImmutableContext()
   notification({ setState }: StateContext<IGameState>, { notification }: NotifyMessage): void {
     setState((state: IGameState) => {
-      state.towns[state.currentTown].recentNews.push({
+      state.towns[state.currentTown].recentNews.unshift({
         timestamp: Date.now(),
         message: notification
       });
 
-      while (state.towns[state.currentTown].recentNews.length > 10) { state.towns[state.currentTown].recentNews.shift(); }
+      while (state.towns[state.currentTown].recentNews.length > 10) { state.towns[state.currentTown].recentNews.pop(); }
 
       return state;
     });

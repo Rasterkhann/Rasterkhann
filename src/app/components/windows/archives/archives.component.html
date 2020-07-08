@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Archives</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-list>
+  <app-building-info [town]="town"
+                     buildingId="archives">
+  </app-building-info>
+</ion-list>
+
+<ion-list>
+  <ion-list-header>News Archive</ion-list-header>
+
+  <ion-item *ngFor="let notification of notifications$ | async">
+    <ion-label class="ion-text-wrap">
+      <p>{{ notification.timestamp | date:'mediumTime' }}</p>
+      <h3>{{ notification.message }}</h3>
+    </ion-label>
+  </ion-item>
+</ion-list>
+
+<app-feature-list [town]="town" buildingId="archives"></app-feature-list>

@@ -9,7 +9,8 @@ export enum Building {
   Alchemist = 'alchemist',
   Inn = 'inn',
   Bazaar = 'bazaar',
-  Cave = 'cave'
+  Cave = 'cave',
+  Archives = 'archives'
 }
 
 export interface BuildingInfo {

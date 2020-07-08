@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
 
 import { Observable, Subject, timer, interval } from 'rxjs';
-import { tap, map, switchMap } from 'rxjs/operators';
+import { tap, map, switchMap, skip } from 'rxjs/operators';
 
 import { GameState } from '../../states';
 import { NewsItem } from '../../interfaces';
@@ -25,14 +25,8 @@ export class CurrentNotificationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    let hasFirstRun = true;
-    this.notifications$.subscribe(val => {
-      if (hasFirstRun) {
-        hasFirstRun = false;
-        return;
-      }
-
-      this.notificationQueue.unshift(val[val.length - 1]);
+    this.notifications$.pipe(skip(1)).subscribe(val => {
+      this.notificationQueue.unshift(val[0]);
     });
   }
 

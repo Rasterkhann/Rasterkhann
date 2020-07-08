@@ -29,6 +29,17 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     features: {}
   },
 
+  [Building.Archives]: {
+    name: 'Archives',
+    description: 'View the news archives.',
+    upgradeTime: () => 30,
+    requires: {
+      [Building.House]: 25
+    },
+    levelCost: (x) => x === 1 ? 50000n : 0n,
+    features: {}
+  },
+
   [Building.House]: {
     name: 'House',
     description: 'Acquire more citizens to increase your gold gain.',

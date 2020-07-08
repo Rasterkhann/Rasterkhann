@@ -1,4 +1,5 @@
 import { IGameState } from '../interfaces';
+import { createBuildingAtLevel } from '../helpers';
 
 export const migrations = [
   {
@@ -9,6 +10,8 @@ export const migrations = [
       // state.version = 2;
 
       state.towns.Rasterkhann.recentNews = state.towns.Rasterkhann.recentNews || [];
+
+      state.towns.Rasterkhann.buildings.archives = state.towns.Rasterkhann.buildings.archives || createBuildingAtLevel(0);
 
       Object.keys(state.towns).forEach(townName => {
         if (state.towns[townName].name) { return; }
