@@ -7,8 +7,13 @@ export const migrations = [
     versionKey: 'version',
     migrate: (state: IGameState) => {
       // state.version = 2;
+      Object.keys(state.towns).forEach(townName => {
+        if (state.towns[townName].name) { return; }
+        state.towns[townName].name = townName;
+      });
+
       state.towns.Rasterkhann.recruitedHeroes.forEach(h => {
-        if(h.onAdventure && state.towns.Rasterkhann.activeAdventures.length === 0) {
+        if (h.onAdventure && state.towns.Rasterkhann.activeAdventures.length === 0) {
           h.onAdventure = '';
         }
       });

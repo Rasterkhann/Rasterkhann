@@ -56,9 +56,9 @@ export function createBuildingAtLevel(level: number): BuildingInfo {
   return { level, features: {}, featureConstruction: {} };
 }
 
-export function createBasicTown(): IGameTown {
+export function createBasicTown(name: string): IGameTown {
   return {
-    name: '',
+    name,
     gold: 0n,
     goldPerTick: 0n,
 
@@ -90,7 +90,7 @@ export function createDefaultSavefile(): IGameState {
     currentInfo: Building.TownHall,
     currentTown: 'Rasterkhann',
     towns: {
-      Rasterkhann: createBasicTown() as IGameTown
+      Rasterkhann: createBasicTown('Rasterkhann') as IGameTown
     },
     options: {}
   };
