@@ -43,6 +43,6 @@ export interface BuildingStatic {
 }
 
 export interface BuildingUnlock {
-  trait?: Trait;
-  job?: HeroJob;
+  trait?: Trait[];
+  job?: HeroJob[];
 }

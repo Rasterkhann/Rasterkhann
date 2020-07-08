@@ -8,7 +8,7 @@ export const GuildHallFeatures: BuildingFeature[] = [
     upgradeTime: 3600,
     requiresLevel: 10,
     unlocks: {
-      job: HeroJob.Warrior
+      job: [HeroJob.Warrior]
     }
   },
   {
@@ -18,7 +18,7 @@ export const GuildHallFeatures: BuildingFeature[] = [
     upgradeTime: 3600,
     requiresLevel: 20,
     unlocks: {
-      job: HeroJob.Thief
+      job: [HeroJob.Thief]
     }
   },
   {
@@ -28,7 +28,7 @@ export const GuildHallFeatures: BuildingFeature[] = [
     upgradeTime: 3600,
     requiresLevel: 30,
     unlocks: {
-      job: HeroJob.Mage
+      job: [HeroJob.Mage]
     }
   },
   {
@@ -38,7 +38,7 @@ export const GuildHallFeatures: BuildingFeature[] = [
     upgradeTime: 3600,
     requiresLevel: 30,
     unlocks: {
-      job: HeroJob.Cleric
+      job: [HeroJob.Cleric]
     }
   },
 ];

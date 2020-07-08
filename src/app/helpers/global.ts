@@ -13,5 +13,6 @@ export function filteredUnlocksEarnedByTown(town: IGameTown, unlock: keyof Build
   return Object.keys(featureNameToBuildingHash)
     .filter(featName => doesTownHaveFeature(town, featName))
     .filter(featName => featureNameToUnlockHash[featName][unlock])
-    .map(featName => featureNameToUnlockHash[featName][unlock]);
+    .map(featName => featureNameToUnlockHash[featName][unlock])
+    .flat();
 }

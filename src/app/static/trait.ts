@@ -1,8 +1,8 @@
 
-import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType } from '../interfaces';
+import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait, BadTrait } from '../interfaces';
 import { ensureHeroStatValue } from '../helpers/trait';
 
-export const TraitEffects: Record<Trait, TraitEffect> = {
+const BaseBadTraits: Record<BadTrait, TraitEffect> = {
   Weak: {
     priority: TraitPriority.Last,
     valueProp: TraitValueProp.VeryBad,
@@ -130,4 +130,139 @@ export const TraitEffects: Record<Trait, TraitEffect> = {
       }
     }
   },
+};
+
+const FirstTierGoodTraits: Record<FirstTierGoodTrait, TraitEffect> = {
+  Strong: {
+    priority: TraitPriority.Last,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero is weakened, +15% ATK.',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.ATK] *= 1.15;
+        ensureHeroStatValue(hero, HeroStat.ATK, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.ATK] *= 1.15;
+      }
+    }
+  },
+
+  Fortified: {
+    priority: TraitPriority.Last,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero is fortified, +15% DEF.',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.DEF] *= 1.15;
+        ensureHeroStatValue(hero, HeroStat.DEF, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.DEF] *= 1.15;
+      }
+    }
+  },
+
+  Healthy: {
+    priority: TraitPriority.Last,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero is healthy, +15% HP.',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.HP] *= 1.15;
+        ensureHeroStatValue(hero, HeroStat.HP, 25);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.HP] *= 1.15;
+      }
+    }
+  },
+
+  Skilled: {
+    priority: TraitPriority.Last,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero is skilled, +15% SP.',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.SP] *= 1.15;
+        ensureHeroStatValue(hero, HeroStat.SP, 5);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.SP] *= 1.15;
+      }
+    }
+  },
+
+  Advanced: {
+    priority: TraitPriority.Last,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero is advanced, +15% LVL (spawn only). -15% EXP (levelup only)',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.LVL] *= 1.15;
+        ensureHeroStatValue(hero, HeroStat.LVL, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.EXP] *= 0.85;
+      }
+    }
+  },
+
+  Active: {
+    priority: TraitPriority.Last,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero is active, +15% STA.',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.STA] *= 1.15;
+        ensureHeroStatValue(hero, HeroStat.STA, 10);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.STA] *= 1.15;
+      }
+    }
+  },
+
+  Modest: {
+    priority: TraitPriority.Last,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero is modest, +500 GOLD (spawn only). +50 GOLD (levelup only).',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.GOLD] += 500;
+        ensureHeroStatValue(hero, HeroStat.GOLD, 0);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.GOLD] += 50;
+      }
+    }
+  },
+
+  Experienced: {
+    priority: TraitPriority.Last,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero is experienced, -15% EXP.',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.EXP] *= 0.85;
+        ensureHeroStatValue(hero, HeroStat.EXP, 150);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.EXP] *= 0.85;
+      }
+    }
+  },
+};
+
+export const TraitEffects: Record<Trait, TraitEffect> = {
+  ...BaseBadTraits,
+  ...FirstTierGoodTraits
 };
