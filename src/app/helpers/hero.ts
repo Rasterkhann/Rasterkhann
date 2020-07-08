@@ -6,6 +6,7 @@ import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect, Bu
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
+import { filteredUnlocksEarnedByTown } from './global';
 
 export function calculateRestingRate(town: IGameTown): number {
   return 1;
@@ -16,11 +17,13 @@ export function calculateMaxNumberOfTraits(town: IGameTown): number {
 }
 
 export function calculateAvailableJobs(town: IGameTown): HeroJob[] {
-  return [HeroJob.Adventurer];
+  return [HeroJob.Adventurer].concat(filteredUnlocksEarnedByTown(town, 'job'));
 }
 
 export function calculateAvailableTraits(town: IGameTown): Trait[] {
-  return ['Weak', 'Frail', 'Ill', 'Clumsy', 'Reclusive', 'Sedentary', 'Poor', 'Inexperienced'];
+  const baseTraits = ['Weak', 'Frail', 'Ill', 'Clumsy', 'Reclusive', 'Sedentary', 'Poor', 'Inexperienced'] as Trait[];
+  const bonusTraits = filteredUnlocksEarnedByTown(town, 'trait') as Trait[];
+  return baseTraits.concat(bonusTraits);
 }
 
 export function calculateProspectiveHeroMaxTotal(town: IGameTown): number {
@@ -111,6 +114,11 @@ export function generateHero(town: IGameTown, level?: number): Hero {
     if (!traitEff.triggers || !traitEff.triggers[TriggerType.Spawn]) { return; }
 
     (traitEff.triggers[TriggerType.Spawn] || noop)({ hero });
+  });
+
+  Object.keys(hero.stats).forEach((stat: HeroStat) => {
+    hero.stats[stat] = Math.floor(hero.stats[stat]);
+    hero.currentStats[stat] = Math.floor(hero.currentStats[stat]);
   });
 
   return hero;

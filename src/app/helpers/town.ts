@@ -1,8 +1,8 @@
 
 import { IGameState, IGameTown, Hero, ProspectiveHero, Building, Adventure, HeroStat } from '../interfaces';
-import { featureNameToBuildingHash } from './building';
 import { calculateMaxActiveAdventures } from './adventure';
 import { canHeroGoOnAdventure } from './hero';
+import { doesTownHaveFeature } from './global';
 
 export function getCurrentTownFromState(state: IGameState): IGameTown {
   return { name: state.currentTown, ...state.towns[state.currentTown] };
@@ -17,11 +17,6 @@ export function calculateOfflineGold(state: IGameState): bigint {
   return goldGainPerTick * BigInt(Math.floor(diffSeconds));
 }
 
-export function doesTownHaveFeature(town: IGameTown, feature: string): boolean {
-  if (!featureNameToBuildingHash[feature]) { throw new Error(`Feature ${feature} does not exist.`); }
-  if (!town.buildings[featureNameToBuildingHash[feature]].features) { return false; }
-  return !!town.buildings[featureNameToBuildingHash[feature]].features[feature];
-}
 
 export function calculateGoldGain(state: IGameState): bigint {
   const town = getCurrentTownFromState(state);

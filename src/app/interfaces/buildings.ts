@@ -1,3 +1,5 @@
+import { Trait } from './trait';
+import { HeroJob } from './hero';
 
 export enum Building {
   TownHall = 'townhall',
@@ -27,6 +29,7 @@ export interface BuildingFeature {
   upgradeTime: number;
   requiresLevel?: number;
   requiresFeature?: Record<string, number>;
+  unlocks?: BuildingUnlock;
 }
 
 export interface BuildingStatic {
@@ -36,4 +39,9 @@ export interface BuildingStatic {
   upgradeTime: (level: number) => number;
   levelCost: (level: number) => bigint;
   features: Record<string, BuildingFeature>;
+}
+
+export interface BuildingUnlock {
+  trait?: Trait;
+  job?: HeroJob;
 }

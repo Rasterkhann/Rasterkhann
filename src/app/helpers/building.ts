@@ -1,6 +1,6 @@
 
 import { BuildingData } from '../static/building'; // this is not a barrel import because that causes a circular dependency loop
-import { Building } from '../interfaces';
+import { Building, BuildingUnlock } from '../interfaces';
 
 // get a hash of feature->building for easy lookup later
 // also serves to dupe-check names
@@ -12,5 +12,17 @@ Object.keys(BuildingData).forEach((building: Building) => {
     }
 
     featureNameToBuildingHash[feature.name] = building;
+  });
+});
+
+// get a hash of feature->unlock for easy lookup later
+export const featureNameToUnlockHash: Record<string, BuildingUnlock> = {};
+Object.keys(BuildingData).forEach((building: Building) => {
+  Object.values(BuildingData[building].features || {}).forEach(feature => {
+    if (featureNameToUnlockHash[feature.name]) {
+      throw new Error(`${feature.name} already exists for building ${featureNameToUnlockHash[feature.name]}. Cannot also add it under ${building}.`);
+    }
+
+    featureNameToUnlockHash[feature.name] = feature.unlocks || {};
   });
 });

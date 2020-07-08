@@ -31,6 +31,7 @@ export interface HeroJobStatic {
   description: string;
   chooseName: () => string;
   sprites: string[];
+  costMultiplier: number;
   statBaseMultiplier: Record<HeroStat, number>;
   statGrowth: Record<HeroStat, (hero?: Hero) => number>;
   triggers: Partial<Record<TriggerType, TraitTriggerFunction>>;

@@ -13,6 +13,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       'adventurer_f1', 'adventurer_f2', 'adventurer_f3', 'adventurer_f4',
       'adventurer_m1', 'adventurer_m2', 'adventurer_m3', 'adventurer_m4'
     ],
+    costMultiplier: 1,
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,
       [HeroStat.EXP]: 1,
@@ -42,6 +43,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     description: 'Combat healer. Post-combat revives.',
     chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['cleric1', 'cleric2', 'cleric3', 'cleric4'],
+    costMultiplier: 4,
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,
       [HeroStat.EXP]: 1,
@@ -73,6 +75,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     description: 'AoE specialist. Pre-combat spread.',
     chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['mage1', 'mage2', 'mage3', 'mage4'],
+    costMultiplier: 5,
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,
       [HeroStat.EXP]: 1,
@@ -88,7 +91,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [HeroStat.EXP]: () => 150,
       [HeroStat.HP]: () => 5,
       [HeroStat.SP]: () => 3,
-      [HeroStat.ATK]: () => 5,
+      [HeroStat.ATK]: () => 3,
       [HeroStat.DEF]: () => 2,
       [HeroStat.STA]: () => 6,
       [HeroStat.GOLD]: () => 0
@@ -104,6 +107,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     description: 'Sneaky robber. Post-combat gold.',
     chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['thief1', 'thief2', 'thief3', 'thief4'],
+    costMultiplier: 3.5,
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,
       [HeroStat.EXP]: 1,
@@ -119,7 +123,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [HeroStat.EXP]: () => 110,
       [HeroStat.HP]: () => 7,
       [HeroStat.SP]: () => 5,
-      [HeroStat.ATK]: () => 4,
+      [HeroStat.ATK]: () => 3,
       [HeroStat.DEF]: () => 2,
       [HeroStat.STA]: () => 3,
       [HeroStat.GOLD]: () => 100
@@ -135,6 +139,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     description: 'Powerful damager. Pre-combat nukes.',
     chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['warrior1', 'warrior2', 'warrior3', 'warrior4'],
+    costMultiplier: 10,
     statBaseMultiplier: {
       [HeroStat.LVL]: 1,
       [HeroStat.EXP]: 1,
@@ -150,8 +155,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [HeroStat.EXP]: () => 200,
       [HeroStat.HP]: () => 15,
       [HeroStat.SP]: () => 1,
-      [HeroStat.ATK]: () => 5,
-      [HeroStat.DEF]: () => 3,
+      [HeroStat.ATK]: () => 4,
+      [HeroStat.DEF]: () => 2,
       [HeroStat.STA]: () => 2,
       [HeroStat.GOLD]: () => 15
     },
