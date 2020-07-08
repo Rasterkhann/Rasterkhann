@@ -17,7 +17,7 @@
     "lint": "ng lint",
     "changelog:generate": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "changelog:commit": "git commit CHANGELOG.md -m \"Update changelog [skip ci]\" || true",
-    "preversion": "npm run changelog:generate && npm run changelog:commit",
+    "postversion": "npm run changelog:generate && npm run changelog:commit",
     "bump:patch": "npm version patch -m \"chore(release): Patch %s\"",
     "bump:minor": "npm version minor -m \"chore(release): Minor %s\"",
     "bump:major": "npm version major -m \"chore(release): Major %s\""
