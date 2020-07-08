@@ -1,4 +1,4 @@
-import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroStat } from '../interfaces';
+import { IGameTown, Adventure, Hero, AdventureDifficulty } from '../interfaces';
 import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
 

@@ -1,5 +1,5 @@
 
-import { Trait, TraitTrigger, TraitTriggerFunction } from './trait';
+import { Trait, TriggerType, TraitTriggerFunction } from './trait';
 import { HeroItem } from './item';
 
 export enum HeroJob {
@@ -33,12 +33,16 @@ export interface HeroJobStatic {
   sprites: string[];
   statBaseMultiplier: Record<HeroStat, number>;
   statGrowth: Record<HeroStat, (hero?: Hero) => number>;
-  triggers: Partial<Record<TraitTrigger, TraitTriggerFunction>>;
+  triggers: Partial<Record<TriggerType, TraitTriggerFunction>>;
+  combatTriggers: Partial<Record<TriggerType, HeroJobAction[]>>;
   actions: HeroJobAction[];
 }
 
 export interface HeroJobActionTargetting {
+  self: Hero;
+  all: Hero[];
   allAllies: Hero[];
+  livingAllies: Hero[];
   livingEnemies: Hero[];
 }
 

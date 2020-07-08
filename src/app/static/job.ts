@@ -1,7 +1,7 @@
 
 import { species } from 'fantastical';
 
-import { HeroJobStatic, HeroJob, HeroStat } from '../interfaces';
+import { HeroJobStatic, HeroJob, HeroStat, TriggerType } from '../interfaces';
 
 import * as JobActions from './jobactions';
 
@@ -34,7 +34,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [HeroStat.GOLD]: () => 50
     },
     triggers: {},
-    actions: [JobActions.Attack]
+    combatTriggers: {},
+    actions: [JobActions.Attack()]
   },
 
   [HeroJob.Cleric]: {
@@ -62,7 +63,10 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [HeroStat.GOLD]: () => 0
     },
     triggers: {},
-    actions: [JobActions.Attack]
+    combatTriggers: {
+      [TriggerType.PostCombat]: [JobActions.HealAllPercent(10)]
+    },
+    actions: [JobActions.Attack(), JobActions.Heal()]
   },
 
   [HeroJob.Mage]: {
@@ -90,7 +94,10 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [HeroStat.GOLD]: () => 0
     },
     triggers: {},
-    actions: [JobActions.Attack]
+    combatTriggers: {
+      [TriggerType.PreCombat]: [JobActions.AttackAllPercent(5)]
+    },
+    actions: [JobActions.Attack(), JobActions.AttackAllDiminishing()]
   },
 
   [HeroJob.Thief]: {
@@ -118,7 +125,10 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [HeroStat.GOLD]: () => 100
     },
     triggers: {},
-    actions: [JobActions.Attack]
+    combatTriggers: {
+      [TriggerType.Victory]: [JobActions.EarnGold(50)]
+    },
+    actions: [JobActions.Attack()]
   },
 
   [HeroJob.Warrior]: {
@@ -146,6 +156,9 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [HeroStat.GOLD]: () => 15
     },
     triggers: {},
-    actions: [JobActions.Attack]
+    combatTriggers: {
+      [TriggerType.PreCombat]: [JobActions.AttackSinglePercent(15)]
+    },
+    actions: [JobActions.Attack(), JobActions.AttackSinglePercent(5)]
   }
 };

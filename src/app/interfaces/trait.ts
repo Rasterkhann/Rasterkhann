@@ -1,16 +1,31 @@
 import { Hero, HeroStat } from './hero';
 
-export type Trait =
-  'Weak' | 'Frail' | 'Ill' | 'Clumsy' | 'Reclusive' | 'Sedentary' | 'Poor' | 'Inexperienced';
+export enum TriggerType {
 
-export enum TraitTrigger {
+  // works for: Trait
   Spawn = 'onSpawn',
+
+  // works for: Trait
   LevelUp = 'onLevelUp',
+
+  // works for: HeroCombatTriggers (only if alive)
   PreCombat = 'onPreCombat',
+
+  // works for: HeroCombatTriggers (only if alive)
+  PostCombat = 'onPostCombat',
+
+  // works for: HeroCombatTriggers (always)
   Victory = 'onVictory',
+
+  // not currently implemented
   Death = 'onDeath',
+
+  // not currently implemented
   PreAdventure = 'onPreAdventure'
 }
+
+export type Trait =
+  'Weak' | 'Frail' | 'Ill' | 'Clumsy' | 'Reclusive' | 'Sedentary' | 'Poor' | 'Inexperienced';
 
 export enum TraitPriority {
   Any = 'any',
@@ -43,5 +58,5 @@ export interface TraitEffect {
   priority: TraitPriority;
   valueProp: TraitValueProp;
   description: string;
-  triggers: Partial<Record<TraitTrigger, TraitTriggerFunction>>;
+  triggers: Partial<Record<TriggerType, TraitTriggerFunction>>;
 }
