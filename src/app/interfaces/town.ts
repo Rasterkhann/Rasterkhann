@@ -3,6 +3,11 @@ import { Building, BuildingInfo } from './buildings';
 import { Hero, ProspectiveHero } from './hero';
 import { Adventure } from './adventure';
 
+export interface NewsItem {
+  timestamp: number;
+  message: string;
+}
+
 export interface IGameTown {
   name: string;
 
@@ -16,4 +21,6 @@ export interface IGameTown {
 
   activeAdventures: Adventure[];
   potentialAdventures: Adventure[];
+
+  recentNews: NewsItem[];
 }

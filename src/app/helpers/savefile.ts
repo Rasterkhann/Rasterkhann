@@ -68,6 +68,8 @@ export function createBasicTown(name: string): IGameTown {
     activeAdventures: [],
     potentialAdventures: [],
 
+    recentNews: [],
+
     buildings: {
       [Building.TownHall]: createBuildingAtLevel(1),
       [Building.Watchtower]: createBuildingAtLevel(1),

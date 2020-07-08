@@ -1,0 +1,5 @@
+
+<div class="notification fade-in" *ngIf="currentNotification$ | async as notification">
+  <div class="timestamp">{{ notification.timestamp | date:'mediumTime' }}</div>
+  <div class="message">{{ notification.message }}</div>
+</div>

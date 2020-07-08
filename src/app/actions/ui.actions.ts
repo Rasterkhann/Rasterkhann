@@ -10,6 +10,11 @@ export class OptionToggleUpgradeVisibility {
   constructor() {}
 }
 
+export class NotifyMessage {
+  static readonly type = '[Notification] New Notification';
+  constructor(public notification: string) {}
+}
+
 export class LoadSaveData {
   static readonly type = '[SaveData] Load Save';
   constructor(public gamestate: IGameState) {}

@@ -12,6 +12,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { CurrentMapComponent } from '../components/current-map/current-map.component';
 import { CurrentTownComponent } from '../components/current-town/current-town.component';
 import { CurrentInfoComponent } from '../components/current-info/current-info.component';
+import { CurrentNotificationComponent } from '../components/current-notification/current-notification.component';
 
 import { AlchemistComponent } from '../components/windows/alchemist/alchemist.component';
 import { ArmoryComponent } from '../components/windows/armory/armory.component';
@@ -48,6 +49,7 @@ import { AdventureComponent } from '../components/shared/adventure/adventure.com
     CurrentMapComponent,
     CurrentTownComponent,
     CurrentInfoComponent,
+    CurrentNotificationComponent,
 
     AlchemistComponent,
     ArmoryComponent,

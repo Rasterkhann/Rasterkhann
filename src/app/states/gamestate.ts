@@ -6,17 +6,18 @@ import { ImmutableContext } from '@ngxs-labs/immer-adapter';
 import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes,
-  RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold
+  RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage
 } from '../actions';
 import {
-  IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure, HeroStat
+  IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem
 } from '../interfaces';
 import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
   getCurrentTownProspectiveHeroes, getCurrentTownRecruitedHeroes, calculateProspectiveHeroMaxTotal,
   getCurrentTownActiveAdventures, getCurrentTownPotentialAdventures, calculateMaxPotentialAdventures,
   getCurrentTownCanDoAnyAdventures, doAdventureEncounter, finalizeAdventure, checkHeroLevelUp,
-  calculateRestingRate
+  calculateRestingRate,
+  canHeroGoOnAdventure
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -77,6 +78,11 @@ export class GameState {
   @Selector()
   public static currentTownPotentialAdventures(state: IGameState): Adventure[] {
     return getCurrentTownPotentialAdventures(state);
+  }
+
+  @Selector()
+  public static currentTownNotifications(state: IGameState): NewsItem[] {
+    return state.towns[state.currentTown].recentNews;
   }
 
   constructor(
@@ -144,6 +150,8 @@ export class GameState {
         if (constructionDoneAt && constructionDoneAt < now) {
           town.buildings[building].constructionDoneAt = 0;
           town.buildings[building].level += 1;
+
+          this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has finished construction for level ${town.buildings[building].level}!`));
         }
 
         Object.keys(town.buildings[building].featureConstruction || {}).forEach(feature => {
@@ -153,6 +161,8 @@ export class GameState {
             town.buildings[building].features = town.buildings[building].features || {};
             town.buildings[building].features[feature] = town.buildings[building].features[feature] || 0;
             town.buildings[building].features[feature]++;
+
+            this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has finished the feature "${feature}"!`));
           }
         });
       });
@@ -196,11 +206,15 @@ export class GameState {
       const restValue = calculateRestingRate(town);
 
       town.recruitedHeroes.forEach(h => {
-        if (h.onAdventure) { return; }
+        if (h.onAdventure || canHeroGoOnAdventure(h)) { return; }
 
         [HeroStat.HP, HeroStat.SP, HeroStat.STA].forEach(stat => {
           h.currentStats[stat] = Math.min(h.currentStats[stat] + restValue, h.stats[stat]);
         });
+
+        if (canHeroGoOnAdventure(h)) {
+          this.store.dispatch(new NotifyMessage(`${h.name} is now fully rested and ready to adventure again!`));
+        }
       });
 
       return state;
@@ -331,6 +345,8 @@ export class GameState {
 
       state.towns[state.currentTown].potentialAdventures.push(this.advCreator.generateAdventure(town));
 
+      this.store.dispatch(new NotifyMessage(`${heroes.map(x => x.name).join(', ')} ${heroes.length === 1 ? 'has' : 'have'} embarked on an adventure.`));
+
       return state;
     });
   }
@@ -348,9 +364,13 @@ export class GameState {
         }
 
         if (adv.encounterTicks.length === 0) {
-          finalizeAdventure(town, adv);
+          const didSucceed = finalizeAdventure(town, adv);
           state.towns[state.currentTown].activeAdventures = state.towns[state.currentTown]
             .activeAdventures.filter(a => a.uuid !== adv.uuid);
+
+          const heroNames = adv.activeHeroes.map(uuid => town.recruitedHeroes.find(h => h.uuid === uuid)).filter(Boolean) as Hero[];
+          const postMsg = didSucceed ? 'it was a success!' : 'it was a failure.';
+          this.store.dispatch(new NotifyMessage(`${heroNames.map(x => x.name).join(', ')} ${heroNames.length === 1 ? 'has' : 'have'} returned from their adventure - ${postMsg}`));
         }
       });
 
@@ -364,6 +384,21 @@ export class GameState {
   chooseInfo({ setState }: StateContext<IGameState>, { window }: ChooseInfo): void {
     setState((state: IGameState) => {
       state.currentInfo = window;
+      return state;
+    });
+  }
+
+  @Action(NotifyMessage)
+  @ImmutableContext()
+  notification({ setState }: StateContext<IGameState>, { notification }: NotifyMessage): void {
+    setState((state: IGameState) => {
+      state.towns[state.currentTown].recentNews.push({
+        timestamp: Date.now(),
+        message: notification
+      });
+
+      while (state.towns[state.currentTown].recentNews.length > 10) { state.towns[state.currentTown].recentNews.shift(); }
+
       return state;
     });
   }
