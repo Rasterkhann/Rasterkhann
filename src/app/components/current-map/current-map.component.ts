@@ -27,8 +27,10 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
   constructor(public game: GameService) { }
 
   ngAfterViewInit(): void {
+    (window as any).PIXI.settings.PRECISION_FRAGMENT = 'highp';
     (window as any).PIXI.utils.skipHello();
-    this.renderer = (window as any).PIXI.autoDetectRenderer(480, 480);
+    this.renderer = (window as any).PIXI.autoDetectRenderer(480, 480, { antialias: false, transparent: true });
+    this.renderer.roundPixels = true;
     this.container.nativeElement.appendChild(this.renderer.view);
 
     this.renderer.view.style.width = '100%';
@@ -68,6 +70,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
               this.textMap[obj.name].y = obj.y - 16;
               this.textMap[obj.name].anchor.set(0.5, 0);
               this.textMap[obj.name].visible = isVisible;
+              this.textMap[obj.name].resolution = 2;
 
               this.tileMap.addChild(this.textMap[obj.name]);
             }
