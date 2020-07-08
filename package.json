@@ -15,8 +15,9 @@
     "build:full": "npm run build -- -c full",
     "test": "npm run lint && npm run build",
     "lint": "ng lint",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git commit CHANGELOG.md -m \"Update changelog [skip ci]\"",
-    "preversion": "npm run changelog",
+    "changelog:generate": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "changelog:commit": "git commit CHANGELOG.md -m \"Update changelog [skip ci]\" || true",
+    "preversion": "npm run changelog:generate && npm run changelog:commit",
     "bump:patch": "npm version patch -m \"chore(release): Patch %s\"",
     "bump:minor": "npm version minor -m \"chore(release): Minor %s\"",
     "bump:major": "npm version major -m \"chore(release): Major %s\""
