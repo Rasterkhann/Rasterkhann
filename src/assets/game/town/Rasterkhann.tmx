@@ -65,7 +65,11 @@
     <property name="aboveText" value="Inn"/>
    </properties>
   </object>
-  <object id="23" gid="489" x="80" y="320" width="16" height="16"/>
+  <object id="23" name="library" gid="489" x="80" y="320" width="16" height="16">
+   <properties>
+    <property name="aboveText" value="Library"/>
+   </properties>
+  </object>
   <object id="24" name="alchemist" gid="529" x="144" y="384" width="16" height="16">
    <properties>
     <property name="aboveText" value="Alchemist"/>

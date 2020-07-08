@@ -12,6 +12,7 @@ export const migrations = [
       state.towns.Rasterkhann.recentNews = state.towns.Rasterkhann.recentNews || [];
 
       state.towns.Rasterkhann.buildings.archives = state.towns.Rasterkhann.buildings.archives || createBuildingAtLevel(0);
+      state.towns.Rasterkhann.buildings.library = state.towns.Rasterkhann.buildings.library || createBuildingAtLevel(0);
 
       Object.keys(state.towns).forEach(townName => {
         if (state.towns[townName].name) { return; }

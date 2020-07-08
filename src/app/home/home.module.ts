@@ -22,6 +22,7 @@ import { CaveComponent } from '../components/windows/cave/cave.component';
 import { GuildHallComponent } from '../components/windows/guildhall/guildhall.component';
 import { HouseComponent } from '../components/windows/house/house.component';
 import { InnComponent } from '../components/windows/inn/inn.component';
+import { LibraryComponent } from '../components/windows/library/library.component';
 import { TownHallComponent } from '../components/windows/townhall/townhall.component';
 import { WatchtowerComponent } from '../components/windows/watchtower/watchtower.component';
 import { WorkshopComponent } from '../components/windows/workshop/workshop.component';
@@ -60,6 +61,7 @@ import { AdventureComponent } from '../components/shared/adventure/adventure.com
     GuildHallComponent,
     HouseComponent,
     InnComponent,
+    LibraryComponent,
     TownHallComponent,
     WatchtowerComponent,
     WorkshopComponent,

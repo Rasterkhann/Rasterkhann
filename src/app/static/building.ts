@@ -1,6 +1,6 @@
 import { Building, BuildingStatic } from '../interfaces';
 import { HouseFeatures, GuildHallFeatures, ArmoryFeatures,
-  AlchemistFeatures, InnFeatures, CaveFeatures, BazaarFeatures } from '../features';
+  AlchemistFeatures, InnFeatures, CaveFeatures, BazaarFeatures, LibraryFeatures } from '../features';
 
 const featuresArrayToHash = (array: any[]) => array.reduce((prev, cur) => ({ ...prev, [cur.name]: cur }), {});
 
@@ -110,5 +110,16 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     upgradeTime: (level) => level * 15,
     levelCost: (x) => BigInt(Math.floor((500 * x) + (1.2 * (1.35 ** x)))),
     features: featuresArrayToHash(CaveFeatures)
+  },
+
+  [Building.Library]: {
+    name: 'Library',
+    description: 'Research new traits and abilities for your heroes.',
+    requires: {
+      [Building.GuildHall]: 5
+    },
+    upgradeTime: (level) => level * 60,
+    levelCost: (x) => BigInt(Math.floor((1000 * x) + (1.2 * (1.2 ** x)))),
+    features: featuresArrayToHash(LibraryFeatures)
   }
 };

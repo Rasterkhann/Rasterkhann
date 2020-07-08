@@ -81,7 +81,8 @@ export function createBasicTown(name: string): IGameTown {
       [Building.GuildHall]: createBuildingAtLevel(0),
       [Building.Inn]: createBuildingAtLevel(0),
       [Building.Workshop]: createBuildingAtLevel(0),
-      [Building.Archives]: createBuildingAtLevel(0)
+      [Building.Archives]: createBuildingAtLevel(0),
+      [Building.Library]: createBuildingAtLevel(0)
     }
   };
 }
