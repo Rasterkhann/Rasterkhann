@@ -42,6 +42,10 @@
 
 * {
   letter-spacing: 1px !important;
+
+  &:not(ion-button) {
+    font-size: 1.1rem !important;
+  }
 }
 
 ion-toolbar {
@@ -67,4 +71,12 @@ ion-item {
 .inline-button {
   height: 16px;
   margin: 0;
+}
+
+ion-title {
+  font-size: 1.2rem !important;
+}
+
+ion-button:not(.in-toolbar) {
+  font-size: 0.9rem;
 }
