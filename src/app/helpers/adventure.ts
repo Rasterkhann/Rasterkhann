@@ -38,10 +38,12 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): void {
   const expReward = 10 * baseReward * expMult;
   const goldReward = baseReward * goldMult;
 
+  chosenHeroes.forEach(h => {
+    h.onAdventure = '';
+  });
+
   if (canTeamFight(chosenHeroes)) {
     chosenHeroes.forEach(h => {
-      h.onAdventure = '';
-
       h.currentStats[HeroStat.EXP] += expReward;
       h.currentStats[HeroStat.GOLD] += goldReward;
 
