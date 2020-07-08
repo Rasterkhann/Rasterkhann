@@ -1,3 +1,12 @@
+## [0.0.3](https://github.com/seiyria/Rasterkhann/compare/v0.0.2...v0.0.3) (2020-07-08)
+
+
+### Features
+
+* **watchtower:** link to the changelog from the watchtower ([36d96ab](https://github.com/seiyria/Rasterkhann/commit/36d96ab3e7faaf2426e6142e76753391ea7b4fc0))
+
+
+
 ## [0.0.2](https://github.com/seiyria/Rasterkhann/compare/v0.0.1...v0.0.2) (2020-07-08)
 
 
