@@ -28,7 +28,7 @@ export function doAdventureEncounter(town: IGameTown, adventure: Adventure): voi
   chosenHeroes.forEach(h => checkHeroLevelUp(h));
 }
 
-export function finalizeAdventure(town: IGameTown, adventure: Adventure): void {
+export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolean {
   const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean) as Hero[];
 
   const expMult = getTownExpMultiplier(town);
@@ -38,11 +38,14 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): void {
   const expReward = 10 * baseReward * expMult;
   const goldReward = baseReward * goldMult;
 
+  let didSucceed = false;
+
   chosenHeroes.forEach(h => {
     h.onAdventure = '';
   });
 
   if (canTeamFight(chosenHeroes)) {
+    didSucceed = true;
     chosenHeroes.forEach(h => {
       h.currentStats[HeroStat.EXP] += expReward;
       h.currentStats[HeroStat.GOLD] += goldReward;
@@ -50,4 +53,6 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): void {
       checkHeroLevelUp(h);
     });
   }
+
+  return didSucceed;
 }
