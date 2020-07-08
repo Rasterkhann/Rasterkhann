@@ -2,7 +2,7 @@
 import { shuffle, take, random, noop } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { Trait, HeroJob, IGameTown, Hero, HeroStat, TraitTrigger, TraitEffect, Building, HeroJobStatic, TraitPriority, Adventure } from '../interfaces';
+import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect, Building, HeroJobStatic, TraitPriority, Adventure } from '../interfaces';
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
@@ -90,8 +90,8 @@ export function generateHero(town: IGameTown, level?: number): Hero {
     job,
     traits,
 
-    stats: stats as Record<HeroStat, number>,
-    currentStats: stats as Record<HeroStat, number>,
+    stats: Object.assign({}, stats) as Record<HeroStat, number>,
+    currentStats: Object.assign({}, stats) as Record<HeroStat, number>,
     gear: {}
   };
 
@@ -108,9 +108,9 @@ export function generateHero(town: IGameTown, level?: number): Hero {
   // do onSpawn for all traits
   traits.forEach(trait => {
     const traitEff: TraitEffect = TraitEffects[trait];
-    if (!traitEff.triggers || !traitEff.triggers[TraitTrigger.Spawn]) { return; }
+    if (!traitEff.triggers || !traitEff.triggers[TriggerType.Spawn]) { return; }
 
-    (traitEff.triggers[TraitTrigger.Spawn] || noop)({ hero });
+    (traitEff.triggers[TriggerType.Spawn] || noop)({ hero });
   });
 
   return hero;
@@ -125,6 +125,15 @@ export function generateMonster(town: IGameTown, adventure: Adventure): Hero {
     baseHero.stats[stat] = newStat;
     baseHero.currentStats[stat] = newStat;
   });
+
+  ensureHeroStatValue(baseHero, HeroStat.LVL,  1);
+  ensureHeroStatValue(baseHero, HeroStat.ATK,  1);
+  ensureHeroStatValue(baseHero, HeroStat.DEF,  1);
+  ensureHeroStatValue(baseHero, HeroStat.HP,   50);
+  ensureHeroStatValue(baseHero, HeroStat.SP,   10);
+  ensureHeroStatValue(baseHero, HeroStat.STA,  10);
+  ensureHeroStatValue(baseHero, HeroStat.GOLD, 0);
+  ensureHeroStatValue(baseHero, HeroStat.EXP,  100);
 
   baseHero.currentStats[HeroStat.GOLD] *= baseHero.currentStats[HeroStat.LVL];
 
@@ -161,13 +170,13 @@ export function checkHeroLevelUp(hero: Hero): void {
       [HeroStat.DEF]:   getLevelupStat(HeroStat.DEF)
     };
 
-    const levelUpJobEffect = JobEffects[hero.job].triggers[TraitTrigger.LevelUp];
+    const levelUpJobEffect = JobEffects[hero.job].triggers[TriggerType.LevelUp];
     if (levelUpJobEffect) {
       levelUpJobEffect({ hero, statBlock: levelupStats });
     }
 
     hero.traits.forEach(trait => {
-      const traitEffect = TraitEffects[trait].triggers[TraitTrigger.LevelUp];
+      const traitEffect = TraitEffects[trait].triggers[TriggerType.LevelUp];
       if (!traitEffect) { return; }
 
       traitEffect({ hero, statBlock: levelupStats });
