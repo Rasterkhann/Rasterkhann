@@ -1,3 +1,22 @@
+# [0.1.0](https://github.com/seiyria/Rasterkhann/compare/v0.0.4...v0.1.0) (2020-07-08)
+
+
+### Bug Fixes
+
+* **combat:** make it so monsters can take damage ([1705b28](https://github.com/seiyria/Rasterkhann/commit/1705b2894ec8ad17ad79423398a0ac7bd81b6efb))
+* **hero:** heroes should not be able to get fractional gold and exp ([72802fc](https://github.com/seiyria/Rasterkhann/commit/72802fc16abd21ec18d501fbad4980aff9ea6f39))
+* **ui:** clean up blurry canvas text ([e5519e5](https://github.com/seiyria/Rasterkhann/commit/e5519e501713832d23bd2a3f010107475b2b2452)), closes [#9](https://github.com/seiyria/Rasterkhann/issues/9)
+
+
+### Features
+
+* **heroes:** all heroes have distinct trigger abilities ([e24fedb](https://github.com/seiyria/Rasterkhann/commit/e24fedb6576e8cb8f7b569a739f61ca9ba438503))
+* **heroes:** new hero classes can be upgraded into ([eeb42fe](https://github.com/seiyria/Rasterkhann/commit/eeb42fe858bc29041d4a4eaeb4b57bce5020cefc))
+* **library:** add basic set of good traits for heroes to spawn with ([2d83743](https://github.com/seiyria/Rasterkhann/commit/2d83743b563a3348befb4a2453afc64f819e5d4a))
+* **library:** add new building to research traits ([f7a4a21](https://github.com/seiyria/Rasterkhann/commit/f7a4a21a03031f2b45261f35ebce9cc1f42c0584))
+
+
+
 ## [0.0.4](https://github.com/seiyria/Rasterkhann/compare/v0.0.3...v0.0.4) (2020-07-08)
 
 
