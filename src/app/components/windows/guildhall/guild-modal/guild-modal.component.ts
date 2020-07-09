@@ -43,7 +43,6 @@ export class GuildModalComponent implements OnDestroy, OnInit {
         this.viewingProspectiveHero = null;
       }
 
-      console.log(d);
       this.canBuyHeroes = d.length < calculateProspectiveHeroMaxTotal(this.town);
 
       d.forEach(h => {
