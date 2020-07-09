@@ -8,9 +8,7 @@ function getCurrentStat(hero: Hero, stat: HeroStat): number {
 }
 
 function heal(creature: Hero, healed: number): void {
-  console.log(JSON.stringify(creature), 'PRE');
   creature.currentStats[HeroStat.HP] = Math.min(creature.stats[HeroStat.HP], creature.currentStats[HeroStat.HP] + healed);
-  console.log(JSON.stringify(creature), 'POST');
 }
 
 function takeDamage(creature: Hero, damage: number): void {
