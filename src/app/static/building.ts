@@ -119,7 +119,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
       [Building.GuildHall]: 5
     },
     upgradeTime: (level) => level * 60,
-    levelCost: (x) => BigInt(Math.floor((1000 * x) + (1.2 * (1.2 ** x)))),
+    levelCost: (x) => BigInt(Math.floor((1000 * x) + (2 * (1.3 ** x)))),
     features: featuresArrayToHash(LibraryFeatures)
   }
 };
