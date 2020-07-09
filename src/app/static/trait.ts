@@ -118,7 +118,7 @@ const BaseBadTraits: Record<BadTrait, TraitEffect> = {
   Inexperienced: {
     priority: TraitPriority.Last,
     valueProp: TraitValueProp.VeryBad,
-    description: 'Hero is inexperienced, +50% EXP.',
+    description: 'Hero is inexperienced, +50% EXP needed per level.',
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
         hero.stats[HeroStat.EXP] *= 2;
@@ -374,7 +374,7 @@ const FirstTierGoodTraits: Record<FirstTierGoodTrait, TraitEffect> = {
   Experienced: {
     priority: TraitPriority.Last,
     valueProp: TraitValueProp.SlightlyGood,
-    description: 'Hero is experienced, -15% EXP.',
+    description: 'Hero is experienced, -15% EXP needed per level.',
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
         hero.stats[HeroStat.EXP] *= 0.85;

@@ -8,6 +8,22 @@ import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
 import { filteredUnlocksEarnedByTown, doesTownHaveFeature } from './global';
 
+export function calculateMaxWeapons(town: IGameTown, hero: Hero): number {
+  return 1;
+}
+
+export function calculateMaxArmors(town: IGameTown, hero: Hero): number {
+  return 1;
+}
+
+export function calculateMaxPotions(town: IGameTown, hero: Hero): number {
+  return 1;
+}
+
+export function doesHeroHaveTrait(hero: Hero, trait: Trait): boolean {
+  return hero.traits.includes(trait);
+}
+
 export function calculateRestingRate(town: IGameTown): number {
 
   let baseRate = 1;

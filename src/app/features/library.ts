@@ -157,7 +157,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   },
   {
     name: 'Trait: Experienced',
-    description: 'Heroes need less EXP.',
+    description: 'Heroes need less EXP to level up.',
     cost: 100000n,
     upgradeTime: 3600,
     requiresLevel: 15,
