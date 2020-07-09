@@ -1,3 +1,29 @@
+## [0.2.1](https://github.com/seiyria/Rasterkhann/compare/v0.2.0...v0.2.1) (2020-07-09)
+
+
+### Bug Fixes
+
+* **adventure:** hopefully address adventures running simultaneously + sometimes using the same hero ([abff536](https://github.com/seiyria/Rasterkhann/commit/abff5365f12ced830f2d91f1b737010abe071ca0))
+* **automation:** make it so automation can only run every 10s guaranteed ([70b6061](https://github.com/seiyria/Rasterkhann/commit/70b6061083dcfaffab6d30590f3f0fa8d907f33d))
+* **guildhall:** remove gold scaling for heroes; they can cost too much ([b9a71e2](https://github.com/seiyria/Rasterkhann/commit/b9a71e258166a0c0345fac03bd50201cf3a844af))
+* **guildhall:** some heroes would not be recruitable ([e88ef83](https://github.com/seiyria/Rasterkhann/commit/e88ef83143b9b7515c2365ffeabfce45cacc3761))
+* **herogen:** heroes should always have their stats set to max on spawn ([9e408e3](https://github.com/seiyria/Rasterkhann/commit/9e408e38e2f1f0de8e649262576c3911b139424d))
+* **house:** house costs were entirely too low, they eclipsed everything else in auto levels ([3eb2024](https://github.com/seiyria/Rasterkhann/commit/3eb20249f6bee2c8dd6f43f53ad18f9b29663fda))
+* **library:** library costs were very low comparatively ([db69a0d](https://github.com/seiyria/Rasterkhann/commit/db69a0d02f0d9ca67ad37fb237a40b7e7c24ff89))
+* **workshop:** don't spam updates which can freeze the game ([6cc4a0b](https://github.com/seiyria/Rasterkhann/commit/6cc4a0b1b5da6c3ec17bf0788de3a55f6352982d))
+
+
+### Features
+
+* **map:** can click the map text to open buildings ([8ff7654](https://github.com/seiyria/Rasterkhann/commit/8ff7654ae9aae6ba231587db8acd9d5a1c472536)), closes [#11](https://github.com/seiyria/Rasterkhann/issues/11)
+
+
+### Reverts
+
+* Revert "test commit" ([c7f1a42](https://github.com/seiyria/Rasterkhann/commit/c7f1a42c31d57a821f16ac33abfb3ce48763f65d))
+
+
+
 # [0.2.0](https://github.com/seiyria/Rasterkhann/compare/v0.1.0...v0.2.0) (2020-07-09)
 
 
