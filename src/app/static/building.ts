@@ -44,7 +44,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     name: 'House',
     description: 'Acquire more citizens to increase your gold gain.',
     upgradeTime: (level) => level * 5,
-    levelCost: (x) => BigInt(Math.floor((15 * x) + (2 * (1.1 ** x)))),
+    levelCost: (x) => BigInt(Math.floor((15 * x) + (2 * (1.25 ** x)))),
     features: featuresArrayToHash(HouseFeatures)
   },
 
