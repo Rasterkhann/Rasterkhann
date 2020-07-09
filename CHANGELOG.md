@@ -1,3 +1,17 @@
+# [0.2.0](https://github.com/seiyria/Rasterkhann/compare/v0.1.0...v0.2.0) (2020-07-09)
+
+
+### Features
+
+* **cave:** add monster gold/experience buff perks ([44761cd](https://github.com/seiyria/Rasterkhann/commit/44761cd496eed067b89f191166d38ac959657ae5))
+* **cave:** more adventures, more encounters, more simultaneous adventures ([c572337](https://github.com/seiyria/Rasterkhann/commit/c57233790ab642d86455a0dec9df6ac10678dc90))
+* **guildhall:** add cheaper training upgrades ([9298222](https://github.com/seiyria/Rasterkhann/commit/92982221e7fefedb687afe1bb8f2612d408cd0a1))
+* **guildhall:** more heroes for recruit / storage ([b274c4e](https://github.com/seiyria/Rasterkhann/commit/b274c4e810f142d004d49ac03569c09350a59d28))
+* **inn:** more restful features to boost hero regen ([d7a6eaa](https://github.com/seiyria/Rasterkhann/commit/d7a6eaac8da6b7a3f6bd692e7e998122f239dcc1))
+* **workshop:** auto game options ([85808bc](https://github.com/seiyria/Rasterkhann/commit/85808bc8a301eebe200af879f263892a523b8a9f))
+
+
+
 # [0.1.0](https://github.com/seiyria/Rasterkhann/compare/v0.0.4...v0.1.0) (2020-07-08)
 
 
