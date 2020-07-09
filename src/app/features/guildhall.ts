@@ -43,6 +43,43 @@ const JobFeatures: BuildingFeature[] = [
   },
 ];
 
+const HeroFeatures: BuildingFeature[] = [
+  {
+    name: 'Bigger Barracks I',
+    description: 'House an additional hero.',
+    cost: 500000n,
+    upgradeTime: 1800,
+    requiresLevel: 10
+  },
+  {
+    name: 'Bigger Barracks II',
+    description: 'House an additional hero.',
+    cost: 1500000n,
+    upgradeTime: 3600,
+    requiresLevel: 30,
+    requiresFeature: {
+      'Bigger Barracks I': 1
+    }
+  },
+  {
+    name: 'Enticing Army I',
+    description: 'Show an additional potential hero.',
+    cost: 500000n,
+    upgradeTime: 1800,
+    requiresLevel: 5
+  },
+  {
+    name: 'Enticing Army II',
+    description: 'Show an additional potential hero.',
+    cost: 1500000n,
+    upgradeTime: 3600,
+    requiresLevel: 25,
+    requiresFeature: {
+      'Enticing Army I': 1
+    }
+  },
+];
+
 const OtherFeatures: BuildingFeature[] = [
   {
     name: 'Cheaper Training I',
@@ -95,5 +132,6 @@ const OtherFeatures: BuildingFeature[] = [
 
 export const GuildHallFeatures: BuildingFeature[] = [
   ...JobFeatures,
+  ...HeroFeatures,
   ...OtherFeatures
 ];

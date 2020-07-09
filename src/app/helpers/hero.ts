@@ -34,11 +34,21 @@ export function calculateAvailableTraits(town: IGameTown): Trait[] {
 }
 
 export function calculateProspectiveHeroMaxTotal(town: IGameTown): number {
-  return 3;
+  let base = 3;
+
+  if (doesTownHaveFeature(town, 'Enticing Army I'))  { base += 1; }
+  if (doesTownHaveFeature(town, 'Enticing Army II')) { base += 1; }
+
+  return base;
 }
 
 export function calculateHeroMaxTotal(town: IGameTown): number {
-  return 3;
+  let base = 3;
+
+  if (doesTownHaveFeature(town, 'Bigger Barracks I'))  { base += 1; }
+  if (doesTownHaveFeature(town, 'Bigger Barracks II')) { base += 1; }
+
+  return base;
 }
 
 export function calculateHeroTrainingGoldPerXP(town: IGameTown): bigint {
