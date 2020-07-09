@@ -1,5 +1,6 @@
 
 import { species } from 'fantastical';
+import { random } from 'lodash';
 
 import { HeroJobStatic, HeroJob, HeroStat, TriggerType } from '../interfaces';
 
@@ -26,7 +27,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => 100,
+      [HeroStat.EXP]: () => random(300, 500),
       [HeroStat.HP]: () => 12,
       [HeroStat.SP]: () => 4,
       [HeroStat.ATK]: () => 2,
@@ -56,7 +57,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => 125,
+      [HeroStat.EXP]: () => random(350, 650),
       [HeroStat.HP]: () => 10,
       [HeroStat.SP]: () => 3,
       [HeroStat.ATK]: () => 2,
@@ -88,7 +89,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => 150,
+      [HeroStat.EXP]: () => random(400, 750),
       [HeroStat.HP]: () => 5,
       [HeroStat.SP]: () => 3,
       [HeroStat.ATK]: () => 3,
@@ -120,7 +121,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => 110,
+      [HeroStat.EXP]: () => random(200, 350),
       [HeroStat.HP]: () => 7,
       [HeroStat.SP]: () => 5,
       [HeroStat.ATK]: () => 3,
@@ -152,7 +153,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => 200,
+      [HeroStat.EXP]: () => random(500, 900),
       [HeroStat.HP]: () => 15,
       [HeroStat.SP]: () => 1,
       [HeroStat.ATK]: () => 4,
