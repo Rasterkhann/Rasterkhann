@@ -4,13 +4,26 @@ import { sample, sum } from 'lodash';
 import { Hero, Adventure, IGameTown, HeroStat, HeroJobActionTargetting, HeroJobAction, TriggerType } from '../interfaces';
 import { generateMonster, getCurrentStat, giveHeroGold, giveHeroEXP } from './hero';
 import { JobEffects } from '../static';
+import { doesTownHaveFeature } from './global';
 
 export function getTownExpMultiplier(town: IGameTown): number {
-  return 0.1;
+  let base = 0.1;
+
+  if (doesTownHaveFeature(town, 'Monster Experience I'))   { base += 0.1; }
+  if (doesTownHaveFeature(town, 'Monster Experience II'))  { base += 0.1; }
+  if (doesTownHaveFeature(town, 'Monster Experience III')) { base += 0.1; }
+
+  return base;
 }
 
 export function getTownGoldMultiplier(town: IGameTown): number {
-  return 1;
+  let base = 1;
+
+  if (doesTownHaveFeature(town, 'Monster Gold I'))   { base += 0.5; }
+  if (doesTownHaveFeature(town, 'Monster Gold II'))  { base += 0.5; }
+  if (doesTownHaveFeature(town, 'Monster Gold III')) { base += 0.5; }
+
+  return base;
 }
 
 // team members can only fight if they have HP and STA > 0
