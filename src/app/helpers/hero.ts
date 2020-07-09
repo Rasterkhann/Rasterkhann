@@ -143,7 +143,7 @@ export function generateHero(town: IGameTown, level?: number): Hero {
 
   Object.keys(hero.stats).forEach((stat: HeroStat) => {
     hero.stats[stat] = Math.floor(hero.stats[stat]);
-    hero.currentStats[stat] = Math.floor(hero.currentStats[stat]);
+    hero.currentStats[stat] = hero.stats[stat];
   });
 
   return hero;
