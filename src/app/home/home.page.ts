@@ -56,12 +56,12 @@ export class HomePage implements OnInit {
       this.autoHeroes$,
       this.autoBuildings$,
       this.autoAdventures$
-    ]).subscribe(async ([_, ...opts]) => {
+    ]).subscribe(async ([i, ...opts]) => {
       const [heroes, buildings, adventures] = opts;
       const state = await this.state$.pipe(first()).toPromise();
-      if (heroes)     { this.checkAutoHeroes(state); }
-      if (buildings)  { this.checkAutoBuildings(state); }
-      if (adventures) { this.checkAutoAdventures(state); }
+      if (i % 3 === 0 && heroes)     { this.checkAutoHeroes(state); }
+      if (i % 3 === 1 && buildings)  { this.checkAutoBuildings(state); }
+      if (i % 3 === 2 && adventures) { this.checkAutoAdventures(state); }
     });
   }
 

@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { timer } from 'rxjs';
+import { timer, forkJoin } from 'rxjs';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures,
@@ -11,11 +11,14 @@ import { doesTownHaveFeature, getCurrentStat } from '../helpers';
 import { BuildingData } from '../static';
 import { AdventureService } from './adventure.service';
 import { HeroService } from './hero.service';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
+
+  private _isStartingAdventure: boolean;
 
   constructor(
     private store: Store,
@@ -203,10 +206,19 @@ export class GameService {
   }
 
   public startAdventure(town: IGameTown, adventure: Adventure): void {
+    if (this._isStartingAdventure) { return; }
+
     const heroes = this.advCreator.pickHeroesForAdventure(town, adventure);
     if (heroes.length === 0) { return; }
 
-    this.store.dispatch(new StartAdventure(adventure, heroes));
+    this._isStartingAdventure = true;
+
+
+    this.store.dispatch(new StartAdventure(adventure, heroes))
+      .pipe(delay(1000))
+      .subscribe(() => {
+        this._isStartingAdventure = false;
+      });
   }
 
 }
