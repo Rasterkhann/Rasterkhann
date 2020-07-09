@@ -61,7 +61,6 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   }
 
   canHeroBeBought(prosHero: ProspectiveHero): boolean {
-    console.log(prosHero, this.canBuyHeroes);
     return this.town.gold > prosHero.cost && this.canBuyHeroes;
   }
 
