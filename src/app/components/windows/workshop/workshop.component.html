@@ -17,17 +17,17 @@
 
   <ion-item *ngIf="hasSpecificAutomation('Automation: Train Heroes')">
     <ion-label>Train Heroes</ion-label>
-    <ion-toggle [ngModel]="optionValues[0]" (ionChange)="toggleOption('automationHeroes')"></ion-toggle>
+    <ion-toggle [(ngModel)]="optionValues.automationHeroes" (click)="toggleOption('automationHeroes')"></ion-toggle>
   </ion-item>
 
   <ion-item *ngIf="hasSpecificAutomation('Automation: Upgrade Buildings')">
     <ion-label>Upgrade Buildings</ion-label>
-    <ion-toggle [ngModel]="optionValues[1]" (ionChange)="toggleOption('automationBuildings')"></ion-toggle>
+    <ion-toggle [(ngModel)]="optionValues.automationBuildings" (click)="toggleOption('automationBuildings')"></ion-toggle>
   </ion-item>
 
   <ion-item *ngIf="hasSpecificAutomation('Automation: Adventure')">
     <ion-label>Adventure</ion-label>
-    <ion-toggle [ngModel]="optionValues[2]" (ionChange)="toggleOption('automationAdventures')"></ion-toggle>
+    <ion-toggle [(ngModel)]="optionValues.automationAdventures" (click)="toggleOption('automationAdventures')"></ion-toggle>
   </ion-item>
 </ion-list>
 

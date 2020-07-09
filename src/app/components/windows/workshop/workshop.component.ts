@@ -19,7 +19,11 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
   @Select((state: any) => state.gamestate.options[GameOption.AutomationBuildings]) autoBuildings$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationAdventures]) autoAdventures$: Observable<boolean>;
 
-  public optionValues: boolean[] = [];
+  public optionValues: Record<GameOption, boolean> = {
+    [GameOption.AutomationHeroes]: false,
+    [GameOption.AutomationBuildings]: false,
+    [GameOption.AutomationAdventures]: false
+  };
 
   private option$: Subscription;
 
@@ -30,8 +34,17 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
       this.autoHeroes$,
       this.autoBuildings$,
       this.autoAdventures$
-    ]).pipe(first()).subscribe(opts => {
-      this.optionValues = opts;
+    ])
+    .pipe(first())
+    .subscribe(
+      ([heroes, buildings, adventures]) => {
+        setTimeout(() => {
+          this.optionValues = {
+            [GameOption.AutomationHeroes]: heroes,
+            [GameOption.AutomationBuildings]: buildings,
+            [GameOption.AutomationAdventures]: adventures
+          };
+        }, 0);
     });
   }
 
