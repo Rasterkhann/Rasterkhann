@@ -48,6 +48,7 @@ export class GameService {
   public toggleOption(option: GameOption): void {
     this.store.dispatch(new OptionToggle(option));
   }
+  
 
   // building functions
   public featureByName(building: Building, feature: string): BuildingFeature {
