@@ -1,17 +1,33 @@
 import { IGameTown, Adventure, Hero, AdventureDifficulty } from '../interfaces';
 import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
+import { doesTownHaveFeature } from './global';
 
 export function calculateMaxActiveAdventures(town: IGameTown): number {
-  return 1;
+  let base = 1;
+
+  if (doesTownHaveFeature(town, 'Tunnels I'))  { base += 1; }
+  if (doesTownHaveFeature(town, 'Tunnels II')) { base += 1; }
+
+  return base;
 }
 
 export function calculateMaxPotentialAdventures(town: IGameTown): number {
-  return 3;
+  let base = 3;
+
+  if (doesTownHaveFeature(town, 'Infestation I'))  { base += 1; }
+  if (doesTownHaveFeature(town, 'Infestation II')) { base += 1; }
+
+  return base;
 }
 
 export function calculateMaxNumberAdventureEncounters(town: IGameTown): number {
-  return 3;
+  let base = 3;
+
+  if (doesTownHaveFeature(town, 'Deeper Cave I'))  { base += 2; }
+  if (doesTownHaveFeature(town, 'Deeper Cave II')) { base += 2; }
+
+  return base;
 }
 
 export function calculateAvailableDifficulties(town: IGameTown): AdventureDifficulty[] {

@@ -55,4 +55,55 @@ export const CaveFeatures: BuildingFeature[] = [
       'Monster Experience II': 1
     }
   },
+  {
+    name: 'Tunnels I',
+    description: 'Can be on another adventure simultaneously.',
+    cost: 100000n,
+    upgradeTime: 7200,
+    requiresLevel: 10
+  },
+  {
+    name: 'Tunnels II',
+    description: 'Can be on another adventure simultaneously.',
+    cost: 300000n,
+    upgradeTime: 10800,
+    requiresLevel: 40,
+    requiresFeature: {
+      'Tunnels I': 1
+    }
+  },
+  {
+    name: 'Infestation I',
+    description: 'More adventure options are present.',
+    cost: 300000n,
+    upgradeTime: 5400,
+    requiresLevel: 20
+  },
+  {
+    name: 'Infestation II',
+    description: 'More adventure options are present.',
+    cost: 500000n,
+    upgradeTime: 10800,
+    requiresLevel: 50,
+    requiresFeature: {
+      'Infestation I': 1
+    }
+  },
+  {
+    name: 'Deeper Cave I',
+    description: 'More potential encounters in an adventure.',
+    cost: 400000n,
+    upgradeTime: 10800,
+    requiresLevel: 30
+  },
+  {
+    name: 'Deeper Cave II',
+    description: 'More potential encounters in an adventure.',
+    cost: 600000n,
+    upgradeTime: 14400,
+    requiresLevel: 60,
+    requiresFeature: {
+      'Deeper Cave I': 1
+    }
+  },
 ];
