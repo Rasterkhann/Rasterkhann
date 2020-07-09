@@ -74,7 +74,7 @@
     <ion-list-header>Traits</ion-list-header>
 
     <ion-item *ngFor="let trait of viewingHero.traits">
-      <ion-label>
+      <ion-label class="ion-text-wrap">
         <h3>{{ trait }}</h3>
         <p>{{ getTraitData(trait) }}</p>
       </ion-label>
