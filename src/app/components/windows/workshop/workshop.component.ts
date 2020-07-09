@@ -38,6 +38,10 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
     if (this.option$) { this.option$.unsubscribe(); }
   }
 
+  toggleOption(option: string): void {
+    this.game.toggleOption(option as GameOption);
+  }
+
   hasSpecificAutomation(auto: string): boolean {
     return doesTownHaveFeature(this.town, auto);
   }

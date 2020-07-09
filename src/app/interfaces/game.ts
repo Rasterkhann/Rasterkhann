@@ -2,8 +2,8 @@
 import { IGameTown } from './town';
 
 export enum GameOption {
-  AutomationBuildings = 'automationBuildings',
   AutomationHeroes = 'automationHeroes',
+  AutomationBuildings = 'automationBuildings',
   AutomationAdventures = 'automationAdventures'
 }
 
