@@ -42,7 +42,7 @@ export class HeroService {
                    * guildHallLevel
                    * this.getTraitTotalMultiplier(hero.traits)
                    * JobEffects[hero.job].costMultiplier
-                   * JobEffects[hero.job].statGrowth[HeroStat.GOLD]();
+                   * (JobEffects[hero.job].statGrowth[HeroStat.GOLD]() || 1);
 
     return {
       hero,
