@@ -11,7 +11,7 @@ import { first } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 
-import { IGameTown, IGameState, GameOption } from '../../../interfaces';
+import { IGameTown, IGameState } from '../../../interfaces';
 import { GameState } from '../../../states';
 import { GameService } from '../../../services/game.service';
 import { afterDeserialize, beforeSerialize, createDefaultSavefile } from '../../../helpers';
@@ -27,7 +27,6 @@ export class WatchtowerComponent implements OnInit {
   @Input() town: IGameTown;
 
   @Select(GameState.entireSavefile) gameState$: Observable<IGameState>;
-  @Select((state: any) => state.gamestate.options[GameOption.ToggleUpgradeVisiblity]) upgradeVisibility$: Observable<boolean>;
 
   public get version(): string {
     return `${environment.version.version}-${environment.version.branch}-${environment.version.revision}-${environment.full ? 'FULL RELEASE' : 'DEMO RELEASE'}`;

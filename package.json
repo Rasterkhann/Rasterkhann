@@ -36,7 +36,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^5.0.0",
     "@ngxs-labs/immer-adapter": "3.0.5",
-    "@ngxs/logger-plugin": "3.6.2",
+    "@ngxs/logger-plugin": "3.6.2-dev.master-eaa5d86",
     "@ngxs/storage-plugin": "3.6.2-dev.master-eaa5d86",
     "@ngxs/store": "3.6.2",
     "@seiyria/pixi-tiledmap": "1.12.0",

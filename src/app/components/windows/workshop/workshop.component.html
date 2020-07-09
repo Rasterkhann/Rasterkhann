@@ -4,4 +4,31 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-list>
+  <app-building-info [town]="town"
+                     buildingId="workshop">
+  </app-building-info>
+</ion-list>
+
+<ion-list>
+  <ion-list-header>Automation</ion-list-header>
+
+  <ion-item *ngIf="!hasAnyAutomation()">No automation upgrades earned.</ion-item>
+
+  <ion-item *ngIf="hasSpecificAutomation('Automation: Train Heroes')">
+    <ion-label>Train Heroes</ion-label>
+    <ion-toggle [ngModel]="optionValues[0]" (ionChange)="game.toggleOption('automationHeroes')"></ion-toggle>
+  </ion-item>
+
+  <ion-item *ngIf="hasSpecificAutomation('Automation: Upgrade Buildings')">
+    <ion-label>Upgrade Buildings</ion-label>
+    <ion-toggle [ngModel]="optionValues[1]" (ionChange)="game.toggleOption('automationBuildings')"></ion-toggle>
+  </ion-item>
+
+  <ion-item *ngIf="hasSpecificAutomation('Automation: Adventure')">
+    <ion-label>Adventure</ion-label>
+    <ion-toggle [ngModel]="optionValues[2]" (ionChange)="game.toggleOption('automationAdventures')"></ion-toggle>
+  </ion-item>
+</ion-list>
+
 <app-feature-list [town]="town" buildingId="workshop"></app-feature-list>

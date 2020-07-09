@@ -1,6 +1,6 @@
 import { Building, BuildingStatic } from '../interfaces';
 import { HouseFeatures, GuildHallFeatures, ArmoryFeatures,
-  AlchemistFeatures, InnFeatures, CaveFeatures, BazaarFeatures, LibraryFeatures } from '../features';
+  AlchemistFeatures, InnFeatures, CaveFeatures, BazaarFeatures, LibraryFeatures, WorkshopFeatures } from '../features';
 
 const featuresArrayToHash = (array: any[]) => array.reduce((prev, cur) => ({ ...prev, [cur.name]: cur }), {});
 
@@ -26,7 +26,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     description: 'Manage your automation settings for your town.',
     upgradeTime: () => 30,
     levelCost: (x) => x === 1 ? 5000n : 0n,
-    features: {}
+    features: featuresArrayToHash(WorkshopFeatures)
   },
 
   [Building.Archives]: {

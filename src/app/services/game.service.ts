@@ -4,8 +4,9 @@ import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
-  OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP } from '../actions';
-import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure, HeroStat } from '../interfaces';
+  UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures,
+  StartAdventure, HeroGainEXP, OptionToggle } from '../actions';
+import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure, HeroStat, GameOption } from '../interfaces';
 import { doesTownHaveFeature, getCurrentStat } from '../helpers';
 import { BuildingData } from '../static';
 import { AdventureService } from './adventure.service';
@@ -44,8 +45,8 @@ export class GameService {
     this.store.dispatch(new LoadSaveData(state));
   }
 
-  public toggleUpgradeVisibility(): void {
-    this.store.dispatch(new OptionToggleUpgradeVisibility());
+  public toggleOption(option: GameOption): void {
+    this.store.dispatch(new OptionToggle(option));
   }
 
   // building functions

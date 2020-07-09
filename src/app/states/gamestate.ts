@@ -5,8 +5,8 @@ import { ImmutableContext } from '@ngxs-labs/immer-adapter';
 
 import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
-  LoadSaveData, OptionToggleUpgradeVisibility, UpgradeBuildingFeature, RerollHeroes,
-  RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage
+  LoadSaveData, UpgradeBuildingFeature, RerollHeroes,
+  RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle
 } from '../actions';
 import {
   IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem
@@ -403,11 +403,11 @@ export class GameState {
     });
   }
 
-  @Action(OptionToggleUpgradeVisibility)
+  @Action(OptionToggle)
   @ImmutableContext()
-  toggleUpgradeVisiblity({ setState }: StateContext<IGameState>): void {
+  toggleOption({ setState }: StateContext<IGameState>, { option }: OptionToggle): void {
     setState((state: IGameState) => {
-      state.options[GameOption.ToggleUpgradeVisiblity] = !state.options[GameOption.ToggleUpgradeVisiblity];
+      state.options[option] = !state.options[option];
       return state;
     });
   }

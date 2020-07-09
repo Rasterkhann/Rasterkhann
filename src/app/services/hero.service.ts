@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { sum } from 'lodash';
 
-import { Hero, IGameTown, ProspectiveHero, HeroStat, Building, HeroJobStatic, Adventure, Trait, TraitValueMultipliers } from '../interfaces';
+import { Hero, IGameTown, ProspectiveHero, HeroStat,
+  Building, HeroJobStatic, Adventure, Trait, TraitValueMultipliers } from '../interfaces';
 import { calculateHeroTrainingGoldPerXP, generateHero, generateMonster, getCurrentStat } from '../helpers';
 import { JobEffects, TraitEffects } from '../static';
 
@@ -51,7 +52,7 @@ export class HeroService {
   }
 
   heroTrainCost(town: IGameTown, hero: Hero): bigint {
-    return BigInt(hero.stats[HeroStat.EXP] - getCurrentStat(hero, HeroStat.EXP)) * calculateHeroTrainingGoldPerXP(town);
+    return BigInt(Math.floor(hero.stats[HeroStat.EXP] - getCurrentStat(hero, HeroStat.EXP))) * calculateHeroTrainingGoldPerXP(town);
   }
 
   private getRatingForHero(town: IGameTown, hero: Hero): number {

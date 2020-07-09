@@ -2,7 +2,9 @@
 import { IGameTown } from './town';
 
 export enum GameOption {
-  ToggleUpgradeVisiblity = 'toggleupgradevisibility'
+  AutomationBuildings = 'automationBuildings',
+  AutomationHeroes = 'automationHeroes',
+  AutomationAdventures = 'automationAdventures'
 }
 
 export interface IGameState {

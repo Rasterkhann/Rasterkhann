@@ -1,13 +1,13 @@
-import { IGameState } from '../interfaces';
+import { IGameState, GameOption } from '../interfaces';
 
 export class ChooseInfo {
   static readonly type = '[Info] Choose Info';
   constructor(public window: string) {}
 }
 
-export class OptionToggleUpgradeVisibility {
-  static readonly type = '[Option] Toggle Upgrade Visibility';
-  constructor() {}
+export class OptionToggle {
+  static readonly type = '[Option] Toggle Option';
+  constructor(public option: GameOption) {}
 }
 
 export class NotifyMessage {
