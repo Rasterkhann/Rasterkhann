@@ -19,8 +19,25 @@ export function calculateRestingRate(town: IGameTown): number {
   return baseRate;
 }
 
+export function calculateRestingCost(town: IGameTown): number {
+
+  let baseRate = 0;
+
+  if (town.buildings[Building.Inn])                 { baseRate += town.buildings[Building.Inn].level; }
+  if (doesTownHaveFeature(town, 'Restful Sleep'))   { baseRate += 50; }
+  if (doesTownHaveFeature(town, 'Blissful Sleep'))  { baseRate += 100; }
+
+  return baseRate;
+}
+
 export function calculateMaxNumberOfTraits(town: IGameTown): number {
-  return 1;
+
+  let baseNum = 1;
+
+  if (doesTownHaveFeature(town, 'Dual Trait'))   { baseNum += 1; }
+  if (doesTownHaveFeature(town, 'Tri Trait'))    { baseNum += 1; }
+
+  return baseNum;
 }
 
 export function calculateAvailableJobs(town: IGameTown): HeroJob[] {
@@ -174,12 +191,12 @@ export function generateMonster(town: IGameTown, adventure: Adventure): Hero {
 }
 
 export function giveHeroEXP(hero: Hero, exp: number): void {
-  hero.currentStats[HeroStat.EXP] += Math.floor(exp);
+  hero.currentStats[HeroStat.EXP] = Math.max(0, Math.floor(hero.currentStats[HeroStat.EXP] + exp));
   checkHeroLevelUp(hero);
 }
 
 export function giveHeroGold(hero: Hero, gold: number): void {
-  hero.currentStats[HeroStat.GOLD] += Math.floor(gold);
+  hero.currentStats[HeroStat.GOLD] = Math.max(0, Math.floor(hero.currentStats[HeroStat.GOLD] + gold));
 }
 
 export function checkHeroLevelUp(hero: Hero): void {

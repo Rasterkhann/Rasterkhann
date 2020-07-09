@@ -27,10 +27,16 @@ export enum TriggerType {
 export type BadTrait =
   'Weak' | 'Frail' | 'Ill' | 'Clumsy' | 'Reclusive' | 'Sedentary' | 'Poor' | 'Inexperienced';
 
+export type SimpleModifierPositiveTrait =
+  'ATK+' | 'DEF+' | 'STA+' | 'HP+' | 'SP+';
+
+export type SimpleModifierNegativeTrait =
+  'ATK-' | 'DEF-' | 'STA-';
+
 export type FirstTierGoodTrait =
   'Strong' | 'Fortified' | 'Healthy' | 'Skilled' | 'Advanced' | 'Active' | 'Modest' | 'Experienced';
 
-export type Trait = BadTrait | FirstTierGoodTrait;
+export type Trait = BadTrait | SimpleModifierPositiveTrait | SimpleModifierNegativeTrait | FirstTierGoodTrait;
 
 export enum TraitPriority {
   Any = 'any',

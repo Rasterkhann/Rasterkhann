@@ -1,5 +1,5 @@
 
-import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait, BadTrait } from '../interfaces';
+import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait, BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait } from '../interfaces';
 import { ensureHeroStatValue } from '../helpers/trait';
 
 const BaseBadTraits: Record<BadTrait, TraitEffect> = {
@@ -132,11 +132,137 @@ const BaseBadTraits: Record<BadTrait, TraitEffect> = {
   },
 };
 
+const SimplePositiveTraits: Record<SimpleModifierPositiveTrait, TraitEffect> = {
+  'ATK+': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero gets +10 ATK on spawn, +1 ATK per level',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.ATK] += 10;
+        ensureHeroStatValue(hero, HeroStat.ATK, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.ATK] += 1;
+      }
+    }
+  },
+  'DEF+': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero gets +10 DEF on spawn, +1 DEF per level',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.DEF] += 10;
+        ensureHeroStatValue(hero, HeroStat.DEF, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.DEF] += 1;
+      }
+    }
+  },
+  'HP+': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero gets +100 HP on spawn, +10 HP per level',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.HP] += 100;
+        ensureHeroStatValue(hero, HeroStat.HP, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.HP] += 10;
+      }
+    }
+  },
+  'SP+': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero gets +20 SP on spawn, +2 SP per level',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.SP] += 20;
+        ensureHeroStatValue(hero, HeroStat.SP, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.SP] += 2;
+      }
+    }
+  },
+  'STA+': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero gets +10 STA on spawn, +1 STA per level',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.STA] += 10;
+        ensureHeroStatValue(hero, HeroStat.STA, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.STA] += 1;
+      }
+    }
+  }
+};
+
+const SimpleNegativeTraits: Record<SimpleModifierNegativeTrait, TraitEffect> = {
+  'ATK-': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero gets -10 ATK on spawn, -1 ATK per level',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.ATK] -= 10;
+        ensureHeroStatValue(hero, HeroStat.ATK, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.ATK] -= 1;
+      }
+    }
+  },
+  'DEF-': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero gets -10 DEF on spawn, -1 DEF per level',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.DEF] -= 10;
+        ensureHeroStatValue(hero, HeroStat.DEF, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.DEF] -= 1;
+      }
+    }
+  },
+  'STA-': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero gets -10 STA on spawn, -1 STA per level',
+    triggers: {
+      [TriggerType.Spawn]: ({ hero }) => {
+        hero.stats[HeroStat.STA] -= 10;
+        ensureHeroStatValue(hero, HeroStat.STA, 1);
+      },
+      [TriggerType.LevelUp]: ({ statBlock }) => {
+        if (!statBlock) { return; }
+        statBlock[HeroStat.STA] -= 1;
+      }
+    }
+  }
+};
+
 const FirstTierGoodTraits: Record<FirstTierGoodTrait, TraitEffect> = {
   Strong: {
     priority: TraitPriority.Last,
     valueProp: TraitValueProp.SlightlyGood,
-    description: 'Hero is weakened, +15% ATK.',
+    description: 'Hero is strong, +15% ATK.',
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
         hero.stats[HeroStat.ATK] *= 1.15;
@@ -264,5 +390,7 @@ const FirstTierGoodTraits: Record<FirstTierGoodTrait, TraitEffect> = {
 
 export const TraitEffects: Record<Trait, TraitEffect> = {
   ...BaseBadTraits,
+  ...SimplePositiveTraits,
+  ...SimpleNegativeTraits,
   ...FirstTierGoodTraits
 };

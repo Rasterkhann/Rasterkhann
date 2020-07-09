@@ -19,7 +19,9 @@ import {
   calculateRestingRate,
   canHeroGoOnAdventure,
   giveHeroEXP,
-  giveHeroGold
+  giveHeroGold,
+  calculateRestingCost,
+  getCurrentStat
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -206,12 +208,21 @@ export class GameState {
       const town = getCurrentTownFromState(state);
 
       const restValue = calculateRestingRate(town);
+      const restCost = calculateRestingCost(town);
 
       town.recruitedHeroes.forEach(h => {
         if (h.onAdventure || canHeroGoOnAdventure(h)) { return; }
 
+        const heroSpendValue = getCurrentStat(h, HeroStat.GOLD) >= restCost ? restCost : 0;
+        const heroRestValue = heroSpendValue === 0 ? 1 : restValue;
+
+        if (heroSpendValue > 0) {
+          giveHeroGold(h, -heroSpendValue);
+          this.store.dispatch(new GainGold(BigInt(heroSpendValue)));
+        }
+
         [HeroStat.HP, HeroStat.SP, HeroStat.STA].forEach(stat => {
-          h.currentStats[stat] = Math.min(h.currentStats[stat] + restValue, h.stats[stat]);
+          h.currentStats[stat] = Math.min(h.currentStats[stat] + heroRestValue, h.stats[stat]);
         });
 
         if (canHeroGoOnAdventure(h)) {
