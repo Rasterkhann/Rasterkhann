@@ -6,7 +6,7 @@ import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect, Bu
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
-import { filteredUnlocksEarnedByTown } from './global';
+import { filteredUnlocksEarnedByTown, doesTownHaveFeature } from './global';
 
 export function calculateRestingRate(town: IGameTown): number {
   return 1;
@@ -35,7 +35,15 @@ export function calculateHeroMaxTotal(town: IGameTown): number {
 }
 
 export function calculateHeroTrainingGoldPerXP(town: IGameTown): bigint {
-  return 50n;
+  let base = 50n;
+
+  if (doesTownHaveFeature(town, 'Cheaper Training I'))   { base -= 3n; }
+  if (doesTownHaveFeature(town, 'Cheaper Training II'))  { base -= 4n; }
+  if (doesTownHaveFeature(town, 'Cheaper Training III')) { base -= 5n; }
+  if (doesTownHaveFeature(town, 'Cheaper Training IV'))  { base -= 6n; }
+  if (doesTownHaveFeature(town, 'Cheaper Training V'))   { base -= 7n; }
+
+  return base;
 }
 
 export function getCurrentStat(hero: Hero, stat: HeroStat): number {
