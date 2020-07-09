@@ -1,12 +1,8 @@
 
 <ion-item>
   <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="hero.sprite"></app-hero-sprite>
-
-  <ion-button class="recruit" slot="start" *ngIf="cost" (click)="recruit()" [disabled]="!canBuyHero">
-    Recruit
-  </ion-button>
   
-  <ion-button class="info" icon-only color="secondary" slot="start" *ngIf="!cost">
+  <ion-button class="info" icon-only color="secondary" slot="start">
     <ion-icon name="information-circle-outline"></ion-icon>
   </ion-button>
 

@@ -27,6 +27,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   private canBuyHeroes: boolean;
   private activeHeroes$: Subscription;
 
+  public viewingProspectiveHero: ProspectiveHero | null;
   public viewingHero: Hero | null;
 
   constructor(
@@ -71,6 +72,15 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   trainCurrentHero(): void {
     if (!this.viewingHero) { return; }
     this.trainHero(this.viewingHero);
+  }
+
+  recruitCurrentHero(): void {
+    if (!this.viewingProspectiveHero || !this.viewingHero) { return; }
+    this.recruitHero(this.viewingProspectiveHero);
+  }
+
+  canRecruitHero(town: IGameTown, prosHero: ProspectiveHero): boolean {
+    return this.canBuyHeroes && this.game.canRecruitHero(town, prosHero);
   }
 
   async trainHero(hero: Hero): Promise<void> {
@@ -118,6 +128,42 @@ export class GuildModalComponent implements OnDestroy, OnInit {
     });
 
     await alert.present();
+  }
+
+  async recruitHero(prosHero: ProspectiveHero): Promise<void> {
+    const alert = await this.alert.create({
+      header: 'Recruit Hero',
+      message: `Are you sure you want to recruit ${prosHero.hero.name}, the level ${prosHero.hero.stats[HeroStat.LVL]} ${prosHero.hero.job}?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Yes, Recruit',
+          handler: async () => {
+            if (!prosHero.rating || !prosHero.cost) { return; }
+            this.game.recruitHero(this.town, prosHero);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  unviewHero(): void {
+    this.viewingHero = null;
+    this.viewingProspectiveHero = null;
+  }
+
+  viewHero(hero: Hero): void {
+    this.viewingHero = hero;
+  }
+
+  viewProspectiveHero(prosHero: ProspectiveHero): void {
+    this.viewingHero = prosHero.hero;
+    this.viewingProspectiveHero = prosHero;
   }
 
 }

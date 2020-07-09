@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { timer, forkJoin } from 'rxjs';
+import { timer } from 'rxjs';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures,
@@ -152,8 +152,12 @@ export class GameService {
     this.store.dispatch(new RerollHeroes());
   }
 
+  public canRecruitHero(town: IGameTown, prosHero: ProspectiveHero): boolean {
+    return town.gold >= prosHero.cost;
+  }
+
   public recruitHero(town: IGameTown, prosHero: ProspectiveHero): void {
-    if (town.gold < prosHero.cost) { return; }
+    if (!this.canRecruitHero(town, prosHero)) { return; }
 
     this.store.dispatch(new RecruitHero(prosHero)).subscribe(() => {
       this.store.dispatch(new SpendGold(prosHero.cost));

@@ -5,10 +5,10 @@
       Guild Recruits
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button *ngIf="viewingHero" color="secondary" (click)="viewingHero = null">
+      <ion-button *ngIf="viewingHero" color="secondary" (click)="unviewHero()">
         Back
       </ion-button>
-      <ion-button *ngIf="viewingHero && !viewingHero.onAdventure" color="danger" (click)="dismissCurrentHero()">
+      <ion-button *ngIf="!viewingProspectiveHero && viewingHero && !viewingHero.onAdventure" color="danger" (click)="dismissCurrentHero()">
         Dismiss
       </ion-button>
       <ion-button (click)="dismiss()">
@@ -23,7 +23,7 @@
     <ion-list-header>Recruited Heroes</ion-list-header>
 
     <ion-item *ngIf="(recruitedHeroes$ | async)?.length === 0">You have no recruited heroes.</ion-item>
-    <app-hero *ngFor="let hero of recruitedHeroes$ | async" [town]="town" [hero]="hero" (click)="viewingHero = hero"></app-hero>
+    <app-hero *ngFor="let hero of recruitedHeroes$ | async" [town]="town" [hero]="hero" (click)="viewHero(hero)"></app-hero>
 
     <ion-list-header class="ion-margin-top">
       <ion-label>Potential Hero Recruits</ion-label>
@@ -35,8 +35,8 @@
               [town]="town" 
               [hero]="prospectiveHero.hero" 
               [cost]="prospectiveHero.cost"
-              [canBuyHero]="canHeroBeBought(prospectiveHero)"
-              [rating]="prospectiveHero.rating"></app-hero>
+              [rating]="prospectiveHero.rating" 
+              (click)="viewProspectiveHero(prospectiveHero)"></app-hero>
   </ion-list>
 
   <ion-list *ngIf="viewingHero">
@@ -46,15 +46,19 @@
       <ion-label class="ion-text-wrap">
         <h2>{{ viewingHero.name }}</h2>
         <p>Lv.{{ viewingHero.stats.lvl }} {{ viewingHero.job }}</p>
-        <p class="exp-row">
+        <p class="exp-row" *ngIf="!viewingProspectiveHero">
           {{ viewingHero.currentStats.exp | bignum }} / {{ viewingHero.stats.exp | bignum }} EXP
           <ion-button class="inline-button" color="secondary" [disabled]="!game.canTrainHero(town, viewingHero)" (click)="trainCurrentHero()">Train</ion-button>
         </p>
-        <p>{{ viewingHero.currentStats.gold | bignum }} GOLD</p>
+        <p *ngIf="!viewingProspectiveHero">{{ viewingHero.currentStats.gold | bignum }} GOLD</p>
+        <p class="exp-row" *ngIf="viewingProspectiveHero">
+          Cost: {{ viewingProspectiveHero.cost | bignum }} GOLD
+          <ion-button class="inline-button" color="secondary" [disabled]="!canRecruitHero(town, viewingProspectiveHero)" (click)="recruitCurrentHero()">Recruit</ion-button>
+        </p>
       </ion-label>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="!viewingProspectiveHero">
       <ion-progress-bar color="success" [value]="viewingHero.currentStats.exp / viewingHero.stats.exp"></ion-progress-bar>
     </ion-item>
 
@@ -69,6 +73,7 @@
     <ion-item>
       <ion-col class="hero-stat">{{ viewingHero.stats.atk | bignum }} ATK</ion-col>
       <ion-col class="hero-stat">{{ viewingHero.stats.def | bignum }} DEF</ion-col>
+      <ion-col class="hero-stat" *ngIf="viewingProspectiveHero">{{ viewingHero.stats.gold | bignum }} GOLD</ion-col>
     </ion-item>
 
     <ion-list-header>Traits</ion-list-header>
