@@ -1,3 +1,19 @@
+## [0.2.2](https://github.com/seiyria/Rasterkhann/compare/v0.2.1...v0.2.2) (2020-07-09)
+
+
+### Bug Fixes
+
+* **guildmodal:** wrap text for hero traits ([abc5af0](https://github.com/seiyria/Rasterkhann/commit/abc5af0111f9f6180b264cd75d9538d0c934ac58))
+* **workshop:** workshop should save values correctly and not cause weird errors ([32b4b7e](https://github.com/seiyria/Rasterkhann/commit/32b4b7e46cfd2ed597974a9044e564d4dedf8b80))
+
+
+### Features
+
+* **guildmodal:** move prospective heroes to viewing hero modal view ([43f329b](https://github.com/seiyria/Rasterkhann/commit/43f329b53a4253e522a531485a0506260918f411)), closes [#13](https://github.com/seiyria/Rasterkhann/issues/13)
+* **inn:** inn generates money when heroes are resting and have money to spend ([c95deeb](https://github.com/seiyria/Rasterkhann/commit/c95deeb32ac7016d9c3b2b5dcdf5f9f68dd941e7))
+
+
+
 ## [0.2.1](https://github.com/seiyria/Rasterkhann/compare/v0.2.0...v0.2.1) (2020-07-09)
 
 
