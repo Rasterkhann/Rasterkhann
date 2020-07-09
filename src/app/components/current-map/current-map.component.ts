@@ -73,6 +73,12 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
               this.textMap[obj.name].resolution = 2;
 
               this.tileMap.addChild(this.textMap[obj.name]);
+
+              this.textMap[obj.name].interactive = true;
+              this.textMap[obj.name].buttonMode = true;
+              this.textMap[obj.name].on('pointerdown', () => {
+                this.game.changeInfo(obj.name);
+              });
             }
           }
         });
