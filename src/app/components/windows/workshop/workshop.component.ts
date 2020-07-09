@@ -1,6 +1,7 @@
 import { Component, Input, AfterViewInit, OnDestroy } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable, combineLatest, Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { IGameTown, GameOption } from '../../../interfaces';
 import { doesTownHaveFeature } from '../../../helpers';
@@ -29,7 +30,7 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
       this.autoHeroes$,
       this.autoBuildings$,
       this.autoAdventures$
-    ]).subscribe(opts => {
+    ]).pipe(first()).subscribe(opts => {
       this.optionValues = opts;
     });
   }
