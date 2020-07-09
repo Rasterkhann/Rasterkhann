@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable, forkJoin, combineLatest, interval } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, throttle } from 'rxjs/operators';
 import { sample } from 'lodash';
 
 import { GameService } from '../services/game.service';
@@ -56,12 +56,12 @@ export class HomePage implements OnInit {
       this.autoHeroes$,
       this.autoBuildings$,
       this.autoAdventures$
-    ]).subscribe(async ([i, ...opts]) => {
+    ]).pipe(throttle(() => interval(5000))).subscribe(async ([_, ...opts]) => {
       const [heroes, buildings, adventures] = opts;
       const state = await this.state$.pipe(first()).toPromise();
-      if (i % 3 === 0 && heroes)     { this.checkAutoHeroes(state); }
-      if (i % 3 === 1 && buildings)  { this.checkAutoBuildings(state); }
-      if (i % 3 === 2 && adventures) { this.checkAutoAdventures(state); }
+      if (heroes)     { this.checkAutoHeroes(state); }
+      if (buildings)  { this.checkAutoBuildings(state); }
+      if (adventures) { this.checkAutoAdventures(state); }
     });
   }
 
