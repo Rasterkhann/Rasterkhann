@@ -9,7 +9,14 @@ import { ensureHeroStatValue } from './trait';
 import { filteredUnlocksEarnedByTown, doesTownHaveFeature } from './global';
 
 export function calculateRestingRate(town: IGameTown): number {
-  return 1;
+
+  let baseRate = 1;
+
+  if (town.buildings[Building.Inn])                 { baseRate += 1; }
+  if (doesTownHaveFeature(town, 'Restful Sleep'))   { baseRate += 1; }
+  if (doesTownHaveFeature(town, 'Blissful Sleep'))  { baseRate += 2; }
+
+  return baseRate;
 }
 
 export function calculateMaxNumberOfTraits(town: IGameTown): number {
