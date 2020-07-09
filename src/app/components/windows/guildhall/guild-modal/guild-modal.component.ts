@@ -39,6 +39,11 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.activeHeroes$ = this.recruitedHeroes$.subscribe(d => {
+      if (this.viewingProspectiveHero && this.viewingHero && d.map(h => h.uuid).includes(this.viewingHero.uuid)) {
+        this.viewingProspectiveHero = null;
+      }
+
+      console.log(d);
       this.canBuyHeroes = d.length < calculateProspectiveHeroMaxTotal(this.town);
 
       d.forEach(h => {
@@ -57,6 +62,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   }
 
   canHeroBeBought(prosHero: ProspectiveHero): boolean {
+    console.log(prosHero, this.canBuyHeroes);
     return this.town.gold > prosHero.cost && this.canBuyHeroes;
   }
 
