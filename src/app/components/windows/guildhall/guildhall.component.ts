@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 
 import { IGameTown } from '../../../interfaces';
 import { GuildModalComponent } from './guild-modal/guild-modal.component';
+import { calculateAvailableJobs } from '../../../helpers';
 
 @Component({
   selector: 'app-guildhall',
@@ -12,6 +13,10 @@ import { GuildModalComponent } from './guild-modal/guild-modal.component';
 export class GuildHallComponent implements OnInit {
 
   @Input() town: IGameTown;
+
+  public get jobsUnlocked(): string {
+    return calculateAvailableJobs(this.town).join(', ');
+  }
 
   constructor(private modal: ModalController) { }
 
