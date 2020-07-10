@@ -73,8 +73,9 @@ ion-item {
   margin: 0;
 }
 
-ion-title {
-  font-size: 1.2rem !important;
+ion-title, ion-title h2, ion-list-header {
+  font-size: 1.4rem !important;
+  letter-spacing: 2px !important;
 }
 
 ion-button:not(.in-toolbar) {
