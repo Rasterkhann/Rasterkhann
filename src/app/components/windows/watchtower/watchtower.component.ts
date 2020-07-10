@@ -29,7 +29,7 @@ export class WatchtowerComponent implements OnInit {
   @Select(GameState.entireSavefile) gameState$: Observable<IGameState>;
 
   public get version(): string {
-    return `${environment.version.version}-${environment.version.branch}-${environment.version.revision}-${environment.full ? 'FULL RELEASE' : 'DEMO RELEASE'}`;
+    return `${environment.version.version}-${environment.version.branch}-${environment.version.revision}-${environment.full ? 'FULL' : 'DEMO'}`;
   }
 
   constructor(private alert: AlertController, public game: GameService) { }
@@ -80,7 +80,7 @@ export class WatchtowerComponent implements OnInit {
         const jsonString = JSON.stringify(beforeSerialize(savefile), null, 4);
         const lzString = await compressToUTF16(jsonString);
         const blob = new Blob([lzString], { type: 'text/plain;charset=utf-8' });
-        saveAs(blob, `rasterkhann-${Date.now()}.sav`);
+        saveAs(blob, `rasterkhann-${Date.now()}-${this.version}.sav`);
       });
   }
 
