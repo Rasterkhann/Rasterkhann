@@ -9,7 +9,7 @@ import {
   RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle
 } from '../actions';
 import {
-  IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem
+  IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType
 } from '../interfaces';
 import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
@@ -21,7 +21,10 @@ import {
   giveHeroEXP,
   giveHeroGold,
   calculateRestingCost,
-  getCurrentStat
+  getCurrentStat,
+  calculateMaxCreatableItems,
+  generateItem,
+  calculateSecondsUntilNextItem
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -387,6 +390,35 @@ export class GameState {
           const postMsg = didSucceed ? 'it was a success!' : 'it was a failure.';
           this.store.dispatch(new NotifyMessage(`${heroNames.map(x => x.name).join(', ')} ${heroNames.length === 1 ? 'has' : 'have'} returned from their adventure - ${postMsg}`));
         }
+      });
+
+      return state;
+    });
+  }
+
+  // item functions
+  @Action(GameLoop)
+  @ImmutableContext()
+  itemCreationTick({ setState }: StateContext<IGameState>): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+
+      const now = Date.now();
+
+      Object.keys(ItemType).forEach((itemType: ItemType) => {
+
+        // check if we can make new items - aka, at capacity
+        const maxItemsOfType = calculateMaxCreatableItems(town, itemType);
+        if (town.itemsForSale[itemType].length >= maxItemsOfType) { return; }
+
+        // check if we can make new items via time
+        if (now < town.nextItemCreation[itemType]) { return; }
+
+        const item = generateItem(town, itemType);
+        town.itemsForSale[itemType].push(item);
+        town.nextItemCreation[itemType] = Date.now() + (GLOBAL_TIME_MULTIPLIER * calculateSecondsUntilNextItem(town, itemType));
+
+        this.store.dispatch(new NotifyMessage(`A new item "${item.name}" was listed for sale.`));
       });
 
       return state;

@@ -8,15 +8,15 @@ import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
 import { filteredUnlocksEarnedByTown, doesTownHaveFeature } from './global';
 
-export function calculateMaxWeapons(town: IGameTown, hero: Hero): number {
+export function calculateMaxHeldWeapons(town: IGameTown, hero: Hero): number {
   return 1;
 }
 
-export function calculateMaxArmors(town: IGameTown, hero: Hero): number {
+export function calculateMaxHeldArmors(town: IGameTown, hero: Hero): number {
   return 1;
 }
 
-export function calculateMaxPotions(town: IGameTown, hero: Hero): number {
+export function calculateMaxHeldPotions(town: IGameTown, hero: Hero): number {
   return 1;
 }
 

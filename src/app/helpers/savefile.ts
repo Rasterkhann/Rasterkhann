@@ -1,5 +1,5 @@
 
-import { Building, IGameTown, IGameState, BuildingInfo, ProspectiveHero } from '../interfaces';
+import { Building, IGameTown, IGameState, BuildingInfo, ProspectiveHero, ItemType, HeroItem } from '../interfaces';
 import { calculateOfflineGold } from './town';
 
 export function beforeSerialize(obj: any): IGameState {
@@ -19,6 +19,11 @@ export function beforeSerialize(obj: any): IGameState {
 
       town.prospectiveHeroes = town.prospectiveHeroes.map((hero: ProspectiveHero) => ({ ...hero, cost: hero.cost.toString() }));
 
+      town.itemsForSale = { ...town.itemsForSale };
+      Object.keys(town.itemsForSale).forEach(itemType => {
+        town.itemsForSale[itemType] = town.itemsForSale[itemType].map((item: HeroItem) => ({ ...item, cost: item.cost.toString() }));
+      });
+
       obj.towns[townName] = town;
     });
   }
@@ -37,6 +42,10 @@ export function afterDeserialize(obj: IGameState): IGameState {
         town.goldPerTick = BigInt(town.goldPerTick);
 
         town.prospectiveHeroes.forEach(hero => hero.cost = BigInt(hero.cost));
+
+        Object.keys(town.itemsForSale).forEach((itemType: ItemType) => {
+          town.itemsForSale[itemType].forEach(item => item.cost = BigInt(item.cost));
+        });
       });
     }
 
@@ -69,6 +78,16 @@ export function createBasicTown(name: string): IGameTown {
     potentialAdventures: [],
 
     recentNews: [],
+    itemsForSale: {
+      [ItemType.Armor]: [],
+      [ItemType.Weapon]: [],
+      [ItemType.Potion]: [],
+    },
+    nextItemCreation: {
+      [ItemType.Armor]: 0,
+      [ItemType.Weapon]: 0,
+      [ItemType.Potion]: 0
+    },
 
     buildings: {
       [Building.TownHall]: createBuildingAtLevel(1),
