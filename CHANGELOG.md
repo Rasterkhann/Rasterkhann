@@ -1,3 +1,18 @@
+# [0.3.0](https://github.com/seiyria/Rasterkhann/compare/v0.2.4...v0.3.0) (2020-07-10)
+
+
+### Bug Fixes
+
+* **combat:** pre-combat could sometimes throw an error ([8319e1c](https://github.com/seiyria/Rasterkhann/commit/8319e1cceadfe9195f3f6f0270fd34786d8a231b))
+* **savefile:** migrate to item data correctly ([010c7e4](https://github.com/seiyria/Rasterkhann/commit/010c7e40e53fc5e3647070c02f0ce0fc0badac71))
+
+
+### Features
+
+* **alchemist:** alchemst now generates potions, has upgrades for all of the related features ([f3c3c9c](https://github.com/seiyria/Rasterkhann/commit/f3c3c9c0b4ff4ddcb2066c89555d474dddd949a9))
+
+
+
 ## [0.2.4](https://github.com/seiyria/Rasterkhann/compare/v0.2.3...v0.2.4) (2020-07-10)
 
 
