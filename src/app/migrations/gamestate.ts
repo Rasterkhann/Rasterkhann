@@ -1,4 +1,4 @@
-import { IGameState } from '../interfaces';
+import { IGameState, ItemType } from '../interfaces';
 import { createBuildingAtLevel } from '../helpers';
 
 export const migrations = [
@@ -29,6 +29,11 @@ export const migrations = [
           Potion: 0,
         };
       }
+
+      Object.keys(ItemType).forEach((itemType: ItemType) => {
+        state.towns.Rasterkhann.itemsForSale[itemType] = state.towns.Rasterkhann.itemsForSale[itemType] || [];
+        state.towns.Rasterkhann.nextItemCreation[itemType] = state.towns.Rasterkhann.nextItemCreation[itemType] || 0;
+      });
 
       Object.keys(state.towns).forEach(townName => {
         if (state.towns[townName].name) { return; }
