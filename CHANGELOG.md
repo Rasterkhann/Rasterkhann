@@ -1,3 +1,25 @@
+## [0.3.2](https://github.com/seiyria/Rasterkhann/compare/v0.3.1...v0.3.2) (2020-07-10)
+
+
+### Bug Fixes
+
+* **dx:** run version script before starting ([57d1436](https://github.com/seiyria/Rasterkhann/commit/57d1436c5900c6221e912395df80cc2125ab5341))
+* **items:** items are no longer generated at level 0 buildings ([f255e45](https://github.com/seiyria/Rasterkhann/commit/f255e455d8adabba99eedca75f75645a9a522c5a))
+* **ui:** boost size of all header-related items again ([3afda5f](https://github.com/seiyria/Rasterkhann/commit/3afda5f0a83518c51d9ca16361f36e55ff8c5962))
+* **ui:** make some stuff bigger again ([ce0acb5](https://github.com/seiyria/Rasterkhann/commit/ce0acb5434c146c435acb0106161d8592ae70d3f))
+
+
+### Features
+
+* **alchemist:** quick info for alchemist highlights ([eca846f](https://github.com/seiyria/Rasterkhann/commit/eca846f8d937c99b438f3a8b2ae4cb02d7c7ef62))
+* **armory:** quick info for armory highlights ([15e94eb](https://github.com/seiyria/Rasterkhann/commit/15e94ebe357e176f688f3b01a5b8756ee1c26019))
+* **cave:** cave info box ([ac47db3](https://github.com/seiyria/Rasterkhann/commit/ac47db32515359ed568f85bebd17f41648d29ecc))
+* **guildhall:** show info panel for guild hall ([4e8f2f2](https://github.com/seiyria/Rasterkhann/commit/4e8f2f268ceccffb5a15d99f85fbfb619991f644))
+* **inn:** info panel ([c7944ea](https://github.com/seiyria/Rasterkhann/commit/c7944ea18921c0bf563d335d34d2c424351902ae))
+* **library:** info panel ([6a44998](https://github.com/seiyria/Rasterkhann/commit/6a44998232b29b3493a50c68da759e2ffe4d347d))
+
+
+
 ## [0.3.1](https://github.com/seiyria/Rasterkhann/compare/v0.3.0...v0.3.1) (2020-07-10)
 
 
