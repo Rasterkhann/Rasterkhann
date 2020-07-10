@@ -1,3 +1,12 @@
+## [0.2.4](https://github.com/seiyria/Rasterkhann/compare/v0.2.3...v0.2.4) (2020-07-10)
+
+
+### Features
+
+* **dx:** add contribution guide ([322a0de](https://github.com/seiyria/Rasterkhann/commit/322a0dea09ac1e95c9fdf5bed4c7be0cf01f1252))
+
+
+
 ## [0.2.3](https://github.com/seiyria/Rasterkhann/compare/v0.2.2...v0.2.3) (2020-07-10)
 
 
