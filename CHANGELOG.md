@@ -1,3 +1,22 @@
+## [0.2.3](https://github.com/seiyria/Rasterkhann/compare/v0.2.2...v0.2.3) (2020-07-10)
+
+
+### Bug Fixes
+
+* **adventure:** always cancel adventures if the id isn't a valid adventure on refresh ([b77fccc](https://github.com/seiyria/Rasterkhann/commit/b77fccce8d07179d66440deffb50b6be4c3e8f08))
+* **hero:** hero level up cost is randomized and larger ([9cc61db](https://github.com/seiyria/Rasterkhann/commit/9cc61dbd31f89c039a4526644c11847c006e929c))
+* **town:** doesTownHaveFeature would fail in niche cases where a building didn't quite exist ([7a86577](https://github.com/seiyria/Rasterkhann/commit/7a865770672e747383f80140b0580dfad1801f56))
+* **ui:** automatically swap views if you recruit a hero ([59d818b](https://github.com/seiyria/Rasterkhann/commit/59d818b43f94345ed3488dcf867dcef112be6fd6))
+* **ui:** exp verbiage changes to make more sense ([d37a552](https://github.com/seiyria/Rasterkhann/commit/d37a552da151997152abb78841ac7ba7d0eaeef6))
+
+
+### Features
+
+* **dx:** add savefile compress/decompress tools to debug them more easily ([75b2cba](https://github.com/seiyria/Rasterkhann/commit/75b2cbaab2cbdf0ec381bba9e62c107fd91f66a4))
+* **ui:** show when building/features start construction ([828d362](https://github.com/seiyria/Rasterkhann/commit/828d3628df4a76ed87ab5d9a28b7ea3bd152e53f))
+
+
+
 ## [0.2.2](https://github.com/seiyria/Rasterkhann/compare/v0.2.1...v0.2.2) (2020-07-09)
 
 
