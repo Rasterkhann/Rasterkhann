@@ -17,10 +17,10 @@ export function calculateMaxCreatableItems(town: IGameTown, itemType: ItemType):
 
   let base = 0;
 
-  if (town.buildings[buildingsRequiredPerItemType[itemType]]) { base += 3; }
-  if (doesTownHaveFeature(town, `More ${itemType}s I`))       { base += 2; }
-  if (doesTownHaveFeature(town, `More ${itemType}s II`))      { base += 2; }
-  if (doesTownHaveFeature(town, `More ${itemType}s III`))     { base += 2; }
+  if (town.buildings[buildingsRequiredPerItemType[itemType]].level > 0) { base += 3; }
+  if (doesTownHaveFeature(town, `More ${itemType}s I`))                 { base += 2; }
+  if (doesTownHaveFeature(town, `More ${itemType}s II`))                { base += 2; }
+  if (doesTownHaveFeature(town, `More ${itemType}s III`))               { base += 2; }
 
   return base;
 }
@@ -28,7 +28,7 @@ export function calculateMaxCreatableItems(town: IGameTown, itemType: ItemType):
 export function calculateSecondsUntilNextItem(town: IGameTown, itemType: ItemType): number {
   let base = 0;
 
-  if (town.buildings[buildingsRequiredPerItemType[itemType]])           { base += 1800; }
+  if (town.buildings[buildingsRequiredPerItemType[itemType]].level > 0) { base += 1800; }
   if (doesTownHaveFeature(town, `Faster ${itemType} Creation I`))       { base -= 300; }
   if (doesTownHaveFeature(town, `Faster ${itemType} Creation II`))      { base -= 300; }
   if (doesTownHaveFeature(town, `Faster ${itemType} Creation III`))     { base -= 300; }
