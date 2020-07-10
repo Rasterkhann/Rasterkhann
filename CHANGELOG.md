@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/seiyria/Rasterkhann/compare/v0.3.0...v0.3.1) (2020-07-10)
+
+
+### Features
+
+* **watchtower:** more descriptive savefile names ([8f9bdb1](https://github.com/seiyria/Rasterkhann/commit/8f9bdb1822f9cbd4c70c38bfa0a180047fc6d5d1))
+
+
+
 # [0.3.0](https://github.com/seiyria/Rasterkhann/compare/v0.2.4...v0.3.0) (2020-07-10)
 
 
