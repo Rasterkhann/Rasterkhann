@@ -9,6 +9,18 @@
                      buildingId="cave">
   </app-building-info>
 
+  <ion-item>
+    Simultaneous Adventures: {{ simultaneousAdventures }}
+  </ion-item>
+
+  <ion-item>
+    Max Encounters: {{ maxEncounters }}
+  </ion-item>
+
+  <ion-item>
+    GOLD/EXP Bonus: +{{ goldModifier }}% / +{{ expModifier }}%
+  </ion-item>
+
   <ion-list-header>Actions</ion-list-header>
 
   <ion-item (click)="openAdventureWindow()">
