@@ -9,7 +9,7 @@ import {
   RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle
 } from '../actions';
 import {
-  IGameTown, IGameState, GameOption, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem
+  IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem
 } from '../interfaces';
 import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
@@ -166,7 +166,7 @@ export class GameState {
             town.buildings[building].features[feature] = town.buildings[building].features[feature] || 0;
             town.buildings[building].features[feature]++;
 
-            this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has finished the feature "${feature}"!`));
+            this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has finished work for the feature "${feature}"!`));
           }
         });
       });
@@ -183,6 +183,8 @@ export class GameState {
 
       const buildingRef = town.buildings[building];
       buildingRef.constructionDoneAt = Date.now() + (GLOBAL_TIME_MULTIPLIER * BuildingData[building].upgradeTime(buildingRef.level + 1));
+
+      this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has started construction for level ${town.buildings[building].level + 1}!`));
       return state;
     });
   }
@@ -195,6 +197,8 @@ export class GameState {
 
       town.buildings[building].featureConstruction = town.buildings[building].featureConstruction || {};
       town.buildings[building].featureConstruction[feature] = Date.now() + (GLOBAL_TIME_MULTIPLIER * constructionTime);
+
+      this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has started work for the feature "${feature}"!`));
 
       return state;
     });
