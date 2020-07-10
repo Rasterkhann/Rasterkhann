@@ -8,6 +8,22 @@
   <app-building-info [town]="town"
                      buildingId="armory">
   </app-building-info>
+
+  <ion-item *ngIf="maximumArmors > 0">
+    Maximum Armors: {{ maximumArmors }}
+  </ion-item>
+
+  <ion-item *ngIf="maximumArmors > 0">
+    Armor Creation Time: {{ armorCreationTime / 60 }}m
+  </ion-item>
+
+  <ion-item *ngIf="maximumWeapons > 0">
+    Maximum Weapons: {{ maximumWeapons }}
+  </ion-item>
+
+  <ion-item *ngIf="maximumWeapons > 0">
+    Weapon Creation Time: {{ weaponCreationTime / 60 }}m
+  </ion-item>
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="armory"></app-feature-list>

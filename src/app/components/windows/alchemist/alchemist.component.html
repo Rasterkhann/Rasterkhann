@@ -9,11 +9,11 @@
                      buildingId="alchemist">
   </app-building-info>
 
-  <ion-item>
+  <ion-item *ngIf="maximumPotions > 0">
     Maximum Potions: {{ maximumPotions }}
   </ion-item>
 
-  <ion-item>
+  <ion-item *ngIf="maximumPotions > 0">
     Potion Creation Time: {{ potionCreationTime / 60 }}m
   </ion-item>
 
