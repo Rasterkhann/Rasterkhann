@@ -53,7 +53,7 @@ export function getCombatTriggers(hero: Hero, trigger: TriggerType): HeroJobActi
 function canTakeAction(creature: Hero, action: HeroJobAction, targetting: HeroJobActionTargetting): boolean {
   if (getCurrentStat(creature, HeroStat.STA) < action.staCost()) { return false; }
   if (getCurrentStat(creature, HeroStat.SP) < action.spCost()) { return false; }
-  if (action.targets(targetting).length === 0) { return false; }
+  if (action.targets(targetting).filter(Boolean).length === 0) { return false; }
   return true;
 }
 
@@ -75,7 +75,7 @@ function chooseAction(creature: Hero, targetting: HeroJobActionTargetting): Hero
 function takeAction(creature: Hero, action: HeroJobAction, targetting: HeroJobActionTargetting): void {
   if (!canTakeAction(creature, action, targetting)) { return; }
 
-  action.act(creature, action.targets(targetting));
+  action.act(creature, action.targets(targetting).filter(Boolean));
   creature.currentStats[HeroStat.STA] -= action.staCost();
   creature.currentStats[HeroStat.SP] -= action.spCost();
 }
