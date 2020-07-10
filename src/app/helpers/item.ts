@@ -143,7 +143,7 @@ export function generatePotion(town: IGameTown): HeroItem {
       if (feature === 'Health Potions I') { return; }
       if (!doesTownHaveFeature(town, feature)) { return; }
 
-      value = random(tierRanges[tier].min, tierRanges[tier].max);
+      value = random(tierRanges[tier].min, tierRanges[tier].max) + town.buildings[Building.Alchemist].level;
       itemTier = tier;
     });
 

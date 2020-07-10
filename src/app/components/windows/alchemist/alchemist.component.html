@@ -8,6 +8,15 @@
   <app-building-info [town]="town"
                      buildingId="alchemist">
   </app-building-info>
+
+  <ion-item>
+    Maximum Potions: {{ maximumPotions }}
+  </ion-item>
+
+  <ion-item>
+    Potion Creation Time: {{ potionCreationTime / 60 }}m
+  </ion-item>
+
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="alchemist"></app-feature-list>
