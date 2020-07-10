@@ -13,6 +13,10 @@ You can join [the Discord](https://discord.gg/MG8cNts) to suggest features, repo
 * `npm run build` to build a production copy of the game
 * `npm run test` to run any tests
 
+### Notes
+
+* Some imports are very specific to avoid circular import errors. If you get circular import errors, make your `helper`/`static` imports more specific.
+
 ## Committing
 
 Commits use [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) as a base. Please follow these guidelines:
@@ -22,9 +26,12 @@ Commits use [conventional-changelog](https://github.com/conventional-changelog/c
 
 When a new version is created (`npm run bump:[major|minor|patch]`) a changelog will be created automatically.
 
-### Notes
+## Savefile Manipulation
 
-* Some imports are very specific to avoid circular import errors. If you get circular import errors, make your `helper`/`static` imports more specific.
+The default exported savefiles aren't super useful, but luckily they're easy to reverse:
+
+* `npm run savefile:tojson mysavefile.sav`
+* `npm run savefile:fromjson mysavefile.json`
 
 ## New Features
 

@@ -20,7 +20,9 @@
     "postversion": "npm run changelog:generate && npm run changelog:commit",
     "bump:patch": "npm version patch -m \"chore(release): Patch %s\"",
     "bump:minor": "npm version minor -m \"chore(release): Minor %s\"",
-    "bump:major": "npm version major -m \"chore(release): Major %s\""
+    "bump:major": "npm version major -m \"chore(release): Major %s\"",
+    "savefile:tojson": "node scripts/save.decompress",
+    "savefile:fromjson": "node scripts/save.compress"
   },
   "private": true,
   "dependencies": {
@@ -67,6 +69,7 @@
     "@types/uuid": "8.0.0",
     "codelyzer": "^5.1.2",
     "conventional-changelog-cli": "2.0.34",
+    "lz-string": "1.4.4",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
