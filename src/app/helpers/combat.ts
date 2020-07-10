@@ -36,7 +36,7 @@ export function canTeamFight(team: Hero[]): boolean {
 }
 
 export function teamFightingMembers(team: Hero[]): Hero[] {
-  return team.filter(h => canMemberFight(h));
+  return team.filter(h => canMemberFight(h)).filter(Boolean);
 }
 
 export function shouldCombatContinue(adventurers: Hero[], monsters: Hero[]): boolean {
