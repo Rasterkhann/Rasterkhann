@@ -20,7 +20,7 @@ export const migrations = [
       });
 
       state.towns.Rasterkhann.recruitedHeroes.forEach(h => {
-        if (h.onAdventure && state.towns.Rasterkhann.activeAdventures.length === 0) {
+        if (h.onAdventure && !state.towns.Rasterkhann.activeAdventures.map(a => a.uuid).includes(h.onAdventure)) {
           h.onAdventure = '';
         }
       });
