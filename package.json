@@ -6,6 +6,7 @@
   "homepage": "https://rasterkhann.com/",
   "scripts": {
     "ng": "ng",
+    "prestart": "npm run build:version",
     "start": "ng serve -o --port 9983 --host=0.0.0.0",
     "build:version": "node scripts/git.version",
     "prebuild": "npm run build:version",
