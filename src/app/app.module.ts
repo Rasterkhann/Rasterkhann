@@ -40,6 +40,7 @@ import { GameLoop, GainGold } from './actions';
     }),
     NgxsLoggerPluginModule.forRoot({
       collapsed: true,
+      disabled: environment.production,
       filter: action => {
         const ignoreActions: any = { [GameLoop.type]: true, [GainGold.type]: true };
         const actionType: string = getActionTypeFromInstance(action) as string;
