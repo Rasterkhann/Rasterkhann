@@ -1,7 +1,24 @@
 
+import { sum } from 'lodash';
+
 // this file cannot import any helpers or statics
-import { IGameTown, BuildingUnlock } from '../interfaces';
+import { IGameTown, BuildingUnlock, HeroStat } from '../interfaces';
 import { featureNameToBuildingHash, featureNameToUnlockHash } from './building';
+
+export function calculateItemCost(boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
+  const statMultipliers: Record<HeroStat, number> = {
+    [HeroStat.ATK]: 150,
+    [HeroStat.DEF]: 120,
+    [HeroStat.EXP]: 300,
+    [HeroStat.GOLD]: 300,
+    [HeroStat.LVL]: 1000,
+    [HeroStat.SP]: 50,
+    [HeroStat.HP]: 100,
+    [HeroStat.STA]: 200
+  };
+
+  return BigInt(sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat])));
+}
 
 export function doesTownHaveFeature(town: IGameTown, feature: string): boolean {
   if (!featureNameToBuildingHash[feature]) { throw new Error(`Feature ${feature} does not exist.`); }

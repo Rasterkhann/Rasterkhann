@@ -2,9 +2,9 @@
 import { species } from 'fantastical';
 import { random } from 'lodash';
 
-import { HeroJobStatic, HeroJob, HeroStat, TriggerType } from '../interfaces';
+import { HeroJobStatic, HeroJob, HeroStat, TriggerType, WeaponSubType } from '../interfaces';
 
-import * as JobActions from './jobactions';
+import * as JobActions from './actions';
 
 export const JobEffects: Record<HeroJob, HeroJobStatic> = {
   [HeroJob.Adventurer]: {
@@ -37,7 +37,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     triggers: {},
     combatTriggers: {},
-    actions: [JobActions.Attack()]
+    actions: [JobActions.Attack()],
+    validWeaponTypes: [WeaponSubType.Hatchet, WeaponSubType.Sword, WeaponSubType.Knife, WeaponSubType.Longbow, WeaponSubType.Shortbow]
   },
 
   [HeroJob.Cleric]: {
@@ -69,7 +70,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     combatTriggers: {
       [TriggerType.PostCombat]: [JobActions.HealAllPercent(10)]
     },
-    actions: [JobActions.Attack(), JobActions.Heal()]
+    actions: [JobActions.Attack(), JobActions.Heal()],
+    validWeaponTypes: [WeaponSubType.Mace, WeaponSubType.Staff]
   },
 
   [HeroJob.Mage]: {
@@ -101,7 +103,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     combatTriggers: {
       [TriggerType.PreCombat]: [JobActions.AttackAllPercent(5)]
     },
-    actions: [JobActions.Attack(), JobActions.AttackAllDiminishing()]
+    actions: [JobActions.Attack(), JobActions.AttackAllDiminishing()],
+    validWeaponTypes: [WeaponSubType.Wand, WeaponSubType.Staff]
   },
 
   [HeroJob.Thief]: {
@@ -133,7 +136,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     combatTriggers: {
       [TriggerType.Victory]: [JobActions.EarnGold(50)]
     },
-    actions: [JobActions.Attack()]
+    actions: [JobActions.Attack()],
+    validWeaponTypes: [WeaponSubType.Knife, WeaponSubType.Katar, WeaponSubType.Shuriken]
   },
 
   [HeroJob.Warrior]: {
@@ -165,6 +169,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     combatTriggers: {
       [TriggerType.PreCombat]: [JobActions.AttackSinglePercent(15)]
     },
-    actions: [JobActions.Attack(), JobActions.AttackSinglePercent(5)]
+    actions: [JobActions.Attack(), JobActions.AttackSinglePercent(5)],
+    validWeaponTypes: [WeaponSubType.Sword, WeaponSubType.Hatchet, WeaponSubType.Spear, WeaponSubType.Mace]
   }
 };

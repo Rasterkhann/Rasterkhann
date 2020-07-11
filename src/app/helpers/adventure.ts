@@ -58,6 +58,8 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroIt
     });
   }
 
+  // TODO: buy weapons - only what the job can buy though
+
   return boughtItems;
 }
 

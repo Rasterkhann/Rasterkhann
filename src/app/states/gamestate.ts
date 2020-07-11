@@ -363,7 +363,7 @@ export class GameState {
 
           boughtItems.forEach(item => {
             delete (item as any).cost;
-            town.recruitedHeroes[i].gear[item.type].push(item);
+            town.recruitedHeroes[i].gear[item.type].push(item as any);
           });
         });
       });

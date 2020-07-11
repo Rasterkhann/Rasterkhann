@@ -165,4 +165,82 @@ export const LibraryFeatures: BuildingFeature[] = [
       trait: ['Experienced']
     }
   },
+  {
+    name: 'Item Traits II',
+    description: 'Unlock basic tier II item traits.',
+    cost: 250000n,
+    upgradeTime: 3600,
+    requiresLevel: 5,
+    unlocks: {
+      itemTrait: [
+        'Guarding', 'Spiked', 'Rash', 'Powerful', 'Arcane',
+        'Tiny', 'Sluggish'
+      ]
+    }
+  },
+  {
+    name: 'Item Traits III',
+    description: 'Unlock advanced tier III item traits.',
+    cost: 500000n,
+    upgradeTime: 3600,
+    requiresLevel: 15,
+    requiresFeature: {
+      'Item Traits II': 1
+    },
+    unlocks: {
+      itemTrait: [
+        'Armored', 'Angry', 'Intrepid', 'Staunch', 'Mystic',
+        'Dull', 'Broken'
+      ]
+    }
+  },
+  {
+    name: 'Item Traits IV',
+    description: 'Unlock powerful tier IV item traits.',
+    cost: 1000000n,
+    upgradeTime: 3600,
+    requiresLevel: 35,
+    requiresFeature: {
+      'Item Traits III': 1
+    },
+    unlocks: {
+      itemTrait: [
+        'Warding', 'Menacing', 'Violent', 'Salubrious', 'Celestial'
+      ]
+    }
+  },
+  {
+    name: 'Item Traits Hybrids',
+    description: 'Unlock hybrid item traits.',
+    cost: 500000n,
+    upgradeTime: 3600,
+    requiresLevel: 25,
+    requiresFeature: {
+      'Item Traits II': 1
+    },
+    unlocks: {
+      itemTrait: [
+        'Forceful', 'Keen', 'Precise', 'Sharp', 'Demonic', 'Deadly', 'Hurtful', 'Dangerous', 'Savage',
+        'Murderous', 'Zealous', 'Large', 'Massive', 'Gigantic', 'Adept', 'Manic', 'Pointy', 'Strong',
+        'Quick', 'Masterful',
+        'Deranged', 'Inept', 'Bad', 'Shoddy'
+      ]
+    }
+  },
+  {
+    name: 'Item Traits Hybrids II',
+    description: 'Unlock stronger hybrid item traits.',
+    cost: 1000000n,
+    upgradeTime: 3600,
+    requiresLevel: 45,
+    requiresFeature: {
+      'Item Traits Hybrids': 1
+    },
+    unlocks: {
+      itemTrait: [
+        'Superior', 'Lucky',
+        'Awful', 'Destroyed', 'Terrible'
+      ]
+    }
+  },
 ];

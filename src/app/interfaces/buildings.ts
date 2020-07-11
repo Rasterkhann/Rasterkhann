@@ -1,5 +1,6 @@
 import { Trait } from './trait';
 import { HeroJob } from './hero';
+import { ItemTrait } from './item';
 
 export enum Building {
   TownHall = 'townhall',
@@ -45,4 +46,5 @@ export interface BuildingStatic {
 export interface BuildingUnlock {
   trait?: Trait[];
   job?: HeroJob[];
+  itemTrait?: ItemTrait[];
 }

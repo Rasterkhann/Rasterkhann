@@ -3,7 +3,7 @@ import { shuffle, take, random, noop } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
-  Building, HeroJobStatic, TraitPriority, Adventure, ItemType } from '../interfaces';
+  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem } from '../interfaces';
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
@@ -19,6 +19,27 @@ export function calculateMaxHeldArmors(town: IGameTown, hero: Hero): number {
 
 export function calculateMaxHeldPotions(town: IGameTown, hero: Hero): number {
   return 1;
+}
+
+export function unequipItem(hero: Hero, item: HeroItem): void {
+
+}
+
+export function equipItem(hero: Hero, item: HeroItem): void {
+
+}
+
+export function getZeroStatBlock(): Record<HeroStat, number> {
+  return {
+    [HeroStat.LVL]: 0,
+    [HeroStat.EXP]: 0,
+    [HeroStat.GOLD]: 0,
+    [HeroStat.ATK]: 0,
+    [HeroStat.DEF]: 0,
+    [HeroStat.HP]: 0,
+    [HeroStat.SP]: 0,
+    [HeroStat.STA]: 0
+  };
 }
 
 export function doesHeroHaveTrait(hero: Hero, trait: Trait): boolean {

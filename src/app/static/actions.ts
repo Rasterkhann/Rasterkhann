@@ -1,7 +1,7 @@
 
 import { sample, random } from 'lodash';
 
-import { Hero, HeroJobAction, HeroJobActionTargetting, HeroStat } from '../interfaces';
+import { Hero, HeroAction, HeroActionTargetting, HeroStat } from '../interfaces';
 
 function getCurrentStat(hero: Hero, stat: HeroStat): number {
   return hero.currentStats[stat];
@@ -20,10 +20,10 @@ function calculateDamage(atk: number, def: number): number {
 }
 
 // ***** ATTACK ABILITIES ***** //
-export const Attack: () => HeroJobAction = () => ({
+export const Attack: () => HeroAction = () => ({
   staCost: () => 1,
   spCost: () => 0,
-  targets: (targetting: HeroJobActionTargetting) => {
+  targets: (targetting: HeroActionTargetting) => {
     return [sample(targetting.livingEnemies)] as Hero[];
   },
   act: (hero: Hero, targets: Hero[]) => {
@@ -34,10 +34,10 @@ export const Attack: () => HeroJobAction = () => ({
   }
 });
 
-export const AttackAll: () => HeroJobAction = () => ({
+export const AttackAll: () => HeroAction = () => ({
   staCost: () => 3,
   spCost: () => 3,
-  targets: (targetting: HeroJobActionTargetting) => {
+  targets: (targetting: HeroActionTargetting) => {
     return targetting.livingEnemies;
   },
   act: (hero: Hero, targets: Hero[]) => {
@@ -48,10 +48,10 @@ export const AttackAll: () => HeroJobAction = () => ({
   }
 });
 
-export const AttackAllDiminishing: () => HeroJobAction = () => ({
+export const AttackAllDiminishing: () => HeroAction = () => ({
   staCost: () => 5,
   spCost: () => 3,
-  targets: (targetting: HeroJobActionTargetting) => {
+  targets: (targetting: HeroActionTargetting) => {
     return targetting.livingEnemies;
   },
   act: (hero: Hero, targets: Hero[]) => {
@@ -62,10 +62,10 @@ export const AttackAllDiminishing: () => HeroJobAction = () => ({
   }
 });
 
-export const AttackSinglePercent: (pct: number) => HeroJobAction = (pct: number) => ({
+export const AttackSinglePercent: (pct: number) => HeroAction = (pct: number) => ({
   staCost: () => 4,
   spCost: () => 5,
-  targets: (targetting: HeroJobActionTargetting) => {
+  targets: (targetting: HeroActionTargetting) => {
     return [sample(targetting.livingEnemies)] as Hero[];
   },
   act: (hero: Hero, targets: Hero[]) => {
@@ -76,10 +76,10 @@ export const AttackSinglePercent: (pct: number) => HeroJobAction = (pct: number)
   }
 });
 
-export const AttackAllPercent: (pct: number) => HeroJobAction = (pct: number) => ({
+export const AttackAllPercent: (pct: number) => HeroAction = (pct: number) => ({
   staCost: () => 7,
   spCost: () => 5,
-  targets: (targetting: HeroJobActionTargetting) => {
+  targets: (targetting: HeroActionTargetting) => {
     return targetting.livingEnemies;
   },
   act: (hero: Hero, targets: Hero[]) => {
@@ -91,10 +91,10 @@ export const AttackAllPercent: (pct: number) => HeroJobAction = (pct: number) =>
 });
 
 // ***** HEALING ABILITIES ***** //
-export const Heal: () => HeroJobAction = () => ({
+export const Heal: () => HeroAction = () => ({
   staCost: () => 5,
   spCost: () => 10,
-  targets: (targetting: HeroJobActionTargetting) => {
+  targets: (targetting: HeroActionTargetting) => {
     return [sample(targetting.livingAllies)] as Hero[];
   },
   act: (hero: Hero, targets: Hero[]) => {
@@ -104,10 +104,10 @@ export const Heal: () => HeroJobAction = () => ({
   }
 });
 
-export const HealAllPercent: (pct: number) => HeroJobAction = (pct: number) => ({
+export const HealAllPercent: (pct: number) => HeroAction = (pct: number) => ({
   staCost: () => 10,
   spCost: () => 7,
-  targets: (targetting: HeroJobActionTargetting) => {
+  targets: (targetting: HeroActionTargetting) => {
     return targetting.livingAllies;
   },
   act: (hero: Hero, targets: Hero[]) => {
@@ -119,10 +119,10 @@ export const HealAllPercent: (pct: number) => HeroJobAction = (pct: number) => (
 });
 
 // ***** GOLD ABILITIES ***** //
-export const EarnGold: (gold: number) => HeroJobAction = (gold: number) => ({
+export const EarnGold: (gold: number) => HeroAction = (gold: number) => ({
   staCost: () => 5,
   spCost: () => 3,
-  targets: (targetting: HeroJobActionTargetting) => {
+  targets: (targetting: HeroActionTargetting) => {
     return [targetting.self];
   },
   act: (hero: Hero, targets: Hero[]) => {

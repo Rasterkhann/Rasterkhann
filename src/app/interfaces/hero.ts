@@ -1,6 +1,6 @@
 
 import { Trait, TriggerType, TraitTriggerFunction } from './trait';
-import { HeroItem, ItemType } from './item';
+import { HeroArmor, HeroItem, HeroWeapon, ItemType, WeaponSubType } from './item';
 
 export enum HeroJob {
   Adventurer = 'Adventurer',
@@ -29,11 +29,12 @@ export interface HeroJobStatic {
   statBaseMultiplier: Record<HeroStat, number>;
   statGrowth: Record<HeroStat, (hero?: Hero) => number>;
   triggers: Partial<Record<TriggerType, TraitTriggerFunction>>;
-  combatTriggers: Partial<Record<TriggerType, HeroJobAction[]>>;
-  actions: HeroJobAction[];
+  combatTriggers: Partial<Record<TriggerType, HeroAction[]>>;
+  actions: HeroAction[];
+  validWeaponTypes: WeaponSubType[];
 }
 
-export interface HeroJobActionTargetting {
+export interface HeroActionTargetting {
   self: Hero;
   all: Hero[];
   allAllies: Hero[];
@@ -41,11 +42,17 @@ export interface HeroJobActionTargetting {
   livingEnemies: Hero[];
 }
 
-export interface HeroJobAction {
+export interface HeroAction {
   staCost: () => number;
   spCost: () => number;
-  targets: (targetting: HeroJobActionTargetting) => Hero[];
+  targets: (targetting: HeroActionTargetting) => Hero[];
   act: (hero: Hero, targets: Hero[]) => void;
+}
+
+export interface HeroGear {
+  [ItemType.Potion]: HeroItem[];
+  [ItemType.Armor]: HeroArmor[];
+  [ItemType.Weapon]: HeroWeapon[];
 }
 
 export interface Hero {
@@ -60,7 +67,7 @@ export interface Hero {
 
   stats: Record<HeroStat, number>;
   currentStats: Record<HeroStat, number>;
-  gear: Record<ItemType, HeroItem[]>;
+  gear: HeroGear;
 }
 
 export interface ProspectiveHero {

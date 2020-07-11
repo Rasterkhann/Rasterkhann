@@ -1,10 +1,11 @@
 
 import { sample, sum } from 'lodash';
 
-import { Hero, Adventure, IGameTown, HeroStat, HeroJobActionTargetting, HeroJobAction, TriggerType, ItemType } from '../interfaces';
+import { Hero, Adventure, IGameTown, HeroStat, HeroActionTargetting, HeroAction, TriggerType, ItemType } from '../interfaces';
 import { generateMonster, getCurrentStat, giveHeroGold, giveHeroEXP } from './hero';
 import { JobEffects } from '../static';
 import { doesTownHaveFeature } from './global';
+import { getActionsForWeapon } from './weapon';
 
 export function getTownExpMultiplier(town: IGameTown): number {
   let base = 0.1;
@@ -43,22 +44,31 @@ export function shouldCombatContinue(adventurers: Hero[], monsters: Hero[]): boo
   return canTeamFight(adventurers) && canTeamFight(monsters);
 }
 
-export function getCombatTriggers(hero: Hero, trigger: TriggerType): HeroJobAction[] {
+export function getCombatTriggers(hero: Hero, trigger: TriggerType): HeroAction[] {
   const jobStatic = JobEffects[hero.job];
   const triggers = jobStatic.combatTriggers[trigger];
 
   return triggers || [];
 }
 
-function canTakeAction(creature: Hero, action: HeroJobAction, targetting: HeroJobActionTargetting): boolean {
+function canTakeAction(creature: Hero, action: HeroAction, targetting: HeroActionTargetting): boolean {
   if (getCurrentStat(creature, HeroStat.STA) < action.staCost()) { return false; }
   if (getCurrentStat(creature, HeroStat.SP) < action.spCost()) { return false; }
   if (action.targets(targetting).filter(Boolean).length === 0) { return false; }
   return true;
 }
 
-function potentialActions(creature: Hero, targetting: HeroJobActionTargetting): HeroJobAction[] {
+function potentialActions(creature: Hero, targetting: HeroActionTargetting): HeroAction[] {
+
+  // base job actions
   const potentialCreatureActions = JobEffects[creature.job].actions;
+
+  // weapon actions
+  creature.gear[ItemType.Weapon].forEach(weapon => {
+    const bonusActions = getActionsForWeapon(weapon);
+    potentialCreatureActions.push(...bonusActions);
+  });
+
   return potentialCreatureActions.filter(act => canTakeAction(creature, act, targetting));
 }
 
@@ -88,11 +98,11 @@ function prepareHeroForCombat(hero: Hero): void {
   });
 }
 
-function chooseAction(creature: Hero, targetting: HeroJobActionTargetting): HeroJobAction | undefined {
+function chooseAction(creature: Hero, targetting: HeroActionTargetting): HeroAction | undefined {
   return sample(potentialActions(creature, targetting));
 }
 
-function takeAction(creature: Hero, action: HeroJobAction, targetting: HeroJobActionTargetting): void {
+function takeAction(creature: Hero, action: HeroAction, targetting: HeroActionTargetting): void {
   if (!canTakeAction(creature, action, targetting)) { return; }
 
   action.act(creature, action.targets(targetting).filter(Boolean));
@@ -100,7 +110,7 @@ function takeAction(creature: Hero, action: HeroJobAction, targetting: HeroJobAc
   creature.currentStats[HeroStat.SP] -= action.spCost();
 }
 
-function takeTurn(creature: Hero, targetting: HeroJobActionTargetting): void {
+function takeTurn(creature: Hero, targetting: HeroActionTargetting): void {
 
   // no targets? nothing happens.
   if (targetting.livingEnemies.length === 0) { return; }
@@ -111,7 +121,7 @@ function takeTurn(creature: Hero, targetting: HeroJobActionTargetting): void {
   takeAction(creature, action, targetting);
 }
 
-function generateTargetting(self: Hero, heroes: Hero[], monsters: Hero[]): HeroJobActionTargetting {
+function generateTargetting(self: Hero, heroes: Hero[], monsters: Hero[]): HeroActionTargetting {
   return {
     self,
     all: heroes.concat(monsters),

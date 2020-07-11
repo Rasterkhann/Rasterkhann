@@ -4,7 +4,7 @@ import { sum } from 'lodash';
 
 import { Hero, IGameTown, ProspectiveHero, HeroStat,
   Building, HeroJobStatic, Adventure, Trait, TraitValueMultipliers } from '../interfaces';
-import { calculateHeroTrainingGoldPerXP, generateHero, generateMonster, getCurrentStat } from '../helpers';
+import { calculateHeroTrainingGoldPerXP, generateHero, generateMonster, getCurrentStat, getZeroStatBlock } from '../helpers';
 import { JobEffects, TraitEffects } from '../static';
 
 @Injectable({
@@ -59,16 +59,7 @@ export class HeroService {
 
     if (guildHallLevel < 5) { return 0.5; }
 
-    const maxStats: Record<HeroStat, number> = {
-      [HeroStat.LVL]: 0,
-      [HeroStat.EXP]: 0,
-      [HeroStat.GOLD]: 0,
-      [HeroStat.ATK]: 0,
-      [HeroStat.DEF]: 0,
-      [HeroStat.HP]: 0,
-      [HeroStat.SP]: 0,
-      [HeroStat.STA]: 0
-    };
+    const maxStats: Record<HeroStat, number> = getZeroStatBlock();
 
     const jobStatic: HeroJobStatic = JobEffects[hero.job];
 
