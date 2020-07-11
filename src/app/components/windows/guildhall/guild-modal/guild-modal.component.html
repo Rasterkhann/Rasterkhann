@@ -85,10 +85,10 @@
       </ion-label>
     </ion-item>
 
-    <ng-container *ngFor="let type of ['Weapon', 'Armor', 'Potion']">
+    <ng-container *ngFor="let type of itemTypes">
       <ion-list-header>{{ type }}s</ion-list-header>
-      <ion-item *ngIf="viewingHero.gear[type].length === 0">No {{ type.toLowerCase() }}s.</ion-item>
-      <app-item *ngFor="let item of viewingHero.gear[type]" [item]="item"></app-item>
+      <ion-item *ngIf="getHeroGearTypeItems(viewingHero, type).length === 0">No {{ type.toLowerCase() }}s.</ion-item>
+      <app-item *ngFor="let item of getHeroGearTypeItems(viewingHero, type)" [item]="item"></app-item>
     </ng-container>
   </ion-list>
 </ion-content>

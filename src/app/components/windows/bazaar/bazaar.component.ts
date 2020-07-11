@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { IGameTown, ItemType } from '../../../interfaces';
+import { IGameTown, ItemType, HeroItem } from '../../../interfaces';
 import { calculateMaxCreatableItems } from '../../../helpers';
 import { ItemsModalComponent } from './items-modal/items-modal.component';
 
@@ -14,12 +14,24 @@ export class BazaarComponent implements OnInit {
 
   @Input() town: IGameTown;
 
+  public get itemTypes(): ItemType[] {
+    return [ItemType.Weapon, ItemType.Armor, ItemType.Potion];
+  }
+
   constructor(private modal: ModalController) { }
 
   ngOnInit(): void {}
 
-  public typeTotal(type: ItemType): number {
+  public getTypeTotal(type: ItemType): number {
     return calculateMaxCreatableItems(this.town, type);
+  }
+
+  public getItems(type: ItemType): HeroItem[] {
+    return this.town.itemsForSale[type];
+  }
+
+  public getConstructionType(type: ItemType): number {
+    return this.town.nextItemCreation[type];
   }
 
   formatPreDuration(text: string): string {

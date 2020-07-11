@@ -6,7 +6,7 @@ import { Select } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 
 import { GameState } from '../../../../states';
-import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait } from '../../../../interfaces';
+import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait, ItemType, HeroItem } from '../../../../interfaces';
 import { GameService } from '../../../../services/game.service';
 import { calculateProspectiveHeroMaxTotal } from '../../../../helpers';
 import { TraitEffects } from '../../../../static';
@@ -26,6 +26,10 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   private canBuyHeroes: boolean;
   private activeHeroes$: Subscription;
+
+  public get itemTypes(): ItemType[] {
+    return [ItemType.Weapon, ItemType.Armor, ItemType.Potion];
+  }
 
   public viewingProspectiveHero: ProspectiveHero | null;
   public viewingHero: Hero | null;
@@ -62,6 +66,10 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   canHeroBeBought(prosHero: ProspectiveHero): boolean {
     return this.town.gold > prosHero.cost && this.canBuyHeroes;
+  }
+
+  getHeroGearTypeItems(hero: Hero, type: ItemType): HeroItem[] {
+    return hero.gear[type];
   }
 
   getTraitData(trait: Trait): string {

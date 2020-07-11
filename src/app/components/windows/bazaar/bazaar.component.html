@@ -10,9 +10,9 @@
   </app-building-info>
 
   
-  <ng-container *ngFor="let type of ['Weapon', 'Armor', 'Potion']">
-    <ion-item *ngIf="town.itemsForSale[type].length < typeTotal(type)">
-      Next {{ type }}:&nbsp;<countdown [config]="{ stopTime: town.nextItemCreation[type], format: 'mm:ss', prettyText: formatPreDuration }"></countdown>
+  <ng-container *ngFor="let type of itemTypes">
+    <ion-item *ngIf="getItems(type).length < getTypeTotal(type)">
+      Next {{ type }}:&nbsp;<countdown [config]="{ stopTime: getConstructionType(type), format: 'mm:ss', prettyText: formatPreDuration }"></countdown>
     </ion-item>
   </ng-container>
 
