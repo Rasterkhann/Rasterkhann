@@ -57,7 +57,7 @@ export const migrations = [
           h.onAdventure = '';
         }
       });
-      
+
       return state;
     }
   }
