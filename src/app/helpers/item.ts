@@ -117,10 +117,10 @@ export function generatePotion(town: IGameTown): HeroItem {
   // stat values
   const tierRanges: Record<ItemTier, { min: number, max: number }> = {
     I:   { min: 5,    max: 15 },
-    II:  { min: 15,   max: 45 },
-    III: { min: 45,   max: 100 },
-    IV:  { min: 100,  max: 175 },
-    V:   { min: 175,  max: 300 },
+    II:  { min: 10,   max: 45 },
+    III: { min: 25,   max: 100 },
+    IV:  { min: 50,   max: 175 },
+    V:   { min: 100,  max: 300 },
   };
 
   // get the name for the stat
