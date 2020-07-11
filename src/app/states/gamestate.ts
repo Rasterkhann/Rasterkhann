@@ -15,7 +15,7 @@ import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
   getCurrentTownProspectiveHeroes, getCurrentTownRecruitedHeroes, calculateProspectiveHeroMaxTotal,
   getCurrentTownActiveAdventures, getCurrentTownPotentialAdventures, calculateMaxPotentialAdventures,
-  getCurrentTownCanDoAnyAdventures, doAdventureEncounter, finalizeAdventure, checkHeroLevelUp,
+  getCurrentTownCanDoAnyAdventures, doAdventureEncounter, finalizeAdventure,
   calculateRestingRate,
   canHeroGoOnAdventure,
   giveHeroEXP,
@@ -24,13 +24,15 @@ import {
   getCurrentStat,
   calculateMaxCreatableItems,
   generateItem,
-  calculateSecondsUntilNextItem
+  calculateSecondsUntilNextItem,
+  heroBuyItemsBeforeAdventure
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
 import { BuildingData } from '../static';
 import { HeroService } from '../services/hero.service';
 import { AdventureService } from '../services/adventure.service';
+import { sum } from 'lodash';
 
 const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
 const ADVENTURE_TIME_MULTIPLIER = environment.production ? 1 : 0.01;
@@ -347,6 +349,22 @@ export class GameState {
 
           town.recruitedHeroes[i] = { ...rh };
           town.recruitedHeroes[i].onAdventure = adventure.uuid;
+          const boughtItems = heroBuyItemsBeforeAdventure(town, town.recruitedHeroes[i]);
+
+          const boughtUUIDs = boughtItems.map(item => item.uuid);
+          Object.keys(town.itemsForSale).forEach((itemType: ItemType) => {
+            town.itemsForSale[itemType] = town.itemsForSale[itemType].filter(item => !boughtUUIDs.includes(item.uuid));
+          });
+
+          const totalEarned: bigint = sum(boughtItems.map(item => item.cost)) as unknown as bigint;
+
+          town.recruitedHeroes[i].currentStats[HeroStat.GOLD] -= Number(totalEarned);
+          this.store.dispatch(new GainGold(totalEarned));
+
+          boughtItems.forEach(item => {
+            delete (item as any).cost;
+            town.recruitedHeroes[i].gear[item.type].push(item);
+          });
         });
       });
 

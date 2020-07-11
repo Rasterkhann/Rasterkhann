@@ -1,6 +1,6 @@
 
 import { Trait, TriggerType, TraitTriggerFunction } from './trait';
-import { HeroItem } from './item';
+import { HeroItem, ItemType } from './item';
 
 export enum HeroJob {
   Adventurer = 'Adventurer',
@@ -19,12 +19,6 @@ export enum HeroStat {
   EXP = 'exp',
   STA = 'sta',
   GOLD = 'gold'
-}
-
-export enum HeroGearSlot {
-  Weapon = 'weapon',
-  Armor = 'armor',
-  Potion = 'potion'
 }
 
 export interface HeroJobStatic {
@@ -66,7 +60,7 @@ export interface Hero {
 
   stats: Record<HeroStat, number>;
   currentStats: Record<HeroStat, number>;
-  gear: Partial<Record<HeroGearSlot, HeroItem[]>>;
+  gear: Record<ItemType, HeroItem[]>;
 }
 
 export interface ProspectiveHero {

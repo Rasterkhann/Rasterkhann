@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Bazaar Items
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>Weapons</ion-list-header>
+    <ion-item *ngIf="town.itemsForSale.Weapon.length === 0">No weapons for sale.</ion-item>
+    <app-item *ngFor="let item of town.itemsForSale.Weapon" [item]="item"></app-item>
+
+    <ion-list-header>Armor</ion-list-header>
+    <ion-item *ngIf="town.itemsForSale.Armor.length === 0">No armors for sale.</ion-item>
+    <app-item *ngFor="let item of town.itemsForSale.Armor" [item]="item"></app-item>
+
+    <ion-list-header>Potions</ion-list-header>
+    <ion-item *ngIf="town.itemsForSale.Potion.length === 0">No potions for sale.</ion-item>
+    <app-item *ngFor="let item of town.itemsForSale.Potion" [item]="item"></app-item>
+  </ion-list>
+</ion-content>

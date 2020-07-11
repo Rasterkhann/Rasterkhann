@@ -1,7 +1,7 @@
 
 import { sample, sum } from 'lodash';
 
-import { Hero, Adventure, IGameTown, HeroStat, HeroJobActionTargetting, HeroJobAction, TriggerType } from '../interfaces';
+import { Hero, Adventure, IGameTown, HeroStat, HeroJobActionTargetting, HeroJobAction, TriggerType, ItemType } from '../interfaces';
 import { generateMonster, getCurrentStat, giveHeroGold, giveHeroEXP } from './hero';
 import { JobEffects } from '../static';
 import { doesTownHaveFeature } from './global';
@@ -63,7 +63,27 @@ function potentialActions(creature: Hero, targetting: HeroJobActionTargetting): 
 }
 
 function prepareHeroForCombat(hero: Hero): void {
-  [HeroStat.HP, HeroStat.SP, HeroStat.STA].forEach(stat => {
+  if (!canMemberFight(hero)) { return; }
+
+  // use potions before combat
+  const usedPotions: string[] = [];
+
+  hero.gear[ItemType.Potion].forEach(potion => {
+    // if we can use at least a third of the value of the potion, we will
+    const anyStatsOver = potion.boostStats.some(({ stat, value }) => hero.currentStats[stat] + (value / 3) < hero.stats[stat]);
+
+    if (anyStatsOver) {
+      potion.boostStats.forEach(({ stat, value }) => {
+        hero.currentStats[stat] = Math.min(hero.stats[stat], hero.currentStats[stat] + value);
+      });
+
+      usedPotions.push(potion.uuid);
+    }
+  });
+
+  hero.gear[ItemType.Potion] = hero.gear[ItemType.Potion].filter(p => !usedPotions.includes(p.uuid));
+
+  [HeroStat.HP, HeroStat.SP, HeroStat.STA].forEach((stat: HeroStat) => {
     hero.currentStats[stat] = Math.min(hero.currentStats[stat], hero.stats[stat]);
   });
 }

@@ -28,10 +28,10 @@ export function calculateMaxCreatableItems(town: IGameTown, itemType: ItemType):
 export function calculateSecondsUntilNextItem(town: IGameTown, itemType: ItemType): number {
   let base = 0;
 
-  if (town.buildings[buildingsRequiredPerItemType[itemType]].level > 0) { base += 1800; }
-  if (doesTownHaveFeature(town, `Faster ${itemType} Creation I`))       { base -= 300; }
-  if (doesTownHaveFeature(town, `Faster ${itemType} Creation II`))      { base -= 300; }
-  if (doesTownHaveFeature(town, `Faster ${itemType} Creation III`))     { base -= 300; }
+  if (town.buildings[buildingsRequiredPerItemType[itemType]].level > 0) { base += 900; }
+  if (doesTownHaveFeature(town, `Faster ${itemType} Creation I`))       { base -= 150; }
+  if (doesTownHaveFeature(town, `Faster ${itemType} Creation II`))      { base -= 150; }
+  if (doesTownHaveFeature(town, `Faster ${itemType} Creation III`))     { base -= 150; }
 
   return base;
 }
@@ -116,11 +116,11 @@ export function generatePotion(town: IGameTown): HeroItem {
 
   // stat values
   const tierRanges: Record<ItemTier, { min: number, max: number }> = {
-    I:   { min: 10,   max: 25 },
-    II:  { min: 25,   max: 75 },
-    III: { min: 75,   max: 150 },
-    IV:  { min: 150,  max: 250 },
-    V:   { min: 250,  max: 400 },
+    I:   { min: 5,    max: 15 },
+    II:  { min: 15,   max: 45 },
+    III: { min: 45,   max: 100 },
+    IV:  { min: 100,  max: 175 },
+    V:   { min: 175,  max: 300 },
   };
 
   // get the name for the stat

@@ -2,7 +2,8 @@
 import { shuffle, take, random, noop } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect, Building, HeroJobStatic, TraitPriority, Adventure } from '../interfaces';
+import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
+  Building, HeroJobStatic, TraitPriority, Adventure, ItemType } from '../interfaces';
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
@@ -153,7 +154,11 @@ export function generateHero(town: IGameTown, level?: number): Hero {
 
     stats: Object.assign({}, stats) as Record<HeroStat, number>,
     currentStats: Object.assign({}, stats) as Record<HeroStat, number>,
-    gear: {}
+    gear: {
+      [ItemType.Potion]: [],
+      [ItemType.Weapon]: [],
+      [ItemType.Armor]: []
+    }
   };
 
   // make sure heroes have at least a base of stats before they get ruined by traits

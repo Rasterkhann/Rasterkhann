@@ -84,5 +84,11 @@
         <p>{{ getTraitData(trait) }}</p>
       </ion-label>
     </ion-item>
+
+    <ng-container *ngFor="let type of ['Weapon', 'Armor', 'Potion']">
+      <ion-list-header>{{ type }}s</ion-list-header>
+      <ion-item *ngIf="viewingHero.gear[type].length === 0">No {{ type.toLowerCase() }}s.</ion-item>
+      <app-item *ngFor="let item of viewingHero.gear[type]" [item]="item"></app-item>
+    </ng-container>
   </ion-list>
 </ion-content>

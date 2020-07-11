@@ -1,7 +1,8 @@
-import { IGameTown, Adventure, Hero, AdventureDifficulty } from '../interfaces';
-import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold } from './hero';
+import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat } from '../interfaces';
+import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calculateMaxHeldPotions } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
 import { doesTownHaveFeature } from './global';
+import { take } from 'lodash';
 
 export function calculateMaxActiveAdventures(town: IGameTown): number {
   let base = 1;
@@ -36,6 +37,28 @@ export function calculateAvailableDifficulties(town: IGameTown): AdventureDiffic
     AdventureDifficulty.Normal,
     AdventureDifficulty.Hard, AdventureDifficulty.VeryHard
   ];
+}
+
+export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroItem[] {
+  const boughtItems: HeroItem[] = [];
+
+  let totalCost = 0n;
+
+  // buy potions
+  const maxPotions = calculateMaxHeldPotions(town, hero);
+  if (hero.gear[ItemType.Potion].length < maxPotions) {
+    const itemsToBuy = maxPotions - hero.gear[ItemType.Potion].length;
+    let boughtPotions = 0;
+
+    town.itemsForSale[ItemType.Potion].forEach(item => {
+      if (totalCost + item.cost > hero.currentStats[HeroStat.GOLD] || boughtPotions >= itemsToBuy) { return; }
+      totalCost += item.cost;
+      boughtItems.push(item);
+      boughtPotions++;
+    });
+  }
+
+  return boughtItems;
 }
 
 export function doAdventureEncounter(town: IGameTown, adventure: Adventure): void {

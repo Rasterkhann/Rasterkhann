@@ -1,0 +1,27 @@
+
+ion-item {
+  padding-left: 20px;
+}
+
+.sprite {
+  width: 32px;
+  height: 32px;
+  
+  object-fit: none;
+
+  transform: scale(2);
+}
+
+.stat-block {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  .stat {
+    flex: 1;
+    width: 33%;
+    font-size: 0.9rem;
+    padding: 0;
+  }
+}

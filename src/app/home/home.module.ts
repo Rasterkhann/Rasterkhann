@@ -30,11 +30,15 @@ import { WorkshopComponent } from '../components/windows/workshop/workshop.compo
 import { BignumPipe } from '../bignum.pipe';
 import { BuildingInfoComponent } from '../components/shared/building-info/building-info.component';
 import { FeatureListComponent } from '../components/shared/feature-list/feature-list.component';
+
 import { GuildModalComponent } from '../components/windows/guildhall/guild-modal/guild-modal.component';
 import { AdventureModalComponent } from '../components/windows/cave/adventure-modal/adventure-modal.component';
+import { ItemsModalComponent } from '../components/windows/bazaar/items-modal/items-modal.component';
+
 import { HeroComponent } from '../components/shared/hero/hero.component';
 import { HeroSpriteComponent } from '../components/shared/hero-sprite/hero-sprite.component';
 import { AdventureComponent } from '../components/shared/adventure/adventure.component';
+import { ItemComponent } from '../components/shared/item/item.component';
 
 
 @NgModule({
@@ -71,15 +75,18 @@ import { AdventureComponent } from '../components/shared/adventure/adventure.com
     HeroComponent,
     HeroSpriteComponent,
     AdventureComponent,
+    ItemComponent,
 
     GuildModalComponent,
     AdventureModalComponent,
+    ItemsModalComponent,
 
     BignumPipe
   ],
   entryComponents: [
     GuildModalComponent,
-    AdventureModalComponent
+    AdventureModalComponent,
+    ItemsModalComponent
   ]
 })
 export class HomePageModule {}

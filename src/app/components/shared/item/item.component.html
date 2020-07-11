@@ -1,0 +1,15 @@
+
+<ion-item>
+  <img [src]="'assets/game/equipment/' + spritesheet + '.png'" class="sprite" [style.object-position]="spriteLocation" slot="start" />
+
+  <ion-label class="ion-text-wrap">
+    <h2>{{ item.name }}</h2>
+    <p *ngIf="item.cost">Cost: {{ item.cost | bignum }} gold</p>
+
+    <ion-row class="stat-block">
+      <ion-col class="stat" size="4" *ngFor="let stat of item.boostStats">
+        {{ stat.stat | uppercase }} {{ stat.value | bignum }}
+      </ion-col>
+    </ion-row>
+  </ion-label>
+</ion-item>

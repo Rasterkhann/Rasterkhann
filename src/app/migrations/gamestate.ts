@@ -41,6 +41,10 @@ export const migrations = [
       });
 
       state.towns.Rasterkhann.recruitedHeroes.forEach(h => {
+        h.gear = h.gear || { Potion: [], Weapon: [], Armor: [] };
+        h.gear.Potion = h.gear.Potion || [];
+        h.gear.Weapon = h.gear.Weapon || [];
+        h.gear.Armor = h.gear.Armor || [];
         if (h.onAdventure && !state.towns.Rasterkhann.activeAdventures.map(a => a.uuid).includes(h.onAdventure)) {
           h.onAdventure = '';
         }
