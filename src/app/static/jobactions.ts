@@ -35,7 +35,7 @@ export const Attack: () => HeroJobAction = () => ({
 });
 
 export const AttackAll: () => HeroJobAction = () => ({
-  staCost: () => 1,
+  staCost: () => 3,
   spCost: () => 3,
   targets: (targetting: HeroJobActionTargetting) => {
     return targetting.livingEnemies;
@@ -49,7 +49,7 @@ export const AttackAll: () => HeroJobAction = () => ({
 });
 
 export const AttackAllDiminishing: () => HeroJobAction = () => ({
-  staCost: () => 1,
+  staCost: () => 5,
   spCost: () => 3,
   targets: (targetting: HeroJobActionTargetting) => {
     return targetting.livingEnemies;
@@ -63,7 +63,7 @@ export const AttackAllDiminishing: () => HeroJobAction = () => ({
 });
 
 export const AttackSinglePercent: (pct: number) => HeroJobAction = (pct: number) => ({
-  staCost: () => 2,
+  staCost: () => 4,
   spCost: () => 5,
   targets: (targetting: HeroJobActionTargetting) => {
     return [sample(targetting.livingEnemies)] as Hero[];
@@ -77,7 +77,7 @@ export const AttackSinglePercent: (pct: number) => HeroJobAction = (pct: number)
 });
 
 export const AttackAllPercent: (pct: number) => HeroJobAction = (pct: number) => ({
-  staCost: () => 2,
+  staCost: () => 7,
   spCost: () => 5,
   targets: (targetting: HeroJobActionTargetting) => {
     return targetting.livingEnemies;
@@ -92,7 +92,7 @@ export const AttackAllPercent: (pct: number) => HeroJobAction = (pct: number) =>
 
 // ***** HEALING ABILITIES ***** //
 export const Heal: () => HeroJobAction = () => ({
-  staCost: () => 3,
+  staCost: () => 5,
   spCost: () => 10,
   targets: (targetting: HeroJobActionTargetting) => {
     return [sample(targetting.livingAllies)] as Hero[];
@@ -105,7 +105,7 @@ export const Heal: () => HeroJobAction = () => ({
 });
 
 export const HealAllPercent: (pct: number) => HeroJobAction = (pct: number) => ({
-  staCost: () => 5,
+  staCost: () => 10,
   spCost: () => 7,
   targets: (targetting: HeroJobActionTargetting) => {
     return targetting.livingAllies;
@@ -120,7 +120,7 @@ export const HealAllPercent: (pct: number) => HeroJobAction = (pct: number) => (
 
 // ***** GOLD ABILITIES ***** //
 export const EarnGold: (gold: number) => HeroJobAction = (gold: number) => ({
-  staCost: () => 0,
+  staCost: () => 5,
   spCost: () => 3,
   targets: (targetting: HeroJobActionTargetting) => {
     return [targetting.self];

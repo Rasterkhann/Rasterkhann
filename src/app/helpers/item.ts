@@ -125,8 +125,8 @@ export function generatePotion(town: IGameTown): HeroItem {
 
   // get the name for the stat
   const statToPotion: Partial<Record<HeroStat, string>> = {
-    [HeroStat.HP]: 'Health',
-    [HeroStat.SP]: 'Skill',
+    [HeroStat.HP]:  'Health',
+    [HeroStat.SP]:  'Skill',
     [HeroStat.STA]: 'Stamina'
   };
 
