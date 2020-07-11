@@ -9,11 +9,16 @@ export const migrations = [
     migrate: (state: IGameState) => {
       // state.version = 2;
 
+      console.log('Running migrations...');
+
+      console.log('Validating RecentNews...');
       state.towns.Rasterkhann.recentNews = state.towns.Rasterkhann.recentNews || [];
 
+      console.log('Validating Archives/Library...');
       state.towns.Rasterkhann.buildings.archives = state.towns.Rasterkhann.buildings.archives || createBuildingAtLevel(0);
       state.towns.Rasterkhann.buildings.library = state.towns.Rasterkhann.buildings.library || createBuildingAtLevel(0);
 
+      console.log('Validating ItemsForSale/NextItemCreation...');
       if (!state.towns.Rasterkhann.itemsForSale) {
         state.towns.Rasterkhann.itemsForSale = {
           Armor: [],
@@ -30,16 +35,19 @@ export const migrations = [
         };
       }
 
+      console.log('Cleaning ItemsForSale/NextItemCreation...');
       Object.keys(ItemType).forEach((itemType: ItemType) => {
         state.towns.Rasterkhann.itemsForSale[itemType] = state.towns.Rasterkhann.itemsForSale[itemType] || [];
         state.towns.Rasterkhann.nextItemCreation[itemType] = state.towns.Rasterkhann.nextItemCreation[itemType] || 0;
       });
 
+      console.log('Setting TownName...');
       Object.keys(state.towns).forEach(townName => {
         if (state.towns[townName].name) { return; }
         state.towns[townName].name = townName;
       });
 
+      console.log('Validating Heroes...');
       state.towns.Rasterkhann.recruitedHeroes.forEach(h => {
         h.gear = h.gear || { Potion: [], Weapon: [], Armor: [] };
         h.gear.Potion = h.gear.Potion || [];
@@ -49,6 +57,7 @@ export const migrations = [
           h.onAdventure = '';
         }
       });
+      
       return state;
     }
   }
