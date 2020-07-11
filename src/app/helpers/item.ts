@@ -83,7 +83,7 @@ function pickPotionSprite(statsModified: HeroStat[], tier: ItemTier): number {
   // dual-ingredient potions
   if (hasHP && hasSP && !hasSTA)  { return getTierSprite(4); }
   if (hasHP && !hasSP && hasSTA)  { return getTierSprite(2); }
-  if (hasHP && hasSP && !hasSTA)  { return getTierSprite(5); }
+  if (!hasHP && hasSP && hasSTA)  { return getTierSprite(5); }
 
   // tri-ingredient potions
   if (hasHP && hasSP && hasSTA)   { return getTierSprite(6); }
