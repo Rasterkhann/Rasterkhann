@@ -1,4 +1,4 @@
-## [0.3.2](https://github.com/seiyria/Rasterkhann/compare/v0.3.1...v0.3.2) (2020-07-10)
+# [0.4.0](https://github.com/seiyria/Rasterkhann/compare/v0.3.1...v0.4.0) (2020-07-11)
 
 
 ### Bug Fixes
@@ -13,6 +13,7 @@
 
 * **alchemist:** quick info for alchemist highlights ([eca846f](https://github.com/seiyria/Rasterkhann/commit/eca846f8d937c99b438f3a8b2ae4cb02d7c7ef62))
 * **armory:** quick info for armory highlights ([15e94eb](https://github.com/seiyria/Rasterkhann/commit/15e94ebe357e176f688f3b01a5b8756ee1c26019))
+* **bazaar:** heroes will shop at the bazaar before embarking on an adventure ([b8edf9c](https://github.com/seiyria/Rasterkhann/commit/b8edf9ca7227d8c7d5c2ed2fee25bdfa8e1331b8))
 * **cave:** cave info box ([ac47db3](https://github.com/seiyria/Rasterkhann/commit/ac47db32515359ed568f85bebd17f41648d29ecc))
 * **guildhall:** show info panel for guild hall ([4e8f2f2](https://github.com/seiyria/Rasterkhann/commit/4e8f2f268ceccffb5a15d99f85fbfb619991f644))
 * **inn:** info panel ([c7944ea](https://github.com/seiyria/Rasterkhann/commit/c7944ea18921c0bf563d335d34d2c424351902ae))
