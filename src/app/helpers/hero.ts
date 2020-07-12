@@ -3,7 +3,7 @@ import { shuffle, take, random, noop } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
-  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem } from '../interfaces';
+  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon } from '../interfaces';
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
@@ -21,12 +21,24 @@ export function calculateMaxHeldPotions(town: IGameTown, hero: Hero): number {
   return 1;
 }
 
-export function unequipItem(hero: Hero, item: HeroItem): void {
-
+export function canEquipItem(hero: Hero, item: HeroWeapon): boolean {
+  return JobEffects[hero.job].validWeaponTypes.includes(item.subType);
 }
 
-export function equipItem(hero: Hero, item: HeroItem): void {
+export function unequipItem(hero: Hero, unequippedItem: HeroItem, slot: number): void {
+  unequippedItem.boostStats.forEach(({ stat, value }) => {
+    hero.stats[stat] -= value;
+    hero.currentStats[stat] -= value;
+  });
+}
 
+export function equipItem(hero: Hero, equippedItem: HeroItem, slot: number): void {
+  hero.gear[equippedItem.type][slot] = equippedItem;
+
+  equippedItem.boostStats.forEach(({ stat, value }) => {
+    hero.stats[stat] -= value;
+    hero.currentStats[stat] -= value;
+  });
 }
 
 export function getZeroStatBlock(): Record<HeroStat, number> {

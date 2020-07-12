@@ -1,5 +1,5 @@
-import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat } from '../interfaces';
-import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calculateMaxHeldPotions } from './hero';
+import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat, HeroGear, HeroWeapon } from '../interfaces';
+import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calculateMaxHeldPotions, calculateMaxHeldWeapons, canEquipItem } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
 import { doesTownHaveFeature } from './global';
 import { take } from 'lodash';
@@ -39,12 +39,11 @@ export function calculateAvailableDifficulties(town: IGameTown): AdventureDiffic
   ];
 }
 
-export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroItem[] {
-  const boughtItems: HeroItem[] = [];
-
+export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGear {
   let totalCost = 0n;
 
   // buy potions
+  const potionsHeroWants: HeroItem[] = [];
   const maxPotions = calculateMaxHeldPotions(town, hero);
   if (hero.gear[ItemType.Potion].length < maxPotions) {
     const itemsToBuy = maxPotions - hero.gear[ItemType.Potion].length;
@@ -53,14 +52,32 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroIt
     town.itemsForSale[ItemType.Potion].forEach(item => {
       if (totalCost + item.cost > hero.currentStats[HeroStat.GOLD] || boughtPotions >= itemsToBuy) { return; }
       totalCost += item.cost;
-      boughtItems.push(item);
+      potionsHeroWants.push(item);
       boughtPotions++;
     });
   }
 
-  // TODO: buy weapons - only what the job can buy though
+  const maxWeapons = calculateMaxHeldWeapons(town, hero);
+  const boughtWeapons: HeroWeapon[] = [];
+  if (hero.gear[ItemType.Weapon].length < maxWeapons) {
+    for (let i = 0; i < maxWeapons; i++) {
+      town.itemsForSale[ItemType.Weapon].forEach((item: HeroWeapon) => {
+        if (boughtWeapons[i]) { return; }
+        if (!canEquipItem(hero, item)) { return; }
+        if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
+        if (hero.gear[ItemType.Weapon][i] && hero.gear[ItemType.Weapon][i].cost > item.cost) { return; }
 
-  return boughtItems;
+        totalCost += item.cost;
+        boughtWeapons[i] = item;
+      });
+    }
+  }
+
+  return {
+    [ItemType.Potion]: potionsHeroWants,
+    [ItemType.Armor]: [],
+    [ItemType.Weapon]: boughtWeapons
+  };
 }
 
 export function doAdventureEncounter(town: IGameTown, adventure: Adventure): void {

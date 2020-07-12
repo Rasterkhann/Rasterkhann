@@ -9,7 +9,7 @@ import {
   RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle
 } from '../actions';
 import {
-  IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType
+  IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem
 } from '../interfaces';
 import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
@@ -25,7 +25,7 @@ import {
   calculateMaxCreatableItems,
   generateItem,
   calculateSecondsUntilNextItem,
-  heroBuyItemsBeforeAdventure
+  heroBuyItemsBeforeAdventure, unequipItem, equipItem
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -351,20 +351,42 @@ export class GameState {
           town.recruitedHeroes[i].onAdventure = adventure.uuid;
           const boughtItems = heroBuyItemsBeforeAdventure(town, town.recruitedHeroes[i]);
 
-          const boughtUUIDs = boughtItems.map(item => item.uuid);
+          // buy potions
+          const boughtPotions = boughtItems[ItemType.Potion];
+          boughtPotions.forEach((item: HeroItem) => {
+            town.recruitedHeroes[i].gear[ItemType.Potion].push(item);
+          });
+
+          // buy weapons
+          const boughtWeapons = boughtItems[ItemType.Weapon];
+          boughtWeapons.forEach((weap, weapIndex) => {
+            // we get weapons back in the exact order that they should be applied, which could be a jagged array
+            if (town.recruitedHeroes[i].gear[ItemType.Weapon][weapIndex]) {
+              unequipItem(town.recruitedHeroes[i], town.recruitedHeroes[i].gear[ItemType.Weapon][weapIndex], i);
+            }
+
+            equipItem(town.recruitedHeroes[i], weap, weapIndex);
+          });
+
+          // remove the "cost" prop on each item; it's no longer necessary
+          const allBoughtItems = boughtItems[ItemType.Potion]
+            .concat(boughtItems[ItemType.Armor])
+            .concat(boughtItems[ItemType.Weapon]);
+
+          const boughtUUIDs = allBoughtItems.map(item => item.uuid);
           Object.keys(town.itemsForSale).forEach((itemType: ItemType) => {
             town.itemsForSale[itemType] = town.itemsForSale[itemType].filter(item => !boughtUUIDs.includes(item.uuid));
           });
 
-          const totalEarned: bigint = sum(boughtItems.map(item => item.cost)) as unknown as bigint;
+          const totalEarned: bigint = BigInt(sum(allBoughtItems.map(item => item.cost)));
 
           town.recruitedHeroes[i].currentStats[HeroStat.GOLD] -= Number(totalEarned);
           this.store.dispatch(new GainGold(totalEarned));
 
-          boughtItems.forEach(item => {
+          allBoughtItems.forEach((item: HeroItem) => {
             delete (item as any).cost;
-            town.recruitedHeroes[i].gear[item.type].push(item as any);
           });
+
         });
       });
 

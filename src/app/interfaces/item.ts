@@ -30,7 +30,7 @@ export enum WeaponSubType {
   Katar = 'Katar',
   Hatchet = 'Hatchet',
   Spear = 'Spear',
-  Mace = 'Mage',
+  Mace = 'Mace',
   Staff = 'Staff',
   Shuriken = 'Shuriken',
   Wand = 'Wand',

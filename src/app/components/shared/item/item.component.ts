@@ -26,7 +26,7 @@ export class ItemComponent implements OnInit {
     const y = Math.floor(this.item.sprite / divisor);
     const x = this.item.sprite % divisor;
 
-    return `-${x * 32}px -${(y - 1) * 32}px`;
+    return `-${x * 32}px -${y * 32}px`;
   }
 
   constructor() { }

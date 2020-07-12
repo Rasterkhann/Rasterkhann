@@ -104,6 +104,20 @@ export const Heal: () => HeroAction = () => ({
   }
 });
 
+export const HealPercent: (pct: number) => HeroAction = (pct: number) => ({
+  staCost: () => 7,
+  spCost: () => 10,
+  targets: (targetting: HeroActionTargetting) => {
+    return [sample(targetting.livingAllies)] as Hero[];
+  },
+  act: (hero: Hero, targets: Hero[]) => {
+    targets.forEach(target => {
+      const healed = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
+      heal(target, healed);
+    });
+  }
+});
+
 export const HealAllPercent: (pct: number) => HeroAction = (pct: number) => ({
   staCost: () => 10,
   spCost: () => 7,

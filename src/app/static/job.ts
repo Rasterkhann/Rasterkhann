@@ -101,7 +101,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     triggers: {},
     combatTriggers: {
-      [TriggerType.PreCombat]: [JobActions.AttackAllPercent(5)]
+      [TriggerType.PreCombat]: [JobActions.AttackAllPercent(15)]
     },
     actions: [JobActions.Attack(), JobActions.AttackAllDiminishing()],
     validWeaponTypes: [WeaponSubType.Wand, WeaponSubType.Staff]
@@ -167,7 +167,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     triggers: {},
     combatTriggers: {
-      [TriggerType.PreCombat]: [JobActions.AttackSinglePercent(15)]
+      [TriggerType.PreCombat]: [JobActions.AttackSinglePercent(30)]
     },
     actions: [JobActions.Attack(), JobActions.AttackSinglePercent(5)],
     validWeaponTypes: [WeaponSubType.Sword, WeaponSubType.Hatchet, WeaponSubType.Spear, WeaponSubType.Mace]

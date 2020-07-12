@@ -128,6 +128,9 @@ export function generateWeapon(town: IGameTown): HeroWeapon {
     .map((stat: HeroStat) => ({ stat, value: boostStatHash[stat] }))
     .filter(({ value }) => value !== 0);
 
+  let cost = calculateItemCost(boostStats) * 10n;
+  if (cost < 0n) { cost = 1000n; }
+
   return {
     name: `${trait ? trait.name + ' ' : ''}${element} ${subType}`,
     subType,
@@ -136,7 +139,7 @@ export function generateWeapon(town: IGameTown): HeroWeapon {
     type: ItemType.Weapon,
     sprite: getSpriteForWeapon(subType, element),
     boostStats,
-    cost: calculateItemCost(boostStats)
+    cost
   };
 }
 

@@ -2,7 +2,6 @@
 import { WeaponElement, WeaponSubType, HeroAction } from '../interfaces';
 import * as WeaponActions from './actions';
 
-// TODO: add some
 export const ElementActions: Record<WeaponElement, HeroAction[]> = {
   [WeaponElement.Iron]: [],
   [WeaponElement.Fire]: [],
@@ -19,15 +18,15 @@ export const ElementActions: Record<WeaponElement, HeroAction[]> = {
 
 export const SubTypeActions: Record<WeaponSubType, HeroAction[]> = {
   [WeaponSubType.Sword]: [],
-  [WeaponSubType.Knife]: [],
+  [WeaponSubType.Knife]: [WeaponActions.EarnGold(100)],
   [WeaponSubType.Katar]: [],
   [WeaponSubType.Hatchet]: [],
-  [WeaponSubType.Spear]: [],
+  [WeaponSubType.Spear]: [WeaponActions.AttackSinglePercent(5)],
   [WeaponSubType.Mace]: [],
   [WeaponSubType.Staff]: [],
-  [WeaponSubType.Shuriken]: [],
-  [WeaponSubType.Wand]: [],
+  [WeaponSubType.Shuriken]: [WeaponActions.AttackAllPercent(3)],
+  [WeaponSubType.Wand]: [WeaponActions.HealPercent(10)],
   [WeaponSubType.Arrow]: [],
-  [WeaponSubType.Shortbow]: [],
-  [WeaponSubType.Longbow]: []
+  [WeaponSubType.Shortbow]: [WeaponActions.AttackAllDiminishing()],
+  [WeaponSubType.Longbow]: [WeaponActions.AttackAllDiminishing()]
 };

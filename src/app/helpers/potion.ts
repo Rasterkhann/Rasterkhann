@@ -13,11 +13,11 @@ function pickPotionSprite(statsModified: HeroStat[], tier: ItemTier): number {
 
     // get the row for each tier
     const tierSprites: Record<ItemTier, number> = {
-      I: 15,
-      II: 16,
-      III: 6,
-      IV: 3,
-      V: 5
+      I: 14,
+      II: 15,
+      III: 5,
+      IV: 2,
+      V: 4
     };
 
     const width = 14;
