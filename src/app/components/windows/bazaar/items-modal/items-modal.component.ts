@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { GameService } from '../../../../services/game.service';
-import { IGameTown } from '../../../../interfaces';
+import { HeroItem, IGameTown, ItemType } from '../../../../interfaces';
+import { calculateMaxCreatableItems } from '../../../../helpers';
 
 @Component({
   selector: 'app-items-modal',
@@ -19,6 +20,14 @@ export class ItemsModalComponent implements OnInit {
 
   dismiss(): void {
     this.modal.dismiss();
+  }
+
+  public getTypeTotal(type: ItemType): number {
+    return calculateMaxCreatableItems(this.town, type);
+  }
+
+  public getItems(type: ItemType): HeroItem[] {
+    return this.town.itemsForSale[type];
   }
 
 }
