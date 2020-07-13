@@ -169,7 +169,7 @@ export const LibraryFeatures: BuildingFeature[] = [
     name: 'Item Traits II',
     description: 'Unlock basic tier II item traits.',
     cost: 250000n,
-    upgradeTime: 3600,
+    upgradeTime: 1200,
     requiresLevel: 5,
     unlocks: {
       itemTrait: [
@@ -182,7 +182,7 @@ export const LibraryFeatures: BuildingFeature[] = [
     name: 'Item Traits III',
     description: 'Unlock advanced tier III item traits.',
     cost: 500000n,
-    upgradeTime: 3600,
+    upgradeTime: 2400,
     requiresLevel: 15,
     requiresFeature: {
       'Item Traits II': 1
@@ -231,7 +231,7 @@ export const LibraryFeatures: BuildingFeature[] = [
     name: 'Item Traits Hybrids II',
     description: 'Unlock stronger hybrid item traits.',
     cost: 1000000n,
-    upgradeTime: 3600,
+    upgradeTime: 4800,
     requiresLevel: 45,
     requiresFeature: {
       'Item Traits Hybrids': 1
