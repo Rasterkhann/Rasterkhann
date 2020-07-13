@@ -43,7 +43,7 @@ export class HeroService {
                  * this.getTraitTotalMultiplier(hero.traits)
                  * JobEffects[hero.job].costMultiplier;
 
-    if (baseCost <= 0) { baseCost = 100; }
+    if (baseCost <= 100) { baseCost = 100; }
 
     return {
       hero,
