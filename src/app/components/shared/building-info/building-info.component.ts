@@ -42,7 +42,7 @@ export class BuildingInfoComponent implements OnInit {
   public goToBuilding(): void {
     const building = this.buildingId;
 
-    if (!this.town.buildings[building]) { return; }
+    if (this.town.buildings[building].level === 0) { return; }
     this.game.changeInfo(building);
   }
 
