@@ -128,7 +128,7 @@ export function generateWeapon(town: IGameTown): HeroWeapon {
     .map((stat: HeroStat) => ({ stat, value: boostStatHash[stat] }))
     .filter(({ value }) => value !== 0);
 
-  let cost = calculateItemCost(boostStats) * 10n;
+  let cost = calculateItemCost(town, boostStats) * 10n;
   if (cost < 0n) { cost = 1000n; }
 
   return {

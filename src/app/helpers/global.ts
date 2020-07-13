@@ -5,7 +5,15 @@ import { sum } from 'lodash';
 import { IGameTown, BuildingUnlock, HeroStat } from '../interfaces';
 import { featureNameToBuildingHash, featureNameToUnlockHash } from './building';
 
-export function calculateItemCost(boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
+export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
+
+  let multiplier = 1;
+  if (doesTownHaveFeature(town, 'Better Prices'))       { multiplier += 0.1; }
+  if (doesTownHaveFeature(town, 'Even Better Prices'))  { multiplier += 0.1; }
+  if (doesTownHaveFeature(town, 'Higher Prices'))       { multiplier += 0.1; }
+  if (doesTownHaveFeature(town, 'Even Higher Prices'))  { multiplier += 0.1; }
+  if (doesTownHaveFeature(town, 'Stronger Prices'))     { multiplier += 0.1; }
+
   const statMultipliers: Record<HeroStat, number> = {
     [HeroStat.ATK]: 150,
     [HeroStat.DEF]: 120,
@@ -17,7 +25,7 @@ export function calculateItemCost(boostStats: Array<{ stat: HeroStat, value: num
     [HeroStat.STA]: 200
   };
 
-  return BigInt(sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat])));
+  return BigInt(Math.floor(multiplier * sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat]))));
 }
 
 export function doesTownHaveFeature(town: IGameTown, feature: string): boolean {

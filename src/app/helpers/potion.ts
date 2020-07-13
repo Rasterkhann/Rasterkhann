@@ -111,7 +111,7 @@ export function generatePotion(town: IGameTown): HeroItem {
     type: ItemType.Potion,
     sprite: pickPotionSprite(chosenStatCombo, itemTier),
     boostStats,
-    cost: calculateItemCost(boostStats)
+    cost: calculateItemCost(town, boostStats)
   };
 
   return item;
