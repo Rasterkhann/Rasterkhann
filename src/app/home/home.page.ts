@@ -76,7 +76,7 @@ export class HomePage implements OnInit {
 
   private checkAutoBuildings(state: IGameState): void {
     const town = getCurrentTownFromState(state);
-    const upgradeableBuildings = Object.values(Building).filter(b => this.game.canUpgradeBuilding(town, b));
+    const upgradeableBuildings = Object.values(Building).filter(b => this.game.canUpgradeBuilding(town, b) && town.buildings[b].level > 0);
     const chosenBuilding = sample(upgradeableBuildings);
     if (!chosenBuilding) { return; }
 
