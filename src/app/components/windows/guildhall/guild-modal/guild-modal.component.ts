@@ -8,7 +8,7 @@ import { Observable, Subscription } from 'rxjs';
 import { GameState } from '../../../../states';
 import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait, ItemType, HeroItem } from '../../../../interfaces';
 import { GameService } from '../../../../services/game.service';
-import { calculateProspectiveHeroMaxTotal } from '../../../../helpers';
+import { calculateHeroMaxTotal, calculateProspectiveHeroMaxTotal } from '../../../../helpers';
 import { TraitEffects } from '../../../../static';
 import { HeroService } from '../../../../services/hero.service';
 
@@ -26,6 +26,10 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   private canBuyHeroes: boolean;
   private activeHeroes$: Subscription;
+
+  public get maxHeroes(): number {
+    return calculateHeroMaxTotal(this.town);
+  }
 
   public get itemTypes(): ItemType[] {
     return [ItemType.Weapon, ItemType.Armor, ItemType.Potion];

@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 
 import { IGameTown } from '../../../interfaces';
 import { GuildModalComponent } from './guild-modal/guild-modal.component';
-import { calculateAvailableJobs } from '../../../helpers';
+import { calculateAvailableJobs, calculateHeroMaxTotal } from '../../../helpers';
 
 @Component({
   selector: 'app-guildhall',
@@ -13,6 +13,10 @@ import { calculateAvailableJobs } from '../../../helpers';
 export class GuildHallComponent implements OnInit {
 
   @Input() town: IGameTown;
+
+  public get maxHeroes(): number {
+    return calculateHeroMaxTotal(this.town);
+  }
 
   public get jobsUnlocked(): string {
     return calculateAvailableJobs(this.town).join(', ');
