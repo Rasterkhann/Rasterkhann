@@ -114,7 +114,10 @@ export const ArmoryFeatures: BuildingFeature[] = [
     description: 'Spears and maces can be created.',
     cost: 500000n,
     upgradeTime: 7200,
-    requiresLevel: 7
+    requiresLevel: 7,
+    requiresFeature: {
+      'Job: Warrior': 1
+    }
   },
   {
     name: 'Ranged Weapons',
@@ -128,14 +131,20 @@ export const ArmoryFeatures: BuildingFeature[] = [
     description: 'Shuriken and katars can be created.',
     cost: 500000n,
     upgradeTime: 7200,
-    requiresLevel: 14
+    requiresLevel: 14,
+    requiresFeature: {
+      'Job: Thief': 1
+    }
   },
   {
     name: 'Magical Weapons',
     description: 'Staves and wands can be created.',
     cost: 500000n,
     upgradeTime: 7200,
-    requiresLevel: 7
+    requiresLevel: 7,
+    requiresFeature: {
+      'Job: Mage': 1
+    }
   },
   {
     name: 'Shadetin Weapons',
@@ -191,6 +200,9 @@ export const ArmoryFeatures: BuildingFeature[] = [
     description: 'Heavy armor can now be created.',
     cost: 600000n,
     upgradeTime: 7200,
-    requiresLevel: 25
+    requiresLevel: 25,
+    requiresFeature: {
+      'Job: Warrior': 1
+    }
   },
 ];
