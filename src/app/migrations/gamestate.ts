@@ -18,6 +18,9 @@ export const migrations = [
       state.towns.Rasterkhann.buildings.archives = state.towns.Rasterkhann.buildings.archives || createBuildingAtLevel(0);
       state.towns.Rasterkhann.buildings.library = state.towns.Rasterkhann.buildings.library || createBuildingAtLevel(0);
 
+      console.log('Setting up Health Potions I...');
+      state.towns.Rasterkhann.buildings.alchemist.features['Health Potions I'] = 1;
+
       console.log('Validating ItemsForSale/NextItemCreation...');
       if (!state.towns.Rasterkhann.itemsForSale) {
         state.towns.Rasterkhann.itemsForSale = {

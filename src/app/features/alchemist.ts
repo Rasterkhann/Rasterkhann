@@ -56,6 +56,13 @@ export const AlchemistFeatures: BuildingFeature[] = [
     }
   },
   {
+    name: 'Health Potions I',
+    description: 'Better Health Potions are created.',
+    cost: 1n,
+    upgradeTime: 1,
+    requiresLevel: 1
+  },
+  {
     name: 'Health Potions II',
     description: 'Better Health Potions are created.',
     cost: 150000n,
