@@ -19,6 +19,10 @@ export class ItemsModalComponent implements OnInit {
 
   @Input() public town: IGameTown;
 
+  public get itemTypes(): ItemType[] {
+    return [ItemType.Weapon, ItemType.Armor, ItemType.Potion];
+  }
+
   constructor(private modal: ModalController, private alert: AlertController, public game: GameService) { }
 
   ngOnInit(): void {}

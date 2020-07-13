@@ -13,16 +13,10 @@
 
 <ion-content padding>
   <ion-list *ngIf="currentTownItemsForSale$ | async as itemsForSale">
-    <ion-list-header>Weapons ({{ getItems(itemsForSale, 'Weapon').length }}/{{ getTypeTotal('Weapon') }})</ion-list-header>
-    <ion-item *ngIf="itemsForSale.Weapon.length === 0">No weapons for sale.</ion-item>
-    <app-item *ngFor="let item of itemsForSale.Weapon" [item]="item" showScrapIcon="true" (click)="scrapItem(item)"></app-item>
-
-    <ion-list-header>Armors ({{ getItems(itemsForSale, 'Armor').length }}/{{ getTypeTotal('Armor') }})</ion-list-header>
-    <ion-item *ngIf="itemsForSale.Armor.length === 0">No armors for sale.</ion-item>
-    <app-item *ngFor="let item of itemsForSale.Armor" [item]="item" showScrapIcon="true" (click)="scrapItem(item)"></app-item>
-
-    <ion-list-header>Potions ({{ getItems(itemsForSale, 'Potion').length }}/{{ getTypeTotal('Potion') }})</ion-list-header>
-    <ion-item *ngIf="itemsForSale.Potion.length === 0">No potions for sale.</ion-item>
-    <app-item *ngFor="let item of itemsForSale.Potion" [item]="item" showScrapIcon="true" (click)="scrapItem(item)"></app-item>
+    <ng-container *ngFor="let type of itemTypes">
+      <ion-list-header>{{ type }}s ({{ getItems(itemsForSale, type).length }}/{{ getTypeTotal(type) }})</ion-list-header>
+      <ion-item *ngIf="itemsForSale[type].length === 0">No {{ type.toLowerCase() }}s for sale.</ion-item>
+      <app-item *ngFor="let item of itemsForSale[type]" [item]="item" showScrapIcon="true" (click)="scrapItem(item)"></app-item>
+    </ng-container>
   </ion-list>
 </ion-content>
