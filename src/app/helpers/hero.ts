@@ -119,13 +119,13 @@ export function calculateHeroMaxTotal(town: IGameTown): number {
 }
 
 export function calculateHeroTrainingGoldPerXP(town: IGameTown): bigint {
-  let base = 50n;
+  let base = 10n;
 
-  if (doesTownHaveFeature(town, 'Cheaper Training I'))   { base -= 3n; }
-  if (doesTownHaveFeature(town, 'Cheaper Training II'))  { base -= 4n; }
-  if (doesTownHaveFeature(town, 'Cheaper Training III')) { base -= 5n; }
-  if (doesTownHaveFeature(town, 'Cheaper Training IV'))  { base -= 6n; }
-  if (doesTownHaveFeature(town, 'Cheaper Training V'))   { base -= 7n; }
+  if (doesTownHaveFeature(town, 'Cheaper Training I'))   { base -= 1n; }
+  if (doesTownHaveFeature(town, 'Cheaper Training II'))  { base -= 1n; }
+  if (doesTownHaveFeature(town, 'Cheaper Training III')) { base -= 1n; }
+  if (doesTownHaveFeature(town, 'Cheaper Training IV'))  { base -= 1n; }
+  if (doesTownHaveFeature(town, 'Cheaper Training V'))   { base -= 1n; }
 
   return base;
 }
