@@ -53,7 +53,7 @@ const BASIC_ARMOR_SPECIFIC_PRESETS = [
 const ARMOR_CLOAK_PRESETS = [
   {
     type: ArmorSubType.Cloak,
-    color: () => sample(Object.keys(ArmorElement)),
+    color: () => sample(Object.keys(ArmorElement).filter(x => x !== ArmorElement.None)),
     stats: {
       [HeroStat.DEF]: 3,
       [HeroStat.STA]: 6
@@ -61,7 +61,7 @@ const ARMOR_CLOAK_PRESETS = [
   },
   {
     type: ArmorSubType.FurCloak,
-    color: () => sample(Object.keys(ArmorElement)),
+    color: () => sample(Object.keys(ArmorElement).filter(x => x !== ArmorElement.None)),
     stats: {
       [HeroStat.DEF]: 4,
       [HeroStat.STA]: 4
@@ -69,7 +69,7 @@ const ARMOR_CLOAK_PRESETS = [
   },
   {
     type: ArmorSubType.TravelingCloak,
-    color: () => sample(Object.keys(ArmorElement)),
+    color: () => sample(Object.keys(ArmorElement).filter(x => x !== ArmorElement.None)),
     stats: {
       [HeroStat.DEF]: 6,
       [HeroStat.STA]: 3
@@ -80,14 +80,14 @@ const ARMOR_CLOAK_PRESETS = [
 const ARMOR_MEDIUM_PRESETS = [
   {
     type: ArmorSubType.RoyalCloak,
-    color: () => sample(Object.keys(ArmorElement)),
+    color: () => sample(Object.keys(ArmorElement).filter(x => x !== ArmorElement.None)),
     stats: {
       [HeroStat.DEF]: 10
     }
   },
   {
     type: ArmorSubType.HideArmor,
-    color: () => sample(Object.keys(ArmorElement)),
+    color: () => sample(Object.keys(ArmorElement).filter(x => x !== ArmorElement.None)),
     stats: {
       [HeroStat.DEF]: 15,
       [HeroStat.STA]: -2
@@ -98,7 +98,7 @@ const ARMOR_MEDIUM_PRESETS = [
 const ARMOR_HEAVY_PRESETS = [
   {
     type: ArmorSubType.ArmoredCloak,
-    color: () => sample(Object.keys(ArmorElement)),
+    color: () => sample(Object.keys(ArmorElement).filter(x => x !== ArmorElement.None)),
     stats: {
       [HeroStat.DEF]: 20,
       [HeroStat.STA]: -5
@@ -106,7 +106,7 @@ const ARMOR_HEAVY_PRESETS = [
   },
   {
     type: ArmorSubType.Fullplate,
-    color: () => sample(Object.keys(ArmorElement)),
+    color: () => sample(Object.keys(ArmorElement).filter(x => x !== ArmorElement.None)),
     stats: {
       [HeroStat.DEF]: 25,
       [HeroStat.STA]: -10
@@ -128,7 +128,9 @@ export function pickArmorPreset(town: IGameTown): { name: string, sprite: number
   if (preset.color) {
     const width = 12;
     const color = preset.color();
-    name = `${color} ${name}`;
+    if (color !== ArmorElement.None) {
+      name = `${color} ${name}`;
+    }
 
     const subtypeOffset = ARMOR_BASIC_TYPE_OFFSET[preset.type as ArmorSubType] || 1;
     const colorOffset = ARMOR_BASIC_SPRITE_COLOR_OFFSET[color as ArmorElement] || 0;
