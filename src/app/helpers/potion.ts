@@ -86,6 +86,8 @@ export function generatePotion(town: IGameTown): HeroItem {
 
   let itemTier: ItemTier = 'I';
 
+  // TODO: pick a tier randomly
+
   const boostStats = chosenStatCombo.map((stat: HeroStat) => {
     let value = 0;
 

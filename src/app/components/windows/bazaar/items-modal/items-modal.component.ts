@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -19,12 +19,33 @@ export class ItemsModalComponent implements OnInit {
 
   @Input() public town: IGameTown;
 
-  constructor(private modal: ModalController, public game: GameService) { }
+  constructor(private modal: ModalController, private alert: AlertController, public game: GameService) { }
 
   ngOnInit(): void {}
 
   dismiss(): void {
     this.modal.dismiss();
+  }
+
+  public async scrapItem(item: HeroItem): Promise<void> {
+    const alert = await this.alert.create({
+      header: 'Scrap Item',
+      message: `Are you sure you want to scrap ${item.name}? It will be gone forever and you will get no gold for this action.`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Yes, Scrap',
+          handler: async () => {
+            this.game.scrapItem(item);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   public getTypeTotal(type: ItemType): number {

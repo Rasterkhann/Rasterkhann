@@ -1,6 +1,10 @@
 
 <ion-item>
   <img [src]="'assets/game/equipment/' + spritesheet + '.png'" class="sprite" [style.object-position]="spriteLocation" slot="start" />
+  
+  <ion-button class="danger" icon-only color="danger" slot="start" *ngIf="showScrapIcon">
+    <ion-icon name="trash-outline"></ion-icon>
+  </ion-button>
 
   <ion-label class="ion-text-wrap">
     <h2>{{ item.name }}</h2>

@@ -2,17 +2,16 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { timer } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures,
-  StartAdventure, HeroGainEXP, OptionToggle } from '../actions';
-import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure, HeroStat, GameOption } from '../interfaces';
+  StartAdventure, HeroGainEXP, OptionToggle, ScrapItem } from '../actions';
+import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem } from '../interfaces';
 import { doesTownHaveFeature, getCurrentStat } from '../helpers';
 import { BuildingData } from '../static';
 import { AdventureService } from './adventure.service';
 import { HeroService } from './hero.service';
-import { delay } from 'rxjs/operators';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -223,6 +222,11 @@ export class GameService {
       .subscribe(() => {
         this._isStartingAdventure = false;
       });
+  }
+
+  // item functions
+  public scrapItem(item: HeroItem): void {
+    this.store.dispatch(new ScrapItem(item));
   }
 
 }

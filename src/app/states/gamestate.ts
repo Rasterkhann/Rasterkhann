@@ -2,11 +2,13 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext } from '@ngxs-labs/immer-adapter';
+import { sum } from 'lodash';
 
 import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, UpgradeBuildingFeature, RerollHeroes,
-  RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle
+  RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
+  ScrapItem
 } from '../actions';
 import {
   IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem
@@ -32,7 +34,6 @@ import { environment } from '../../environments/environment';
 import { BuildingData } from '../static';
 import { HeroService } from '../services/hero.service';
 import { AdventureService } from '../services/adventure.service';
-import { sum } from 'lodash';
 
 const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
 const ADVENTURE_TIME_MULTIPLIER = environment.production ? 1 : 0.01;
@@ -477,6 +478,17 @@ export class GameState {
         this.store.dispatch(new NotifyMessage(`A new item "${item.name}" was listed for sale.`));
       });
 
+      return state;
+    });
+  }
+
+  // item functions
+  @Action(ScrapItem)
+  @ImmutableContext()
+  scrapItem({ setState }: StateContext<IGameState>, { item }: ScrapItem): void {
+    setState((state: IGameState) => {
+      state.towns[state.currentTown].itemsForSale[item.type] = state.towns[state.currentTown].itemsForSale[item.type]
+                                                                 .filter(i => i.uuid !== item.uuid);
       return state;
     });
   }

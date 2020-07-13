@@ -25,3 +25,17 @@ ion-item {
     padding: 0;
   }
 }
+
+ion-button {
+  position: absolute;
+
+  &.danger {
+    top: 10px;
+    left: 56px;
+    --border-radius: 50%;
+    --padding-start: 0;
+    --padding-end: 0;
+    width: 15px;
+    height: 15px;
+  }
+}

@@ -16,6 +16,7 @@ const SPRITESHEET_WIDTHS = {
 export class ItemComponent implements OnInit {
 
   @Input() public item: HeroItem;
+  @Input() public showScrapIcon: boolean;
 
   public get spritesheet(): string {
     return this.item.type.toLowerCase();
