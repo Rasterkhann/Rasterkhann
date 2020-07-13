@@ -54,11 +54,32 @@ export enum WeaponElement {
 }
 
 export enum ArmorSubType {
-
+  Shirt = 'Shirt',
+  Fur = 'Fur',
+  Cloak = 'Cloak',
+  FurCloak = 'Fur Cloak',
+  RoyalCloak = 'Royal Cloak',
+  Fullplate = 'Fullplate',
+  TravelingCloak = 'Traveling Cloak',
+  ArmoredCloak = 'Armored Cloak',
+  HideArmor = 'Hide Armor',
+  LeatherArmor = 'Leather Armor'
 }
 
 export enum ArmorElement {
-
+  None = 'None',
+  Red = 'Red',
+  Orange = 'Orange',
+  Yellow = 'Yellow',
+  Green = 'Green',
+  Teal = 'Teal',
+  Aqua = 'Aqua',
+  Purple = 'Purple',
+  Pink = 'Pink',
+  Brown = 'Brown',
+  Black = 'Black',
+  Gray = 'Gray',
+  White = 'White'
 }
 
 export interface HeroItem {

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IGameTown, ItemType } from '../../../interfaces';
 import { calculateMaxCreatableItems, calculateSecondsUntilNextItem } from '../../../helpers';
+import { generateArmor } from '../../../helpers/armor';
 
 @Component({
   selector: 'app-armory',

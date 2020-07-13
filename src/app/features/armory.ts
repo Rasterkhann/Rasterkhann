@@ -4,14 +4,14 @@ export const ArmoryFeatures: BuildingFeature[] = [
   {
     name: 'More Armors I',
     description: 'More armors are available for sale at once.',
-    cost: 0n,
+    cost: 100000n,
     upgradeTime: 600,
     requiresLevel: 3
   },
   {
     name: 'More Armors II',
     description: 'More armors are available for sale at once.',
-    cost: 0n,
+    cost: 400000n,
     upgradeTime: 600,
     requiresLevel: 15,
     requiresFeature: {
@@ -21,7 +21,7 @@ export const ArmoryFeatures: BuildingFeature[] = [
   {
     name: 'More Armors III',
     description: 'More armors are available for sale at once.',
-    cost: 0n,
+    cost: 750000n,
     upgradeTime: 600,
     requiresLevel: 33,
     requiresFeature: {
@@ -31,14 +31,14 @@ export const ArmoryFeatures: BuildingFeature[] = [
   {
     name: 'Faster Armor Creation I',
     description: 'Armors are created more frequently.',
-    cost: 0n,
+    cost: 75000n,
     upgradeTime: 1200,
     requiresLevel: 5
   },
   {
     name: 'Faster Armor Creation II',
     description: 'Armors are created more frequently.',
-    cost: 0n,
+    cost: 300000n,
     upgradeTime: 1200,
     requiresLevel: 19,
     requiresFeature: {
@@ -48,7 +48,7 @@ export const ArmoryFeatures: BuildingFeature[] = [
   {
     name: 'Faster Armor Creation III',
     description: 'Armors are created more frequently.',
-    cost: 0n,
+    cost: 650000n,
     upgradeTime: 1200,
     requiresLevel: 36,
     requiresFeature: {
@@ -171,5 +171,26 @@ export const ArmoryFeatures: BuildingFeature[] = [
     cost: 500000n,
     upgradeTime: 7200,
     requiresLevel: 50
+  },
+  {
+    name: 'Cloaks',
+    description: 'Cloaks can now be created.',
+    cost: 100000n,
+    upgradeTime: 7200,
+    requiresLevel: 7
+  },
+  {
+    name: 'Medium Armor',
+    description: 'Medium armor can now be created.',
+    cost: 300000n,
+    upgradeTime: 7200,
+    requiresLevel: 15
+  },
+  {
+    name: 'Heavy Armor',
+    description: 'Heavy armor can now be created.',
+    cost: 600000n,
+    upgradeTime: 7200,
+    requiresLevel: 25
   },
 ];

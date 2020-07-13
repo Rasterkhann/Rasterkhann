@@ -368,6 +368,17 @@ export class GameState {
             equipItem(town.recruitedHeroes[i], weap, weapIndex);
           });
 
+          // buy weapons
+          const boughtArmors = boughtItems[ItemType.Armor];
+          boughtArmors.forEach((arm, armIndex) => {
+            // we get weapons back in the exact order that they should be applied, which could be a jagged array
+            if (town.recruitedHeroes[i].gear[ItemType.Armor][armIndex]) {
+              unequipItem(town.recruitedHeroes[i], town.recruitedHeroes[i].gear[ItemType.Armor][armIndex], i);
+            }
+
+            equipItem(town.recruitedHeroes[i], arm, armIndex);
+          });
+
           // remove the "cost" prop on each item; it's no longer necessary
           const allBoughtItems = boughtItems[ItemType.Potion]
             .concat(boughtItems[ItemType.Armor])

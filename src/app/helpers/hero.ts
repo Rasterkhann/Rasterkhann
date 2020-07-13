@@ -21,7 +21,7 @@ export function calculateMaxHeldPotions(town: IGameTown, hero: Hero): number {
   return 1;
 }
 
-export function canEquipItem(hero: Hero, item: HeroWeapon): boolean {
+export function canEquipWeapon(hero: Hero, item: HeroWeapon): boolean {
   return JobEffects[hero.job].validWeaponTypes.includes(item.subType);
 }
 

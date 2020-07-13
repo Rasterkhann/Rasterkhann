@@ -1,5 +1,5 @@
-import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat, HeroGear, HeroWeapon } from '../interfaces';
-import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calculateMaxHeldPotions, calculateMaxHeldWeapons, canEquipItem } from './hero';
+import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat, HeroGear, HeroWeapon, HeroArmor } from '../interfaces';
+import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calculateMaxHeldPotions, calculateMaxHeldWeapons, canEquipWeapon, calculateMaxHeldArmors } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
 import { doesTownHaveFeature } from './global';
 import { take } from 'lodash';
@@ -63,7 +63,7 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGe
     for (let i = 0; i < maxWeapons; i++) {
       town.itemsForSale[ItemType.Weapon].forEach((item: HeroWeapon) => {
         if (boughtWeapons[i]) { return; }
-        if (!canEquipItem(hero, item)) { return; }
+        if (!canEquipWeapon(hero, item)) { return; }
         if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
         if (hero.gear[ItemType.Weapon][i] && hero.gear[ItemType.Weapon][i].cost > item.cost) { return; }
 
@@ -73,9 +73,24 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGe
     }
   }
 
+  const maxArmors = calculateMaxHeldArmors(town, hero);
+  const boughtArmors: HeroArmor[] = [];
+  if (hero.gear[ItemType.Armor].length < maxArmors) {
+    for (let i = 0; i < maxArmors; i++) {
+      town.itemsForSale[ItemType.Armor].forEach((item: HeroArmor) => {
+        if (boughtArmors[i]) { return; }
+        if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
+        if (hero.gear[ItemType.Armor][i] && hero.gear[ItemType.Armor][i].cost > item.cost) { return; }
+
+        totalCost += item.cost;
+        boughtArmors[i] = item;
+      });
+    }
+  }
+
   return {
     [ItemType.Potion]: potionsHeroWants,
-    [ItemType.Armor]: [],
+    [ItemType.Armor]: boughtArmors,
     [ItemType.Weapon]: boughtWeapons
   };
 }

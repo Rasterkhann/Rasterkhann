@@ -14,8 +14,6 @@ const buildingsRequiredPerItemType = {
 
 // calculator helper functions
 export function calculateMaxCreatableItems(town: IGameTown, itemType: ItemType): number {
-  if (itemType === ItemType.Armor) { return 0; }
-
   let base = 0;
 
   if (town.buildings[buildingsRequiredPerItemType[itemType]].level > 0) { base += 3; }
