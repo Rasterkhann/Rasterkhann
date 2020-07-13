@@ -92,7 +92,7 @@ export function generatePotion(town: IGameTown): HeroItem {
     // there is no "Healing Potions I" so it gets a default value
     if (stat === HeroStat.HP) { value = random(tierRanges.I.min, tierRanges.I.max); }
 
-    const validTiers = ['I', 'II', 'III', 'IV', 'V'].filter(tier => doesTownHaveFeature(town, `${statToPotion[stat]} Potions ${tier}`));
+    const validTiers = ['I', 'II', 'III', 'IV', 'V'].filter(checkTier => doesTownHaveFeature(town, `${statToPotion[stat]} Potions ${checkTier}`));
     const tier = (sample(validTiers) || 'I') as ItemTier;
     value = random(tierRanges[tier].min, tierRanges[tier].max) + town.buildings[Building.Alchemist].level;
     itemTier = tier;
