@@ -1,3 +1,24 @@
+## [0.5.1](https://github.com/seiyria/Rasterkhann/compare/v0.5.0...v0.5.1) (2020-07-13)
+
+
+### Bug Fixes
+
+* **armor:** armor should not generate with "none" in the name ([da3916e](https://github.com/seiyria/Rasterkhann/commit/da3916e62ab9e9ed774a11f69e441bbea7021bf2))
+* **armory:** make some weapon creations require different classes ([7c5f19e](https://github.com/seiyria/Rasterkhann/commit/7c5f19e9a878fc6155622aa5aaca9e1a6d2b435d))
+* **guildhall:** for some reason, heroes would not generate with the correct values ([265397b](https://github.com/seiyria/Rasterkhann/commit/265397b72041da136f0bb1ab800fa999cb40422f))
+* **hero:** training costs needed to go down since hero cost went up ([8edc7ac](https://github.com/seiyria/Rasterkhann/commit/8edc7ac8f4bcda3ddcd1d0801fec71f670c05634))
+* **time:** upgrade times are lower in general but progressively get longer, esp for early game powerups ([f0084a4](https://github.com/seiyria/Rasterkhann/commit/f0084a4d3b296c8327cb5accd61b236e4a5b0f84)), closes [#23](https://github.com/seiyria/Rasterkhann/issues/23)
+
+
+### Features
+
+* **alchemist:** alchemist picks a random potion tier ([8d70b94](https://github.com/seiyria/Rasterkhann/commit/8d70b94f8e4324ed96a0d477160978d94555e423)), closes [#22](https://github.com/seiyria/Rasterkhann/issues/22)
+* **bazaar:** add features to increase item costs for heroes ([68885d0](https://github.com/seiyria/Rasterkhann/commit/68885d020ebba64f71bd7e74f246a553cafaeba7)), closes [#21](https://github.com/seiyria/Rasterkhann/issues/21)
+* **trait:** multi-gear traits ([c347f87](https://github.com/seiyria/Rasterkhann/commit/c347f87e1630f122237b8e1a0199c10e0dce4d6f)), closes [#20](https://github.com/seiyria/Rasterkhann/issues/20)
+* **ui:** contrast a bit for list headers ([17da218](https://github.com/seiyria/Rasterkhann/commit/17da2187f21d0c686f3237052dead09799b5419e)), closes [#25](https://github.com/seiyria/Rasterkhann/issues/25)
+
+
+
 # [0.5.0](https://github.com/seiyria/Rasterkhann/compare/v0.4.0...v0.5.0) (2020-07-13)
 
 
