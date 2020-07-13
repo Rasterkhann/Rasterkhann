@@ -14,7 +14,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-list-header>Active Adventures</ion-list-header>
+    <ion-list-header>Active Adventures ({{ (activeAdventures$ | async)?.length }}/{{ simultaneousAdventures }})</ion-list-header>
 
     <ion-item *ngIf="(activeAdventures$ | async)?.length === 0">You have no active adventures.</ion-item>
     <app-adventure *ngFor="let adv of activeAdventures$ | async" 
