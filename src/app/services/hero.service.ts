@@ -37,11 +37,13 @@ export class HeroService {
     const hero = this.generateHero(town);
     const rating = this.getRatingForHero(town, hero);
 
-    const baseCost = rating
-                   * hero.stats[HeroStat.LVL]
-                   * guildHallLevel
-                   * this.getTraitTotalMultiplier(hero.traits)
-                   * JobEffects[hero.job].costMultiplier;
+    let baseCost = rating
+                 * hero.stats[HeroStat.LVL]
+                 * guildHallLevel
+                 * this.getTraitTotalMultiplier(hero.traits)
+                 * JobEffects[hero.job].costMultiplier;
+
+    if (baseCost <= 0) { baseCost = 100; }
 
     return {
       hero,
