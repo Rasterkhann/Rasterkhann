@@ -52,6 +52,10 @@ ion-toolbar {
   --min-height: 36px;
 }
 
+ion-list {
+  padding-top: 0 !important;
+}
+
 ion-item {
   --min-height: 26px;
 
@@ -76,6 +80,11 @@ ion-item {
 ion-title, ion-title h2, ion-list-header, ion-list-header h4 {
   font-size: 1.4rem !important;
   letter-spacing: 2px !important;
+  background-color: #530053;
+}
+
+ion-header {
+  --ion-toolbar-background: #530053;
 }
 
 ion-button:not(.in-toolbar) {
