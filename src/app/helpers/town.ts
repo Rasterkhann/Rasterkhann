@@ -1,5 +1,5 @@
 
-import { IGameState, IGameTown, Hero, ProspectiveHero, Building, Adventure, HeroStat } from '../interfaces';
+import { IGameState, IGameTown, Hero, ProspectiveHero, Building, Adventure, HeroStat, HeroGear, ItemType, HeroItem } from '../interfaces';
 import { calculateMaxActiveAdventures } from './adventure';
 import { canHeroGoOnAdventure } from './hero';
 import { doesTownHaveFeature } from './global';
@@ -57,6 +57,11 @@ export function getTownAllHeroesFree(town: IGameTown): Hero[] {
 export function getCurrentTownAnyHeroesFree(state: IGameState): boolean {
   const town = getCurrentTownFromState(state);
   return getTownAllHeroesFree(town).length > 0;
+}
+
+export function getCurrentTownItemsForSale(state: IGameState): Record<ItemType, HeroItem[]> {
+  const town = getCurrentTownFromState(state);
+  return town.itemsForSale;
 }
 
 export function getCurrentTownCanDoAnyAdventures(state: IGameState): boolean {

@@ -25,7 +25,7 @@ import {
   calculateMaxCreatableItems,
   generateItem,
   calculateSecondsUntilNextItem,
-  heroBuyItemsBeforeAdventure, unequipItem, equipItem
+  heroBuyItemsBeforeAdventure, unequipItem, equipItem, getCurrentTownItemsForSale
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -92,6 +92,11 @@ export class GameState {
   @Selector()
   public static currentTownNotifications(state: IGameState): NewsItem[] {
     return state.towns[state.currentTown].recentNews;
+  }
+
+  @Selector()
+  public static currentTownItemsForSale(state: IGameState): Record<ItemType, HeroItem[]> {
+    return getCurrentTownItemsForSale(state);
   }
 
   constructor(

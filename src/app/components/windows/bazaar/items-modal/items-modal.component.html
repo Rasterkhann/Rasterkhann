@@ -12,17 +12,17 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-    <ion-list-header>Weapons ({{ getItems('Weapon').length }}/{{ getTypeTotal('Weapon') }})</ion-list-header>
-    <ion-item *ngIf="town.itemsForSale.Weapon.length === 0">No weapons for sale.</ion-item>
-    <app-item *ngFor="let item of town.itemsForSale.Weapon" [item]="item"></app-item>
+  <ion-list *ngIf="currentTownItemsForSale$ | async as itemsForSale">
+    <ion-list-header>Weapons ({{ getItems(itemsForSale, 'Weapon').length }}/{{ getTypeTotal('Weapon') }})</ion-list-header>
+    <ion-item *ngIf="itemsForSale.Weapon.length === 0">No weapons for sale.</ion-item>
+    <app-item *ngFor="let item of itemsForSale.Weapon" [item]="item"></app-item>
 
-    <ion-list-header>Armors ({{ getItems('Armor').length }}/{{ getTypeTotal('Armor') }})</ion-list-header>
-    <ion-item *ngIf="town.itemsForSale.Armor.length === 0">No armors for sale.</ion-item>
-    <app-item *ngFor="let item of town.itemsForSale.Armor" [item]="item"></app-item>
+    <ion-list-header>Armors ({{ getItems(itemsForSale, 'Armor').length }}/{{ getTypeTotal('Armor') }})</ion-list-header>
+    <ion-item *ngIf="itemsForSale.Armor.length === 0">No armors for sale.</ion-item>
+    <app-item *ngFor="let item of itemsForSale.Armor" [item]="item"></app-item>
 
-    <ion-list-header>Potions ({{ getItems('Potion').length }}/{{ getTypeTotal('Potion') }})</ion-list-header>
-    <ion-item *ngIf="town.itemsForSale.Potion.length === 0">No potions for sale.</ion-item>
-    <app-item *ngFor="let item of town.itemsForSale.Potion" [item]="item"></app-item>
+    <ion-list-header>Potions ({{ getItems(itemsForSale, 'Potion').length }}/{{ getTypeTotal('Potion') }})</ion-list-header>
+    <ion-item *ngIf="itemsForSale.Potion.length === 0">No potions for sale.</ion-item>
+    <app-item *ngFor="let item of itemsForSale.Potion" [item]="item"></app-item>
   </ion-list>
 </ion-content>

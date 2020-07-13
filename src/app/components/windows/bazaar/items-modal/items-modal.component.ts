@@ -1,9 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 import { GameService } from '../../../../services/game.service';
 import { HeroItem, IGameTown, ItemType } from '../../../../interfaces';
 import { calculateMaxCreatableItems } from '../../../../helpers';
+import { GameState } from '../../../../states';
 
 @Component({
   selector: 'app-items-modal',
@@ -11,6 +14,8 @@ import { calculateMaxCreatableItems } from '../../../../helpers';
   styleUrls: ['./items-modal.component.scss'],
 })
 export class ItemsModalComponent implements OnInit {
+
+  @Select(GameState.currentTownItemsForSale) currentTownItemsForSale$: Observable<Record<ItemType, HeroItem[]>>;
 
   @Input() public town: IGameTown;
 
@@ -26,8 +31,8 @@ export class ItemsModalComponent implements OnInit {
     return calculateMaxCreatableItems(this.town, type);
   }
 
-  public getItems(type: ItemType): HeroItem[] {
-    return this.town.itemsForSale[type];
+  public getItems(itemsForSale: Record<ItemType, HeroItem[]>, type: ItemType): HeroItem[] {
+    return itemsForSale[type];
   }
 
 }
