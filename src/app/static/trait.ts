@@ -1,5 +1,5 @@
 
-import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait, BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait } from '../interfaces';
+import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait, BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait } from '../interfaces';
 import { ensureHeroStatValue } from '../helpers/trait';
 
 const BaseBadTraits: Record<BadTrait, TraitEffect> = {
@@ -388,9 +388,33 @@ const FirstTierGoodTraits: Record<FirstTierGoodTrait, TraitEffect> = {
   },
 };
 
+export const GearTraits: Record<GearTrait, TraitEffect> = {
+  'Multi-armed': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.VeryGood,
+    description: 'Hero can hold an additional weapon.',
+    triggers: {}
+  },
+
+  'Tiny Body': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.VeryGood,
+    description: 'Hero can wear an additional armor.',
+    triggers: {}
+  },
+
+  'Big Satchel': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.VeryGood,
+    description: 'Hero can hold an additional potion.',
+    triggers: {}
+  }
+};
+
 export const TraitEffects: Record<Trait, TraitEffect> = {
   ...BaseBadTraits,
   ...SimplePositiveTraits,
   ...SimpleNegativeTraits,
-  ...FirstTierGoodTraits
+  ...FirstTierGoodTraits,
+  ...GearTraits
 };

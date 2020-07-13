@@ -62,7 +62,7 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGe
   if (hero.gear[ItemType.Weapon].length < maxWeapons) {
     for (let i = 0; i < maxWeapons; i++) {
       town.itemsForSale[ItemType.Weapon].forEach((item: HeroWeapon) => {
-        if (boughtWeapons[i]) { return; }
+        if (boughtWeapons[i] || boughtWeapons.map(x => x.uuid).includes(item.uuid)) { return; }
         if (!canEquipWeapon(hero, item)) { return; }
         if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
         if (hero.gear[ItemType.Weapon][i] && hero.gear[ItemType.Weapon][i].cost > item.cost) { return; }
@@ -78,7 +78,7 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGe
   if (hero.gear[ItemType.Armor].length < maxArmors) {
     for (let i = 0; i < maxArmors; i++) {
       town.itemsForSale[ItemType.Armor].forEach((item: HeroArmor) => {
-        if (boughtArmors[i]) { return; }
+        if (boughtArmors[i] || boughtArmors.map(x => x.uuid).includes(item.uuid)) { return; }
         if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
         if (hero.gear[ItemType.Armor][i] && hero.gear[ItemType.Armor][i].cost > item.cost) { return; }
 

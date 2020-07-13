@@ -10,15 +10,21 @@ import { ensureHeroStatValue } from './trait';
 import { filteredUnlocksEarnedByTown, doesTownHaveFeature } from './global';
 
 export function calculateMaxHeldWeapons(town: IGameTown, hero: Hero): number {
-  return 1;
+  let base = 1;
+  if (doesHeroHaveTrait(hero, 'Multi-armed')) { base += 1; }
+  return base;
 }
 
 export function calculateMaxHeldArmors(town: IGameTown, hero: Hero): number {
-  return 1;
+  let base = 1;
+  if (doesHeroHaveTrait(hero, 'Tiny Body')) { base += 1; }
+  return base;
 }
 
 export function calculateMaxHeldPotions(town: IGameTown, hero: Hero): number {
-  return 1;
+  let base = 1;
+  if (doesHeroHaveTrait(hero, 'Big Satchel')) { base += 1; }
+  return base;
 }
 
 export function canEquipWeapon(hero: Hero, item: HeroWeapon): boolean {

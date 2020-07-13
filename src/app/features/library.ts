@@ -166,6 +166,36 @@ export const LibraryFeatures: BuildingFeature[] = [
     }
   },
   {
+    name: 'Trait: Multi-armed',
+    description: 'Heroes can hold an additional weapon.',
+    cost: 100000n,
+    upgradeTime: 3600,
+    requiresLevel: 35,
+    unlocks: {
+      trait: ['Multi-armed']
+    }
+  },
+  {
+    name: 'Trait: Tiny Body',
+    description: 'Heroes can wear an additional armor.',
+    cost: 100000n,
+    upgradeTime: 3600,
+    requiresLevel: 25,
+    unlocks: {
+      trait: ['Tiny Body']
+    }
+  },
+  {
+    name: 'Trait: Big Satchel',
+    description: 'Heroes can hold an additional potion.',
+    cost: 100000n,
+    upgradeTime: 3600,
+    requiresLevel: 15,
+    unlocks: {
+      trait: ['Big Satchel']
+    }
+  },
+  {
     name: 'Item Traits II',
     description: 'Unlock basic tier II item traits.',
     cost: 250000n,

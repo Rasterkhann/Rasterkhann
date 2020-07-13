@@ -36,7 +36,10 @@ export type SimpleModifierNegativeTrait =
 export type FirstTierGoodTrait =
   'Strong' | 'Fortified' | 'Healthy' | 'Skilled' | 'Advanced' | 'Active' | 'Modest' | 'Experienced';
 
-export type Trait = BadTrait | SimpleModifierPositiveTrait | SimpleModifierNegativeTrait | FirstTierGoodTrait;
+export type GearTrait =
+  'Multi-armed' | 'Tiny Body' | 'Big Satchel';
+
+export type Trait = BadTrait | SimpleModifierPositiveTrait | SimpleModifierNegativeTrait | FirstTierGoodTrait | GearTrait;
 
 export enum TraitPriority {
   Any = 'any',
