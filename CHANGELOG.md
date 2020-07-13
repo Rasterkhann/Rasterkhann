@@ -1,3 +1,30 @@
+# [0.5.0](https://github.com/seiyria/Rasterkhann/compare/v0.4.0...v0.5.0) (2020-07-13)
+
+
+### Bug Fixes
+
+* **alchemist:** let potions slide back a little bit per tier ([f100900](https://github.com/seiyria/Rasterkhann/commit/f10090083b1fabb9761aefeb573b983990ab03d9))
+* **console:** turn off verbose logging in production ([f653739](https://github.com/seiyria/Rasterkhann/commit/f65373959d645bc4ee22e31a62f64a150aa0647e))
+* **hero:** hero skills take more sta ([7cbd289](https://github.com/seiyria/Rasterkhann/commit/7cbd2893d951b1edeeebf1580e58804fd5c3ca55))
+* **hero:** hero xp scaling is a bit harsher ([d9df869](https://github.com/seiyria/Rasterkhann/commit/d9df869efd3b45eae8bf7b0473000527a09c390a)), closes [#17](https://github.com/seiyria/Rasterkhann/issues/17)
+* **hero:** heroes should always be generated with a cost > 0 ([9b30242](https://github.com/seiyria/Rasterkhann/commit/9b30242162c67fe6ca714d7e1dd7ee5f2b9b7c07))
+* **item:** sp+sta potions have a valid sprite now ([e0f23ca](https://github.com/seiyria/Rasterkhann/commit/e0f23ca5e6c59a830e6d022b150e88f20a18542a))
+* **ui:** map max width is 900px ([d6bbbf9](https://github.com/seiyria/Rasterkhann/commit/d6bbbf9e4bdca97e6a9b7c38583cf7ac1af87313)), closes [#16](https://github.com/seiyria/Rasterkhann/issues/16)
+
+
+### Features
+
+* **armory:** armor is now created at intervals, much like weapons ([754f31a](https://github.com/seiyria/Rasterkhann/commit/754f31a60e807d93f857f5f1591f77ad9c17d6e5))
+* **bazaar:** bazaar popup updates in real time ([9d32731](https://github.com/seiyria/Rasterkhann/commit/9d32731245fdd4181d33bff66094f9407bedfd16)), closes [#19](https://github.com/seiyria/Rasterkhann/issues/19)
+* **bazaar:** can scrap items that are undesirable ([e0cc75f](https://github.com/seiyria/Rasterkhann/commit/e0cc75f4fb2b6475d494abbdd63c179bd18ae813)), closes [#15](https://github.com/seiyria/Rasterkhann/issues/15)
+* **bazaar:** show totals at top of headers ([c1e0b74](https://github.com/seiyria/Rasterkhann/commit/c1e0b74999b3c42134eb65a1f5ce09a877f005c5))
+* **bazaar,armory:** add weapon creation ([8526cc9](https://github.com/seiyria/Rasterkhann/commit/8526cc96ba5d4d9e341a1022cf72943dafb0515f))
+* **cave:** show #adventures at the top of the popup ([0f25681](https://github.com/seiyria/Rasterkhann/commit/0f25681f490bbf2458ce88bd6432eb1c58943915))
+* **guildhall:** popup shows #recruits ([534e708](https://github.com/seiyria/Rasterkhann/commit/534e70826fb0caca64d65eae8791367d7b1ba187)), closes [#18](https://github.com/seiyria/Rasterkhann/issues/18)
+* **weapons:** heroes will buy and equip weapons before going on an adventure ([e096b57](https://github.com/seiyria/Rasterkhann/commit/e096b57595a6813f65f64d5a4026161b98114b6e))
+
+
+
 # [0.4.0](https://github.com/seiyria/Rasterkhann/compare/v0.3.1...v0.4.0) (2020-07-11)
 
 
