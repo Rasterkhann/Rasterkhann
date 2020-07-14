@@ -198,7 +198,7 @@ export const ArmoryFeatures: BuildingFeature[] = [
   {
     name: 'Heavy Armor',
     description: 'Heavy armor can now be created.',
-    cost: BuildingFeatureTime.Short000n,
+    cost: 550000n,
     upgradeTime: BuildingFeatureTime.XLong,
     requiresLevel: 25,
     requiresFeature: {
