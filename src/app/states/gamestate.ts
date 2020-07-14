@@ -370,7 +370,7 @@ export class GameState {
 
             // we get weapons back in the exact order that they should be applied, which could be a jagged array
             if (town.recruitedHeroes[i].gear[ItemType.Weapon][weapIndex]) {
-              unequipItem(town.recruitedHeroes[i], town.recruitedHeroes[i].gear[ItemType.Weapon][weapIndex], i);
+              unequipItem(town.recruitedHeroes[i], town.recruitedHeroes[i].gear[ItemType.Weapon][weapIndex], weapIndex);
             }
 
             equipItem(town.recruitedHeroes[i], weap, weapIndex);
@@ -383,7 +383,7 @@ export class GameState {
 
             // we get armors back in the exact order that they should be applied, which could be a jagged array
             if (town.recruitedHeroes[i].gear[ItemType.Armor][armIndex]) {
-              unequipItem(town.recruitedHeroes[i], town.recruitedHeroes[i].gear[ItemType.Armor][armIndex], i);
+              unequipItem(town.recruitedHeroes[i], town.recruitedHeroes[i].gear[ItemType.Armor][armIndex], armIndex);
             }
 
             equipItem(town.recruitedHeroes[i], arm, armIndex);
