@@ -101,8 +101,6 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
         this.render();
       });
-
-    // this.renderer.addChild(this.currentSprite);
   }
 
   ngOnChanges(changes: any): void {
