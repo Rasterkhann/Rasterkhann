@@ -2,12 +2,13 @@
 import { sum } from 'lodash';
 
 // this file cannot import any helpers or statics
-import { IGameTown, BuildingUnlock, HeroStat } from '../interfaces';
+import { IGameTown, BuildingUnlock, HeroStat, Building } from '../interfaces';
 import { featureNameToBuildingHash, featureNameToUnlockHash } from './building';
 
 export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
 
   let multiplier = 1;
+  multiplier += 0.01 * town.buildings[Building.Bazaar].level;
   if (doesTownHaveFeature(town, 'Better Prices'))       { multiplier += 0.1; }
   if (doesTownHaveFeature(town, 'Even Better Prices'))  { multiplier += 0.1; }
   if (doesTownHaveFeature(town, 'Higher Prices'))       { multiplier += 0.1; }
