@@ -93,6 +93,28 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGe
   };
 }
 
+export function tickAdventure(town: IGameTown, adv: Adventure): string | undefined {
+  adv.encounterTicks[0]--;
+
+  let isTeamFighting = true;
+
+  if (adv.encounterTicks[0] < 0) {
+    isTeamFighting = doAdventureEncounter(town, adv);
+    adv.encounterTicks.shift();
+  }
+
+  if (!isTeamFighting || adv.encounterTicks.length === 0) {
+    const didSucceed = finalizeAdventure(town, adv);
+    town.activeAdventures = town
+      .activeAdventures.filter(a => a.uuid !== adv.uuid);
+
+    const heroNames = adv.activeHeroes.map(uuid => town.recruitedHeroes.find(h => h.uuid === uuid)).filter(Boolean) as Hero[];
+    const postMsg = didSucceed ? 'it was a success!' : 'it was a failure.';
+
+    return `${heroNames.map(x => x.name).join(', ')} ${heroNames.length === 1 ? 'has' : 'have'} returned from their adventure - ${postMsg}`;
+  }
+}
+
 export function doAdventureEncounter(town: IGameTown, adventure: Adventure): boolean {
   const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean) as Hero[];
   doCombat(town, chosenHeroes, adventure);

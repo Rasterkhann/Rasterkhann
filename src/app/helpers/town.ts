@@ -1,6 +1,6 @@
 
-import { IGameState, IGameTown, Hero, ProspectiveHero, Building, Adventure, HeroStat, HeroGear, ItemType, HeroItem } from '../interfaces';
-import { calculateMaxActiveAdventures } from './adventure';
+import { IGameState, IGameTown, Hero, ProspectiveHero, Building, Adventure, ItemType, HeroItem } from '../interfaces';
+import { calculateMaxActiveAdventures, tickAdventure } from './adventure';
 import { canHeroGoOnAdventure } from './hero';
 import { doesTownHaveFeature } from './global';
 
@@ -17,6 +17,21 @@ export function calculateOfflineGold(state: IGameState): bigint {
   return goldGainPerTick * BigInt(Math.floor(diffSeconds));
 }
 
+export function calculateOfflineAdventureProgress(state: IGameState): void {
+  const now = Date.now();
+  const prev = state.lastTimestamp;
+
+  const diffSeconds = ((now - prev) / 1000);
+  const maxTicks = Math.min(diffSeconds, 21600); // you can get at most 6 hours of offline adventure progress
+
+  const town = state.towns[state.currentTown];
+
+  for (let i = 0; i < maxTicks; i++) {
+    town.activeAdventures.forEach(adv => {
+      tickAdventure(town, adv);
+    });
+  }
+}
 
 export function calculateGoldGain(state: IGameState): bigint {
   const town = getCurrentTownFromState(state);

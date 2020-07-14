@@ -1,6 +1,6 @@
 
 import { Building, IGameTown, IGameState, BuildingInfo, ProspectiveHero, ItemType, HeroItem, GameOption } from '../interfaces';
-import { calculateOfflineGold } from './town';
+import { calculateOfflineAdventureProgress, calculateOfflineGold } from './town';
 
 export function beforeSerialize(obj: any): IGameState {
 
@@ -52,6 +52,8 @@ export function afterDeserialize(obj: IGameState): IGameState {
     if (obj.lastTimestamp) {
       const bonusGold = calculateOfflineGold(obj);
       obj.towns[obj.currentTown].gold += bonusGold;
+
+      calculateOfflineAdventureProgress(obj);
     }
 
   } catch (e) {
