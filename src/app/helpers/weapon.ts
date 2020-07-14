@@ -125,8 +125,9 @@ export function generateWeapon(town: IGameTown): HeroWeapon {
   }
 
   const boostStats = Object.keys(boostStatHash)
-    .map((stat: HeroStat) => ({ stat, value: boostStatHash[stat] + town.buildings[Building.Armory].level }))
-    .filter(({ value }) => value !== 0);
+    .map((stat: HeroStat) => ({ stat, value: boostStatHash[stat] }))
+    .filter(({ value }) => value !== 0)
+    .map(obj => ({ ...obj, value: obj.value + town.buildings[Building.Armory].level }));
 
   let cost = calculateItemCost(town, boostStats) * 10n;
   if (cost < 0n) { cost = 1000n; }
