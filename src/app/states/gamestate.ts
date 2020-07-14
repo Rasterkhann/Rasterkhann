@@ -17,7 +17,7 @@ import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
   getCurrentTownProspectiveHeroes, getCurrentTownRecruitedHeroes, calculateProspectiveHeroMaxTotal,
   getCurrentTownActiveAdventures, getCurrentTownPotentialAdventures, calculateMaxPotentialAdventures,
-  getCurrentTownCanDoAnyAdventures, doAdventureEncounter, finalizeAdventure,
+  getCurrentTownCanDoAnyAdventures,
   calculateRestingRate,
   canHeroGoOnAdventure,
   giveHeroEXP,

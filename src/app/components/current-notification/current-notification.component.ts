@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
 
-import { Observable, Subject, timer, interval } from 'rxjs';
-import { tap, map, switchMap, skip } from 'rxjs/operators';
+import { Observable, interval } from 'rxjs';
+import { tap, map, skip } from 'rxjs/operators';
 
 import { GameState } from '../../states';
 import { NewsItem } from '../../interfaces';
