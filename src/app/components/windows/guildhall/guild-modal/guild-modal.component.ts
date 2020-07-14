@@ -115,6 +115,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
         }, {
           text: 'Yes, Train',
           handler: async () => {
+            if (!this.game.canTrainHero(this.town, hero)) { return; }
             this.game.trainHero(this.town, hero);
           }
         }
@@ -136,6 +137,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
         }, {
           text: 'Yes, Dismiss',
           handler: async () => {
+            if (hero.onAdventure) { return; }
             this.game.dismissHero(this.town, hero);
             this.viewingHero = null;
           }
