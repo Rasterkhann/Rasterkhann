@@ -89,4 +89,11 @@ ion-header {
 
 ion-button:not(.in-toolbar) {
   font-size: 0.9rem;
+
+}
+@media only screen and (min-height: 768px) and (min-width: 768px) {
+  .sc-ion-modal-md-h {
+      --width: 60%;
+      --height: 90%;
+  }
 }
