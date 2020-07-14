@@ -94,7 +94,7 @@ export function generatePotion(town: IGameTown): HeroItem {
 
     const validTiers = ['I', 'II', 'III', 'IV', 'V'].filter(checkTier => doesTownHaveFeature(town, `${statToPotion[stat]} Potions ${checkTier}`));
     const tier = (sample(validTiers) || 'I') as ItemTier;
-    value = random(tierRanges[tier].min, tierRanges[tier].max) + town.buildings[Building.Alchemist].level;
+    value = random(tierRanges[tier].min, tierRanges[tier].max) + random(1, town.buildings[Building.Alchemist].level);
     itemTier = tier;
 
     return { stat, value };

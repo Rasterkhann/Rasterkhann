@@ -1,6 +1,6 @@
 
 
-import { sample } from 'lodash';
+import { random, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { HeroItem, IGameTown, HeroStat, ItemType, ArmorElement, ArmorSubType, Building } from '../interfaces';
@@ -169,7 +169,7 @@ export function generateArmor(town: IGameTown): HeroItem {
   const boostStats = Object.keys(boostStatHash)
     .map((stat: HeroStat) => ({ stat, value: boostStatHash[stat] }))
     .filter(({ value }) => value !== 0)
-    .map(obj => ({ ...obj, value: obj.value + town.buildings[Building.Armory].level }));
+    .map(obj => ({ ...obj, value: obj.value + random(1, town.buildings[Building.Armory].level) }));
 
   let cost = calculateItemCost(town, boostStats) * 10n;
   if (cost < 0n) { cost = 1000n; }
