@@ -93,10 +93,10 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGe
   };
 }
 
-export function doAdventureEncounter(town: IGameTown, adventure: Adventure): void {
+export function doAdventureEncounter(town: IGameTown, adventure: Adventure): boolean {
   const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean) as Hero[];
   doCombat(town, chosenHeroes, adventure);
-  chosenHeroes.forEach(h => checkHeroLevelUp(h));
+  return canTeamFight(chosenHeroes);
 }
 
 export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolean {

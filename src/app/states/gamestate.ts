@@ -433,12 +433,15 @@ export class GameState {
       const town = getCurrentTownFromState(state);
       town.activeAdventures.forEach(adv => {
         adv.encounterTicks[0]--;
+
+        let isTeamFighting = true;
+
         if (adv.encounterTicks[0] < 0) {
-          doAdventureEncounter(town, adv);
+          isTeamFighting = doAdventureEncounter(town, adv);
           adv.encounterTicks.shift();
         }
 
-        if (adv.encounterTicks.length === 0) {
+        if (!isTeamFighting || adv.encounterTicks.length === 0) {
           const didSucceed = finalizeAdventure(town, adv);
           state.towns[state.currentTown].activeAdventures = state.towns[state.currentTown]
             .activeAdventures.filter(a => a.uuid !== adv.uuid);
