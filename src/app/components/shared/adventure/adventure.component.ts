@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { sum } from 'lodash';
 
 import { IGameTown, Adventure, AdventureDifficulty } from '../../../interfaces';
 import { GameService } from '../../../services/game.service';
@@ -30,6 +31,10 @@ export class AdventureComponent implements OnInit {
         return h.name;
       })
       .filter(Boolean);
+  }
+
+  sumTicks(): number {
+    return sum(this.adventure.encounterTicks);
   }
 
   formatPreDuration(text: string): string {
