@@ -1,7 +1,10 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 import { IGameTown, Building } from '../../interfaces';
 import { GameService } from '../../services/game.service';
+import { GameState } from '../../states';
 
 @Component({
   selector: 'app-current-map',
@@ -11,6 +14,8 @@ import { GameService } from '../../services/game.service';
 export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('container') container: ElementRef;
+
+  @Select(GameState.currentInfoWindow) currentInfo$: Observable<string>;
 
   @Input() public town: IGameTown;
 
@@ -23,6 +28,8 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
   private spriteMap: Record<string, any> = {};
   private textMap: Record<string, any> = {};
+
+  private currentSprite: any;
 
   constructor(public game: GameService) { }
 
@@ -83,8 +90,19 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
           }
         });
 
+        this.currentSprite = (window as any).PIXI.Sprite.from('assets/game/ui/arrow.png');
+        this.tileMap.addChild(this.currentSprite);
+
+        this.currentInfo$.subscribe(newWin => {
+          const buildingTextPos = this.textMap[newWin];
+          this.currentSprite.x = buildingTextPos.x - 8;
+          this.currentSprite.y = buildingTextPos.y - 20;
+        });
+
         this.render();
       });
+
+    // this.renderer.addChild(this.currentSprite);
   }
 
   ngOnChanges(changes: any): void {
