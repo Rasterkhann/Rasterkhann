@@ -34,7 +34,9 @@ export class HeroComponent implements OnInit {
   public get stars(): string[] {
     if (!this.rating) { return []; }
 
-    const base = Array(this.numStars).fill('star');
+    const stars = Math.max(this.numStars, 0);
+
+    const base = Array(stars).fill('star');
     if (this.hasHalfStar) { base.push('star-half'); }
     if (base.length === 0) { base.push('star-half'); }
     return base;

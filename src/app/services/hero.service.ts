@@ -87,6 +87,10 @@ export class HeroService {
     // normalize the stars to the guild hall level
     const statPctComparedToGuildHallLevel = avgStatPct * (hero.stats[HeroStat.LVL] / guildHallLevel);
 
-    return statPctComparedToGuildHallLevel;
+    // multiply by trait rating
+    const traitAvgMultiplier = sum(hero.traits.map(t => TraitValueMultipliers[TraitEffects[t].valueProp])) / hero.traits.length;
+    console.log(hero.traits, hero.traits.map(t => TraitEffects[t].valueProp), traitAvgMultiplier);
+
+    return statPctComparedToGuildHallLevel * traitAvgMultiplier;
   }
 }
