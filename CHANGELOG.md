@@ -1,3 +1,18 @@
+## [0.5.4](https://github.com/seiyria/Rasterkhann/compare/v0.5.3...v0.5.4) (2020-07-14)
+
+
+### Bug Fixes
+
+* **equipment:** really fix heroes losing stats on item equip this time ([9da6e44](https://github.com/seiyria/Rasterkhann/commit/9da6e44ee268a152acf3d75a87f30dd5c9325fba))
+
+
+### Features
+
+* **archive:** archive is 25 long and now shows hero item purchases ([3ee2fc3](https://github.com/seiyria/Rasterkhann/commit/3ee2fc3a032efc5a8b2aa2d6bd17a2de7ae9fb66))
+* **guildhall:** hero rating factors in traits now ([49e61c0](https://github.com/seiyria/Rasterkhann/commit/49e61c0b8d28a9dfd2863e891dd0658c17512d76))
+
+
+
 ## [0.5.3](https://github.com/seiyria/Rasterkhann/compare/v0.5.1...v0.5.3) (2020-07-14)
 
 
