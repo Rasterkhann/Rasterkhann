@@ -60,14 +60,14 @@ export const CaveFeatures: BuildingFeature[] = [
     description: 'Can be on another adventure simultaneously.',
     cost: 100000n,
     upgradeTime: 7200,
-    requiresLevel: 10
+    requiresLevel: 5
   },
   {
     name: 'Tunnels II',
     description: 'Can be on another adventure simultaneously.',
     cost: 300000n,
     upgradeTime: 10800,
-    requiresLevel: 40,
+    requiresLevel: 25,
     requiresFeature: {
       'Tunnels I': 1
     }
