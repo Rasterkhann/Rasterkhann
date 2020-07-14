@@ -366,8 +366,10 @@ export class GameState {
           // buy weapons
           const boughtWeapons = boughtItems[ItemType.Weapon];
           boughtWeapons.forEach((weap, weapIndex) => {
+            if (!weap) { return; }
+
             // we get weapons back in the exact order that they should be applied, which could be a jagged array
-            if (weap && town.recruitedHeroes[i].gear[ItemType.Weapon][weapIndex]) {
+            if (town.recruitedHeroes[i].gear[ItemType.Weapon][weapIndex]) {
               unequipItem(town.recruitedHeroes[i], town.recruitedHeroes[i].gear[ItemType.Weapon][weapIndex], i);
             }
 
@@ -377,8 +379,10 @@ export class GameState {
           // buy weapons
           const boughtArmors = boughtItems[ItemType.Armor];
           boughtArmors.forEach((arm, armIndex) => {
-            // we get weapons back in the exact order that they should be applied, which could be a jagged array
-            if (arm && town.recruitedHeroes[i].gear[ItemType.Armor][armIndex]) {
+            if (!arm) { return; }
+
+            // we get armors back in the exact order that they should be applied, which could be a jagged array
+            if (town.recruitedHeroes[i].gear[ItemType.Armor][armIndex]) {
               unequipItem(town.recruitedHeroes[i], town.recruitedHeroes[i].gear[ItemType.Armor][armIndex], i);
             }
 
