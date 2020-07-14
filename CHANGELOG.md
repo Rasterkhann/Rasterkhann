@@ -1,3 +1,13 @@
+## [0.5.5](https://github.com/seiyria/Rasterkhann/compare/v0.5.4...v0.5.5) (2020-07-14)
+
+
+### Features
+
+* **building:** add a rush button to finish stuff faster ([d483853](https://github.com/seiyria/Rasterkhann/commit/d483853b969dcf5cc290c2a34acf2fbb67ba5dbe)), closes [#28](https://github.com/seiyria/Rasterkhann/issues/28)
+* **cave:** adventures will now progress a maximum of 6 hours while offline ([c59e098](https://github.com/seiyria/Rasterkhann/commit/c59e098507ab57c296fbe2d9b0da401b8b9dc15f)), closes [#30](https://github.com/seiyria/Rasterkhann/issues/30)
+
+
+
 ## [0.5.4](https://github.com/seiyria/Rasterkhann/compare/v0.5.3...v0.5.4) (2020-07-14)
 
 
