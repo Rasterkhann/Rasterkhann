@@ -3,7 +3,7 @@
 import { sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { IGameTown, HeroStat, ItemType, WeaponSubType, WeaponElement, HeroWeapon, HeroAction } from '../interfaces';
+import { IGameTown, HeroStat, ItemType, WeaponSubType, WeaponElement, HeroWeapon, HeroAction, Building } from '../interfaces';
 import { ElementActions, SubTypeActions } from '../static';
 import { calculateItemCost, doesTownHaveFeature } from './global';
 import { getZeroStatBlock } from './hero';
@@ -125,7 +125,7 @@ export function generateWeapon(town: IGameTown): HeroWeapon {
   }
 
   const boostStats = Object.keys(boostStatHash)
-    .map((stat: HeroStat) => ({ stat, value: boostStatHash[stat] }))
+    .map((stat: HeroStat) => ({ stat, value: boostStatHash[stat] + town.buildings[Building.Armory].level }))
     .filter(({ value }) => value !== 0);
 
   let cost = calculateItemCost(town, boostStats) * 10n;
