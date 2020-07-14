@@ -409,6 +409,11 @@ export class GameState {
             delete (item as any).cost;
           });
 
+          if (allBoughtItems.length > 0) {
+            const allItemNames = allBoughtItems.map(item => item.name);
+            this.store.dispatch(new NotifyMessage(`${town.recruitedHeroes[i].name} purchased ${allItemNames.join(', ')}.`));
+          }
+
         });
       });
 
@@ -520,7 +525,7 @@ export class GameState {
         message: notification
       });
 
-      while (state.towns[state.currentTown].recentNews.length > 10) { state.towns[state.currentTown].recentNews.pop(); }
+      while (state.towns[state.currentTown].recentNews.length > 25) { state.towns[state.currentTown].recentNews.pop(); }
 
       return state;
     });
