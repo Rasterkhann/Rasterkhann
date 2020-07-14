@@ -1,8 +1,8 @@
 import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat, HeroGear, HeroWeapon, HeroArmor } from '../interfaces';
-import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calculateMaxHeldPotions, calculateMaxHeldWeapons, canEquipWeapon, calculateMaxHeldArmors } from './hero';
+import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calculateMaxHeldPotions,
+  calculateMaxHeldWeapons, canEquipWeapon, calculateMaxHeldArmors } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
 import { doesTownHaveFeature } from './global';
-import { take } from 'lodash';
 
 export function calculateMaxActiveAdventures(town: IGameTown): number {
   let base = 1;

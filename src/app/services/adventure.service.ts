@@ -19,7 +19,7 @@ export class AdventureService {
     const encounterCount = random(1, calculateMaxNumberAdventureEncounters(town));
     const difficulty = sample(calculateAvailableDifficulties(town)) as AdventureDifficulty;
 
-    const ticks = Array(encounterCount).fill(600).map(() => sample([300, 600, 1200, 1800])) as number[];
+    const ticks = Array(encounterCount).fill(600).map(() => sample([75, 150, 300, 600, 1200])) as number[];
 
     const adventure: Adventure = {
       uuid: uuid(),
