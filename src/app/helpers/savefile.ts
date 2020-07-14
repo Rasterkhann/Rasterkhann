@@ -1,5 +1,5 @@
 
-import { Building, IGameTown, IGameState, BuildingInfo, ProspectiveHero, ItemType, HeroItem } from '../interfaces';
+import { Building, IGameTown, IGameState, BuildingInfo, ProspectiveHero, ItemType, HeroItem, GameOption } from '../interfaces';
 import { calculateOfflineGold } from './town';
 
 export function beforeSerialize(obj: any): IGameState {
@@ -115,6 +115,8 @@ export function createDefaultSavefile(): IGameState {
     towns: {
       Rasterkhann: createBasicTown('Rasterkhann') as IGameTown
     },
-    options: {}
+    options: {
+      [GameOption.ShowHelpText]: true
+    }
   };
 }

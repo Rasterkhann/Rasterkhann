@@ -13,6 +13,8 @@
 </ion-header>
 
 <ion-content padding>
+  <app-help-text helpText="The Cave is where you can send heroes on adventures. You can also reroll adventures if you don't find any of them to be suitable for your current heroes."></app-help-text>
+
   <ion-list>
     <ion-list-header>Active Adventures ({{ (activeAdventures$ | async)?.length }}/{{ simultaneousAdventures }})</ion-list-header>
 

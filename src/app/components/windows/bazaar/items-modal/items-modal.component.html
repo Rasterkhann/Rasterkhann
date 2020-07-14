@@ -12,6 +12,8 @@
 </ion-header>
 
 <ion-content padding>
+  <app-help-text helpText="The Bazaar is a place for your heroes to come and buy items. You don't directly purchase anything here, but you can remove items you think are bad or items that just aren't getting bought."></app-help-text>
+
   <ion-list *ngIf="currentTownItemsForSale$ | async as itemsForSale">
     <ng-container *ngFor="let type of itemTypes">
       <ion-list-header>{{ type }}s ({{ getItems(itemsForSale, type).length }}/{{ getTypeTotal(type) }})</ion-list-header>

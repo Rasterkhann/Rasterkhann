@@ -1,0 +1,9 @@
+
+<ng-container *ngIf="showHelpText$ | async">
+  <ion-item>
+    <ion-icon slot="start" name="help-circle"></ion-icon>
+    <ion-label class="ion-text-wrap">
+      {{ helpText }}
+    </ion-label>
+  </ion-item>
+</ng-container>

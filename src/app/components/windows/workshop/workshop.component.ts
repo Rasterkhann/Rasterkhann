@@ -19,7 +19,7 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
   @Select((state: any) => state.gamestate.options[GameOption.AutomationBuildings]) autoBuildings$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationAdventures]) autoAdventures$: Observable<boolean>;
 
-  public optionValues: Record<GameOption, boolean> = {
+  public optionValues: Partial<Record<GameOption, boolean>> = {
     [GameOption.AutomationHeroes]: false,
     [GameOption.AutomationBuildings]: false,
     [GameOption.AutomationAdventures]: false

@@ -11,7 +11,7 @@ import { first } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 
-import { IGameTown, IGameState } from '../../../interfaces';
+import { IGameTown, IGameState, GameOption } from '../../../interfaces';
 import { GameState } from '../../../states';
 import { GameService } from '../../../services/game.service';
 import { afterDeserialize, beforeSerialize, createDefaultSavefile } from '../../../helpers';
@@ -26,6 +26,7 @@ export class WatchtowerComponent implements OnInit {
 
   @Input() town: IGameTown;
 
+  @Select((state: any) => state.gamestate.options) options$: Observable<Record<GameOption, any>>;
   @Select(GameState.entireSavefile) gameState$: Observable<IGameState>;
 
   public get version(): string {
@@ -104,6 +105,12 @@ export class WatchtowerComponent implements OnInit {
     });
 
     await alert.present();
+  }
+
+  toggleOption(option: string): void {
+    setTimeout(() => {
+      this.game.toggleOption(option as GameOption);
+    }, 0);
   }
 
 }

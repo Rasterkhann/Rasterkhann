@@ -4,7 +4,8 @@ import { IGameTown } from './town';
 export enum GameOption {
   AutomationHeroes = 'automationHeroes',
   AutomationBuildings = 'automationBuildings',
-  AutomationAdventures = 'automationAdventures'
+  AutomationAdventures = 'automationAdventures',
+  ShowHelpText = 'showHelpText'
 }
 
 export interface IGameState {

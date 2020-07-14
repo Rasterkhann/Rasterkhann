@@ -7,6 +7,17 @@
 <ion-list>
 
   <ion-list-header>
+    <h4>Options</h4>
+  </ion-list-header>
+
+  <ng-container *ngIf="options$ | async as options">
+    <ion-item>
+      <ion-label>Show Help Text</ion-label>
+      <ion-toggle [checked]="options.showHelpText" (click)="toggleOption('showHelpText')"></ion-toggle>
+    </ion-item>
+  </ng-container>
+
+  <ion-list-header>
     <h4>Savefile Operations</h4>
   </ion-list-header>
 

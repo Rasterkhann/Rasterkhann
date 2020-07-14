@@ -39,6 +39,7 @@ import { HeroComponent } from '../components/shared/hero/hero.component';
 import { HeroSpriteComponent } from '../components/shared/hero-sprite/hero-sprite.component';
 import { AdventureComponent } from '../components/shared/adventure/adventure.component';
 import { ItemComponent } from '../components/shared/item/item.component';
+import { HelpTextComponent } from '../components/shared/help-text/help-text.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { ItemComponent } from '../components/shared/item/item.component';
     HeroSpriteComponent,
     AdventureComponent,
     ItemComponent,
+    HelpTextComponent,
 
     GuildModalComponent,
     AdventureModalComponent,
