@@ -61,8 +61,8 @@ export class GameState {
   }
 
   @Selector()
-  public static currentInfoWindow(state: IGameState): string {
-    return state.currentInfo;
+  public static currentInfoWindow(state: IGameState): { window: string, autoOpen: boolean } {
+    return { window: state.currentInfo, autoOpen: !!state.autoOpenInfo };
   }
 
   @Selector()
@@ -521,9 +521,10 @@ export class GameState {
   // ui functions
   @Action(ChooseInfo)
   @ImmutableContext()
-  chooseInfo({ setState }: StateContext<IGameState>, { window }: ChooseInfo): void {
+  chooseInfo({ setState }: StateContext<IGameState>, { window, autoOpen }: ChooseInfo): void {
     setState((state: IGameState) => {
       state.currentInfo = window;
+      state.autoOpenInfo = autoOpen;
       return state;
     });
   }

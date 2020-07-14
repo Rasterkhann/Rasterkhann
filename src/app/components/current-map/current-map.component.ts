@@ -15,7 +15,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('container') container: ElementRef;
 
-  @Select(GameState.currentInfoWindow) currentInfo$: Observable<string>;
+  @Select(GameState.currentInfoWindow) currentInfo$: Observable<{ window: string, autoOpen: boolean }>;
 
   @Input() public town: IGameTown;
 
@@ -34,6 +34,10 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
   constructor(public game: GameService) { }
 
   ngAfterViewInit(): void {
+    window.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    }, false);
+
     (window as any).PIXI.settings.PRECISION_FRAGMENT = 'highp';
     (window as any).PIXI.utils.skipHello();
     this.renderer = (window as any).PIXI.autoDetectRenderer(480, 480, { antialias: false, transparent: true });
@@ -58,8 +62,13 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
         this.tileMap.children[4].children.forEach((obj: any) => {
           obj.setInteractive(true);
-          obj.setOnCallback('pointerdown', () => {
+          obj.setOnCallback('pointerdown', (event: any) => {
+            if (event.data.button === 2) { return; } // swallow right clicks
             this.game.changeInfo(obj.name);
+          });
+          obj.setOnCallback('rightclick', () => {
+            this.game.changeInfo(obj.name, true);
+            return false;
           });
 
           if (!obj.name) { obj.visible = false; }
@@ -83,8 +92,12 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
               this.textMap[obj.name].interactive = true;
               this.textMap[obj.name].buttonMode = true;
-              this.textMap[obj.name].on('pointerdown', () => {
+              this.textMap[obj.name].on('pointerdown', (event: any) => {
+                if (event.data.button === 2) { return; } // swallow right clicks
                 this.game.changeInfo(obj.name);
+              });
+              this.textMap[obj.name].on('rightclick', () => {
+                this.game.changeInfo(obj.name, true);
               });
             }
           }
@@ -93,8 +106,8 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
         this.currentSprite = (window as any).PIXI.Sprite.from('assets/game/ui/arrow.png');
         this.tileMap.addChild(this.currentSprite);
 
-        this.currentInfo$.subscribe(newWin => {
-          const buildingTextPos = this.textMap[newWin];
+        this.currentInfo$.subscribe(({ window }) => {
+          const buildingTextPos = this.textMap[window];
           this.currentSprite.x = buildingTextPos.x - 8;
           this.currentSprite.y = buildingTextPos.y - 20;
         });

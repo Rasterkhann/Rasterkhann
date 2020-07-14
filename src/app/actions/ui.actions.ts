@@ -2,7 +2,7 @@ import { IGameState, GameOption } from '../interfaces';
 
 export class ChooseInfo {
   static readonly type = '[Info] Choose Info';
-  constructor(public window: string) {}
+  constructor(public window: string, public autoOpen: boolean) {}
 }
 
 export class OptionToggle {

@@ -13,6 +13,7 @@ import { getTownExpMultiplier, getTownGoldMultiplier, calculateMaxActiveAdventur
 export class CaveComponent implements OnInit {
 
   @Input() town: IGameTown;
+  @Input() autoOpen: boolean;
 
   public get maxEncounters(): number {
     return calculateMaxNumberAdventureEncounters(this.town);
@@ -32,7 +33,11 @@ export class CaveComponent implements OnInit {
 
   constructor(private modal: ModalController) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.autoOpen) {
+      this.openAdventureWindow();
+    }
+  }
 
   async openAdventureWindow(): Promise<void> {
     const modal = await this.modal.create({

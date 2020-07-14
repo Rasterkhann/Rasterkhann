@@ -12,6 +12,7 @@ export interface IGameState {
   version: number;
   lastTimestamp: number;
   currentInfo: string;
+  autoOpenInfo?: boolean;
   currentTown: string;
   towns: Record<string, IGameTown>;
   options: Partial<Record<GameOption, boolean|string>>;

@@ -13,6 +13,7 @@ import { calculateAvailableJobs, calculateHeroMaxTotal } from '../../../helpers'
 export class GuildHallComponent implements OnInit {
 
   @Input() town: IGameTown;
+  @Input() autoOpen: boolean;
 
   public get maxHeroes(): number {
     return calculateHeroMaxTotal(this.town);
@@ -24,7 +25,11 @@ export class GuildHallComponent implements OnInit {
 
   constructor(private modal: ModalController) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.autoOpen) {
+      this.openGuildWindow();
+    }
+  }
 
   async openGuildWindow(): Promise<void> {
     const modal = await this.modal.create({

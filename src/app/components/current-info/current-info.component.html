@@ -1,11 +1,11 @@
 
-<ng-container *ngIf="currentInfo$ | async as window" [ngSwitch]="window">
+<ng-container *ngIf="currentInfo$ | async as win" [ngSwitch]="win.window">
   <app-alchemist  [town]="town" *ngSwitchCase="'alchemist'"></app-alchemist>
   <app-archives   [town]="town" *ngSwitchCase="'archives'"></app-archives>
   <app-armory     [town]="town" *ngSwitchCase="'armory'"></app-armory>
-  <app-bazaar     [town]="town" *ngSwitchCase="'bazaar'"></app-bazaar>
-  <app-cave       [town]="town" *ngSwitchCase="'cave'"></app-cave>
-  <app-guildhall  [town]="town" *ngSwitchCase="'guildhall'"></app-guildhall>
+  <app-bazaar     [town]="town" *ngSwitchCase="'bazaar'" [autoOpen]="win.autoOpen"></app-bazaar>
+  <app-cave       [town]="town" *ngSwitchCase="'cave'" [autoOpen]="win.autoOpen"></app-cave>
+  <app-guildhall  [town]="town" *ngSwitchCase="'guildhall'" [autoOpen]="win.autoOpen"></app-guildhall>
   <app-house      [town]="town" *ngSwitchCase="'house'"></app-house>
   <app-inn        [town]="town" *ngSwitchCase="'inn'"></app-inn>
   <app-library    [town]="town" *ngSwitchCase="'library'"></app-library>

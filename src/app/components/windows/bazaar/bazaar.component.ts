@@ -13,6 +13,7 @@ import { ItemsModalComponent } from './items-modal/items-modal.component';
 export class BazaarComponent implements OnInit {
 
   @Input() town: IGameTown;
+  @Input() autoOpen: boolean;
 
   public get itemTypes(): ItemType[] {
     return [ItemType.Weapon, ItemType.Armor, ItemType.Potion];
@@ -20,7 +21,11 @@ export class BazaarComponent implements OnInit {
 
   constructor(private modal: ModalController) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.autoOpen) {
+      this.openItemsWindow();
+    }
+  }
 
   public getTypeTotal(type: ItemType): number {
     return calculateMaxCreatableItems(this.town, type);

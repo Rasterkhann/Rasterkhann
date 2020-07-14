@@ -38,9 +38,9 @@ export class GameService {
   }
 
   // ui functions
-  public changeInfo(newWindow: string): void {
+  public changeInfo(newWindow: string, autoOpen = false): void {
     if (!newWindow) { return; }
-    this.store.dispatch(new ChooseInfo(newWindow));
+    this.store.dispatch(new ChooseInfo(newWindow, autoOpen));
   }
 
   public loadState(state: IGameState): void {

@@ -14,7 +14,7 @@ export class CurrentInfoComponent implements OnInit {
 
   @Input() public town: IGameTown;
 
-  @Select(GameState.currentInfoWindow) currentInfo$: Observable<string>;
+  @Select(GameState.currentInfoWindow) currentInfo$: Observable<{ window: string, autoOpen: boolean }>;
 
   constructor() { }
 
