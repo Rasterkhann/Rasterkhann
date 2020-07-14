@@ -17,6 +17,18 @@ export enum Building {
   Library = 'library'
 }
 
+export enum BuildingFeatureTime {
+  XXXShort = 60,
+  XXShort = 120,
+  XShort = 180,
+  Short = 300,
+  Medium = 450,
+  Long = 600,
+  XLong = 900,
+  XXLong = 1200,
+  XXXLong = 1800
+}
+
 export interface BuildingInfo {
   level: number;
   constructionDoneAt?: number;
