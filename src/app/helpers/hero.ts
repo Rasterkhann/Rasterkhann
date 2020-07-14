@@ -31,7 +31,7 @@ export function canEquipWeapon(hero: Hero, item: HeroWeapon): boolean {
   return JobEffects[hero.job].validWeaponTypes.includes(item.subType);
 }
 
-export function unequipItem(hero: Hero, unequippedItem: HeroItem, slot: number): void {
+export function unequipItem(hero: Hero, unequippedItem: HeroItem): void {
   unequippedItem.boostStats.forEach(({ stat, value }) => {
     hero.stats[stat] -= value;
     hero.currentStats[stat] -= value;
@@ -42,8 +42,8 @@ export function equipItem(hero: Hero, equippedItem: HeroItem, slot: number): voi
   hero.gear[equippedItem.type][slot] = equippedItem;
 
   equippedItem.boostStats.forEach(({ stat, value }) => {
-    hero.stats[stat] -= value;
-    hero.currentStats[stat] -= value;
+    hero.stats[stat] += value;
+    hero.currentStats[stat] += value;
   });
 }
 
