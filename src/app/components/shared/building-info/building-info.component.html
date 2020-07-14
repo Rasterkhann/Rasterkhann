@@ -3,7 +3,7 @@
           [class.ion-hide]="!isBuildingAvailable()">
   <ion-label class="ion-text-wrap cursor" (click)="goToBuilding()">
     <h2>{{ buildingName }} (Level {{ town.buildings[buildingId]?.level || 0 }})</h2>
-    <p>{{ buildingDescription }}</p>
+    <p *ngIf="showHelpText$ | async">{{ buildingDescription }}</p>
     <p *ngIf="!town.buildings[buildingId]?.constructionDoneAt && game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) > 0">
       Next Level Cost: {{ game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) | bignum }} gold
     </p>

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
-import { IGameTown, Building } from '../../../interfaces';
+import { IGameTown, Building, GameOption } from '../../../interfaces';
 import { GameService } from '../../../services/game.service';
 import { BuildingData } from '../../../static';
 
@@ -14,6 +16,8 @@ export class BuildingInfoComponent implements OnInit {
 
   @Input() town: IGameTown;
   @Input() buildingId: Building;
+
+  @Select((state: any) => state.gamestate.options[GameOption.ShowHelpText]) showHelpText$: Observable<boolean>;
 
   public get buildingName(): string {
     return BuildingData[this.buildingId].name;
