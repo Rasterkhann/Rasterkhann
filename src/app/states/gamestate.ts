@@ -392,7 +392,8 @@ export class GameState {
           // remove the "cost" prop on each item; it's no longer necessary
           const allBoughtItems = boughtItems[ItemType.Potion]
             .concat(boughtItems[ItemType.Armor])
-            .concat(boughtItems[ItemType.Weapon]);
+            .concat(boughtItems[ItemType.Weapon])
+            .filter(Boolean);
 
           const boughtUUIDs = allBoughtItems.map(item => item.uuid);
           Object.keys(town.itemsForSale).forEach((itemType: ItemType) => {
