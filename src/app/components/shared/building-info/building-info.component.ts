@@ -56,4 +56,10 @@ export class BuildingInfoComponent implements OnInit {
     this.game.upgradeBuilding(this.town, building);
   }
 
+  public rush(): void {
+    const building = this.buildingId;
+
+    this.game.rushBuilding(this.town, building);
+  }
+
 }

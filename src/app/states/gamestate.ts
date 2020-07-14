@@ -8,7 +8,7 @@ import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, UpgradeBuildingFeature, RerollHeroes,
   RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
-  ScrapItem
+  ScrapItem, RushBuilding, RushBuildingFeature
 } from '../actions';
 import {
   IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem
@@ -200,6 +200,18 @@ export class GameState {
     });
   }
 
+  @Action(RushBuilding)
+  @ImmutableContext()
+  rushBuilding({ setState }: StateContext<IGameState>, { building }: RushBuilding): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+
+      const buildingRef = town.buildings[building];
+      buildingRef.constructionDoneAt = 1;
+      return state;
+    });
+  }
+
   @Action(UpgradeBuildingFeature)
   @ImmutableContext()
   upgradeBuildingFeature({ setState }: StateContext<IGameState>, { building, feature, constructionTime }: UpgradeBuildingFeature): void {
@@ -210,6 +222,18 @@ export class GameState {
       town.buildings[building].featureConstruction[feature] = Date.now() + (GLOBAL_TIME_MULTIPLIER * constructionTime);
 
       this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has started work for the feature "${feature}"!`));
+
+      return state;
+    });
+  }
+
+  @Action(RushBuildingFeature)
+  @ImmutableContext()
+  rushBuildingFeature({ setState }: StateContext<IGameState>, { building, feature }: RushBuildingFeature): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+
+      town.buildings[building].featureConstruction[feature] = 1;
 
       return state;
     });

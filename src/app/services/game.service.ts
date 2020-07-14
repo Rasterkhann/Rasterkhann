@@ -6,7 +6,7 @@ import { delay } from 'rxjs/operators';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures,
-  StartAdventure, HeroGainEXP, OptionToggle, ScrapItem } from '../actions';
+  StartAdventure, HeroGainEXP, OptionToggle, ScrapItem, RushBuilding, RushBuildingFeature } from '../actions';
 import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem } from '../interfaces';
 import { doesTownHaveFeature, getCurrentStat } from '../helpers';
 import { BuildingData } from '../static';
@@ -64,8 +64,16 @@ export class GameService {
     return BuildingData[building].levelCost(level);
   }
 
+  public rushCost(building: Building, level = 1): bigint {
+    return this.buildingCost(building, level) / 2n;
+  }
+
   public buildingFeatureCost(building: Building, feature: string): bigint {
     return this.featureByName(building, feature).cost;
+  }
+
+  public buildingFeatureRushCost(building: Building, feature: string): bigint {
+    return this.buildingFeatureCost(building, feature) / 2n;
   }
 
   public buildingFeatureTime(building: Building, feature: string): number {
@@ -105,6 +113,18 @@ export class GameService {
     return town.gold >= nextLevelCost;
   }
 
+  public canRushBuilding(town: IGameTown, building: Building): boolean {
+    if (town.buildings[building]) {
+      const isConstructing = town.buildings[building].constructionDoneAt;
+      if (!isConstructing) { return false; }
+    }
+
+    const nextLevelCost = this.rushCost(building, this.nextLevelForBuilding(town, building));
+    if (nextLevelCost === 0n) { return false; }
+
+    return town.gold >= nextLevelCost;
+  }
+
   public canUpgradeBuildingFeature(town: IGameTown, building: Building, feature: string): boolean {
     if (town.buildings[building].featureConstruction) {
       const isConstructing = town.buildings[building].featureConstruction[feature];
@@ -112,6 +132,18 @@ export class GameService {
     }
 
     const nextLevelCost = this.buildingFeatureCost(building, feature);
+    if (nextLevelCost === 0n) { return false; }
+
+    return this.canSeeBuildingFeature(town, building, feature) && town.gold >= nextLevelCost;
+  }
+
+  public canRushBuildingFeature(town: IGameTown, building: Building, feature: string): boolean {
+    if (town.buildings[building].featureConstruction) {
+      const isConstructing = town.buildings[building].featureConstruction[feature];
+      if (!isConstructing) { return false; }
+    }
+
+    const nextLevelCost = this.buildingFeatureRushCost(building, feature);
     if (nextLevelCost === 0n) { return false; }
 
     return this.canSeeBuildingFeature(town, building, feature) && town.gold >= nextLevelCost;
@@ -126,12 +158,30 @@ export class GameService {
       });
   }
 
+  public rushBuilding(town: IGameTown, building: Building): void {
+    if (!this.canRushBuilding(town, building)) { return; }
+
+    this.store.dispatch(new RushBuilding(building))
+      .subscribe(() => {
+        this.store.dispatch(new SpendGold(this.rushCost(building, this.nextLevelForBuilding(town, building))));
+      });
+  }
+
   public upgradeBuildingFeature(town: IGameTown, building: Building, feature: string): void {
     if (!this.canUpgradeBuildingFeature(town, building, feature)) { return; }
 
     this.store.dispatch(new UpgradeBuildingFeature(building, feature, this.buildingFeatureTime(building, feature)))
       .subscribe(() => {
         this.store.dispatch(new SpendGold(this.buildingFeatureCost(building, feature)));
+      });
+  }
+
+  public rushBuildingFeature(town: IGameTown, building: Building, feature: string): void {
+    if (!this.canRushBuildingFeature(town, building, feature)) { return; }
+
+    this.store.dispatch(new RushBuildingFeature(building, feature))
+      .subscribe(() => {
+        this.store.dispatch(new SpendGold(this.buildingFeatureRushCost(building, feature)));
       });
   }
 

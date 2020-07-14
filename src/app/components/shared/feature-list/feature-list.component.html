@@ -15,13 +15,20 @@
       <p *ngIf="!town.buildings[buildingId].featureConstruction || !town.buildings[buildingId].featureConstruction[feature.name]">
         Next Level Cost: {{ game.buildingFeatureCost(buildingId, feature.name) | bignum }} gold
       </p>
-      <p *ngIf="town.buildings[buildingId].featureConstruction && town.buildings[buildingId].featureConstruction[feature.name]">
+      <p *ngIf="town.buildings[buildingId].featureConstruction && town.buildings[buildingId].featureConstruction[feature.name] > 1">
         Feature done in <countdown [config]="{ stopTime: town.buildings[buildingId].featureConstruction[feature.name] }"></countdown>
+      </p>
+      <p *ngIf="town.buildings[buildingId].featureConstruction && town.buildings[buildingId].featureConstruction[feature.name] === 1">
+        Finishing...
       </p>
     </ion-label>
 
     <ion-button slot="end"  
                 (click)="game.upgradeBuildingFeature(town, buildingId, feature.name)" 
                 *ngIf="game.canUpgradeBuildingFeature(town, buildingId, feature.name)">Purchase</ion-button>
+
+    <ion-button slot="end"  
+                (click)="game.rushBuildingFeature(town, buildingId, feature.name)" 
+                *ngIf="game.canRushBuildingFeature(town, buildingId, feature.name)">Rush</ion-button>
   </ion-item>
 </ion-list>
