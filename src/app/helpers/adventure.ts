@@ -57,35 +57,33 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGe
     });
   }
 
+  // buy weapons
   const maxWeapons = calculateMaxHeldWeapons(town, hero);
   const boughtWeapons: HeroWeapon[] = [];
-  if (hero.gear[ItemType.Weapon].length < maxWeapons) {
-    for (let i = 0; i < maxWeapons; i++) {
-      town.itemsForSale[ItemType.Weapon].forEach((item: HeroWeapon) => {
-        if (boughtWeapons[i] || boughtWeapons.map(x => x.uuid).includes(item.uuid)) { return; }
-        if (!canEquipWeapon(hero, item)) { return; }
-        if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
-        if (hero.gear[ItemType.Weapon][i] && hero.gear[ItemType.Weapon][i].cost > item.cost) { return; }
+  for (let i = 0; i < maxWeapons; i++) {
+    town.itemsForSale[ItemType.Weapon].forEach((item: HeroWeapon) => {
+      if (boughtWeapons[i] || boughtWeapons.map(x => x.uuid).includes(item.uuid)) { return; }
+      if (!canEquipWeapon(hero, item)) { return; }
+      if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
+      if (hero.gear[ItemType.Weapon][i] && hero.gear[ItemType.Weapon][i].cost > item.cost) { return; }
 
-        totalCost += item.cost;
-        boughtWeapons[i] = item;
-      });
-    }
+      totalCost += item.cost;
+      boughtWeapons[i] = item;
+    });
   }
 
+  // buy armor
   const maxArmors = calculateMaxHeldArmors(town, hero);
   const boughtArmors: HeroArmor[] = [];
-  if (hero.gear[ItemType.Armor].length < maxArmors) {
-    for (let i = 0; i < maxArmors; i++) {
-      town.itemsForSale[ItemType.Armor].forEach((item: HeroArmor) => {
-        if (boughtArmors[i] || boughtArmors.map(x => x.uuid).includes(item.uuid)) { return; }
-        if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
-        if (hero.gear[ItemType.Armor][i] && hero.gear[ItemType.Armor][i].cost > item.cost) { return; }
+  for (let i = 0; i < maxArmors; i++) {
+    town.itemsForSale[ItemType.Armor].forEach((item: HeroArmor) => {
+      if (boughtArmors[i] || boughtArmors.map(x => x.uuid).includes(item.uuid)) { return; }
+      if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
+      if (hero.gear[ItemType.Armor][i] && hero.gear[ItemType.Armor][i].cost > item.cost) { return; }
 
-        totalCost += item.cost;
-        boughtArmors[i] = item;
-      });
-    }
+      totalCost += item.cost;
+      boughtArmors[i] = item;
+    });
   }
 
   return {
