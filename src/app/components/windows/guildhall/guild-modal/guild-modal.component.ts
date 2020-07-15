@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 
 import { Select } from '@ngxs/store';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 
 import { GameState } from '../../../../states';
 import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait, ItemType, HeroItem } from '../../../../interfaces';
@@ -19,13 +19,14 @@ import { HeroService } from '../../../../services/hero.service';
 })
 export class GuildModalComponent implements OnDestroy, OnInit {
 
+  @Select(GameState.currentTown) currentTown$: Observable<IGameTown>;
   @Select(GameState.currentTownProspectiveHeroes) prospectiveHeroes$: Observable<ProspectiveHero[]>;
   @Select(GameState.currentTownRecruitedHeroes) recruitedHeroes$: Observable<Hero[]>;
 
-  @Input() public town: IGameTown;
-
   private canBuyHeroes: boolean;
   private activeHeroes$: Subscription;
+
+  public town: IGameTown;
 
   public get maxHeroes(): number {
     return calculateHeroMaxTotal(this.town);
@@ -46,18 +47,21 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activeHeroes$ = this.recruitedHeroes$.subscribe(d => {
-      if (this.viewingProspectiveHero && this.viewingHero && d.map(h => h.uuid).includes(this.viewingHero.uuid)) {
-        this.viewingProspectiveHero = null;
-      }
+    this.activeHeroes$ = combineLatest([this.currentTown$, this.recruitedHeroes$])
+      .subscribe(([town, d]) => {
+        this.town = town;
 
-      this.canBuyHeroes = d.length < calculateProspectiveHeroMaxTotal(this.town);
+        if (this.viewingProspectiveHero && this.viewingHero && d.map(h => h.uuid).includes(this.viewingHero.uuid)) {
+          this.viewingProspectiveHero = null;
+        }
 
-      d.forEach(h => {
-        if (!this.viewingHero || h.uuid !== this.viewingHero.uuid) { return; }
-        this.viewingHero = h;
+        this.canBuyHeroes = d.length < calculateProspectiveHeroMaxTotal(this.town);
+
+        d.forEach(h => {
+          if (!this.viewingHero || h.uuid !== this.viewingHero.uuid) { return; }
+          this.viewingHero = h;
+        });
       });
-    });
   }
 
   ngOnDestroy(): void {

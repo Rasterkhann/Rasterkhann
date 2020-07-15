@@ -41,10 +41,7 @@ export class CaveComponent implements OnInit {
 
   async openAdventureWindow(): Promise<void> {
     const modal = await this.modal.create({
-      component: AdventureModalComponent,
-      componentProps: {
-        town: this.town
-      }
+      component: AdventureModalComponent
     });
 
     await modal.present();

@@ -19,78 +19,83 @@
 </ion-header>
 
 <ion-content padding>
-  <app-help-text helpText="The Guild Hall is where you can recruit new heroes and view your current ones."></app-help-text>
-
-  <ion-list *ngIf="!viewingHero">
-    <ion-list-header>Recruited Heroes ({{ (recruitedHeroes$ | async)?.length }}/{{ maxHeroes }})</ion-list-header>
-
-    <ion-item *ngIf="(recruitedHeroes$ | async)?.length === 0">You have no recruited heroes.</ion-item>
-    <app-hero *ngFor="let hero of recruitedHeroes$ | async" [town]="town" [hero]="hero" (click)="viewHero(hero)"></app-hero>
-
-    <ion-list-header class="ion-margin-top">
-      <ion-label>Potential Hero Recruits</ion-label>
-      <ion-button class="ion-margin-end thin-button" fill="outline" (click)="game.rerollProspectiveHeroes(town, true)">Reroll for {{ game.heroRerollCost(town) | bignum }} gold</ion-button>
-    </ion-list-header>
-
-    <ion-item *ngIf="(prospectiveHeroes$ | async)?.length === 0">There are no prospective heroes.</ion-item>
-    <app-hero *ngFor="let prospectiveHero of prospectiveHeroes$ | async" 
-              [town]="town" 
-              [hero]="prospectiveHero.hero" 
-              [cost]="prospectiveHero.cost"
-              [rating]="prospectiveHero.rating" 
-              (click)="viewProspectiveHero(prospectiveHero)"></app-hero>
-  </ion-list>
-
-  <ion-list *ngIf="viewingHero">
-    <ion-item>
-      <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="viewingHero.sprite"></app-hero-sprite>
-
-      <ion-label class="ion-text-wrap">
-        <h2>{{ viewingHero.name }}</h2>
-        <p>Lv.{{ viewingHero.stats.lvl }} {{ viewingHero.job }}</p>
-        <p class="exp-row" *ngIf="!viewingProspectiveHero">
-          {{ viewingHero.currentStats.exp | bignum }} / {{ viewingHero.stats.exp | bignum }} EXP
-          <ion-button class="inline-button" color="secondary" [disabled]="!game.canTrainHero(town, viewingHero)" (click)="trainCurrentHero()">Train</ion-button>
-        </p>
-        <p *ngIf="!viewingProspectiveHero">{{ viewingHero.currentStats.gold | bignum }} GOLD</p>
-        <p class="exp-row" *ngIf="viewingProspectiveHero">
-          Cost: {{ viewingProspectiveHero.cost | bignum }} GOLD
-          <ion-button class="inline-button" color="secondary" [disabled]="!canRecruitHero(town, viewingProspectiveHero)" (click)="recruitCurrentHero()">Recruit</ion-button>
-        </p>
-      </ion-label>
-    </ion-item>
-
-    <ion-item *ngIf="!viewingProspectiveHero">
-      <ion-progress-bar color="success" [value]="viewingHero.currentStats.exp / viewingHero.stats.exp"></ion-progress-bar>
-    </ion-item>
-
-    <ion-list-header>Stats</ion-list-header>
-
-    <ion-item>
-      <ion-col class="hero-stat">{{ viewingHero.currentStats.hp | bignum }} / {{ viewingHero.stats.hp | bignum }} HP</ion-col>
-      <ion-col class="hero-stat">{{ viewingHero.currentStats.sp | bignum }} / {{ viewingHero.stats.sp | bignum }} SP</ion-col>
-      <ion-col class="hero-stat">{{ viewingHero.currentStats.sta | bignum }} / {{ viewingHero.stats.sta | bignum }} STA</ion-col>
-    </ion-item>
-
-    <ion-item>
-      <ion-col class="hero-stat">{{ viewingHero.stats.atk | bignum }} ATK</ion-col>
-      <ion-col class="hero-stat">{{ viewingHero.stats.def | bignum }} DEF</ion-col>
-      <ion-col class="hero-stat" *ngIf="viewingProspectiveHero">{{ viewingHero.stats.gold | bignum }} GOLD</ion-col>
-    </ion-item>
-
-    <ion-list-header>Traits</ion-list-header>
-
-    <ion-item *ngFor="let trait of viewingHero.traits">
-      <ion-label class="ion-text-wrap">
-        <h3>{{ trait }}</h3>
-        <p>{{ getTraitData(trait) }}</p>
-      </ion-label>
-    </ion-item>
-
-    <ng-container *ngFor="let type of itemTypes">
-      <ion-list-header>{{ type }}s</ion-list-header>
-      <ion-item *ngIf="getHeroGearTypeItems(viewingHero, type).length === 0">No {{ type.toLowerCase() }}s.</ion-item>
-      <app-item *ngFor="let item of getHeroGearTypeItems(viewingHero, type)" [item]="item"></app-item>
-    </ng-container>
-  </ion-list>
+  <ng-container *ngIf="currentTown$ | async as town">
+    <app-help-text helpText="The Guild Hall is where you can recruit new heroes and view your current ones."></app-help-text>
+  
+    <ion-list *ngIf="!viewingHero">
+      <ion-list-header>Recruited Heroes ({{ (recruitedHeroes$ | async)?.length }}/{{ maxHeroes }})</ion-list-header>
+  
+      <ion-item *ngIf="(recruitedHeroes$ | async)?.length === 0">You have no recruited heroes.</ion-item>
+      <app-hero *ngFor="let hero of recruitedHeroes$ | async" [town]="town" [hero]="hero" (click)="viewHero(hero)"></app-hero>
+  
+      <ion-list-header class="ion-margin-top">
+        <ion-label>Potential Hero Recruits</ion-label>
+        <ion-button class="ion-margin-end thin-button" 
+                    fill="outline" 
+                    [disabled]="!game.canRerollHeroes(town)"
+                    (click)="game.rerollProspectiveHeroes(town, true)">Reroll for {{ game.heroRerollCost(town) | bignum }} gold</ion-button>
+      </ion-list-header>
+  
+      <ion-item *ngIf="(prospectiveHeroes$ | async)?.length === 0">There are no prospective heroes.</ion-item>
+      <app-hero *ngFor="let prospectiveHero of prospectiveHeroes$ | async" 
+                [town]="town" 
+                [hero]="prospectiveHero.hero" 
+                [cost]="prospectiveHero.cost"
+                [rating]="prospectiveHero.rating" 
+                (click)="viewProspectiveHero(prospectiveHero)"></app-hero>
+    </ion-list>
+  
+    <ion-list *ngIf="viewingHero">
+      <ion-item>
+        <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="viewingHero.sprite"></app-hero-sprite>
+  
+        <ion-label class="ion-text-wrap">
+          <h2>{{ viewingHero.name }}</h2>
+          <p>Lv.{{ viewingHero.stats.lvl }} {{ viewingHero.job }}</p>
+          <p class="exp-row" *ngIf="!viewingProspectiveHero">
+            {{ viewingHero.currentStats.exp | bignum }} / {{ viewingHero.stats.exp | bignum }} EXP
+            <ion-button class="inline-button" color="secondary" [disabled]="!game.canTrainHero(town, viewingHero)" (click)="trainCurrentHero()">Train</ion-button>
+          </p>
+          <p *ngIf="!viewingProspectiveHero">{{ viewingHero.currentStats.gold | bignum }} GOLD</p>
+          <p class="exp-row" *ngIf="viewingProspectiveHero">
+            Cost: {{ viewingProspectiveHero.cost | bignum }} GOLD
+            <ion-button class="inline-button" color="secondary" [disabled]="!canRecruitHero(town, viewingProspectiveHero)" (click)="recruitCurrentHero()">Recruit</ion-button>
+          </p>
+        </ion-label>
+      </ion-item>
+  
+      <ion-item *ngIf="!viewingProspectiveHero">
+        <ion-progress-bar color="success" [value]="viewingHero.currentStats.exp / viewingHero.stats.exp"></ion-progress-bar>
+      </ion-item>
+  
+      <ion-list-header>Stats</ion-list-header>
+  
+      <ion-item>
+        <ion-col class="hero-stat">{{ viewingHero.currentStats.hp | bignum }} / {{ viewingHero.stats.hp | bignum }} HP</ion-col>
+        <ion-col class="hero-stat">{{ viewingHero.currentStats.sp | bignum }} / {{ viewingHero.stats.sp | bignum }} SP</ion-col>
+        <ion-col class="hero-stat">{{ viewingHero.currentStats.sta | bignum }} / {{ viewingHero.stats.sta | bignum }} STA</ion-col>
+      </ion-item>
+  
+      <ion-item>
+        <ion-col class="hero-stat">{{ viewingHero.stats.atk | bignum }} ATK</ion-col>
+        <ion-col class="hero-stat">{{ viewingHero.stats.def | bignum }} DEF</ion-col>
+        <ion-col class="hero-stat" *ngIf="viewingProspectiveHero">{{ viewingHero.stats.gold | bignum }} GOLD</ion-col>
+      </ion-item>
+  
+      <ion-list-header>Traits</ion-list-header>
+  
+      <ion-item *ngFor="let trait of viewingHero.traits">
+        <ion-label class="ion-text-wrap">
+          <h3>{{ trait }}</h3>
+          <p>{{ getTraitData(trait) }}</p>
+        </ion-label>
+      </ion-item>
+  
+      <ng-container *ngFor="let type of itemTypes">
+        <ion-list-header>{{ type }}s</ion-list-header>
+        <ion-item *ngIf="getHeroGearTypeItems(viewingHero, type).length === 0">No {{ type.toLowerCase() }}s.</ion-item>
+        <app-item *ngFor="let item of getHeroGearTypeItems(viewingHero, type)" [item]="item"></app-item>
+      </ng-container>
+    </ion-list>
+  </ng-container>
 </ion-content>

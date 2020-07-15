@@ -33,10 +33,7 @@ export class GuildHallComponent implements OnInit {
 
   async openGuildWindow(): Promise<void> {
     const modal = await this.modal.create({
-      component: GuildModalComponent,
-      componentProps: {
-        town: this.town
-      }
+      component: GuildModalComponent
     });
 
     await modal.present();
