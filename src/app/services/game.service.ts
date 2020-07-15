@@ -116,7 +116,7 @@ export class GameService {
   public canRushBuilding(town: IGameTown, building: Building): boolean {
     if (town.buildings[building]) {
       const isConstructing = town.buildings[building].constructionDoneAt;
-      if (!isConstructing) { return false; }
+      if (!isConstructing || isConstructing === 1) { return false; }
     }
 
     const nextLevelCost = this.rushCost(building, this.nextLevelForBuilding(town, building));
@@ -140,7 +140,7 @@ export class GameService {
   public canRushBuildingFeature(town: IGameTown, building: Building, feature: string): boolean {
     if (town.buildings[building].featureConstruction) {
       const isConstructing = town.buildings[building].featureConstruction[feature];
-      if (!isConstructing) { return false; }
+      if (!isConstructing || isConstructing === 1) { return false; }
     }
 
     const nextLevelCost = this.buildingFeatureRushCost(building, feature);
