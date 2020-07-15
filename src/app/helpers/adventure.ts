@@ -4,6 +4,15 @@ import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calcula
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
 import { doesTownHaveFeature } from './global';
 
+export function calculateMaxMembersPerTeam(town: IGameTown): number {
+  let base = 1;
+
+  if (doesTownHaveFeature(town, 'Teamwork I'))  { base += 1; }
+  if (doesTownHaveFeature(town, 'Teamwork II')) { base += 1; }
+
+  return base;
+}
+
 export function calculateMaxActiveAdventures(town: IGameTown): number {
   let base = 1;
 

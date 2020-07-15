@@ -106,4 +106,21 @@ export const CaveFeatures: BuildingFeature[] = [
       'Deeper Cave I': 1
     }
   },
+  {
+    name: 'Teamwork I',
+    description: 'Heroes can form a team of two in an adventure.',
+    cost: 400000n,
+    upgradeTime: BuildingFeatureTime.Medium,
+    requiresLevel: 10
+  },
+  {
+    name: 'Teamwork II',
+    description: 'Heroes can form a team of three in an adventure.',
+    cost: 600000n,
+    upgradeTime: BuildingFeatureTime.Long,
+    requiresLevel: 40,
+    requiresFeature: {
+      'Teamwork I': 1
+    }
+  },
 ];

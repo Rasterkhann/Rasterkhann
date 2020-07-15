@@ -3,7 +3,8 @@ import { ModalController } from '@ionic/angular';
 
 import { IGameTown } from '../../../interfaces';
 import { AdventureModalComponent } from './adventure-modal/adventure-modal.component';
-import { getTownExpMultiplier, getTownGoldMultiplier, calculateMaxActiveAdventures, calculateMaxNumberAdventureEncounters } from '../../../helpers';
+import { getTownExpMultiplier, getTownGoldMultiplier, calculateMaxActiveAdventures,
+  calculateMaxNumberAdventureEncounters, calculateMaxMembersPerTeam } from '../../../helpers';
 
 @Component({
   selector: 'app-cave',
@@ -21,6 +22,10 @@ export class CaveComponent implements OnInit {
 
   public get simultaneousAdventures(): number {
     return calculateMaxActiveAdventures(this.town);
+  }
+
+  public get maxTeamMembers(): number {
+    return calculateMaxMembersPerTeam(this.town);
   }
 
   public get expModifier(): number {

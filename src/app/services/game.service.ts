@@ -276,7 +276,6 @@ export class GameService {
 
     this.isStartingAdventure = true;
 
-
     this.store.dispatch(new StartAdventure(adventure, heroes))
       .pipe(delay(1000))
       .subscribe(() => {
