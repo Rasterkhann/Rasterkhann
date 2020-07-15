@@ -11,7 +11,6 @@
     "prestart": "npm run build:version",
     "start": "ng serve -o --port 9983 --host=0.0.0.0",
     "start:electron": "electron .",
-    "start:electron:www": "NODE_ENV=production electron .",
     "postinstall": "npm run build:version",
     "prebuild": "npm run build:version",
     "build": "npm run build:version && ng build",

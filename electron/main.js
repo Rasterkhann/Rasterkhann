@@ -8,12 +8,13 @@ const Config = require('electron-config');
 
 
 const config = new Config();
+const devMode = isDev;
 
 let mainWindow;
 
 function createWindow () {
   
-  const preload = isDev ? path.join(__dirname, 'preload.js') : 'preload.js';
+  const preload = devMode ? path.join(__dirname, 'preload.js') : 'preload.js';
 
   // Create the browser window.
   const opts = { 
@@ -35,7 +36,7 @@ function createWindow () {
   mainWindow.once('ready-to-show', mainWindow.show);
 
   // if we're in dev mode, load localhost
-  if(isDev) {
+  if(devMode) {
     mainWindow.loadURL('http://localhost:9983');
 
   // otherwise load the local compiled app
@@ -53,7 +54,7 @@ function createWindow () {
   });
 
   // Open the DevTools.
-  if(isDev) {
+  if(devMode) {
     mainWindow.webContents.openDevTools();
   }
     
