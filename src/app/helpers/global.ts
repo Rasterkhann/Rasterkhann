@@ -2,7 +2,8 @@
 import { sum } from 'lodash';
 
 // this file cannot import any helpers or statics
-import { IGameTown, BuildingUnlock, HeroStat, Building } from '../interfaces';
+import { IGameTown, BuildingUnlock, HeroStat, Building, BuildingFeature } from '../interfaces';
+import { BuildingData } from '../static';
 import { featureNameToBuildingHash, featureNameToUnlockHash } from './building';
 
 export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
@@ -42,4 +43,30 @@ export function filteredUnlocksEarnedByTown(town: IGameTown, unlock: keyof Build
     .filter(featName => featureNameToUnlockHash[featName][unlock])
     .map(featName => featureNameToUnlockHash[featName][unlock])
     .flat();
+}
+
+export function featureByName(building: Building, feature: string): BuildingFeature {
+  return BuildingData[building].features[feature];
+}
+
+export function canSeeBuildingFeature(town: IGameTown, building: Building, feature: string): boolean {
+  const featureRef: BuildingFeature = featureByName(building, feature);
+  if (!featureRef) { return false; }
+
+  if (doesTownHaveFeature(town, feature)) { return false; }
+
+  if (featureRef.requiresLevel && town.buildings[building].level < featureRef.requiresLevel) { return false; }
+
+  if (featureRef.requiresFeature) {
+    const allPreFeatures = Object.keys(featureRef.requiresFeature)
+      .every(feat => doesTownHaveFeature(town, feat));
+    if (!allPreFeatures) { return false; }
+  }
+
+  return true;
+}
+
+export function visibleBuildingFeatures(town: IGameTown, buildingId: Building): BuildingFeature[] {
+  return Object.values(BuildingData[buildingId].features || {})
+          .filter(feature => canSeeBuildingFeature(town, buildingId, feature.name));
 }

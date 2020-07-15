@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnChanges } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { visibleBuildingFeatures } from '../../helpers';
 
 import { IGameTown, Building } from '../../interfaces';
 import { GameService } from '../../services/game.service';
@@ -28,8 +29,11 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
   private spriteMap: Record<string, any> = {};
   private textMap: Record<string, any> = {};
+  private featureMap: Record<string, any> = {};
 
   private currentSprite: any;
+
+  private spriteSub: Subscription;
 
   constructor(public game: GameService) { }
 
@@ -61,6 +65,8 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
         });
 
         this.tileMap.children[4].children.forEach((obj: any) => {
+
+          // click building to open info
           obj.setInteractive(true);
           obj.setOnCallback('pointerdown', (event: any) => {
             if (event.data.button === 2) { return; } // swallow right clicks
@@ -81,6 +87,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
             this.spriteMap[obj.name].push(obj);
 
             if (obj.properties && obj.properties.aboveText) {
+              // add text
               this.textMap[obj.name] = new (window as any).PIXI.Text(obj.properties.aboveText, textStyle);
               this.textMap[obj.name].x = obj.x + 8;
               this.textMap[obj.name].y = obj.y - 16;
@@ -90,6 +97,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
               this.tileMap.addChild(this.textMap[obj.name]);
 
+              // click text to open building info
               this.textMap[obj.name].interactive = true;
               this.textMap[obj.name].buttonMode = true;
               this.textMap[obj.name].on('pointerdown', (event: any) => {
@@ -99,6 +107,13 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
               this.textMap[obj.name].on('rightclick', () => {
                 this.game.changeInfo(obj.name, true);
               });
+
+              // add abovedot
+              this.featureMap[obj.name] = (window as any).PIXI.Sprite.from('assets/game/ui/orb.png');
+              this.featureMap[obj.name].x = obj.x + 4;
+              this.featureMap[obj.name].y = obj.y - 28;
+
+              this.tileMap.addChild(this.featureMap[obj.name]);
             }
           }
         });
@@ -106,7 +121,8 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
         this.currentSprite = (window as any).PIXI.Sprite.from('assets/game/ui/arrow.png');
         this.tileMap.addChild(this.currentSprite);
 
-        this.currentInfo$.subscribe(({ window }) => {
+        if (this.spriteSub) { this.spriteSub.unsubscribe(); }
+        this.spriteSub = this.currentInfo$.subscribe(({ window }) => {
           const buildingTextPos = this.textMap[window];
           this.currentSprite.x = buildingTextPos.x - 8;
           this.currentSprite.y = buildingTextPos.y - 20;
@@ -123,11 +139,12 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
         return [x, true];
       }));
 
-      Object.keys(this.spriteMap).forEach(buildingName => {
+      Object.keys(this.spriteMap).forEach((buildingName: Building) => {
         this.toggleVisible(buildingName, false);
         if (!currentBuildings[buildingName]) { return; }
 
         this.toggleVisible(buildingName, true);
+        this.featureMap[buildingName].visible = visibleBuildingFeatures(this.town, buildingName).length > 0;
       });
     }
   }

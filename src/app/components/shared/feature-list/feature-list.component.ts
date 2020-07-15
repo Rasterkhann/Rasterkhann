@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 
 import { GameService } from '../../../services/game.service';
 import { IGameTown, Building, BuildingFeature } from '../../../interfaces';
-import { BuildingData } from '../../../static';
+import { visibleBuildingFeatures } from '../../../helpers';
 
 @Component({
   selector: 'app-feature-list',
@@ -16,8 +16,7 @@ export class FeatureListComponent implements OnInit {
   @Input() buildingId: Building;
 
   public get allFeatures(): BuildingFeature[] {
-    return Object.values(BuildingData[this.buildingId].features || {})
-      .filter(feature => this.game.canSeeBuildingFeature(this.town, this.buildingId, feature.name));
+    return visibleBuildingFeatures(this.town, this.buildingId);
   }
 
   constructor(public game: GameService) { }

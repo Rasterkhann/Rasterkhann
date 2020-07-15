@@ -8,7 +8,7 @@ import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures,
   StartAdventure, HeroGainEXP, OptionToggle, ScrapItem, RushBuilding, RushBuildingFeature } from '../actions';
 import { Building, IGameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem } from '../interfaces';
-import { doesTownHaveFeature, getCurrentStat } from '../helpers';
+import { doesTownHaveFeature, featureByName, getCurrentStat } from '../helpers';
 import { BuildingData } from '../static';
 import { AdventureService } from './adventure.service';
 import { HeroService } from './hero.service';
@@ -53,7 +53,7 @@ export class GameService {
 
   // building functions
   public featureByName(building: Building, feature: string): BuildingFeature {
-    return BuildingData[building].features[feature];
+    return featureByName(building, feature);
   }
 
   public doesTownHaveFeature(town: IGameTown, feature: string): boolean {
