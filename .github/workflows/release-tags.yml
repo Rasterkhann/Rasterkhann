@@ -27,7 +27,7 @@ jobs:
 
     - run: npm run lint
       
-    - run: npm run release:all
+    - run: npm run build:electron:full:demo
       
     - name: Create Release
       id: create_release
