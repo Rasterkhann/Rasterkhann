@@ -43,6 +43,7 @@
     ],
     "dmg": {
       "artifactName": "${productName}.${ext}",
+      "icon": "src/assets/favicon/android-chrome-512x512.png",
       "contents": [
         {
           "x": 110,
@@ -58,17 +59,19 @@
     },
     "linux": {
       "artifactName": "${productName}.${ext}",
+      "icon": "src/assets/favicon/android-chrome-512x512.png",
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "category": "Game"
     },
     "win": {
       "artifactName": "${productName}.${ext}",
+      "icon": "src/assets/favicon/android-chrome-512x512.png",
       "target": [
         "portable"
-      ],
-      "icon": "src/assets/favicon/android-chrome-512x512.png"
+      ]
     }
   },
   "dependencies": {
