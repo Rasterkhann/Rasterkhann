@@ -186,15 +186,20 @@ export class GameService {
   }
 
   // guild hall functions
+  public canRerollHeroes(town: IGameTown): boolean {
+    const cost = this.heroRerollCost(town);
+    return town.gold >= cost;
+  }
+
   public heroRerollCost(town: IGameTown): bigint {
     return BigInt(town.buildings[Building.GuildHall].level * 100);
   }
 
   public rerollProspectiveHeroes(town: IGameTown, doesCost = true): void {
     if (doesCost) {
-      const cost = this.heroRerollCost(town);
-      if (town.gold < cost) { return; }
+      if (!this.canRerollHeroes(town)) { return; }
 
+      const cost = this.heroRerollCost(town);
       this.store.dispatch(new SpendGold(cost));
     }
 
@@ -243,15 +248,20 @@ export class GameService {
   }
 
   // cave functions
+  public canRerollAdventures(town: IGameTown): boolean {
+    const cost = this.adventureRerollCost(town);
+    return town.gold >= cost;
+  }
+
   public adventureRerollCost(town: IGameTown): bigint {
     return BigInt(town.buildings[Building.Cave].level * 100);
   }
 
   public rerollAdventures(town: IGameTown, doesCost = true): void {
     if (doesCost) {
-      const cost = this.adventureRerollCost(town);
-      if (town.gold < cost) { return; }
+      if (!this.canRerollAdventures(town)) { return; }
 
+      const cost = this.adventureRerollCost(town);
       this.store.dispatch(new SpendGold(cost));
     }
 
