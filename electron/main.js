@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const url = require('url');
 
@@ -51,6 +52,10 @@ function createWindow () {
 
   mainWindow.on('close', () => {
     config.set('winBounds', mainWindow.getBounds());
+  });
+
+  mainWindow.on('opened', () => {
+    autoUpdater.checkForUpdatesAndNotify();
   });
 
   // Open the DevTools.

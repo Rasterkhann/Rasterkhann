@@ -68,8 +68,11 @@
     "win": {
       "artifactName": "${productName}.${ext}",
       "icon": "src/assets/favicon/android-chrome-512x512.png",
+      "publish": [
+        "github"
+      ],
       "target": [
-        "portable"
+        "nsis"
       ]
     }
   },
@@ -95,6 +98,7 @@
     "discord-rpc": "3.1.1",
     "electron-config": "2.0.0",
     "electron-is-dev": "1.2.0",
+    "electron-updater": "4.3.1",
     "fantastical": "2.0.1",
     "file-saver": "2.0.2",
     "immer": "7.0.5",
