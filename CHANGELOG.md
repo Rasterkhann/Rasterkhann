@@ -1,3 +1,12 @@
+## [0.5.8](https://github.com/seiyria/Rasterkhann/compare/v0.5.7...v0.5.8) (2020-07-15)
+
+
+### Features
+
+* **meta:** there are now automated electron releases for the game ([5f5a416](https://github.com/seiyria/Rasterkhann/commit/5f5a4165c1200c543aee27f09441bf54e1def495)), closes [#1](https://github.com/seiyria/Rasterkhann/issues/1)
+
+
+
 ## [0.5.7](https://github.com/seiyria/Rasterkhann/compare/v0.5.5...v0.5.7) (2020-07-15)
 
 
