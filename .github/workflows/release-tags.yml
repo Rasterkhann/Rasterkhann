@@ -44,7 +44,7 @@ jobs:
         prerelease: false
 
     - name: Create Electron Artifacts
-      id: create_release
+      id: create_artifacts
       uses: samuelmeuli/action-electron-builder@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
