@@ -1,3 +1,7 @@
+## [0.5.16](https://github.com/seiyria/Rasterkhann/compare/v0.5.15...v0.5.16) (2020-07-15)
+
+
+
 ## [0.5.15](https://github.com/seiyria/Rasterkhann/compare/v0.5.14...v0.5.15) (2020-07-15)
 
 
