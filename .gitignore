@@ -32,3 +32,6 @@ npm-debug.log*
 
 src/environments/versions.ts
 sav
+build
+*.sav
+dist

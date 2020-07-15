@@ -112,6 +112,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
               this.featureMap[obj.name] = (window as any).PIXI.Sprite.from('assets/game/ui/orb.png');
               this.featureMap[obj.name].x = obj.x + 4;
               this.featureMap[obj.name].y = obj.y - 28;
+              this.featureMap[obj.name].visible = false;
 
               this.tileMap.addChild(this.featureMap[obj.name]);
             }

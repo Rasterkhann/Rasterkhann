@@ -1,0 +1,54 @@
+name: Release New Tags
+
+on:
+  push:
+    tags:
+      - '*' # Any pushed tag
+
+jobs:
+  build:
+    name: Create Release
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - run: npm install
+
+    - run: npm run lint
+      
+    - run: npm run release:all
+      
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          This is an automated release. See [the Changelog](https://github.com/seiyria/Rasterkhann/blob/main/CHANGELOG.md) for more info.
+        draft: false
+        prerelease: false
+      
+    - name: Upload Release Asset (Windows)
+      id: upload-release-asset-win
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./dist/Rasterkhann.exe
+        asset_name: Rasterkhann.exe
+        asset_content_type: application/vnd.microsoft.portable-executable
