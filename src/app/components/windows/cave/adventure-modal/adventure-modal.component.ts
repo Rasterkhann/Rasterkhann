@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Select } from '@ngxs/store';
 
@@ -16,15 +16,10 @@ import { calculateMaxActiveAdventures } from '../../../../helpers';
 })
 export class AdventureModalComponent implements OnInit {
 
+  @Select(GameState.currentTown) currentTown$: Observable<IGameTown>;
   @Select(GameState.currentTownCanDoAdventures) canDoAdventures$: Observable<boolean>;
   @Select(GameState.currentTownActiveAdventures) activeAdventures$: Observable<Adventure[]>;
   @Select(GameState.currentTownPotentialAdventures) potentialAdventures$: Observable<Adventure[]>;
-
-  @Input() public town: IGameTown;
-
-  public get simultaneousAdventures(): number {
-    return calculateMaxActiveAdventures(this.town);
-  }
 
   constructor(private modal: ModalController, public game: GameService) { }
 
@@ -32,6 +27,10 @@ export class AdventureModalComponent implements OnInit {
 
   dismiss(): void {
     this.modal.dismiss();
+  }
+
+  public simultaneousAdventures(town: IGameTown): number {
+    return calculateMaxActiveAdventures(town);
   }
 
 }
