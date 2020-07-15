@@ -1,5 +1,5 @@
 
-import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait, 
+import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait,
   BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait } from '../interfaces';
 import { ensureHeroStatValue } from '../helpers/trait';
 
