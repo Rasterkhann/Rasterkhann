@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-
-import * as NumberFormat from 'swarm-numberformat';
+import { formatNumber } from './helpers';
 
 @Pipe({
   name: 'bignum'
@@ -14,7 +13,7 @@ export class BignumPipe implements PipeTransform {
     if (value === 0) { return '0'; }
     if (!value) { return ''; }
     if (value < 1_000_000n) { return this.decimalPipe.transform(value.toString()); }
-    return NumberFormat.format(value.toString(), { flavor: 'short', sigfigs: 3 });
+    return formatNumber(value);
   }
 
 }

@@ -1,10 +1,16 @@
 
 import { sum } from 'lodash';
 
+import * as NumberFormat from 'swarm-numberformat';
+
 // this file cannot import any helpers or statics
 import { IGameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog } from '../interfaces';
 import { BuildingData } from '../static';
 import { featureNameToBuildingHash, featureNameToUnlockHash } from './building';
+
+export function formatNumber(value: bigint | number): string {
+  return NumberFormat.format(value.toString(), { flavor: 'short', sigfigs: 3 });
+}
 
 export function calculateGlobalCostMultiplier(town: IGameTown): number {
   let multiplier = 1;

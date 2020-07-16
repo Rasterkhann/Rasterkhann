@@ -4,7 +4,7 @@ import { random, sample, sum } from 'lodash';
 import { Hero, Adventure, IGameTown, HeroStat, HeroActionTargetting, HeroAction, TriggerType, ItemType, CombatLog, Combat } from '../interfaces';
 import { generateMonster, getCurrentStat, giveHeroGold, giveHeroEXP } from './hero';
 import { JobEffects } from '../static';
-import { addCombatLogToTown, doesTownHaveFeature } from './global';
+import { addCombatLogToTown, doesTownHaveFeature, formatNumber } from './global';
 import { getActionsForWeapon } from './weapon';
 
 export function getTownExpMultiplier(town: IGameTown): number {
@@ -116,7 +116,7 @@ class CombatTracker implements Combat {
       const earnedGold = Math.floor((goldMult * sum(monsters.map(m => getCurrentStat(m, HeroStat.GOLD)))) / heroes.length);
 
       heroes.forEach(hero => {
-        this.addLogEntry(`${this.getHeroTag(hero)} won combat and earned ${earnedExp} EXP and ${earnedGold} GOLD!`);
+        this.addLogEntry(`${this.getHeroTag(hero)} won combat and earned ${formatNumber(earnedExp)} EXP and ${formatNumber(earnedGold)} GOLD!`);
         giveHeroEXP(hero, earnedExp);
         giveHeroGold(hero, earnedGold);
       });

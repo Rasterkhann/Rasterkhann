@@ -8,7 +8,7 @@ import { Observable, Subscription, combineLatest } from 'rxjs';
 import { GameState } from '../../../../states';
 import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait, ItemType, HeroItem } from '../../../../interfaces';
 import { GameService } from '../../../../services/game.service';
-import { allEquippableWeapons, calculateHeroMaxTotal } from '../../../../helpers';
+import { allEquippableWeapons, calculateHeroMaxTotal, formatNumber } from '../../../../helpers';
 import { TraitEffects } from '../../../../static';
 import { HeroService } from '../../../../services/hero.service';
 
@@ -112,11 +112,10 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   async trainHero(hero: Hero): Promise<void> {
     const cost = this.heroCreator.heroTrainCost(this.town, hero);
 
-    // TODO: import bignum pipe (to game service) and format cost
     const alert = await this.alert.create({
       header: 'Train Hero',
       message: `Are you sure you want to train ${hero.name} to the level ${hero.stats[HeroStat.LVL] + 1} ${hero.job}?
-       It will cost ${cost} gold.`,
+       It will cost ${formatNumber(cost)} gold.`,
       buttons: [
         {
           text: 'Cancel',
