@@ -9,7 +9,10 @@
                      buildingId="bazaar">
   </app-building-info>
 
-  
+  <ion-item>
+    Item Cost Multiplier: {{ costMultiplier * 100 | number }}%
+  </ion-item>
+
   <ng-container *ngFor="let type of itemTypes">
     <ion-item *ngIf="getItems(type).length < getTypeTotal(type)">
       Next {{ type }}:&nbsp;<countdown [config]="{ stopTime: getConstructionType(type), format: 'mm:ss', prettyText: formatPreDuration }"></countdown>

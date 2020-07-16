@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { IGameTown, ItemType, HeroItem } from '../../../interfaces';
-import { calculateMaxCreatableItems } from '../../../helpers';
+import { calculateGlobalCostMultiplier, calculateMaxCreatableItems } from '../../../helpers';
 import { ItemsModalComponent } from './items-modal/items-modal.component';
 
 @Component({
@@ -14,6 +14,10 @@ export class BazaarComponent implements OnInit {
 
   @Input() town: IGameTown;
   @Input() autoOpen: boolean;
+
+  public get costMultiplier(): number {
+    return calculateGlobalCostMultiplier(this.town);
+  }
 
   public get itemTypes(): ItemType[] {
     return [ItemType.Weapon, ItemType.Armor, ItemType.Potion];

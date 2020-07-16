@@ -180,6 +180,7 @@ export function generateArmor(town: IGameTown): HeroItem {
     type: ItemType.Armor,
     sprite: preset.sprite,
     boostStats,
-    cost
+    cost,
+    timesPassedOver: 0
   };
 }

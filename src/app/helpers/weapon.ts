@@ -140,7 +140,8 @@ export function generateWeapon(town: IGameTown): HeroWeapon {
     type: ItemType.Weapon,
     sprite: getSpriteForWeapon(subType, element),
     boostStats,
-    cost
+    cost,
+    timesPassedOver: 0
   };
 }
 

@@ -18,6 +18,14 @@ export class ItemComponent implements OnInit {
   @Input() public item: HeroItem;
   @Input() public showScrapIcon: boolean;
 
+  public get color(): string {
+    if (this.item.timesPassedOver === 0) { return ''; }
+    if (this.item.timesPassedOver < 10)  { return 'primary'; }
+    if (this.item.timesPassedOver < 50)  { return 'secondary'; }
+    if (this.item.timesPassedOver < 100) { return 'warning'; }
+    return 'danger';
+  }
+
   public get spritesheet(): string {
     return this.item.type.toLowerCase();
   }

@@ -6,8 +6,7 @@ import { IGameTown, BuildingUnlock, HeroStat, Building, BuildingFeature } from '
 import { BuildingData } from '../static';
 import { featureNameToBuildingHash, featureNameToUnlockHash } from './building';
 
-export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
-
+export function calculateGlobalCostMultiplier(town: IGameTown): number {
   let multiplier = 1;
   multiplier += 0.01 * town.buildings[Building.Bazaar].level;
   if (doesTownHaveFeature(town, 'Better Prices'))       { multiplier += 0.1; }
@@ -15,6 +14,13 @@ export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: Her
   if (doesTownHaveFeature(town, 'Higher Prices'))       { multiplier += 0.1; }
   if (doesTownHaveFeature(town, 'Even Higher Prices'))  { multiplier += 0.1; }
   if (doesTownHaveFeature(town, 'Stronger Prices'))     { multiplier += 0.1; }
+
+  return multiplier;
+}
+
+export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
+
+  const multiplier = calculateGlobalCostMultiplier(town);
 
   const statMultipliers: Record<HeroStat, number> = {
     [HeroStat.ATK]: 150,
