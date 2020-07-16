@@ -17,7 +17,7 @@
     "build:demo": "npm run build -- -c demo",
     "build:full": "npm run build -- -c full",
     "build:electron:test": "electron-builder --dir",
-    "build:electron:dist": "electron-builder",
+    "build:electron:dist": "electron-builder --publish never",
     "build:electron:full:demo": "npm run build:demo && npm run build:electron:dist",
     "build:version": "node scripts/git.version",
     "test": "npm run lint && npm run build",
