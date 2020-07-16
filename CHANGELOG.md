@@ -1,3 +1,12 @@
+## [0.5.23](https://github.com/seiyria/Rasterkhann/compare/v0.5.22...v0.5.23) (2020-07-16)
+
+
+### Features
+
+* **logs:** show checkmark if adventure succeeded ([29ebc9b](https://github.com/seiyria/Rasterkhann/commit/29ebc9b2c78ed45d50522dd162c7a3364a46741a))
+
+
+
 ## [0.5.22](https://github.com/seiyria/Rasterkhann/compare/v0.5.21...v0.5.22) (2020-07-16)
 
 
@@ -37,7 +46,7 @@
 
 
 
-## [0.5.19](https://github.com/seiyria/Rasterkhann/compare/v0.5.7...v0.5.19) (2020-07-16)
+## [0.5.19](https://github.com/seiyria/Rasterkhann/compare/v0.5.8...v0.5.19) (2020-07-16)
 
 
 ### Bug Fixes
@@ -49,8 +58,16 @@
 ### Features
 
 * **core:** in downloadable version, back up savefile if it exists but failed to load ([5401c62](https://github.com/seiyria/Rasterkhann/commit/5401c62bae5e6785ecaab6ff0895d5df0a63b092)), closes [#42](https://github.com/seiyria/Rasterkhann/issues/42)
-* **meta:** there are now automated electron releases for the game ([5f5a416](https://github.com/seiyria/Rasterkhann/commit/5f5a4165c1200c543aee27f09441bf54e1def495)), closes [#1](https://github.com/seiyria/Rasterkhann/issues/1)
 * **ui:** show rush cost when it's available ([1a07707](https://github.com/seiyria/Rasterkhann/commit/1a07707e8574d40d9b2d86eea176c3811e65b794)), closes [#47](https://github.com/seiyria/Rasterkhann/issues/47)
+
+
+
+## [0.5.8](https://github.com/seiyria/Rasterkhann/compare/v0.5.7...v0.5.8) (2020-07-15)
+
+
+### Features
+
+* **meta:** there are now automated electron releases for the game ([5f5a416](https://github.com/seiyria/Rasterkhann/commit/5f5a4165c1200c543aee27f09441bf54e1def495)), closes [#1](https://github.com/seiyria/Rasterkhann/issues/1)
 
 
 
