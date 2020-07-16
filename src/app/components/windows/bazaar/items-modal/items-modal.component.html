@@ -18,7 +18,7 @@
     <ng-container *ngFor="let type of itemTypes">
       <ion-list-header>{{ type }}s ({{ getItems(itemsForSale, type).length }}/{{ getTypeTotal(type) }})</ion-list-header>
       <ion-item *ngIf="itemsForSale[type].length === 0">No {{ type.toLowerCase() }}s for sale.</ion-item>
-      <app-item *ngFor="let item of itemsForSale[type]" [item]="item" showScrapIcon="true" (click)="scrapItem(item)"></app-item>
+      <app-item *ngFor="let item of itemsForSale[type]" [item]="item" showScrapIcon="true" showPassedOver="true" (click)="scrapItem(item)"></app-item>
     </ng-container>
   </ion-list>
 </ion-content>

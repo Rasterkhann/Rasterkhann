@@ -7,7 +7,7 @@
   </ion-button>
 
   <ion-label class="ion-text-wrap">
-    <h2>{{ item.name }} <ion-badge class="color-badge" *ngIf="color" [color]="color">&nbsp;</ion-badge></h2>
+    <h2>{{ item.name }} <ion-badge class="color-badge" *ngIf="color && showPassedOver" [color]="color">&nbsp;</ion-badge></h2>
     <p *ngIf="item.cost">Cost: {{ item.cost | bignum }} gold</p>
 
     <ion-row class="stat-block">

@@ -17,6 +17,7 @@ export class ItemComponent implements OnInit {
 
   @Input() public item: HeroItem;
   @Input() public showScrapIcon: boolean;
+  @Input() public showPassedOver: boolean;
 
   public get color(): string {
     if (this.item.timesPassedOver === 0) { return ''; }
