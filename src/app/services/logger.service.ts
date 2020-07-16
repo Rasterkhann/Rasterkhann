@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { debounce } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,9 @@ export class LoggerService {
   }
 
   private init(): void {
-    window.addEventListener('error', (ev) => {
+    window.addEventListener('error', debounce((ev) => {
       this.errorLog(ev.message);
-    });
+    }, 500));
   }
 
   log(message: string): void {
