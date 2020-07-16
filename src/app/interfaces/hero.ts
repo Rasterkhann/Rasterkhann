@@ -1,6 +1,7 @@
 
 import { Trait, TriggerType, TraitTriggerFunction } from './trait';
 import { HeroArmor, HeroItem, HeroWeapon, ItemType, WeaponSubType } from './item';
+import { Combat } from './adventure';
 
 export enum HeroJob {
   Adventurer = 'Adventurer',
@@ -46,7 +47,7 @@ export interface HeroAction {
   staCost: () => number;
   spCost: () => number;
   targets: (targetting: HeroActionTargetting) => Hero[];
-  act: (hero: Hero, targets: Hero[]) => void;
+  act: (combat: Combat, hero: Hero, targets: Hero[]) => void;
 }
 
 export interface HeroGear {

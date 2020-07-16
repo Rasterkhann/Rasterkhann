@@ -8,6 +8,7 @@ export const migrations = [
     versionKey: 'version',
     migrate: (state: IGameState) => {
       // state.version = 2;
+      console.log('Savefile version 1...');
 
       console.log('Running migrations...');
 
@@ -61,6 +62,20 @@ export const migrations = [
         }
       });
 
+      console.log('Adding combat log support...');
+      state.towns.Rasterkhann.combatLogs = state.towns.Rasterkhann.combatLogs || [];
+
+      state.version = 2;
+
+      return state;
+    }
+  },
+  {
+    version: 2,
+    key: 'gamestate',
+    versionKey: 'version',
+    migrate: (state: IGameState) => {
+      console.log('Savefile version 2...');
       return state;
     }
   }

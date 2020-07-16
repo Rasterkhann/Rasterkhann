@@ -4,6 +4,18 @@ import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calcula
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
 import { doesTownHaveFeature } from './global';
 
+export function formatDifficulty(difficulty: AdventureDifficulty): string {
+  switch (difficulty) {
+    case AdventureDifficulty.VeryEasy:  return 'Very Easy';
+    case AdventureDifficulty.Easy:      return 'Easy';
+    case AdventureDifficulty.Normal:    return 'Normal';
+    case AdventureDifficulty.Hard:      return 'Hard';
+    case AdventureDifficulty.VeryHard:  return 'Very Hard';
+
+    default:                            return 'Unknown';
+  }
+}
+
 export function calculateMaxMembersPerTeam(town: IGameTown): number {
   let base = 1;
 

@@ -1,7 +1,7 @@
 
 import { Building, BuildingInfo } from './buildings';
 import { Hero, ProspectiveHero } from './hero';
-import { Adventure } from './adventure';
+import { Adventure, CombatLog } from './adventure';
 import { HeroItem, ItemType } from './item';
 
 export interface NewsItem {
@@ -27,4 +27,6 @@ export interface IGameTown {
 
   itemsForSale: Record<ItemType, HeroItem[]>;
   nextItemCreation: Record<ItemType, number>;
+
+  combatLogs: CombatLog[];
 }

@@ -1,10 +1,11 @@
+import { Hero } from './hero';
 
 export enum AdventureDifficulty {
-  VeryEasy = 0.5,
-  Easy = 0.75,
-  Normal = 1,
-  Hard = 1.25,
-  VeryHard = 1.5
+  VeryEasy = 1,
+  Easy = 1.5,
+  Normal = 3,
+  Hard = 5,
+  VeryHard = 10
 }
 
 export interface Adventure {
@@ -16,4 +17,20 @@ export interface Adventure {
   encounterCount: number;
   encounterTicks: number[];
   activeHeroes: string[];
+}
+
+export interface CombatLog {
+  advName: string;
+  advEncounters: number;
+  advLevel: number;
+  advDifficulty: AdventureDifficulty;
+  encNum: number;
+  timestamp: number;
+  logs: string[];
+}
+
+export interface Combat {
+  start(): void;
+  addLogEntry(str: string): void;
+  getHeroTag(hero: Hero): string;
 }

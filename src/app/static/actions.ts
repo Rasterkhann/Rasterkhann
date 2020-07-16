@@ -1,7 +1,7 @@
 
 import { sample, random } from 'lodash';
 
-import { Hero, HeroAction, HeroActionTargetting, HeroStat } from '../interfaces';
+import { Combat, Hero, HeroAction, HeroActionTargetting, HeroStat } from '../interfaces';
 
 function getCurrentStat(hero: Hero, stat: HeroStat): number {
   return hero.currentStats[stat];
@@ -26,10 +26,12 @@ export const Attack: () => HeroAction = () => ({
   targets: (targetting: HeroActionTargetting) => {
     return [sample(targetting.livingEnemies)] as Hero[];
   },
-  act: (hero: Hero, targets: Hero[]) => {
+  act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
       const damage = calculateDamage(getCurrentStat(hero, HeroStat.ATK), getCurrentStat(target, HeroStat.DEF));
       takeDamage(target, damage);
+
+      combat.addLogEntry(`${combat.getHeroTag(hero)} attacked ${target.name} for ${damage} HP!`);
     });
   }
 });
@@ -40,10 +42,12 @@ export const AttackAll: () => HeroAction = () => ({
   targets: (targetting: HeroActionTargetting) => {
     return targetting.livingEnemies;
   },
-  act: (hero: Hero, targets: Hero[]) => {
+  act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
       const damage = calculateDamage(getCurrentStat(hero, HeroStat.ATK), getCurrentStat(target, HeroStat.DEF));
       takeDamage(target, damage);
+
+      combat.addLogEntry(`${combat.getHeroTag(hero)} attacked ${target.name} for ${damage} HP!`);
     });
   }
 });
@@ -54,10 +58,12 @@ export const AttackAllDiminishing: () => HeroAction = () => ({
   targets: (targetting: HeroActionTargetting) => {
     return targetting.livingEnemies;
   },
-  act: (hero: Hero, targets: Hero[]) => {
+  act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
       const damage = calculateDamage(getCurrentStat(hero, HeroStat.ATK) / targets.length, getCurrentStat(target, HeroStat.DEF));
       takeDamage(target, damage);
+
+      combat.addLogEntry(`${combat.getHeroTag(hero)} attacked ${target.name} for ${damage} HP!`);
     });
   }
 });
@@ -68,10 +74,12 @@ export const AttackSinglePercent: (pct: number) => HeroAction = (pct: number) =>
   targets: (targetting: HeroActionTargetting) => {
     return [sample(targetting.livingEnemies)] as Hero[];
   },
-  act: (hero: Hero, targets: Hero[]) => {
+  act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
       const damage = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
       takeDamage(target, damage);
+
+      combat.addLogEntry(`${combat.getHeroTag(hero)} attacked ${target.name} for ${damage} HP!`);
     });
   }
 });
@@ -82,10 +90,12 @@ export const AttackAllPercent: (pct: number) => HeroAction = (pct: number) => ({
   targets: (targetting: HeroActionTargetting) => {
     return targetting.livingEnemies;
   },
-  act: (hero: Hero, targets: Hero[]) => {
+  act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
       const damage = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
       takeDamage(target, damage);
+
+      combat.addLogEntry(`${combat.getHeroTag(hero)} attacked ${target.name} for ${damage} HP!`);
     });
   }
 });
@@ -97,9 +107,12 @@ export const Heal: () => HeroAction = () => ({
   targets: (targetting: HeroActionTargetting) => {
     return [sample(targetting.livingAllies)] as Hero[];
   },
-  act: (hero: Hero, targets: Hero[]) => {
+  act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
-      heal(target, getCurrentStat(hero, HeroStat.DEF));
+      const healed = getCurrentStat(hero, HeroStat.DEF);
+      heal(target, healed);
+
+      combat.addLogEntry(`${combat.getHeroTag(hero)} healed ${target.name} for ${healed} HP!`);
     });
   }
 });
@@ -110,10 +123,12 @@ export const HealPercent: (pct: number) => HeroAction = (pct: number) => ({
   targets: (targetting: HeroActionTargetting) => {
     return [sample(targetting.livingAllies)] as Hero[];
   },
-  act: (hero: Hero, targets: Hero[]) => {
+  act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
       const healed = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
       heal(target, healed);
+
+      combat.addLogEntry(`${combat.getHeroTag(hero)} healed ${target.name} for ${healed} HP!`);
     });
   }
 });
@@ -124,24 +139,28 @@ export const HealAllPercent: (pct: number) => HeroAction = (pct: number) => ({
   targets: (targetting: HeroActionTargetting) => {
     return targetting.livingAllies;
   },
-  act: (hero: Hero, targets: Hero[]) => {
+  act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
       const healed = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
       heal(target, healed);
+
+      combat.addLogEntry(`${combat.getHeroTag(hero)} healed ${target.name} for ${healed} HP!`);
     });
   }
 });
 
 // ***** GOLD ABILITIES ***** //
-export const EarnGold: (gold: number) => HeroAction = (gold: number) => ({
+export const EarnGold: (gold: number) => HeroAction = (gold: number = 0) => ({
   staCost: () => 5,
   spCost: () => 3,
   targets: (targetting: HeroActionTargetting) => {
     return [targetting.self];
   },
-  act: (hero: Hero, targets: Hero[]) => {
+  act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
-      target.currentStats[HeroStat.GOLD] += gold || 0;
+      target.currentStats[HeroStat.GOLD] += gold;
+
+      combat.addLogEntry(`${combat.getHeroTag(hero)} found ${gold} GOLD!`);
     });
   }
 });

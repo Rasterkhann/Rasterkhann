@@ -1,10 +1,10 @@
 
 import { sample, sum } from 'lodash';
 
-import { Hero, Adventure, IGameTown, HeroStat, HeroActionTargetting, HeroAction, TriggerType, ItemType } from '../interfaces';
+import { Hero, Adventure, IGameTown, HeroStat, HeroActionTargetting, HeroAction, TriggerType, ItemType, CombatLog, Combat } from '../interfaces';
 import { generateMonster, getCurrentStat, giveHeroGold, giveHeroEXP } from './hero';
 import { JobEffects } from '../static';
-import { doesTownHaveFeature } from './global';
+import { addCombatLogToTown, doesTownHaveFeature } from './global';
 import { getActionsForWeapon } from './weapon';
 
 export function getTownExpMultiplier(town: IGameTown): number {
@@ -18,11 +18,11 @@ export function getTownExpMultiplier(town: IGameTown): number {
 }
 
 export function getTownGoldMultiplier(town: IGameTown): number {
-  let base = 1;
+  let base = 0.3;
 
-  if (doesTownHaveFeature(town, 'Monster Gold I'))   { base += 0.5; }
-  if (doesTownHaveFeature(town, 'Monster Gold II'))  { base += 0.5; }
-  if (doesTownHaveFeature(town, 'Monster Gold III')) { base += 0.5; }
+  if (doesTownHaveFeature(town, 'Monster Gold I'))   { base += 0.15; }
+  if (doesTownHaveFeature(town, 'Monster Gold II'))  { base += 0.15; }
+  if (doesTownHaveFeature(town, 'Monster Gold III')) { base += 0.15; }
 
   return base;
 }
@@ -51,130 +51,179 @@ export function getCombatTriggers(hero: Hero, trigger: TriggerType): HeroAction[
   return triggers || [];
 }
 
-function canTakeAction(creature: Hero, action: HeroAction, targetting: HeroActionTargetting): boolean {
-  if (getCurrentStat(creature, HeroStat.STA) < action.staCost()) { return false; }
-  if (getCurrentStat(creature, HeroStat.SP) < action.spCost()) { return false; }
-  if (action.targets(targetting).filter(Boolean).length === 0) { return false; }
-  return true;
-}
+class CombatTracker implements Combat {
 
-function potentialActions(creature: Hero, targetting: HeroActionTargetting): HeroAction[] {
+  private combatLog: CombatLog;
 
-  // base job actions
-  const potentialCreatureActions = JobEffects[creature.job].actions;
+  constructor(private town: IGameTown, private heroes: Hero[], private adventure: Adventure) {}
 
-  // weapon actions
-  creature.gear[ItemType.Weapon].forEach(weapon => {
-    const bonusActions = getActionsForWeapon(weapon);
-    potentialCreatureActions.push(...bonusActions);
-  });
+  public start(): void {
 
-  return potentialCreatureActions.filter(act => canTakeAction(creature, act, targetting));
-}
+    const town = this.town;
+    const heroes = this.heroes;
+    const adventure = this.adventure;
 
-function prepareHeroForCombat(hero: Hero): void {
-  if (!canMemberFight(hero)) { return; }
+    this.combatLog = {
+      advName: adventure.name,
+      advEncounters: adventure.encounterCount,
+      advLevel: adventure.encounterLevel,
+      advDifficulty: adventure.difficulty,
+      encNum: adventure.encounterCount - adventure.encounterTicks.length,
+      timestamp: Date.now(),
+      logs: []
+    };
 
-  // use potions before combat
-  const usedPotions: string[] = [];
+    // generate 1 monster per hero
+    const monsters = heroes.map(() => generateMonster(town, adventure));
 
-  hero.gear[ItemType.Potion].forEach(potion => {
-    // if we can use at least a third of the value of the potion, we will
-    const anyStatsOver = potion.boostStats.some(({ stat, value }) => hero.currentStats[stat] + (value / 3) < hero.stats[stat]);
+    this.addLogEntry(`Heroes: ${heroes.map(h => this.getHeroTag(h)).join(', ')}`);
+    this.addLogEntry(`Monsters: ${monsters.map(m => this.getHeroTag(m)).join(', ')}`);
 
-    if (anyStatsOver) {
-      potion.boostStats.forEach(({ stat, value }) => {
-        hero.currentStats[stat] = Math.min(hero.stats[stat], hero.currentStats[stat] + value);
+    // prepare heroes for combat
+    heroes.forEach(hero => this.prepareHeroForCombat(hero));
+
+    // run pre-combat triggers
+    teamFightingMembers(heroes).forEach(hero => {
+      getCombatTriggers(hero, TriggerType.PreCombat)
+        .forEach(act => this.takeAction(hero, act, this.generateTargetting(hero, heroes, monsters)));
+    });
+
+    // while combat goes on, everyone who can fight gets a turn
+    while (shouldCombatContinue(heroes, monsters)) {
+      teamFightingMembers(heroes).forEach(h => this.takeTurn(h, this.generateTargetting(h, heroes, monsters)));
+      teamFightingMembers(monsters).forEach(m => this.takeTurn(m, this.generateTargetting(m, monsters, heroes)));
+    }
+
+    // run post-combat triggers
+    teamFightingMembers(heroes).forEach(hero => {
+      getCombatTriggers(hero, TriggerType.PostCombat)
+        .forEach(act => this.takeAction(hero, act, this.generateTargetting(hero, heroes, monsters)));
+    });
+
+    // if they can still fight, they won
+    if (canTeamFight(heroes)) {
+
+      // run pre-combat triggers
+      heroes.forEach(hero => {
+        getCombatTriggers(hero, TriggerType.Victory)
+          .forEach(act => this.takeAction(hero, act, this.generateTargetting(hero, heroes, monsters)));
       });
 
-      usedPotions.push(potion.uuid);
+      const expMult = getTownExpMultiplier(town);
+      const goldMult = getTownGoldMultiplier(town);
+
+      const earnedExp = Math.floor((expMult * sum(monsters.map(m => getCurrentStat(m, HeroStat.EXP)))) / heroes.length);
+      const earnedGold = Math.floor((goldMult * sum(monsters.map(m => getCurrentStat(m, HeroStat.GOLD)))) / heroes.length);
+
+      heroes.forEach(hero => {
+        this.addLogEntry(`${this.getHeroTag(hero)} won combat and earned ${earnedExp} EXP and ${earnedGold} GOLD!`);
+        giveHeroEXP(hero, earnedExp);
+        giveHeroGold(hero, earnedGold);
+      });
+
+    } else {
+      heroes.forEach(h => {
+        this.addLogEntry(`${this.getHeroTag(h)} lost combat!`);
+      });
+
     }
-  });
 
-  hero.gear[ItemType.Potion] = hero.gear[ItemType.Potion].filter(p => !usedPotions.includes(p.uuid));
+    addCombatLogToTown(town, this.combatLog);
+  }
 
-  [HeroStat.HP, HeroStat.SP, HeroStat.STA].forEach((stat: HeroStat) => {
-    hero.currentStats[stat] = Math.min(hero.currentStats[stat], hero.stats[stat]);
-  });
-}
+  private canTakeAction(creature: Hero, action: HeroAction, targetting: HeroActionTargetting): boolean {
+    if (getCurrentStat(creature, HeroStat.STA) < action.staCost()) { return false; }
+    if (getCurrentStat(creature, HeroStat.SP) < action.spCost())   { return false; }
+    if (action.targets(targetting).filter(Boolean).length === 0)   { return false; }
+    return true;
+  }
 
-function chooseAction(creature: Hero, targetting: HeroActionTargetting): HeroAction | undefined {
-  return sample(potentialActions(creature, targetting));
-}
+  private potentialActions(creature: Hero, targetting: HeroActionTargetting): HeroAction[] {
 
-function takeAction(creature: Hero, action: HeroAction, targetting: HeroActionTargetting): void {
-  if (!canTakeAction(creature, action, targetting)) { return; }
+    // base job actions
+    const potentialCreatureActions = JobEffects[creature.job].actions;
 
-  action.act(creature, action.targets(targetting).filter(Boolean));
-  creature.currentStats[HeroStat.STA] -= action.staCost();
-  creature.currentStats[HeroStat.SP] -= action.spCost();
-}
+    // weapon actions
+    creature.gear[ItemType.Weapon].forEach(weapon => {
+      const bonusActions = getActionsForWeapon(weapon);
+      potentialCreatureActions.push(...bonusActions);
+    });
 
-function takeTurn(creature: Hero, targetting: HeroActionTargetting): void {
+    return potentialCreatureActions.filter(act => this.canTakeAction(creature, act, targetting));
+  }
 
-  // no targets? nothing happens.
-  if (targetting.livingEnemies.length === 0) { return; }
+  private prepareHeroForCombat(hero: Hero): void {
+    if (!canMemberFight(hero)) { return; }
 
-  const action = chooseAction(creature, targetting);
-  if (!action) { return; }
+    // use potions before combat
+    const usedPotions: string[] = [];
 
-  takeAction(creature, action, targetting);
-}
+    hero.gear[ItemType.Potion].forEach(potion => {
+      // if we can use at least a third of the value of the potion, we will
+      const anyStatsOver = potion.boostStats.some(({ stat, value }) => hero.currentStats[stat] + (value / 3) < hero.stats[stat]);
 
-function generateTargetting(self: Hero, heroes: Hero[], monsters: Hero[]): HeroActionTargetting {
-  return {
-    self,
-    all: heroes.concat(monsters),
-    allAllies: heroes,
-    livingAllies: teamFightingMembers(heroes),
-    livingEnemies: teamFightingMembers(monsters)
-  };
+      if (anyStatsOver) {
+        potion.boostStats.forEach(({ stat, value }) => {
+          hero.currentStats[stat] = Math.min(hero.stats[stat], hero.currentStats[stat] + value);
+        });
+
+        this.addLogEntry(`${hero.name} used ${potion.name} and restored ${potion.boostStats.map(({ stat, value }) => `${value} ${stat}`).join(', ')}`);
+
+        usedPotions.push(potion.uuid);
+      }
+    });
+
+    hero.gear[ItemType.Potion] = hero.gear[ItemType.Potion].filter(p => !usedPotions.includes(p.uuid));
+
+    [HeroStat.HP, HeroStat.SP, HeroStat.STA].forEach((stat: HeroStat) => {
+      hero.currentStats[stat] = Math.min(hero.currentStats[stat], hero.stats[stat]);
+    });
+  }
+
+  private chooseAction(creature: Hero, targetting: HeroActionTargetting): HeroAction | undefined {
+    return sample(this.potentialActions(creature, targetting));
+  }
+
+  private takeAction(creature: Hero, action: HeroAction, targetting: HeroActionTargetting): void {
+    if (!this.canTakeAction(creature, action, targetting)) { return; }
+
+    action.act(this, creature, action.targets(targetting).filter(Boolean));
+    creature.currentStats[HeroStat.STA] -= action.staCost();
+    creature.currentStats[HeroStat.SP] -= action.spCost();
+  }
+
+  private takeTurn(creature: Hero, targetting: HeroActionTargetting): void {
+
+    // no targets? nothing happens.
+    if (targetting.livingEnemies.length === 0) { return; }
+
+    const action = this.chooseAction(creature, targetting);
+    if (!action) { return; }
+
+    this.takeAction(creature, action, targetting);
+  }
+
+  private generateTargetting(self: Hero, heroes: Hero[], monsters: Hero[]): HeroActionTargetting {
+    return {
+      self,
+      all: heroes.concat(monsters),
+      allAllies: heroes,
+      livingAllies: teamFightingMembers(heroes),
+      livingEnemies: teamFightingMembers(monsters)
+    };
+  }
+
+  public getHeroTag(hero: Hero): string {
+    const bracketed = `[HP ${hero.currentStats[HeroStat.HP]}/SP ${hero.currentStats[HeroStat.SP]}/STA ${hero.currentStats[HeroStat.STA]}]`;
+    return `${hero.name} ${bracketed}`;
+  }
+
+  public addLogEntry(logEntry: string): void {
+    this.combatLog.logs.push(logEntry);
+  }
 }
 
 export function doCombat(town: IGameTown, heroes: Hero[], adventure: Adventure): void {
-
-  // generate 1 monster per hero
-  const monsters = heroes.map(() => generateMonster(town, adventure));
-
-  // prepare heroes for combat
-  heroes.forEach(hero => prepareHeroForCombat(hero));
-
-  // run pre-combat triggers
-  teamFightingMembers(heroes).forEach(hero => {
-    getCombatTriggers(hero, TriggerType.PreCombat)
-      .forEach(act => takeAction(hero, act, generateTargetting(hero, heroes, monsters)));
-  });
-
-  // while combat goes on, everyone who can fight gets a turn
-  while (shouldCombatContinue(heroes, monsters)) {
-    teamFightingMembers(heroes).forEach(h => takeTurn(h, generateTargetting(h, heroes, monsters)));
-    teamFightingMembers(monsters).forEach(m => takeTurn(m, generateTargetting(m, monsters, heroes)));
-  }
-
-  // run post-combat triggers
-  teamFightingMembers(heroes).forEach(hero => {
-    getCombatTriggers(hero, TriggerType.PostCombat)
-      .forEach(act => takeAction(hero, act, generateTargetting(hero, heroes, monsters)));
-  });
-
-  // if they can still fight, they won
-  if (canTeamFight(heroes)) {
-
-    // run pre-combat triggers
-    heroes.forEach(hero => {
-      getCombatTriggers(hero, TriggerType.Victory)
-        .forEach(act => takeAction(hero, act, generateTargetting(hero, heroes, monsters)));
-    });
-
-    const expMult = getTownExpMultiplier(town);
-    const goldMult = getTownGoldMultiplier(town);
-
-    const earnedExp = Math.floor(expMult * sum(monsters.map(m => getCurrentStat(m, HeroStat.EXP))));
-    const earnedGold = Math.floor(goldMult * sum(monsters.map(m => getCurrentStat(m, HeroStat.GOLD))));
-
-    heroes.forEach(hero => {
-      giveHeroEXP(hero, earnedExp);
-      giveHeroGold(hero, earnedGold);
-    });
-  }
+  const combat = new CombatTracker(town, heroes, adventure);
+  combat.start();
 }

@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Combat Logs
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngIf="town.combatLogs.length === 0">
+      <ion-label class="ion-text-wrap">You have no combat logs to view. Send your heroes on adventures to generate some!</ion-label>
+    </ion-item>
+
+    <ng-container *ngFor="let log of town.combatLogs">
+      <ion-item-divider sticky="true" class="log-header">
+        <ion-label class="ion-text-wrap">
+          <h3>{{ log.advName }}</h3>
+          <h4>{{ formatDifficulty(log.advDifficulty) }} &middot; Lv.{{ log.advLevel }} &middot; Encounter {{ log.encNum + 1 }}/{{ log.advEncounters }}</h4>
+          <p>{{ log.timestamp | date:'mediumTime' }}</p>
+        </ion-label>
+
+        <ion-button class="ion-margin-end" slot="end" fill="outline" (click)="toggleLogVisibility(log)">
+          <ion-icon slot="icon-only" [name]="isLogEntryVisible(log) ? 'arrow-down-circle' : 'arrow-forward-circle'"></ion-icon>
+        </ion-button>
+      </ion-item-divider>
+
+      <ion-item class="log-entry" *ngFor="let entry of log.logs" [class.ion-hide]="!isLogEntryVisible(log)">
+        <ion-label class="ion-text-wrap">
+          {{ entry }}
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>

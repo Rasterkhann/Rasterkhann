@@ -64,8 +64,8 @@ export function afterDeserialize(obj: IGameState): IGameState {
   return obj;
 }
 
-export function createBuildingAtLevel(level: number): BuildingInfo {
-  return { level, features: {}, featureConstruction: {} };
+export function createBuildingAtLevel(level: number, features = {}): BuildingInfo {
+  return { level, features, featureConstruction: {} };
 }
 
 export function createBasicTown(name: string): IGameTown {
@@ -81,6 +81,8 @@ export function createBasicTown(name: string): IGameTown {
     potentialAdventures: [],
 
     recentNews: [],
+    combatLogs: [],
+
     itemsForSale: {
       [ItemType.Armor]: [],
       [ItemType.Weapon]: [],
@@ -93,18 +95,18 @@ export function createBasicTown(name: string): IGameTown {
     },
 
     buildings: {
-      [Building.TownHall]: createBuildingAtLevel(1),
-      [Building.Watchtower]: createBuildingAtLevel(1),
-      [Building.House]: createBuildingAtLevel(3),
-      [Building.Alchemist]: createBuildingAtLevel(0),
-      [Building.Armory]: createBuildingAtLevel(0),
-      [Building.Bazaar]: createBuildingAtLevel(0),
-      [Building.Cave]: createBuildingAtLevel(0),
-      [Building.GuildHall]: createBuildingAtLevel(0),
-      [Building.Inn]: createBuildingAtLevel(0),
-      [Building.Workshop]: createBuildingAtLevel(0),
-      [Building.Archives]: createBuildingAtLevel(0),
-      [Building.Library]: createBuildingAtLevel(0)
+      [Building.TownHall]:      createBuildingAtLevel(1),
+      [Building.Watchtower]:    createBuildingAtLevel(1),
+      [Building.House]:         createBuildingAtLevel(3),
+      [Building.Alchemist]:     createBuildingAtLevel(0, { 'Health Potions I': 1 }),
+      [Building.Armory]:        createBuildingAtLevel(0),
+      [Building.Bazaar]:        createBuildingAtLevel(0),
+      [Building.Cave]:          createBuildingAtLevel(0),
+      [Building.GuildHall]:     createBuildingAtLevel(0),
+      [Building.Inn]:           createBuildingAtLevel(0),
+      [Building.Workshop]:      createBuildingAtLevel(0),
+      [Building.Archives]:      createBuildingAtLevel(0),
+      [Building.Library]:       createBuildingAtLevel(0)
     }
   };
 }

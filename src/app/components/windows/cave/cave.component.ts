@@ -5,6 +5,7 @@ import { IGameTown } from '../../../interfaces';
 import { AdventureModalComponent } from './adventure-modal/adventure-modal.component';
 import { getTownExpMultiplier, getTownGoldMultiplier, calculateMaxActiveAdventures,
   calculateMaxNumberAdventureEncounters, calculateMaxMembersPerTeam } from '../../../helpers';
+import { CombatLogModalComponent } from './combat-log-modal/combat-log-modal.component';
 
 @Component({
   selector: 'app-cave',
@@ -47,6 +48,17 @@ export class CaveComponent implements OnInit {
   async openAdventureWindow(): Promise<void> {
     const modal = await this.modal.create({
       component: AdventureModalComponent
+    });
+
+    await modal.present();
+  }
+
+  async openLogWindow(): Promise<void> {
+    const modal = await this.modal.create({
+      component: CombatLogModalComponent,
+      componentProps: {
+        town: this.town
+      }
     });
 
     await modal.present();

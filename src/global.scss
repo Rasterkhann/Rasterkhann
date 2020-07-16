@@ -77,10 +77,13 @@ ion-item {
   margin: 0;
 }
 
-ion-title, ion-title h2, ion-list-header, ion-list-header h4 {
+ion-title, ion-title h2, 
+ion-list-header, ion-list-header h4,
+ion-item-divider {
   font-size: 1.4rem !important;
   letter-spacing: 2px !important;
   background-color: #530053;
+  color: #ccc;
 }
 
 ion-header {

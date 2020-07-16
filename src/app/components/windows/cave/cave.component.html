@@ -34,6 +34,14 @@
 
     <ion-button slot="end">View</ion-button>
   </ion-item>
+
+  <ion-item (click)="openLogWindow()">
+    <ion-label>
+      View Combat Logs
+    </ion-label>
+
+    <ion-button slot="end">View</ion-button>
+  </ion-item>
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="cave"></app-feature-list>

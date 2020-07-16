@@ -4,7 +4,7 @@ import { sum } from 'lodash';
 
 import { IGameTown, Adventure, AdventureDifficulty } from '../../../interfaces';
 import { GameService } from '../../../services/game.service';
-import { getTownHeroByUUID } from '../../../helpers';
+import { formatDifficulty, getTownHeroByUUID } from '../../../helpers';
 
 @Component({
   selector: 'app-adventure',
@@ -47,15 +47,7 @@ export class AdventureComponent implements OnInit {
   }
 
   formatDifficulty(difficulty: AdventureDifficulty): string {
-    switch (difficulty) {
-      case AdventureDifficulty.VeryEasy:  return 'Very Easy';
-      case AdventureDifficulty.Easy:      return 'Easy';
-      case AdventureDifficulty.Normal:    return 'Normal';
-      case AdventureDifficulty.Hard:      return 'Hard';
-      case AdventureDifficulty.VeryHard:  return 'Very Hard';
-
-      default:                            return 'Unknown';
-    }
+    return formatDifficulty(difficulty);
   }
 
   async go(): Promise<void> {

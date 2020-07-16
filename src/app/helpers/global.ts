@@ -2,7 +2,7 @@
 import { sum } from 'lodash';
 
 // this file cannot import any helpers or statics
-import { IGameTown, BuildingUnlock, HeroStat, Building, BuildingFeature } from '../interfaces';
+import { IGameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog } from '../interfaces';
 import { BuildingData } from '../static';
 import { featureNameToBuildingHash, featureNameToUnlockHash } from './building';
 
@@ -34,6 +34,11 @@ export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: Her
   };
 
   return BigInt(Math.floor(multiplier * sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat]))));
+}
+
+export function addCombatLogToTown(town: IGameTown, log: CombatLog): void {
+  town.combatLogs.unshift(log);
+  if (town.combatLogs.length > 10) { town.combatLogs.length = 10; }
 }
 
 export function doesTownHaveFeature(town: IGameTown, feature: string): boolean {

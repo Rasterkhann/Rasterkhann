@@ -1,5 +1,5 @@
 
-import { shuffle, take, random, noop, uniq } from 'lodash';
+import { shuffle, take, random, noop, uniq, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
@@ -241,6 +241,20 @@ export function generateHero(town: IGameTown, level?: number): Hero {
 
 export function generateMonster(town: IGameTown, adventure: Adventure): Hero {
   const baseHero = generateHero(town, adventure.encounterLevel);
+
+  const adjectives = ['Tiny', 'Small', 'Short', 'Stout', 'Large', 'Gigantic', 'Humongous', 'Gargantuan', 'Colossal'];
+  const monsterNames = [
+    'Chicken', 'Bandit', 'Bugbear', 'Cultist', 'Gnoll', 'Goblin', 'Hobgoblin', 'Kobold', 'Orc', 'Sahagin', 'Thug', 'Rat',
+    'Ettin', 'Giant', 'Ghast', 'Ghost', 'Spectre', 'Ghoul', 'Lich', 'Minotaur', 'Mummy', 'Skeleton', 'Ogre', 'Troll', 'Wight',
+    'Zombie'
+  ];
+
+  let name = sample(monsterNames) as string;
+  if (random(1, 10) <= 3) {
+    name = `${sample(adjectives)} ${name}`;
+  }
+
+  baseHero.name = name;
 
   // multiply their stats by the difficulty
   Object.keys(baseHero.stats).forEach((stat: HeroStat) => {
