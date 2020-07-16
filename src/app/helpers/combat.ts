@@ -1,5 +1,5 @@
 
-import { sample, sum } from 'lodash';
+import { random, sample, sum } from 'lodash';
 
 import { Hero, Adventure, IGameTown, HeroStat, HeroActionTargetting, HeroAction, TriggerType, ItemType, CombatLog, Combat } from '../interfaces';
 import { generateMonster, getCurrentStat, giveHeroGold, giveHeroEXP } from './hero';
@@ -73,8 +73,8 @@ class CombatTracker implements Combat {
       logs: []
     };
 
-    // generate 1 monster per hero
-    const monsters = heroes.map(() => generateMonster(town, adventure));
+    // generate 1-2 monsters per hero
+    const monsters = Array(heroes.length + random(0, heroes.length)).fill(null).map(() => generateMonster(town, adventure));
 
     this.addLogEntry(`Heroes: ${heroes.map(h => this.getHeroTag(h)).join(', ')}`);
     this.addLogEntry(`Monsters: ${monsters.map(m => this.getHeroTag(m)).join(', ')}`);
