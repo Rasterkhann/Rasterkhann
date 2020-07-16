@@ -36,7 +36,7 @@ export function allEquippableWeapons(town: IGameTown, hero: Hero): WeaponSubType
 
     base.push(subType);
   });
-  
+
   return uniq(base);
 }
 
