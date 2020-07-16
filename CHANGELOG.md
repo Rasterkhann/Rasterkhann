@@ -1,3 +1,17 @@
+## [0.5.22](https://github.com/seiyria/Rasterkhann/compare/v0.5.21...v0.5.22) (2020-07-16)
+
+
+### Features
+
+* **adventures:** adventures are now generated at a random hero level ([a58b6c8](https://github.com/seiyria/Rasterkhann/commit/a58b6c81b4fe1dc3d8067b11617800b76e956eb1)), closes [#50](https://github.com/seiyria/Rasterkhann/issues/50)
+* **adventures:** more potential monsters per combat, tweaked difficulty ([6605da8](https://github.com/seiyria/Rasterkhann/commit/6605da86b94406d1212c24b91d09a327ebe790b3)), closes [#51](https://github.com/seiyria/Rasterkhann/issues/51)
+* **cave:** add combat log viewer ([a13e489](https://github.com/seiyria/Rasterkhann/commit/a13e489c69081f2355fc1c771de18f6118dbf704)), closes [#45](https://github.com/seiyria/Rasterkhann/issues/45)
+* **core:** number formatter made global ([5a21724](https://github.com/seiyria/Rasterkhann/commit/5a21724975f4d32aac455a3b47a1b549b97450e4)), closes [#52](https://github.com/seiyria/Rasterkhann/issues/52)
+* **earngold:** thief earngold ability gives a bit more ([a0806bd](https://github.com/seiyria/Rasterkhann/commit/a0806bd01405fe77be6278b494eff5cdfa9d58ba))
+* **monsters:** slightly change how monster gold is given ([e483b0b](https://github.com/seiyria/Rasterkhann/commit/e483b0b28d5baabef6bbec3d10c3f60a16c3fa66))
+
+
+
 ## [0.5.21](https://github.com/seiyria/Rasterkhann/compare/v0.5.20...v0.5.21) (2020-07-16)
 
 
@@ -23,7 +37,7 @@
 
 
 
-## [0.5.19](https://github.com/seiyria/Rasterkhann/compare/v0.5.18...v0.5.19) (2020-07-16)
+## [0.5.19](https://github.com/seiyria/Rasterkhann/compare/v0.5.7...v0.5.19) (2020-07-16)
 
 
 ### Bug Fixes
@@ -35,56 +49,8 @@
 ### Features
 
 * **core:** in downloadable version, back up savefile if it exists but failed to load ([5401c62](https://github.com/seiyria/Rasterkhann/commit/5401c62bae5e6785ecaab6ff0895d5df0a63b092)), closes [#42](https://github.com/seiyria/Rasterkhann/issues/42)
-* **ui:** show rush cost when it's available ([1a07707](https://github.com/seiyria/Rasterkhann/commit/1a07707e8574d40d9b2d86eea176c3811e65b794)), closes [#47](https://github.com/seiyria/Rasterkhann/issues/47)
-
-
-
-## [0.5.18](https://github.com/seiyria/Rasterkhann/compare/v0.5.17...v0.5.18) (2020-07-15)
-
-
-
-## [0.5.17](https://github.com/seiyria/Rasterkhann/compare/v0.5.16...v0.5.17) (2020-07-15)
-
-
-
-## [0.5.16](https://github.com/seiyria/Rasterkhann/compare/v0.5.15...v0.5.16) (2020-07-15)
-
-
-
-## [0.5.15](https://github.com/seiyria/Rasterkhann/compare/v0.5.14...v0.5.15) (2020-07-15)
-
-
-
-## [0.5.14](https://github.com/seiyria/Rasterkhann/compare/v0.5.13...v0.5.14) (2020-07-15)
-
-
-
-## [0.5.13](https://github.com/seiyria/Rasterkhann/compare/v0.5.12...v0.5.13) (2020-07-15)
-
-
-
-## [0.5.12](https://github.com/seiyria/Rasterkhann/compare/v0.5.11...v0.5.12) (2020-07-15)
-
-
-
-## [0.5.11](https://github.com/seiyria/Rasterkhann/compare/v0.5.10...v0.5.11) (2020-07-15)
-
-
-
-## [0.5.10](https://github.com/seiyria/Rasterkhann/compare/v0.5.9...v0.5.10) (2020-07-15)
-
-
-
-## [0.5.9](https://github.com/seiyria/Rasterkhann/compare/v0.5.8...v0.5.9) (2020-07-15)
-
-
-
-## [0.5.8](https://github.com/seiyria/Rasterkhann/compare/v0.5.7...v0.5.8) (2020-07-15)
-
-
-### Features
-
 * **meta:** there are now automated electron releases for the game ([5f5a416](https://github.com/seiyria/Rasterkhann/commit/5f5a4165c1200c543aee27f09441bf54e1def495)), closes [#1](https://github.com/seiyria/Rasterkhann/issues/1)
+* **ui:** show rush cost when it's available ([1a07707](https://github.com/seiyria/Rasterkhann/commit/1a07707e8574d40d9b2d86eea176c3811e65b794)), closes [#47](https://github.com/seiyria/Rasterkhann/issues/47)
 
 
 
