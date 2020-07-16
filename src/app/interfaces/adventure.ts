@@ -1,11 +1,11 @@
 import { Hero } from './hero';
 
 export enum AdventureDifficulty {
-  VeryEasy = 1,
-  Easy = 1.5,
-  Normal = 3,
-  Hard = 5,
-  VeryHard = 8
+  VeryEasy = 0.75,
+  Easy = 1.25,
+  Normal = 2,
+  Hard = 3,
+  VeryHard = 5
 }
 
 export interface Adventure {
