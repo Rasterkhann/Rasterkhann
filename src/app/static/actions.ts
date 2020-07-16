@@ -158,9 +158,10 @@ export const EarnGold: (gold: number) => HeroAction = (gold: number = 0) => ({
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
-      target.currentStats[HeroStat.GOLD] += gold;
+      const earnedGold = target.currentStats[HeroStat.LVL] * gold;
+      target.currentStats[HeroStat.GOLD] += earnedGold;
 
-      combat.addLogEntry(`${combat.getHeroTag(hero)} found ${gold} GOLD!`);
+      combat.addLogEntry(`${combat.getHeroTag(hero)} found ${earnedGold} GOLD!`);
     });
   }
 });
