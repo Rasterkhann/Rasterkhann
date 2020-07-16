@@ -1,8 +1,8 @@
-import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat, HeroGear, HeroWeapon, HeroArmor } from '../interfaces';
+import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat, HeroGear, HeroWeapon, HeroArmor, CombatLog } from '../interfaces';
 import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calculateMaxHeldPotions,
   calculateMaxHeldWeapons, canEquipWeapon, calculateMaxHeldArmors } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
-import { doesTownHaveFeature } from './global';
+import { addCombatLogToTown, doesTownHaveFeature, formatNumber } from './global';
 
 export function formatDifficulty(difficulty: AdventureDifficulty): string {
   switch (difficulty) {
@@ -155,8 +155,8 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolea
   const goldMult = getTownGoldMultiplier(town);
 
   const baseReward = adventure.encounterCount * adventure.encounterLevel * adventure.difficulty;
-  const expReward = 10 * baseReward * expMult;
-  const goldReward = baseReward * goldMult;
+  const expReward = Math.floor(10 * baseReward * expMult);
+  const goldReward = Math.floor(baseReward * goldMult);
 
   let didSucceed = false;
 
@@ -166,12 +166,28 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolea
 
   if (canTeamFight(chosenHeroes)) {
     didSucceed = true;
+
+    const combatLog: CombatLog = {
+      advName: `${adventure.name} Bonus Reward`,
+      advEncounters: adventure.encounterCount,
+      advLevel: adventure.encounterLevel,
+      advDifficulty: adventure.difficulty,
+      encNum: adventure.encounterCount,
+      timestamp: Date.now(),
+      logs: [],
+      wasSuccess: true
+    };
+
     chosenHeroes.forEach(h => {
       giveHeroEXP(h, expReward);
       giveHeroGold(h, goldReward);
 
+      combatLog.logs.push(`${h.name} earned ${formatNumber(expReward)} EXP and ${formatNumber(goldReward)} GOLD.`);
+
       checkHeroLevelUp(h);
     });
+
+    addCombatLogToTown(town, combatLog);
   }
 
   return didSucceed;
