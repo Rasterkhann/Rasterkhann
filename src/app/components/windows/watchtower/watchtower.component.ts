@@ -67,6 +67,7 @@ export class WatchtowerComponent implements OnInit {
         await alert.present();
 
       } catch (e) {
+        this.game.logger.errorLog(e);
         alert(`Could not load save data: ${e}`);
       }
     };

@@ -57,6 +57,7 @@ export function afterDeserialize(obj: IGameState): IGameState {
     }
 
   } catch (e) {
+    this.game.logger.errorLog(e);
     alert(`Your savefile could not be loaded correctly, the error is: ${e}`);
   }
 

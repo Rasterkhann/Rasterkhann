@@ -12,6 +12,7 @@ import { doesTownHaveFeature, featureByName, getCurrentStat } from '../helpers';
 import { BuildingData } from '../static';
 import { AdventureService } from './adventure.service';
 import { HeroService } from './hero.service';
+import { LoggerService } from './logger.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +23,8 @@ export class GameService {
   constructor(
     private store: Store,
     private advCreator: AdventureService,
-    private heroCreator: HeroService
+    private heroCreator: HeroService,
+    public logger: LoggerService
   ) {
     this.init();
   }

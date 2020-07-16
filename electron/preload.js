@@ -6,6 +6,8 @@ const { compressToUTF16, decompressFromUTF16 } = require('lz-string');
 
 const folder = os.homedir() + '/Documents/Rasterkhann';
 const savefileLoc = path.join(folder, 'Rasterkhann.sav');
+const logLoc = path.join(folder, 'game.log');
+const errorLogLoc = path.join(folder, 'error.log');
 
 window.isDownloaded = true;
 
@@ -28,4 +30,12 @@ window.loadCurrentSavefile = () => {
     
     return {};
   }
+};
+
+window.log = (data) => {
+  fs.appendFileSync(logLoc, data);
+};
+
+window.errorLog = (data) => {
+  fs.appendFileSync(errorLog, data);
 };
