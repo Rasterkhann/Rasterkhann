@@ -8,7 +8,7 @@ import { Observable, Subscription, combineLatest } from 'rxjs';
 import { GameState } from '../../../../states';
 import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait, ItemType, HeroItem } from '../../../../interfaces';
 import { GameService } from '../../../../services/game.service';
-import { calculateHeroMaxTotal, calculateProspectiveHeroMaxTotal } from '../../../../helpers';
+import { calculateHeroMaxTotal } from '../../../../helpers';
 import { TraitEffects } from '../../../../static';
 import { HeroService } from '../../../../services/hero.service';
 
