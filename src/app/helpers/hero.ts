@@ -1,5 +1,5 @@
 
-import { shuffle, take, random, noop } from 'lodash';
+import { shuffle, take, random, noop, uniq } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
@@ -28,7 +28,16 @@ export function calculateMaxHeldPotions(town: IGameTown, hero: Hero): number {
 }
 
 export function allEquippableWeapons(town: IGameTown, hero: Hero): WeaponSubType[] {
-  return JobEffects[hero.job].validWeaponTypes;
+  const base = JobEffects[hero.job].validWeaponTypes;
+
+  Object.values(WeaponSubType).forEach(subType => {
+    if (subType === WeaponSubType.Arrow) { return; }
+    if (!doesHeroHaveTrait(hero, `${subType} User` as Trait)) { return; }
+
+    base.push(subType);
+  });
+  
+  return uniq(base);
 }
 
 export function canEquipWeapon(town: IGameTown, hero: Hero, item: HeroWeapon): boolean {

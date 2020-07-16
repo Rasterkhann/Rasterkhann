@@ -196,6 +196,58 @@ export const LibraryFeatures: BuildingFeature[] = [
     }
   },
   {
+    name: 'Trait: Small Weapon Proficiency',
+    description: 'Heroes can also use small weapons.',
+    cost: 100000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 7,
+    requiresFeature: {
+      'Small Weapons': 1
+    },
+    unlocks: {
+      trait: ['Shuriken User', 'Katar User']
+    }
+  },
+  {
+    name: 'Trait: Martial Weapon Proficiency',
+    description: 'Heroes can also use martial weapons.',
+    cost: 100000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 10,
+    requiresFeature: {
+      'Martial Weapons': 1
+    },
+    unlocks: {
+      trait: ['Spear User', 'Mace User']
+    }
+  },
+  {
+    name: 'Trait: Ranged Weapon Proficiency',
+    description: 'Heroes can also use ranged weapons.',
+    cost: 100000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 19,
+    requiresFeature: {
+      'Ranged Weapons': 1
+    },
+    unlocks: {
+      trait: ['Longbow User', 'Shortbow User']
+    }
+  },
+  {
+    name: 'Trait: Magical Weapon Proficiency',
+    description: 'Heroes can also use magical weapons.',
+    cost: 100000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 15,
+    requiresFeature: {
+      'Magical Weapons': 1
+    },
+    unlocks: {
+      trait: ['Staff User', 'Wand User']
+    }
+  },
+  {
     name: 'Item Traits II',
     description: 'Unlock basic tier II item traits.',
     cost: 250000n,

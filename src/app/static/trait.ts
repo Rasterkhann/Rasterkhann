@@ -1,6 +1,6 @@
 
 import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait,
-  BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait } from '../interfaces';
+  BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait, WeaponUseTrait } from '../interfaces';
 import { ensureHeroStatValue } from '../helpers/trait';
 
 const BaseBadTraits: Record<BadTrait, TraitEffect> = {
@@ -389,6 +389,75 @@ const FirstTierGoodTraits: Record<FirstTierGoodTrait, TraitEffect> = {
   },
 };
 
+export const WeaponTraits: Record<WeaponUseTrait, TraitEffect> = {
+  'Sword User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use swords.',
+    triggers: {}
+  },
+  'Knife User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use knives.',
+    triggers: {}
+  },
+  'Katar User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use katars.',
+    triggers: {}
+  },
+  'Hatchet User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use hatchets.',
+    triggers: {}
+  },
+  'Spear User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use spears.',
+    triggers: {}
+  },
+  'Mace User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use maces.',
+    triggers: {}
+  },
+  'Staff User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use staves.',
+    triggers: {}
+  },
+  'Shuriken User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use shuriken.',
+    triggers: {}
+  },
+  'Wand User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use wands.',
+    triggers: {}
+  },
+  'Shortbow User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use shortbows.',
+    triggers: {}
+  },
+  'Longbow User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use longbows.',
+    triggers: {}
+  },
+};
+
 export const GearTraits: Record<GearTrait, TraitEffect> = {
   'Multi-armed': {
     priority: TraitPriority.Any,
@@ -417,5 +486,6 @@ export const TraitEffects: Record<Trait, TraitEffect> = {
   ...SimplePositiveTraits,
   ...SimpleNegativeTraits,
   ...FirstTierGoodTraits,
+  ...WeaponTraits,
   ...GearTraits
 };
