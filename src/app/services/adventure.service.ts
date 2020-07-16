@@ -21,12 +21,15 @@ export class AdventureService {
 
     const ticks = Array(encounterCount).fill(600).map(() => sample([75, 150, 300, 600, 1200])) as number[];
 
+    const possibleAdventureLevels = town.recruitedHeroes.map(h => h.currentStats[HeroStat.LVL]);
+    const adventureLevel = sample(possibleAdventureLevels) as number;
+
     const adventure: Adventure = {
       uuid: uuid(),
       name: adventureName(),
       difficulty,
       duration: sum(ticks),
-      encounterLevel: random(1, town.buildings[Building.Cave].level),
+      encounterLevel: Math.min(adventureLevel, town.buildings[Building.Cave].level) || random(1, town.buildings[Building.Cave].level),
       encounterTicks: ticks,
       encounterCount,
       activeHeroes: []
