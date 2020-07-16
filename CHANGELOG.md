@@ -1,3 +1,19 @@
+## [0.5.19](https://github.com/seiyria/Rasterkhann/compare/v0.5.18...v0.5.19) (2020-07-16)
+
+
+### Bug Fixes
+
+* **guildhall:** in some cases, you would not be able to buy your next hero but the window would show 3/4 ([7ae71f6](https://github.com/seiyria/Rasterkhann/commit/7ae71f6815d29f92cd772f8686e7ab3392fa66ba)), closes [#41](https://github.com/seiyria/Rasterkhann/issues/41)
+* **ui:** modal no longer can obscure gold. it is moved left ([81123ac](https://github.com/seiyria/Rasterkhann/commit/81123ac189ee89af47f086bce3b014d32fbf110c)), closes [#40](https://github.com/seiyria/Rasterkhann/issues/40)
+
+
+### Features
+
+* **core:** in downloadable version, back up savefile if it exists but failed to load ([5401c62](https://github.com/seiyria/Rasterkhann/commit/5401c62bae5e6785ecaab6ff0895d5df0a63b092)), closes [#42](https://github.com/seiyria/Rasterkhann/issues/42)
+* **ui:** show rush cost when it's available ([1a07707](https://github.com/seiyria/Rasterkhann/commit/1a07707e8574d40d9b2d86eea176c3811e65b794)), closes [#47](https://github.com/seiyria/Rasterkhann/issues/47)
+
+
+
 ## [0.5.18](https://github.com/seiyria/Rasterkhann/compare/v0.5.17...v0.5.18) (2020-07-15)
 
 
