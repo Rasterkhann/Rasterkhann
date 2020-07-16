@@ -43,6 +43,7 @@ export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: Her
 }
 
 export function addCombatLogToTown(town: IGameTown, log: CombatLog): void {
+  town.combatLogs = town.combatLogs || [];
   town.combatLogs.unshift(log);
   if (town.combatLogs.length > 10) { town.combatLogs.length = 10; }
 }
