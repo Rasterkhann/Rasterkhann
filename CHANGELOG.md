@@ -1,3 +1,18 @@
+## [0.5.21](https://github.com/seiyria/Rasterkhann/compare/v0.5.20...v0.5.21) (2020-07-16)
+
+
+### Bug Fixes
+
+* **item:** only show passed over indicator in bazaar ([71c1032](https://github.com/seiyria/Rasterkhann/commit/71c1032bec9f68e3c063be34ad01000bd18a4769))
+
+
+### Features
+
+* **hero:** show what weapons are usable by heroes ([8823dd3](https://github.com/seiyria/Rasterkhann/commit/8823dd3f23257514e7bdc8423ce96bdd8358fc15))
+* **trait:** add weapon proficiency traits ([05b6a05](https://github.com/seiyria/Rasterkhann/commit/05b6a05ea03a9cbb2a97d59c9f737879471c14a1)), closes [#49](https://github.com/seiyria/Rasterkhann/issues/49)
+
+
+
 ## [0.5.20](https://github.com/seiyria/Rasterkhann/compare/v0.5.19...v0.5.20) (2020-07-16)
 
 
