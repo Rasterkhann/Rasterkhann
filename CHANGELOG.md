@@ -1,3 +1,13 @@
+## [0.5.20](https://github.com/seiyria/Rasterkhann/compare/v0.5.19...v0.5.20) (2020-07-16)
+
+
+### Features
+
+* **core:** add logging service ([385c847](https://github.com/seiyria/Rasterkhann/commit/385c8473ddf9787ab0d3512ec36448548a3f2bb4)), closes [#2](https://github.com/seiyria/Rasterkhann/issues/2)
+* **item:** add times passed over indicator for items ([d6d125c](https://github.com/seiyria/Rasterkhann/commit/d6d125c1fb88e50ea418f42080abc6e4ab1d0f3e))
+
+
+
 ## [0.5.19](https://github.com/seiyria/Rasterkhann/compare/v0.5.18...v0.5.19) (2020-07-16)
 
 
