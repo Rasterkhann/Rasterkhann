@@ -3,7 +3,7 @@ import { shuffle, take, random, noop } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
-  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon } from '../interfaces';
+  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon, WeaponSubType } from '../interfaces';
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
@@ -27,8 +27,12 @@ export function calculateMaxHeldPotions(town: IGameTown, hero: Hero): number {
   return base;
 }
 
-export function canEquipWeapon(hero: Hero, item: HeroWeapon): boolean {
-  return JobEffects[hero.job].validWeaponTypes.includes(item.subType);
+export function allEquippableWeapons(town: IGameTown, hero: Hero): WeaponSubType[] {
+  return JobEffects[hero.job].validWeaponTypes;
+}
+
+export function canEquipWeapon(town: IGameTown, hero: Hero, item: HeroWeapon): boolean {
+  return allEquippableWeapons(town, hero).includes(item.subType);
 }
 
 export function unequipItem(hero: Hero, unequippedItem: HeroItem): void {
