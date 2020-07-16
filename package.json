@@ -68,9 +68,6 @@
     "win": {
       "artifactName": "${productName}.${ext}",
       "icon": "src/assets/favicon/android-chrome-512x512.png",
-      "publish": [
-        "github"
-      ],
       "target": [
         "nsis"
       ]
