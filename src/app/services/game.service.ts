@@ -64,7 +64,7 @@ export class GameService {
     return BuildingData[building].levelCost(level);
   }
 
-  public rushCost(building: Building, level = 1): bigint {
+  public buildingRushCost(building: Building, level = 1): bigint {
     return this.buildingCost(building, level) / 2n;
   }
 
@@ -119,7 +119,7 @@ export class GameService {
       if (!isConstructing || isConstructing === 1) { return false; }
     }
 
-    const nextLevelCost = this.rushCost(building, this.nextLevelForBuilding(town, building));
+    const nextLevelCost = this.buildingRushCost(building, this.nextLevelForBuilding(town, building));
     if (nextLevelCost === 0n) { return false; }
 
     return town.gold >= nextLevelCost;
@@ -163,7 +163,7 @@ export class GameService {
 
     this.store.dispatch(new RushBuilding(building))
       .subscribe(() => {
-        this.store.dispatch(new SpendGold(this.rushCost(building, this.nextLevelForBuilding(town, building))));
+        this.store.dispatch(new SpendGold(this.buildingRushCost(building, this.nextLevelForBuilding(town, building))));
       });
   }
 

@@ -7,6 +7,9 @@
     <p *ngIf="!town.buildings[buildingId]?.constructionDoneAt && game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) > 0">
       Next Level Cost: {{ game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) | bignum }} gold
     </p>
+    <p *ngIf="town.buildings[buildingId].level > 0 && game.canRushBuilding(town, buildingId)">
+      Rush Cost: {{ game.buildingRushCost(buildingId, game.nextLevelForBuilding(town, buildingId)) | bignum }} gold
+    </p>
     <p *ngIf="town.buildings[buildingId]?.constructionDoneAt > 1">
       Construction done in <countdown [config]="{ stopTime: town.buildings[buildingId].constructionDoneAt }"></countdown>
     </p>
