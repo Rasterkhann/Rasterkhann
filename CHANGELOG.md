@@ -1,3 +1,12 @@
+## [0.5.24](https://github.com/seiyria/Rasterkhann/compare/v0.5.23...v0.5.24) (2020-07-16)
+
+
+### Features
+
+* **logs:** add win gold/xp to logs ([8f9858d](https://github.com/seiyria/Rasterkhann/commit/8f9858ddcf0e4c1d00281e7e29e998558c370005)), closes [#54](https://github.com/seiyria/Rasterkhann/issues/54)
+
+
+
 ## [0.5.23](https://github.com/seiyria/Rasterkhann/compare/v0.5.22...v0.5.23) (2020-07-16)
 
 
