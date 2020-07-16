@@ -20,7 +20,7 @@
     <ng-container *ngFor="let log of town.combatLogs">
       <ion-item-divider sticky="true" class="log-header">
         <ion-label class="ion-text-wrap">
-          <h3>{{ log.advName }}</h3>
+          <h3><ion-icon [name]="log.wasSuccess ? 'checkmark-outline' : 'close-outline'"></ion-icon> {{ log.advName }}</h3>
           <h4>{{ formatDifficulty(log.advDifficulty) }} &middot; Lv.{{ log.advLevel }} &middot; Encounter {{ log.encNum + 1 }}/{{ log.advEncounters }}</h4>
           <p>{{ log.timestamp | date:'mediumTime' }}</p>
         </ion-label>

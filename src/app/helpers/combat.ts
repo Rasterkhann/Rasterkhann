@@ -70,7 +70,8 @@ class CombatTracker implements Combat {
       advDifficulty: adventure.difficulty,
       encNum: adventure.encounterCount - adventure.encounterTicks.length,
       timestamp: Date.now(),
-      logs: []
+      logs: [],
+      wasSuccess: false
     };
 
     // generate 1-2 monsters per hero
@@ -102,6 +103,8 @@ class CombatTracker implements Combat {
 
     // if they can still fight, they won
     if (canTeamFight(heroes)) {
+
+      this.combatLog.wasSuccess = true;
 
       // run pre-combat triggers
       heroes.forEach(hero => {

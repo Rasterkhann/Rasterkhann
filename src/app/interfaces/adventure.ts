@@ -27,6 +27,7 @@ export interface CombatLog {
   encNum: number;
   timestamp: number;
   logs: string[];
+  wasSuccess: boolean;
 }
 
 export interface Combat {
