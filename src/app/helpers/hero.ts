@@ -272,7 +272,10 @@ export function generateMonster(town: IGameTown, adventure: Adventure): Hero {
   ensureHeroStatValue(baseHero, HeroStat.GOLD, 0);
   ensureHeroStatValue(baseHero, HeroStat.EXP,  100);
 
-  baseHero.currentStats[HeroStat.GOLD] *= baseHero.currentStats[HeroStat.LVL];
+  // randomly give them gold because gold is nice
+  const goldMult = random(baseHero.currentStats[HeroStat.LVL] * 0.05, baseHero.currentStats[HeroStat.LVL] * 0.10);
+  baseHero.currentStats[HeroStat.GOLD] *= adventure.difficulty;
+  baseHero.currentStats[HeroStat.GOLD] *= goldMult;
 
   return baseHero;
 }
