@@ -1,3 +1,18 @@
+## [0.5.25](https://github.com/seiyria/Rasterkhann/compare/v0.5.24...v0.5.25) (2020-07-17)
+
+
+### Bug Fixes
+
+* **loader:** verify combatLogs exists [how did this pass migration?] ([aebb938](https://github.com/seiyria/Rasterkhann/commit/aebb9381289c5c1c30b44da18ae1906512ad094e))
+
+
+### Features
+
+* **guildhall:** show traits on prospective heroes to avoid a click ([02e050a](https://github.com/seiyria/Rasterkhann/commit/02e050ac8aa8c96b90b82b727dfff768007258b1))
+* **rush:** rush cost goes down as time remaining goes down ([ae092a5](https://github.com/seiyria/Rasterkhann/commit/ae092a59701b87b22e6dc76f7d501d525d1d1df3))
+
+
+
 ## [0.5.24](https://github.com/seiyria/Rasterkhann/compare/v0.5.23...v0.5.24) (2020-07-16)
 
 
