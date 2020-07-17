@@ -94,6 +94,7 @@ ion-button:not(.in-toolbar) {
   font-size: 0.9rem;
 
 }
+
 @media only screen and (min-height: 768px) and (min-width: 768px) {
   .sc-ion-modal-md-h {
     justify-content: flex-start;
@@ -101,4 +102,8 @@ ion-button:not(.in-toolbar) {
       --width: 60%;
       --height: calc(100% - 210px);
   }
+}
+
+.alert-wrapper {
+  outline: 1px solid #530053;
 }
