@@ -11,6 +11,8 @@
       {{ hero.name }} ({{ hero.job.substring(0, 3).toUpperCase() }} Lv.{{ hero.stats.lvl }})
     </h3>
 
+    <p *ngIf="showTraits">Traits: {{ hero.traits.join(', ') }}</p>
+
     <p *ngIf="!cost">Status: {{ status }}</p>
 
     <p *ngIf="cost">Recruitment Fee: {{ cost | bignum }} gold</p>
