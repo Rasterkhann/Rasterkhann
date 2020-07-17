@@ -16,7 +16,7 @@
         Next Level Cost: {{ game.buildingFeatureCost(buildingId, feature.name) | bignum }} gold
       </p>
       <p *ngIf="game.canRushBuildingFeature(town, buildingId, feature.name)">
-        Rush Cost: {{ game.buildingFeatureRushCost(buildingId, feature.name) | bignum }} gold
+        Rush Cost: {{ game.buildingFeatureRushCost(town, buildingId, feature.name) | bignum }} gold
       </p>
       <p *ngIf="town.buildings[buildingId].featureConstruction && town.buildings[buildingId].featureConstruction[feature.name] > 1">
         Feature done in <countdown [config]="{ stopTime: town.buildings[buildingId].featureConstruction[feature.name] }"></countdown>

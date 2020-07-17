@@ -66,16 +66,32 @@ export class GameService {
     return BuildingData[building].levelCost(level);
   }
 
-  public buildingRushCost(building: Building, level = 1): bigint {
-    return this.buildingCost(building, level) / 2n;
+  public buildingRushCost(town: IGameTown, building: Building, level = 1): bigint {
+    const doneAt = town.buildings[building].constructionDoneAt;
+    const startedAt = town.buildings[building].constructionStartedAt;
+    const baseCost = this.buildingCost(building, level) / 2n;
+    if (!doneAt || !startedAt) { return baseCost; }
+
+    const secondsTotal = (doneAt - startedAt) / 1000;
+    const secondsLeft = (doneAt - Date.now()) / 1000;
+
+    return BigInt(Math.floor(Number(baseCost) * (secondsLeft / secondsTotal)));
   }
 
   public buildingFeatureCost(building: Building, feature: string): bigint {
     return this.featureByName(building, feature).cost;
   }
 
-  public buildingFeatureRushCost(building: Building, feature: string): bigint {
-    return this.buildingFeatureCost(building, feature) / 2n;
+  public buildingFeatureRushCost(town: IGameTown, building: Building, feature: string): bigint {
+    const doneAt = town.buildings[building].featureConstruction[feature];
+    const startedAt = town.buildings[building].featureConstruction[`${feature}-start`];
+    const baseCost = this.buildingFeatureCost(building, feature) / 2n;
+    if (!doneAt || !startedAt) { return baseCost; }
+
+    const secondsTotal = (doneAt - startedAt) / 1000;
+    const secondsLeft = (doneAt - Date.now()) / 1000;
+
+    return BigInt(Math.floor(Number(baseCost) * (secondsLeft / secondsTotal)));
   }
 
   public buildingFeatureTime(building: Building, feature: string): number {
@@ -121,7 +137,7 @@ export class GameService {
       if (!isConstructing || isConstructing === 1) { return false; }
     }
 
-    const nextLevelCost = this.buildingRushCost(building, this.nextLevelForBuilding(town, building));
+    const nextLevelCost = this.buildingRushCost(town, building, this.nextLevelForBuilding(town, building));
     if (nextLevelCost === 0n) { return false; }
 
     return town.gold >= nextLevelCost;
@@ -145,7 +161,7 @@ export class GameService {
       if (!isConstructing || isConstructing === 1) { return false; }
     }
 
-    const nextLevelCost = this.buildingFeatureRushCost(building, feature);
+    const nextLevelCost = this.buildingFeatureRushCost(town, building, feature);
     if (nextLevelCost === 0n) { return false; }
 
     return this.canSeeBuildingFeature(town, building, feature) && town.gold >= nextLevelCost;
@@ -165,7 +181,7 @@ export class GameService {
 
     this.store.dispatch(new RushBuilding(building))
       .subscribe(() => {
-        this.store.dispatch(new SpendGold(this.buildingRushCost(building, this.nextLevelForBuilding(town, building))));
+        this.store.dispatch(new SpendGold(this.buildingRushCost(town, building, this.nextLevelForBuilding(town, building))));
       });
   }
 
@@ -183,7 +199,7 @@ export class GameService {
 
     this.store.dispatch(new RushBuildingFeature(building, feature))
       .subscribe(() => {
-        this.store.dispatch(new SpendGold(this.buildingFeatureRushCost(building, feature)));
+        this.store.dispatch(new SpendGold(this.buildingFeatureRushCost(town, building, feature)));
       });
   }
 

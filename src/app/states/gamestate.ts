@@ -163,6 +163,7 @@ export class GameState {
       Object.keys(town.buildings).forEach((building: Building) => {
         const constructionDoneAt = town.buildings[building].constructionDoneAt;
         if (constructionDoneAt && constructionDoneAt < now) {
+          town.buildings[building].constructionStartedAt = 0;
           town.buildings[building].constructionDoneAt = 0;
           town.buildings[building].level += 1;
 
@@ -170,8 +171,11 @@ export class GameState {
         }
 
         Object.keys(town.buildings[building].featureConstruction || {}).forEach(feature => {
+          if (feature.includes('-start')) { return; }
+
           const featureDoneAt = town.buildings[building].featureConstruction[feature];
           if (featureDoneAt && featureDoneAt < now) {
+            delete town.buildings[building].featureConstruction[`${feature}-start`];
             delete town.buildings[building].featureConstruction[feature];
             town.buildings[building].features = town.buildings[building].features || {};
             town.buildings[building].features[feature] = town.buildings[building].features[feature] || 0;
@@ -193,6 +197,7 @@ export class GameState {
       const town = getCurrentTownFromState(state);
 
       const buildingRef = town.buildings[building];
+      buildingRef.constructionStartedAt = Date.now();
       buildingRef.constructionDoneAt = Date.now() + (GLOBAL_TIME_MULTIPLIER * BuildingData[building].upgradeTime(buildingRef.level + 1));
 
       this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has started construction for level ${town.buildings[building].level + 1}!`));
@@ -219,6 +224,7 @@ export class GameState {
       const town = getCurrentTownFromState(state);
 
       town.buildings[building].featureConstruction = town.buildings[building].featureConstruction || {};
+      town.buildings[building].featureConstruction[`${feature}-start`] = Date.now();
       town.buildings[building].featureConstruction[feature] = Date.now() + (GLOBAL_TIME_MULTIPLIER * constructionTime);
 
       this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has started work for the feature "${feature}"!`));

@@ -31,6 +31,7 @@ export enum BuildingFeatureTime {
 
 export interface BuildingInfo {
   level: number;
+  constructionStartedAt?: number;
   constructionDoneAt?: number;
   features: Record<string, number>;
   featureConstruction: Record<string, number>;
