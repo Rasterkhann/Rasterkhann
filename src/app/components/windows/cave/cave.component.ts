@@ -30,11 +30,11 @@ export class CaveComponent implements OnInit {
   }
 
   public get expModifier(): number {
-    return getTownExpMultiplier(this.town) * 100;
+    return (getTownExpMultiplier(this.town) - 1) * 100;
   }
 
   public get goldModifier(): number {
-    return getTownGoldMultiplier(this.town) * 100;
+    return (getTownGoldMultiplier(this.town) - 1) * 100;
   }
 
   constructor(private modal: ModalController) { }

@@ -155,8 +155,8 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolea
   const goldMult = getTownGoldMultiplier(town);
 
   const baseReward = adventure.encounterCount * adventure.encounterLevel * adventure.difficulty;
-  const expReward = Math.floor(10 * baseReward * expMult);
-  const goldReward = Math.floor(baseReward * goldMult);
+  const expReward = Math.floor(100 * baseReward * expMult);
+  const goldReward = Math.floor(10 * baseReward * goldMult);
 
   let didSucceed = false;
 

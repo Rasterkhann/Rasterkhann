@@ -8,7 +8,7 @@ import { addCombatLogToTown, doesTownHaveFeature, formatNumber } from './global'
 import { getActionsForWeapon } from './weapon';
 
 export function getTownExpMultiplier(town: IGameTown): number {
-  let base = 0.1;
+  let base = 1.1;
 
   if (doesTownHaveFeature(town, 'Monster Experience I'))   { base += 0.1; }
   if (doesTownHaveFeature(town, 'Monster Experience II'))  { base += 0.1; }
@@ -18,7 +18,7 @@ export function getTownExpMultiplier(town: IGameTown): number {
 }
 
 export function getTownGoldMultiplier(town: IGameTown): number {
-  let base = 0.3;
+  let base = 1.3;
 
   if (doesTownHaveFeature(town, 'Monster Gold I'))   { base += 0.15; }
   if (doesTownHaveFeature(town, 'Monster Gold II'))  { base += 0.15; }
