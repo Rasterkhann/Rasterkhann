@@ -5,7 +5,7 @@ import { Hero, Adventure, IGameTown, HeroStat, HeroActionTargetting,
   HeroAction, TriggerType, ItemType, CombatLog, Combat, HeroTrackedStat } from '../interfaces';
 import { generateMonster, checkHeroLevelUp } from './hero';
 import { JobEffects } from '../static';
-import { addCombatLogToTown, doesTownHaveFeature, formatNumber, getCurrentStat, giveHeroEXP, giveHeroGold, increaseTrackedStat } from './global';
+import { addCombatLogToTown, doesTownHaveFeature, formatNumber, getCurrentStat, giveHeroEXP, giveHeroGold, increaseTrackedStat, getHeroTag } from './global';
 import { getActionsForWeapon } from './weapon';
 
 export function getTownExpMultiplier(town: IGameTown): number {
@@ -221,8 +221,7 @@ class CombatTracker implements Combat {
   }
 
   public getHeroTag(hero: Hero): string {
-    const bracketed = `[HP ${hero.currentStats[HeroStat.HP]}/SP ${hero.currentStats[HeroStat.SP]}/STA ${hero.currentStats[HeroStat.STA]}]`;
-    return `${hero.name} ${bracketed}`;
+    return getHeroTag(hero);
   }
 
   public addLogEntry(logEntry: string): void {

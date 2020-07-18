@@ -5,6 +5,7 @@ import { random } from 'lodash';
 import { HeroJobStatic, HeroJob, HeroStat, TriggerType, WeaponSubType } from '../interfaces';
 
 import * as JobActions from './actions';
+import * as JobActionMessages from './action-messages';
 
 export const JobEffects: Record<HeroJob, HeroJobStatic> = {
   [HeroJob.Adventurer]: {
@@ -37,7 +38,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     triggers: {},
     combatTriggers: {},
-    actions: [JobActions.Attack()],
+    actions: [JobActions.Attack(JobActionMessages.AttackMessage)],
     validWeaponTypes: [WeaponSubType.Hatchet, WeaponSubType.Sword, WeaponSubType.Knife, WeaponSubType.Longbow, WeaponSubType.Shortbow]
   },
 
@@ -68,9 +69,12 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     triggers: {},
     combatTriggers: {
-      [TriggerType.PostCombat]: [JobActions.HealAllPercent(10)]
+      [TriggerType.PostCombat]: [JobActions.HealAllPercent(JobActionMessages.HealMessage, 10)]
     },
-    actions: [JobActions.Attack(), JobActions.Heal()],
+    actions: [
+      JobActions.Attack(JobActionMessages.AttackMessage),
+      JobActions.Heal(JobActionMessages.HealMessage)
+    ],
     validWeaponTypes: [WeaponSubType.Mace, WeaponSubType.Staff]
   },
 
@@ -101,9 +105,12 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     triggers: {},
     combatTriggers: {
-      [TriggerType.PreCombat]: [JobActions.AttackAllPercent(15)]
+      [TriggerType.PreCombat]: [JobActions.AttackAllPercent(JobActionMessages.FireballMessage, 15)]
     },
-    actions: [JobActions.Attack(), JobActions.AttackAllDiminishing()],
+    actions: [
+      JobActions.Attack(JobActionMessages.AttackMessage),
+      JobActions.AttackAllDiminishing(JobActionMessages.MagicMissileMessage)
+    ],
     validWeaponTypes: [WeaponSubType.Wand, WeaponSubType.Staff]
   },
 
@@ -134,9 +141,9 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     triggers: {},
     combatTriggers: {
-      [TriggerType.Victory]: [JobActions.EarnGold(50)]
+      [TriggerType.Victory]: [JobActions.EarnGold(JobActionMessages.FindGoldMessage, 50)]
     },
-    actions: [JobActions.Attack()],
+    actions: [JobActions.Attack(JobActionMessages.AttackMessage)],
     validWeaponTypes: [WeaponSubType.Knife, WeaponSubType.Katar, WeaponSubType.Shuriken]
   },
 
@@ -167,9 +174,12 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     triggers: {},
     combatTriggers: {
-      [TriggerType.PreCombat]: [JobActions.AttackSinglePercent(30)]
+      [TriggerType.PreCombat]: [JobActions.AttackSinglePercent(JobActionMessages.CleaveMessage, 30)]
     },
-    actions: [JobActions.Attack(), JobActions.AttackSinglePercent(5)],
+    actions: [
+      JobActions.Attack(JobActionMessages.AttackMessage),
+      JobActions.AttackSinglePercent(JobActionMessages.HamstringMessage, 5)
+    ],
     validWeaponTypes: [WeaponSubType.Sword, WeaponSubType.Hatchet, WeaponSubType.Spear, WeaponSubType.Mace]
   }
 };

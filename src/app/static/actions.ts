@@ -1,7 +1,7 @@
 
 import { sample, random } from 'lodash';
 
-import { Combat, Hero, HeroAction, HeroActionTargetting, HeroStat } from '../interfaces';
+import { Combat, Hero, HeroAction, HeroActionTargetting, HeroStat, HeroActionStringReplacer } from '../interfaces';
 import { getCurrentStat, giveHeroGold } from '../helpers/global';
 
 function heal(creature: Hero, healed: number): void {
@@ -17,7 +17,8 @@ function calculateDamage(atk: number, def: number): number {
 }
 
 // ***** ATTACK ABILITIES ***** //
-export const Attack: () => HeroAction = () => ({
+export const Attack: (replacer: HeroActionStringReplacer) => HeroAction
+                   = (replacer: HeroActionStringReplacer) => ({
   staCost: () => 1,
   spCost: () => 0,
   targets: (targetting: HeroActionTargetting) => {
@@ -28,12 +29,14 @@ export const Attack: () => HeroAction = () => ({
       const damage = calculateDamage(getCurrentStat(hero, HeroStat.ATK), getCurrentStat(target, HeroStat.DEF));
       takeDamage(target, damage);
 
-      combat.addLogEntry(`${combat.getHeroTag(hero)} attacked ${target.name} for ${damage} HP!`);
+      const message = replacer.replace({ source: hero, target, value: damage });
+      combat.addLogEntry(message);
     });
   }
 });
 
-export const AttackAll: () => HeroAction = () => ({
+export const AttackAll: (replacer: HeroActionStringReplacer) => HeroAction
+                      = (replacer: HeroActionStringReplacer) => ({
   staCost: () => 3,
   spCost: () => 3,
   targets: (targetting: HeroActionTargetting) => {
@@ -44,12 +47,14 @@ export const AttackAll: () => HeroAction = () => ({
       const damage = calculateDamage(getCurrentStat(hero, HeroStat.ATK), getCurrentStat(target, HeroStat.DEF));
       takeDamage(target, damage);
 
-      combat.addLogEntry(`${combat.getHeroTag(hero)} attacked ${target.name} for ${damage} HP!`);
+      const message = replacer.replace({ source: hero, target, value: damage });
+      combat.addLogEntry(message);
     });
   }
 });
 
-export const AttackAllDiminishing: () => HeroAction = () => ({
+export const AttackAllDiminishing: (replacer: HeroActionStringReplacer) => HeroAction
+                                 = (replacer: HeroActionStringReplacer) => ({
   staCost: () => 5,
   spCost: () => 3,
   targets: (targetting: HeroActionTargetting) => {
@@ -60,12 +65,14 @@ export const AttackAllDiminishing: () => HeroAction = () => ({
       const damage = calculateDamage(getCurrentStat(hero, HeroStat.ATK) / targets.length, getCurrentStat(target, HeroStat.DEF));
       takeDamage(target, damage);
 
-      combat.addLogEntry(`${combat.getHeroTag(hero)} attacked ${target.name} for ${damage} HP!`);
+      const message = replacer.replace({ source: hero, target, value: damage });
+      combat.addLogEntry(message);
     });
   }
 });
 
-export const AttackSinglePercent: (pct: number) => HeroAction = (pct: number) => ({
+export const AttackSinglePercent: (replacer: HeroActionStringReplacer, pct: number) => HeroAction
+                                = (replacer: HeroActionStringReplacer, pct: number) => ({
   staCost: () => 4,
   spCost: () => 5,
   targets: (targetting: HeroActionTargetting) => {
@@ -76,12 +83,14 @@ export const AttackSinglePercent: (pct: number) => HeroAction = (pct: number) =>
       const damage = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
       takeDamage(target, damage);
 
-      combat.addLogEntry(`${combat.getHeroTag(hero)} attacked ${target.name} for ${damage} HP!`);
+      const message = replacer.replace({ source: hero, target, value: damage });
+      combat.addLogEntry(message);
     });
   }
 });
 
-export const AttackAllPercent: (pct: number) => HeroAction = (pct: number) => ({
+export const AttackAllPercent: (replacer: HeroActionStringReplacer, pct: number) => HeroAction
+                             = (replacer: HeroActionStringReplacer, pct: number) => ({
   staCost: () => 7,
   spCost: () => 5,
   targets: (targetting: HeroActionTargetting) => {
@@ -92,13 +101,15 @@ export const AttackAllPercent: (pct: number) => HeroAction = (pct: number) => ({
       const damage = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
       takeDamage(target, damage);
 
-      combat.addLogEntry(`${combat.getHeroTag(hero)} attacked ${target.name} for ${damage} HP!`);
+      const message = replacer.replace({ source: hero, target, value: damage });
+      combat.addLogEntry(message);
     });
   }
 });
 
 // ***** HEALING ABILITIES ***** //
-export const Heal: () => HeroAction = () => ({
+export const Heal: (replacer: HeroActionStringReplacer) => HeroAction
+                 = (replacer: HeroActionStringReplacer) => ({
   staCost: () => 5,
   spCost: () => 10,
   targets: (targetting: HeroActionTargetting) => {
@@ -109,12 +120,14 @@ export const Heal: () => HeroAction = () => ({
       const healed = getCurrentStat(hero, HeroStat.DEF);
       heal(target, healed);
 
-      combat.addLogEntry(`${combat.getHeroTag(hero)} healed ${target.name} for ${healed} HP!`);
+      const message = replacer.replace({ source: hero, target, value: healed });
+      combat.addLogEntry(message);
     });
   }
 });
 
-export const HealPercent: (pct: number) => HeroAction = (pct: number) => ({
+export const HealPercent: (replacer: HeroActionStringReplacer, pct: number) => HeroAction
+                        = (replacer: HeroActionStringReplacer, pct: number) => ({
   staCost: () => 7,
   spCost: () => 10,
   targets: (targetting: HeroActionTargetting) => {
@@ -125,12 +138,14 @@ export const HealPercent: (pct: number) => HeroAction = (pct: number) => ({
       const healed = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
       heal(target, healed);
 
-      combat.addLogEntry(`${combat.getHeroTag(hero)} healed ${target.name} for ${healed} HP!`);
+      const message = replacer.replace({ source: hero, target, value: healed });
+      combat.addLogEntry(message);
     });
   }
 });
 
-export const HealAllPercent: (pct: number) => HeroAction = (pct: number) => ({
+export const HealAllPercent: (replacer: HeroActionStringReplacer, pct: number) => HeroAction
+                           = (replacer: HeroActionStringReplacer, pct: number) => ({
   staCost: () => 10,
   spCost: () => 7,
   targets: (targetting: HeroActionTargetting) => {
@@ -141,13 +156,15 @@ export const HealAllPercent: (pct: number) => HeroAction = (pct: number) => ({
       const healed = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
       heal(target, healed);
 
-      combat.addLogEntry(`${combat.getHeroTag(hero)} healed ${target.name} for ${healed} HP!`);
+      const message = replacer.replace({ source: hero, target, value: healed });
+      combat.addLogEntry(message);
     });
   }
 });
 
 // ***** GOLD ABILITIES ***** //
-export const EarnGold: (gold: number) => HeroAction = (gold: number = 0) => ({
+export const EarnGold: (replacer: HeroActionStringReplacer, gold: number) => HeroAction
+                     = (replacer: HeroActionStringReplacer, gold: number = 0) => ({
   staCost: () => 5,
   spCost: () => 3,
   targets: (targetting: HeroActionTargetting) => {
@@ -158,7 +175,8 @@ export const EarnGold: (gold: number) => HeroAction = (gold: number = 0) => ({
       const earnedGold = target.currentStats[HeroStat.LVL] * gold;
       giveHeroGold(target, earnedGold);
 
-      combat.addLogEntry(`${combat.getHeroTag(hero)} found ${earnedGold} GOLD!`);
+      const message = replacer.replace({ source: hero, target, value: earnedGold });
+      combat.addLogEntry(message);
     });
   }
 });

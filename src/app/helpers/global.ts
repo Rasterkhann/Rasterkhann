@@ -108,3 +108,8 @@ export function giveHeroGold(hero: Hero, gold: number): void {
   hero.currentStats[HeroStat.GOLD] = Math.max(0, Math.floor(hero.currentStats[HeroStat.GOLD] + gold));
   increaseTrackedStat(hero, HeroTrackedStat.GoldEarned, gold);
 }
+
+export function getHeroTag(hero: Hero): string {
+  const bracketed = `[HP ${hero.currentStats[HeroStat.HP]}/SP ${hero.currentStats[HeroStat.SP]}/STA ${hero.currentStats[HeroStat.STA]}]`;
+  return `${hero.name} ${bracketed}`;
+}

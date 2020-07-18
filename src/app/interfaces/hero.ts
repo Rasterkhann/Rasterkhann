@@ -61,6 +61,16 @@ export interface HeroAction {
   act: (combat: Combat, hero: Hero, targets: Hero[]) => void;
 }
 
+export interface HeroActionReplaceOpts {
+  source: Hero;
+  target: Hero;
+  value: number;
+}
+
+export interface HeroActionStringReplacer {
+  replace: (opts: HeroActionReplaceOpts) => string;
+}
+
 export interface HeroGear {
   [ItemType.Potion]: HeroItem[];
   [ItemType.Armor]: HeroArmor[];
