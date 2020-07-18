@@ -1,4 +1,4 @@
-import { Hero, HeroStat } from './hero';
+import { Hero, HeroStat, HeroJob } from './hero';
 
 export enum TriggerType {
 
@@ -79,4 +79,5 @@ export interface TraitEffect {
   valueProp: TraitValueProp;
   description: string;
   triggers: Partial<Record<TriggerType, TraitTriggerFunction>>;
+  cantAttachToClass?: HeroJob[];
 }

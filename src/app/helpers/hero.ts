@@ -113,10 +113,16 @@ export function calculateAvailableJobs(town: IGameTown): HeroJob[] {
   return [HeroJob.Adventurer].concat(filteredUnlocksEarnedByTown(town, 'job'));
 }
 
-export function calculateAvailableTraits(town: IGameTown): Trait[] {
+export function calculateAvailableTraits(town: IGameTown, job: HeroJob): Trait[] {
   const baseTraits = ['Weak', 'Frail', 'Ill', 'Clumsy', 'Reclusive', 'Sedentary', 'Poor', 'Inexperienced'] as Trait[];
   const bonusTraits = filteredUnlocksEarnedByTown(town, 'trait') as Trait[];
-  return baseTraits.concat(bonusTraits);
+  return baseTraits
+    .concat(bonusTraits)
+    .filter(trait => {
+      const invalidClasses = TraitEffects[trait].cantAttachToClass;
+      if (!invalidClasses) { return true; }
+      return !invalidClasses.includes(job);
+    });
 }
 
 export function calculateProspectiveHeroMaxTotal(town: IGameTown): number {
@@ -161,10 +167,11 @@ export function generateHero(town: IGameTown, level?: number): Hero {
   const generateLevel = level || town.buildings[Building.GuildHall].level || 1;
 
   const allJobs = calculateAvailableJobs(town);
-  const allTraits = calculateAvailableTraits(town);
+  const job = take(shuffle(allJobs))[0];
+
+  const allTraits = calculateAvailableTraits(town, job);
   const maxTraits = calculateMaxNumberOfTraits(town);
 
-  const job = take(shuffle(allJobs))[0];
   const numTraits = random(1, maxTraits);
   const traits: Trait[] = [];
 

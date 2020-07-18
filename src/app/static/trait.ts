@@ -1,6 +1,6 @@
 
 import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait,
-  BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait, WeaponUseTrait } from '../interfaces';
+  BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait, WeaponUseTrait, HeroJob } from '../interfaces';
 import { ensureHeroStatValue } from '../helpers/trait';
 import { giveHeroGold } from '../helpers/global';
 
@@ -395,66 +395,77 @@ export const WeaponTraits: Record<WeaponUseTrait, TraitEffect> = {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use swords.',
+    cantAttachToClass: [HeroJob.Warrior, HeroJob.Adventurer],
     triggers: {}
   },
   'Knife User': {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use knives.',
+    cantAttachToClass: [HeroJob.Thief, HeroJob.Adventurer],
     triggers: {}
   },
   'Katar User': {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use katars.',
+    cantAttachToClass: [HeroJob.Thief],
     triggers: {}
   },
   'Hatchet User': {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use hatchets.',
+    cantAttachToClass: [HeroJob.Warrior, HeroJob.Adventurer],
     triggers: {}
   },
   'Spear User': {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use spears.',
+    cantAttachToClass: [HeroJob.Warrior],
     triggers: {}
   },
   'Mace User': {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use maces.',
+    cantAttachToClass: [HeroJob.Warrior, HeroJob.Cleric],
     triggers: {}
   },
   'Staff User': {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use staves.',
+    cantAttachToClass: [HeroJob.Mage, HeroJob.Cleric],
     triggers: {}
   },
   'Shuriken User': {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use shuriken.',
+    cantAttachToClass: [HeroJob.Thief],
     triggers: {}
   },
   'Wand User': {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use wands.',
+    cantAttachToClass: [HeroJob.Mage],
     triggers: {}
   },
   'Shortbow User': {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use shortbows.',
+    cantAttachToClass: [HeroJob.Adventurer],
     triggers: {}
   },
   'Longbow User': {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.Neutral,
     description: 'Hero can additionally use longbows.',
+    cantAttachToClass: [HeroJob.Adventurer],
     triggers: {}
   },
 };
