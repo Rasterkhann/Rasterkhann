@@ -2,6 +2,7 @@
 import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait,
   BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait, WeaponUseTrait } from '../interfaces';
 import { ensureHeroStatValue } from '../helpers/trait';
+import { giveHeroGold } from '../helpers/global';
 
 const BaseBadTraits: Record<BadTrait, TraitEffect> = {
   Weak: {
@@ -362,12 +363,12 @@ const FirstTierGoodTraits: Record<FirstTierGoodTrait, TraitEffect> = {
     description: 'Hero is modest, +500 GOLD (spawn only). +50 GOLD (levelup only).',
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
-        hero.stats[HeroStat.GOLD] += 500;
+        giveHeroGold(hero, 500);
         ensureHeroStatValue(hero, HeroStat.GOLD, 0);
       },
-      [TriggerType.LevelUp]: ({ statBlock }) => {
+      [TriggerType.LevelUp]: ({ hero, statBlock }) => {
         if (!statBlock) { return; }
-        statBlock[HeroStat.GOLD] += 50;
+        giveHeroGold(hero, 50);
       }
     }
   },

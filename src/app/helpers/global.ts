@@ -4,9 +4,8 @@ import { sum } from 'lodash';
 import * as NumberFormat from 'swarm-numberformat';
 
 // this file cannot import any helpers or statics
-import { IGameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog } from '../interfaces';
-import { BuildingData } from '../static';
-import { featureNameToBuildingHash, featureNameToUnlockHash } from './building';
+import { IGameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog, Hero, HeroTrackedStat } from '../interfaces';
+import { featureNameToBuildingHash, featureNameToUnlockHash, getBuildingData } from './building';
 
 export function formatNumber(value: bigint | number): string {
   return NumberFormat.format(value.toString(), { flavor: 'short', sigfigs: 3 });
@@ -64,7 +63,7 @@ export function filteredUnlocksEarnedByTown(town: IGameTown, unlock: keyof Build
 }
 
 export function featureByName(building: Building, feature: string): BuildingFeature {
-  return BuildingData[building].features[feature];
+  return getBuildingData(building).features[feature];
 }
 
 export function canSeeBuildingFeature(town: IGameTown, building: Building, feature: string): boolean {
@@ -85,6 +84,27 @@ export function canSeeBuildingFeature(town: IGameTown, building: Building, featu
 }
 
 export function visibleBuildingFeatures(town: IGameTown, buildingId: Building): BuildingFeature[] {
-  return Object.values(BuildingData[buildingId].features || {})
+  return Object.values(getBuildingData(buildingId).features || {})
           .filter(feature => canSeeBuildingFeature(town, buildingId, feature.name));
+}
+
+export function getCurrentStat(hero: Hero, stat: HeroStat): number {
+  return hero.currentStats[stat];
+}
+
+export function increaseTrackedStat(hero: Hero, stat: HeroTrackedStat, value = 1): void {
+  if (value <= 0) { return; }
+
+  hero.trackedStats[stat] = hero.trackedStats[stat] || 0;
+  hero.trackedStats[stat] += value;
+}
+
+export function giveHeroEXP(hero: Hero, exp: number): void {
+  hero.currentStats[HeroStat.EXP] = Math.max(0, Math.floor(hero.currentStats[HeroStat.EXP] + exp));
+  increaseTrackedStat(hero, HeroTrackedStat.EXPEarned, exp);
+}
+
+export function giveHeroGold(hero: Hero, gold: number): void {
+  hero.currentStats[HeroStat.GOLD] = Math.max(0, Math.floor(hero.currentStats[HeroStat.GOLD] + gold));
+  increaseTrackedStat(hero, HeroTrackedStat.GoldEarned, gold);
 }

@@ -1,6 +1,6 @@
 
 import { BuildingData } from '../static/building'; // this is not a barrel import because that causes a circular dependency loop
-import { Building, BuildingUnlock } from '../interfaces';
+import { Building, BuildingUnlock, BuildingStatic } from '../interfaces';
 
 // get a hash of feature->building for easy lookup later
 // also serves to dupe-check names
@@ -26,3 +26,7 @@ Object.keys(BuildingData).forEach((building: Building) => {
     featureNameToUnlockHash[feature.name] = feature.unlocks || {};
   });
 });
+
+export function getBuildingData(building: Building): BuildingStatic {
+  return BuildingData[building];
+}

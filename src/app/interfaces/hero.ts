@@ -22,6 +22,17 @@ export enum HeroStat {
   GOLD = 'gold'
 }
 
+export enum HeroTrackedStat {
+  TotalAdventures = 'Adventures (Total)',
+  TotalEncounters = 'Encounters (Total)',
+  AdventuresSucceeded = 'Adventures (Won)',
+  EncountersSucceeded = 'Encounters (Won)',
+  ItemsBought = 'Items Bought',
+  PotionsUsed = 'Potions Used',
+  GoldEarned = 'GOLD Earned',
+  EXPEarned = 'EXP Earned'
+}
+
 export interface HeroJobStatic {
   description: string;
   chooseName: () => string;
@@ -69,6 +80,8 @@ export interface Hero {
   stats: Record<HeroStat, number>;
   currentStats: Record<HeroStat, number>;
   gear: HeroGear;
+
+  trackedStats: Record<HeroTrackedStat, number>;
 }
 
 export interface ProspectiveHero {

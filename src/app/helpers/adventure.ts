@@ -1,8 +1,8 @@
-import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat, HeroGear, HeroWeapon, HeroArmor, CombatLog } from '../interfaces';
-import { getTownHeroByUUID, checkHeroLevelUp, giveHeroEXP, giveHeroGold, calculateMaxHeldPotions,
+import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat, HeroGear, HeroWeapon, HeroArmor, CombatLog, HeroTrackedStat } from '../interfaces';
+import { getTownHeroByUUID, checkHeroLevelUp, calculateMaxHeldPotions,
   calculateMaxHeldWeapons, canEquipWeapon, calculateMaxHeldArmors } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
-import { addCombatLogToTown, doesTownHaveFeature, formatNumber } from './global';
+import { addCombatLogToTown, doesTownHaveFeature, formatNumber, giveHeroEXP, giveHeroGold, increaseTrackedStat } from './global';
 
 export function formatDifficulty(difficulty: AdventureDifficulty): string {
   switch (difficulty) {
@@ -113,6 +113,8 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGe
     });
   }
 
+  increaseTrackedStat(hero, HeroTrackedStat.ItemsBought, boughtWeapons.length + boughtArmors.length + potionsHeroWants.length);
+
   return {
     [ItemType.Potion]: potionsHeroWants,
     [ItemType.Armor]: boughtArmors,
@@ -145,7 +147,17 @@ export function tickAdventure(town: IGameTown, adv: Adventure): string | undefin
 export function doAdventureEncounter(town: IGameTown, adventure: Adventure): boolean {
   const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean) as Hero[];
   doCombat(town, chosenHeroes, adventure);
-  return canTeamFight(chosenHeroes);
+
+  const didWin = canTeamFight(chosenHeroes);
+
+  chosenHeroes.forEach(hero => {
+    increaseTrackedStat(hero, HeroTrackedStat.TotalEncounters, 1);
+    if (didWin) {
+      increaseTrackedStat(hero, HeroTrackedStat.EncountersSucceeded, 1);
+    }
+  });
+
+  return didWin;
 }
 
 export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolean {
@@ -158,14 +170,15 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolea
   const expReward = Math.floor(100 * baseReward * expMult);
   const goldReward = Math.floor(10 * baseReward * goldMult);
 
-  let didSucceed = false;
+  const didSucceed = canTeamFight(chosenHeroes);
 
   chosenHeroes.forEach(h => {
     h.onAdventure = '';
+
+    increaseTrackedStat(h, HeroTrackedStat.TotalAdventures, 1);
   });
 
-  if (canTeamFight(chosenHeroes)) {
-    didSucceed = true;
+  if (didSucceed) {
 
     const combatLog: CombatLog = {
       advName: `${adventure.name} Bonus Reward`,
@@ -179,7 +192,10 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolea
     };
 
     chosenHeroes.forEach(h => {
+      increaseTrackedStat(h, HeroTrackedStat.AdventuresSucceeded, 1);
+
       giveHeroEXP(h, expReward);
+      checkHeroLevelUp(h);
       giveHeroGold(h, goldReward);
 
       combatLog.logs.push(`${h.name} earned ${formatNumber(expReward)} EXP and ${formatNumber(goldReward)} GOLD.`);

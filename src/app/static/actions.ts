@@ -2,10 +2,7 @@
 import { sample, random } from 'lodash';
 
 import { Combat, Hero, HeroAction, HeroActionTargetting, HeroStat } from '../interfaces';
-
-function getCurrentStat(hero: Hero, stat: HeroStat): number {
-  return hero.currentStats[stat];
-}
+import { getCurrentStat, giveHeroGold } from '../helpers/global';
 
 function heal(creature: Hero, healed: number): void {
   creature.currentStats[HeroStat.HP] = Math.min(creature.stats[HeroStat.HP], creature.currentStats[HeroStat.HP] + healed);
@@ -159,7 +156,7 @@ export const EarnGold: (gold: number) => HeroAction = (gold: number = 0) => ({
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     targets.forEach(target => {
       const earnedGold = target.currentStats[HeroStat.LVL] * gold;
-      target.currentStats[HeroStat.GOLD] += earnedGold;
+      giveHeroGold(target, earnedGold);
 
       combat.addLogEntry(`${combat.getHeroTag(hero)} found ${earnedGold} GOLD!`);
     });

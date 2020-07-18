@@ -72,7 +72,7 @@
         <ion-progress-bar color="success" [value]="viewingHero.currentStats.exp / viewingHero.stats.exp"></ion-progress-bar>
       </ion-item>
   
-      <ion-list-header>Stats</ion-list-header>
+      <ion-list-header>Core Stats</ion-list-header>
   
       <ion-item>
         <ion-col class="hero-stat">{{ viewingHero.currentStats.hp | bignum }} / {{ viewingHero.stats.hp | bignum }} HP</ion-col>
@@ -100,6 +100,17 @@
         <ion-item *ngIf="getHeroGearTypeItems(viewingHero, type).length === 0">No {{ type.toLowerCase() }}s.</ion-item>
         <app-item *ngFor="let item of getHeroGearTypeItems(viewingHero, type)" [item]="item"></app-item>
       </ng-container>
+  
+      <ion-list-header>Tracked Statistics</ion-list-header>
+
+      <ion-item *ngFor="let stat of viewingHero.trackedStats | keyvalue">
+        <ion-label>
+          {{ stat.key }}
+        </ion-label>
+        <ion-label slot="end">
+          {{ stat.value | bignum }}
+        </ion-label>
+      </ion-item>
     </ion-list>
   </ng-container>
 </ion-content>

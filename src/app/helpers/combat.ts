@@ -1,10 +1,11 @@
 
 import { random, sample, sum } from 'lodash';
 
-import { Hero, Adventure, IGameTown, HeroStat, HeroActionTargetting, HeroAction, TriggerType, ItemType, CombatLog, Combat } from '../interfaces';
-import { generateMonster, getCurrentStat, giveHeroGold, giveHeroEXP } from './hero';
+import { Hero, Adventure, IGameTown, HeroStat, HeroActionTargetting,
+  HeroAction, TriggerType, ItemType, CombatLog, Combat, HeroTrackedStat } from '../interfaces';
+import { generateMonster, checkHeroLevelUp } from './hero';
 import { JobEffects } from '../static';
-import { addCombatLogToTown, doesTownHaveFeature, formatNumber } from './global';
+import { addCombatLogToTown, doesTownHaveFeature, formatNumber, getCurrentStat, giveHeroEXP, giveHeroGold, increaseTrackedStat } from './global';
 import { getActionsForWeapon } from './weapon';
 
 export function getTownExpMultiplier(town: IGameTown): number {
@@ -121,6 +122,7 @@ class CombatTracker implements Combat {
       heroes.forEach(hero => {
         this.addLogEntry(`${this.getHeroTag(hero)} won combat and earned ${formatNumber(earnedExp)} EXP and ${formatNumber(earnedGold)} GOLD!`);
         giveHeroEXP(hero, earnedExp);
+        checkHeroLevelUp(hero);
         giveHeroGold(hero, earnedGold);
       });
 
@@ -175,6 +177,8 @@ class CombatTracker implements Combat {
         usedPotions.push(potion.uuid);
       }
     });
+
+    increaseTrackedStat(hero, HeroTrackedStat.PotionsUsed, usedPotions.length);
 
     hero.gear[ItemType.Potion] = hero.gear[ItemType.Potion].filter(p => !usedPotions.includes(p.uuid));
 

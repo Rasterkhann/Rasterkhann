@@ -76,6 +76,27 @@ export const migrations = [
     versionKey: 'version',
     migrate: (state: IGameState) => {
       console.log('Savefile version 2...');
+
+      console.log('Migrating heroes to have stats...');
+      state.towns.Rasterkhann.recruitedHeroes.forEach(h => {
+        h.trackedStats = h.trackedStats || {};
+      });
+
+      state.towns.Rasterkhann.prospectiveHeroes.forEach(ph => {
+        ph.hero.trackedStats = ph.hero.trackedStats || {};
+      });
+
+      state.version = 3;
+
+      return state;
+    }
+  },
+  {
+    version: 3,
+    key: 'gamestate',
+    versionKey: 'version',
+    migrate: (state: IGameState) => {
+      console.log('Savefile version 3...');
       return state;
     }
   }

@@ -27,7 +27,7 @@ import {
   calculateMaxCreatableItems,
   generateItem,
   calculateSecondsUntilNextItem,
-  heroBuyItemsBeforeAdventure, unequipItem, equipItem, getCurrentTownItemsForSale, tickAdventure
+  heroBuyItemsBeforeAdventure, unequipItem, equipItem, getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -327,6 +327,7 @@ export class GameState {
       if (!heroRef) { return state; }
 
       giveHeroEXP(heroRef, exp);
+      checkHeroLevelUp(heroRef);
 
       return state;
     });

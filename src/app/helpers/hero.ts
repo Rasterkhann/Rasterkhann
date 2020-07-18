@@ -3,11 +3,11 @@ import { shuffle, take, random, noop, uniq, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
-  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon, WeaponSubType } from '../interfaces';
+  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon, WeaponSubType, HeroTrackedStat } from '../interfaces';
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
-import { filteredUnlocksEarnedByTown, doesTownHaveFeature } from './global';
+import { filteredUnlocksEarnedByTown, doesTownHaveFeature, getCurrentStat } from './global';
 
 export function calculateMaxHeldWeapons(town: IGameTown, hero: Hero): number {
   let base = 1;
@@ -149,10 +149,6 @@ export function calculateHeroTrainingGoldPerXP(town: IGameTown): bigint {
   return base;
 }
 
-export function getCurrentStat(hero: Hero, stat: HeroStat): number {
-  return hero.currentStats[stat];
-}
-
 export function canHeroGoOnAdventure(hero: Hero): boolean {
   return !hero.onAdventure
       && getCurrentStat(hero, HeroStat.STA) === hero.stats[HeroStat.STA]
@@ -210,6 +206,16 @@ export function generateHero(town: IGameTown, level?: number): Hero {
       [ItemType.Potion]: [],
       [ItemType.Weapon]: [],
       [ItemType.Armor]: []
+    },
+    trackedStats: {
+      [HeroTrackedStat.AdventuresSucceeded]: 0,
+      [HeroTrackedStat.EXPEarned]: 0,
+      [HeroTrackedStat.EncountersSucceeded]: 0,
+      [HeroTrackedStat.GoldEarned]: 0,
+      [HeroTrackedStat.ItemsBought]: 0,
+      [HeroTrackedStat.PotionsUsed]: 0,
+      [HeroTrackedStat.TotalAdventures]: 0,
+      [HeroTrackedStat.TotalEncounters]: 0
     }
   };
 
@@ -280,15 +286,6 @@ export function generateMonster(town: IGameTown, adventure: Adventure): Hero {
   baseHero.currentStats[HeroStat.EXP] /= 5;
 
   return baseHero;
-}
-
-export function giveHeroEXP(hero: Hero, exp: number): void {
-  hero.currentStats[HeroStat.EXP] = Math.max(0, Math.floor(hero.currentStats[HeroStat.EXP] + exp));
-  checkHeroLevelUp(hero);
-}
-
-export function giveHeroGold(hero: Hero, gold: number): void {
-  hero.currentStats[HeroStat.GOLD] = Math.max(0, Math.floor(hero.currentStats[HeroStat.GOLD] + gold));
 }
 
 export function checkHeroLevelUp(hero: Hero): void {
