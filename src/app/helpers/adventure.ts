@@ -1,4 +1,5 @@
-import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType, HeroStat, HeroGear, HeroWeapon, HeroArmor, CombatLog, HeroTrackedStat } from '../interfaces';
+import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType,
+  HeroStat, HeroGear, HeroWeapon, HeroArmor, CombatLog, HeroTrackedStat } from '../interfaces';
 import { getTownHeroByUUID, checkHeroLevelUp, calculateMaxHeldPotions,
   calculateMaxHeldWeapons, canEquipWeapon, calculateMaxHeldArmors } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
