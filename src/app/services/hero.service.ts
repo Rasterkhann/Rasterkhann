@@ -89,7 +89,6 @@ export class HeroService {
 
     // multiply by trait rating
     const traitAvgMultiplier = sum(hero.traits.map(t => TraitValueMultipliers[TraitEffects[t].valueProp])) / hero.traits.length;
-    console.log(hero.traits, hero.traits.map(t => TraitEffects[t].valueProp), traitAvgMultiplier);
 
     return statPctComparedToGuildHallLevel * traitAvgMultiplier;
   }
