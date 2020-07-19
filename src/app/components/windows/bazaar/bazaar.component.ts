@@ -1,16 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { IGameTown, ItemType, HeroItem } from '../../../interfaces';
+import { IGameTown, ItemType, HeroItem, Building } from '../../../interfaces';
 import { calculateGlobalCostMultiplier, calculateMaxCreatableItems } from '../../../helpers';
 import { ItemsModalComponent } from './items-modal/items-modal.component';
+import { Store } from '@ngxs/store';
+import { ChooseInfo } from '../../../actions';
 
 @Component({
   selector: 'app-bazaar',
   templateUrl: './bazaar.component.html',
   styleUrls: ['./bazaar.component.scss'],
 })
-export class BazaarComponent implements OnInit {
+export class BazaarComponent implements OnInit, OnChanges {
 
   @Input() town: IGameTown;
   @Input() autoOpen: boolean;
@@ -23,11 +25,23 @@ export class BazaarComponent implements OnInit {
     return [ItemType.Weapon, ItemType.Armor, ItemType.Potion];
   }
 
-  constructor(private modal: ModalController) { }
+  constructor(private modal: ModalController, private store: Store) { }
 
   ngOnInit(): void {
     if (this.autoOpen) {
       this.openItemsWindow();
+      setTimeout(() => {
+        this.store.dispatch(new ChooseInfo(Building.Bazaar, false));
+      }, 0);
+    }
+  }
+
+  ngOnChanges(changes: any): void {
+    if (changes && changes.autoOpen && changes.autoOpen.currentValue && !changes.autoOpen.firstChange) {
+      this.openItemsWindow();
+      setTimeout(() => {
+        this.store.dispatch(new ChooseInfo(Building.Bazaar, false));
+      }, 0);
     }
   }
 

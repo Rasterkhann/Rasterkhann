@@ -1,16 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { IGameTown } from '../../../interfaces';
+import { IGameTown, Building } from '../../../interfaces';
 import { GuildModalComponent } from './guild-modal/guild-modal.component';
 import { calculateAvailableJobs, calculateHeroMaxTotal } from '../../../helpers';
+import { Store } from '@ngxs/store';
+import { ChooseInfo } from '../../../actions';
 
 @Component({
   selector: 'app-guildhall',
   templateUrl: './guildhall.component.html',
   styleUrls: ['./guildhall.component.scss'],
 })
-export class GuildHallComponent implements OnInit {
+export class GuildHallComponent implements OnInit, OnChanges {
 
   @Input() town: IGameTown;
   @Input() autoOpen: boolean;
@@ -23,11 +25,23 @@ export class GuildHallComponent implements OnInit {
     return calculateAvailableJobs(this.town).join(', ');
   }
 
-  constructor(private modal: ModalController) { }
+  constructor(private modal: ModalController, private store: Store) { }
 
   ngOnInit(): void {
     if (this.autoOpen) {
       this.openGuildWindow();
+      setTimeout(() => {
+        this.store.dispatch(new ChooseInfo(Building.GuildHall, false));
+      }, 0);
+    }
+  }
+
+  ngOnChanges(changes: any): void {
+    if (changes && changes.autoOpen && changes.autoOpen.currentValue && !changes.autoOpen.firstChange) {
+      this.openGuildWindow();
+      setTimeout(() => {
+        this.store.dispatch(new ChooseInfo(Building.GuildHall, false));
+      }, 0);
     }
   }
 
