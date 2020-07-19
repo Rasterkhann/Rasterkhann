@@ -55,7 +55,7 @@ export function afterDeserialize(obj: IGameState): IGameState {
 
       try {
         calculateOfflineAdventureProgress(obj);
-      } catch(e) {
+      } catch (e) {
         console.error('Could not do adventure catch-up. Skipping...');
       }
     }
