@@ -53,7 +53,11 @@ export function afterDeserialize(obj: IGameState): IGameState {
       const bonusGold = calculateOfflineGold(obj);
       obj.towns[obj.currentTown].gold += bonusGold;
 
-      calculateOfflineAdventureProgress(obj);
+      try {
+        calculateOfflineAdventureProgress(obj);
+      } catch(e) {
+        console.error('Could not do adventure catch-up. Skipping...');
+      }
     }
 
   } catch (e) {
