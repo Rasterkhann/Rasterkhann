@@ -33,7 +33,7 @@
         <ion-button class="ion-margin-end thin-button" 
                     fill="outline" 
                     [disabled]="!game.canRerollHeroes(town)"
-                    (click)="game.rerollProspectiveHeroes(town, true)">Reroll for {{ game.heroRerollCost(town) | bignum }} gold</ion-button>
+                    (click)="rerollHeroes(town)">Reroll for {{ game.heroRerollCost(town) | bignum }} gold</ion-button>
       </ion-list-header>
   
       <ion-item *ngIf="(prospectiveHeroes$ | async)?.length === 0">There are no prospective heroes.</ion-item>

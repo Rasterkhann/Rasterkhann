@@ -30,7 +30,7 @@
         <ion-button class="ion-margin-end thin-button" 
                     fill="outline" 
                     [disabled]="!game.canRerollAdventures(town)"
-                    (click)="game.rerollAdventures(town, true)">Reroll for {{ game.adventureRerollCost(town) | bignum }} gold</ion-button>
+                    (click)="rerollAdventures(town)">Reroll for {{ game.adventureRerollCost(town) | bignum }} gold</ion-button>
       </ion-list-header>
   
       <ion-item *ngIf="(potentialAdventures$ | async)?.length === 0">There are no potential adventures.</ion-item>

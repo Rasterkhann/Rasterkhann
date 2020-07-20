@@ -29,6 +29,12 @@ export class AdventureModalComponent implements OnInit {
     this.modal.dismiss();
   }
 
+  rerollAdventures(town: IGameTown): void {
+    setTimeout(() => {
+      this.game.rerollAdventures(town, true);
+    }, 0);
+  }
+
   public simultaneousAdventures(town: IGameTown): number {
     return calculateMaxActiveAdventures(town);
   }
