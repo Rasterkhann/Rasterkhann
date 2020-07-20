@@ -32,7 +32,7 @@ export class AdventureModalComponent implements OnInit {
   rerollAdventures(town: IGameTown): void {
     setTimeout(() => {
       this.game.rerollAdventures(town, true);
-    }, 0);
+    }, 100);
   }
 
   public simultaneousAdventures(town: IGameTown): number {
