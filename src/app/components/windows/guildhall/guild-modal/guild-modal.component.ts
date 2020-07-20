@@ -9,7 +9,7 @@ import { GameState } from '../../../../states';
 import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait, ItemType, HeroItem } from '../../../../interfaces';
 import { GameService } from '../../../../services/game.service';
 import { allEquippableWeapons, calculateHeroMaxTotal, formatNumber } from '../../../../helpers';
-import { TraitEffects } from '../../../../static';
+import { JobEffects, TraitEffects } from '../../../../static';
 import { HeroService } from '../../../../services/hero.service';
 
 @Component({
@@ -34,6 +34,11 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   public get itemTypes(): ItemType[] {
     return [ItemType.Weapon, ItemType.Armor, ItemType.Potion];
+  }
+
+  public get viewingHeroJobDescription(): string {
+    if (!this.viewingHero) { return ''; }
+    return JobEffects[this.viewingHero.job].description;
   }
 
   public viewingProspectiveHero: ProspectiveHero | null;

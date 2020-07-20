@@ -5,11 +5,11 @@
       Guild Recruits
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button *ngIf="viewingHero" color="secondary" (click)="unviewHero()">
-        Back
-      </ion-button>
       <ion-button *ngIf="!viewingProspectiveHero && viewingHero && !viewingHero.onAdventure" color="danger" (click)="dismissCurrentHero()">
         Dismiss
+      </ion-button>
+      <ion-button *ngIf="viewingHero" color="secondary" (click)="unviewHero()">
+        Back
       </ion-button>
       <ion-button (click)="dismiss()">
         Close
@@ -52,7 +52,9 @@
   
         <ion-label class="ion-text-wrap">
           <h2>{{ viewingHero.name }}</h2>
-          <p>Lv.{{ viewingHero.stats.lvl }} {{ viewingHero.job }}</p>
+          <p>
+            Lv.{{ viewingHero.stats.lvl }} {{ viewingHero.job }} &middot; {{ viewingHeroJobDescription }}
+          </p>
           <p>
             Usable Weapons: {{ getAllWeaponsForViewingHero().join(', ') }}
           </p>

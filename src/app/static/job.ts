@@ -43,7 +43,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
   },
 
   [HeroJob.Cleric]: {
-    description: 'Combat healer. Post-combat revives.',
+    description: 'Combat healer. Post-combat heals.',
     chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['cleric1', 'cleric2', 'cleric3', 'cleric4'],
     costMultiplier: 4,
@@ -79,7 +79,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
   },
 
   [HeroJob.Mage]: {
-    description: 'AoE specialist. Pre-combat spread.',
+    description: 'AoE specialist. Pre-combat AoE burst.',
     chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['mage1', 'mage2', 'mage3', 'mage4'],
     costMultiplier: 5,
@@ -115,7 +115,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
   },
 
   [HeroJob.Thief]: {
-    description: 'Sneaky robber. Post-combat gold.',
+    description: 'Sneaky robber. Post-combat gold gain.',
     chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['thief1', 'thief2', 'thief3', 'thief4'],
     costMultiplier: 3.5,
@@ -148,7 +148,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
   },
 
   [HeroJob.Warrior]: {
-    description: 'Powerful damager. Pre-combat nukes.',
+    description: 'Powerful ST damager. Pre-combat ST nuke.',
     chooseName: () => species.human({ allowMultipleNames: true }),
     sprites: ['warrior1', 'warrior2', 'warrior3', 'warrior4'],
     costMultiplier: 10,
