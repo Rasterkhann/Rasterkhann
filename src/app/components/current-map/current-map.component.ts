@@ -24,7 +24,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
     return Object.keys(this.town.buildings || {}) as Building[];
   }
 
-  private renderer: any;
+  private app: any;
   private tileMap: any;
 
   private spriteMap: Record<string, any> = {};
@@ -44,14 +44,19 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
     (window as any).PIXI.settings.PRECISION_FRAGMENT = 'highp';
     (window as any).PIXI.utils.skipHello();
-    this.renderer = (window as any).PIXI.autoDetectRenderer(480, 480, { antialias: false, transparent: true });
-    this.renderer.roundPixels = true;
-    this.container.nativeElement.appendChild(this.renderer.view);
 
-    this.renderer.view.style.width = '100%';
-    this.renderer.view.style.height = '100%';
+    this.app = new (window as any).PIXI.Application({
+      width: 480,
+      height: 480,
+      resolution: window.devicePixelRatio || 1,
+      transparent: true,
+      antialias: false
+    });
 
-    this.renderer.resolution = 1;
+    this.container.nativeElement.appendChild(this.app.view);
+
+    this.app.renderer.view.style.width = '100%';
+    this.app.renderer.view.style.height = '100%';
 
     (window as any).PIXI.loader
       .add('assets/game/town/Rasterkhann.tmx')
@@ -110,9 +115,10 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
               // add abovedot
               this.featureMap[obj.name] = (window as any).PIXI.Sprite.from('assets/game/ui/orb.png');
-              this.featureMap[obj.name].x = obj.x + 4;
-              this.featureMap[obj.name].y = obj.y - 28;
+              this.featureMap[obj.name].x = obj.x + 8;
+              this.featureMap[obj.name].y = obj.y - 24;
               this.featureMap[obj.name].visible = false;
+              this.featureMap[obj.name].anchor.set(0.5);
 
               this.tileMap.addChild(this.featureMap[obj.name]);
             }
@@ -129,7 +135,9 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
           this.currentSprite.y = buildingTextPos.y - 20;
         });
 
-        this.render();
+        this.app.stage.addChild(this.tileMap);
+
+        this.addAnimations();
       });
   }
 
@@ -156,12 +164,16 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
     if (this.textMap[buildingName]) {
       this.textMap[buildingName].visible = visible;
     }
-
-    this.render();
   }
 
-  private render(): void {
-    this.renderer.render(this.tileMap);
+  private addAnimations(): void {
+    this.app.ticker.add((delta: number) => {
+      Object.values(this.featureMap).forEach(sprite => {
+        sprite.rotation -= 0.05 * delta;
+      });
+
+      this.currentSprite.y -= 0.02 * delta;
+    });
   }
 
 }
