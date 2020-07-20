@@ -26,7 +26,7 @@
       <ion-list-header>Recruited Heroes ({{ (recruitedHeroes$ | async)?.length }}/{{ maxHeroes }})</ion-list-header>
   
       <ion-item *ngIf="(recruitedHeroes$ | async)?.length === 0">You have no recruited heroes.</ion-item>
-      <app-hero *ngFor="let hero of recruitedHeroes$ | async" [town]="town" [hero]="hero" (click)="viewHero(hero)"></app-hero>
+      <app-hero *ngFor="let hero of (recruitedHeroes$ | async); trackBy: trackHeroBy" [town]="town" [hero]="hero" (click)="viewHero(hero)"></app-hero>
   
       <ion-list-header class="ion-margin-top">
         <ion-label>Potential Hero Recruits</ion-label>

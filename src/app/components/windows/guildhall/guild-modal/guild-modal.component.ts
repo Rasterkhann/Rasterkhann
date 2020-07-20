@@ -68,6 +68,10 @@ export class GuildModalComponent implements OnDestroy, OnInit {
     if (this.activeHeroes$) { this.activeHeroes$.unsubscribe(); }
   }
 
+  trackHeroBy(hero: Hero): string {
+    return hero.uuid;
+  }
+
   dismiss(): void {
     this.modal.dismiss();
   }
