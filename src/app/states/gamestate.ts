@@ -395,8 +395,10 @@ export class GameState {
       increaseTrackedStat(heroRef, HeroTrackedStat.OddJobsDone);
       increaseTrackedStat(heroRef, HeroTrackedStat.OddJobsMoney, heroRef.currentlyWorkingEarned);
 
-      const totalEarned = formatNumber(heroRef.currentlyWorkingEarned);
-      this.store.dispatch(new NotifyMessage(`${heroRef.name} earned ${totalEarned} GOLD from working at the ${building}!`));
+      if(heroRef.currentlyWorkingEarned > 0) {
+        const totalEarned = formatNumber(heroRef.currentlyWorkingEarned);
+        this.store.dispatch(new NotifyMessage(`${heroRef.name} earned ${totalEarned} GOLD from working at the ${building}!`));
+      }
 
       return state;
     });
