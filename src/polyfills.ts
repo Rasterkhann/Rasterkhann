@@ -64,3 +64,6 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+import BigInt from 'bigint-polyfill';
+(window as any).BigInt = window.BigInt || BigInt;

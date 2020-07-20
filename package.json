@@ -91,6 +91,7 @@
     "@ngxs/store": "3.6.2",
     "@seiyria/pixi-tiledmap": "1.12.0",
     "async-lz-string": "1.0.1",
+    "bigint-polyfill": "0.1.0",
     "decimal.js": "10.2.0",
     "discord-rpc": "3.1.1",
     "electron-config": "2.0.0",
