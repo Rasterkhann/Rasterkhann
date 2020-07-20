@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext } from '@ngxs-labs/immer-adapter';
-import { sample, sum } from 'lodash';
+import { sample, sum, random } from 'lodash';
 
 import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
@@ -28,7 +28,7 @@ import {
   generateItem,
   calculateSecondsUntilNextItem,
   heroBuyItemsBeforeAdventure, unequipItem, equipItem,
-  getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp, getCurrentTownFreeOddJobBuildings, increaseTrackedStat
+  getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp, getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -278,6 +278,7 @@ export class GameState {
 
       town.recruitedHeroes.forEach(h => {
         if (h.onAdventure || h.currentlyWorkingAt || !canHeroGoOnAdventure(h)) { return; }
+        if (random(1, 10) !== 1) { return; }
 
         this.store.dispatch(new HeroStartOddJob(h.uuid));
       });
@@ -285,7 +286,15 @@ export class GameState {
       town.recruitedHeroes.forEach(h => {
         if (!h.currentlyWorkingAt) { return; }
 
-        this.store.dispatch(new HeroGainGold(h.uuid, town.buildings[h.currentlyWorkingAt].level));
+        const earnedGold = town.buildings[h.currentlyWorkingAt].level;
+
+        h.currentlyWorkingTicks = h.currentlyWorkingTicks || 0;
+        h.currentlyWorkingTicks++;
+
+        h.currentlyWorkingEarned = h.currentlyWorkingEarned || 0;
+        h.currentlyWorkingEarned += earnedGold;
+
+        this.store.dispatch(new HeroGainGold(h.uuid, earnedGold));
       });
 
       return state;
@@ -361,7 +370,11 @@ export class GameState {
       if (!building) { return state; }
 
       heroRef.currentlyWorkingAt = building;
+      heroRef.currentlyWorkingTicks = 0;
+      heroRef.currentlyWorkingEarned = 0;
       town.buildings[building].currentWorkerId = heroId;
+
+      this.store.dispatch(new NotifyMessage(`${heroRef.name} has begun working at the ${building}!`));
 
       return state;
     });
@@ -375,10 +388,15 @@ export class GameState {
       const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
       if (!heroRef || !heroRef.currentlyWorkingAt) { return state; }
 
-      town.buildings[heroRef.currentlyWorkingAt].currentWorkerId = null;
+      const building = heroRef.currentlyWorkingAt;
+      town.buildings[building].currentWorkerId = null;
       heroRef.currentlyWorkingAt = null;
 
       increaseTrackedStat(heroRef, HeroTrackedStat.OddJobsDone);
+      increaseTrackedStat(heroRef, HeroTrackedStat.OddJobsMoney, heroRef.currentlyWorkingEarned);
+
+      const totalEarned = formatNumber(heroRef.currentlyWorkingEarned);
+      this.store.dispatch(new NotifyMessage(`${heroRef.name} earned ${totalEarned} GOLD from working at the ${building}!`));
 
       return state;
     });

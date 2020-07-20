@@ -32,7 +32,8 @@ export enum HeroTrackedStat {
   PotionsUsed = 'Potions Used',
   GoldEarned = 'GOLD Earned',
   EXPEarned = 'EXP Earned',
-  OddJobsDone = 'Odd Jobs'
+  OddJobsDone = 'Odd Jobs',
+  OddJobsMoney = 'Odd Jobs Earnings'
 }
 
 export interface HeroJobStatic {
@@ -86,6 +87,8 @@ export interface Hero {
 
   onAdventure: string;
   currentlyWorkingAt: Building | null;
+  currentlyWorkingTicks: number;
+  currentlyWorkingEarned: number;
 
   job: HeroJob;
   traits: Trait[];

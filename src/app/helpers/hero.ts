@@ -206,6 +206,8 @@ export function generateHero(town: IGameTown, level?: number): Hero {
     sprite: take(shuffle(jobStatic.sprites))[0],
     onAdventure: '',
     currentlyWorkingAt: null,
+    currentlyWorkingTicks: 0,
+    currentlyWorkingEarned: 0,
 
     job,
     traits,
@@ -226,7 +228,8 @@ export function generateHero(town: IGameTown, level?: number): Hero {
       [HeroTrackedStat.PotionsUsed]: 0,
       [HeroTrackedStat.TotalAdventures]: 0,
       [HeroTrackedStat.TotalEncounters]: 0,
-      [HeroTrackedStat.OddJobsDone]: 0
+      [HeroTrackedStat.OddJobsDone]: 0,
+      [HeroTrackedStat.OddJobsMoney]: 0
     }
   };
 
