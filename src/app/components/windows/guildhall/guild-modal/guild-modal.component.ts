@@ -85,11 +85,10 @@ export class GuildModalComponent implements OnDestroy, OnInit {
     return this.town.gold > prosHero.cost && this.canBuyHeroes;
   }
 
-  rerollHeroes(ev: Event, town: IGameTown): void {
-    ev.preventDefault();
+  rerollHeroes(town: IGameTown): void {
     setTimeout(() => {
       this.game.rerollProspectiveHeroes(town, true);
-    }, 0);
+    }, 100);
   }
 
   getHeroGearTypeItems(hero: Hero, type: ItemType): HeroItem[] {
