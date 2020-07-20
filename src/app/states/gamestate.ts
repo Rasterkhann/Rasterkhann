@@ -2,16 +2,16 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext } from '@ngxs-labs/immer-adapter';
-import { sum } from 'lodash';
+import { sample, sum } from 'lodash';
 
 import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, UpgradeBuildingFeature, RerollHeroes,
   RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
-  ScrapItem, RushBuilding, RushBuildingFeature
+  ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob
 } from '../actions';
 import {
-  IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem
+  IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat
 } from '../interfaces';
 import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
@@ -27,7 +27,8 @@ import {
   calculateMaxCreatableItems,
   generateItem,
   calculateSecondsUntilNextItem,
-  heroBuyItemsBeforeAdventure, unequipItem, equipItem, getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp
+  heroBuyItemsBeforeAdventure, unequipItem, equipItem,
+  getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp, getCurrentTownFreeOddJobBuildings, increaseTrackedStat
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -248,7 +249,7 @@ export class GameState {
   // hero functions
   @Action(GameLoop)
   @ImmutableContext()
-  restHeroes({ setState }: StateContext<IGameState>): void {
+  heroLoop({ setState }: StateContext<IGameState>): void {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
@@ -273,6 +274,18 @@ export class GameState {
         if (canHeroGoOnAdventure(h)) {
           this.store.dispatch(new NotifyMessage(`${h.name} is now fully rested and ready to adventure again!`));
         }
+      });
+
+      town.recruitedHeroes.forEach(h => {
+        if (h.onAdventure || h.currentlyWorkingAt || !canHeroGoOnAdventure(h)) { return; }
+
+        this.store.dispatch(new HeroStartOddJob(h.uuid));
+      });
+
+      town.recruitedHeroes.forEach(h => {
+        if (!h.currentlyWorkingAt) { return; }
+
+        this.store.dispatch(new HeroGainGold(h.uuid, town.buildings[h.currentlyWorkingAt].level));
       });
 
       return state;
@@ -320,10 +333,10 @@ export class GameState {
 
   @Action(HeroGainEXP)
   @ImmutableContext()
-  heroGainExp({ setState }: StateContext<IGameState>, { hero, exp }: HeroGainEXP): void {
+  heroGainExp({ setState }: StateContext<IGameState>, { heroId, exp }: HeroGainEXP): void {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
-      const heroRef = town.recruitedHeroes.find(h => h.uuid === hero.uuid);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
       if (!heroRef) { return state; }
 
       giveHeroEXP(heroRef, exp);
@@ -333,12 +346,50 @@ export class GameState {
     });
   }
 
-  @Action(HeroGainGold)
+  @Action(HeroStartOddJob)
   @ImmutableContext()
-  heroGainGold({ setState }: StateContext<IGameState>, { hero, gold }: HeroGainGold): void {
+  heroStartOddJob({ setState }: StateContext<IGameState>, { heroId }: HeroStartOddJob): void {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
-      const heroRef = town.recruitedHeroes.find(h => h.uuid === hero.uuid);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef || heroRef.onAdventure) { return state; }
+
+      const buildings = getCurrentTownFreeOddJobBuildings(state);
+      if (buildings.length === 0) { return state; }
+
+      const building = sample(buildings);
+      if (!building) { return state; }
+
+      heroRef.currentlyWorkingAt = building;
+      town.buildings[building].currentWorkerId = heroId;
+
+      return state;
+    });
+  }
+
+  @Action(HeroStopOddJob)
+  @ImmutableContext()
+  heroStopOddJob({ setState }: StateContext<IGameState>, { heroId }: HeroStopOddJob): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef || !heroRef.currentlyWorkingAt) { return state; }
+
+      town.buildings[heroRef.currentlyWorkingAt].currentWorkerId = null;
+      heroRef.currentlyWorkingAt = null;
+
+      increaseTrackedStat(heroRef, HeroTrackedStat.OddJobsDone);
+
+      return state;
+    });
+  }
+
+  @Action(HeroGainGold)
+  @ImmutableContext()
+  heroGainGold({ setState }: StateContext<IGameState>, { heroId, gold }: HeroGainGold): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
       if (!heroRef) { return state; }
 
       giveHeroGold(heroRef, gold);
@@ -383,6 +434,8 @@ export class GameState {
       heroes.forEach(h => {
         town.recruitedHeroes.forEach((rh, i) => {
           if (h.uuid !== rh.uuid) { return; }
+
+          this.store.dispatch(new HeroStopOddJob(rh.uuid));
 
           town.recruitedHeroes[i] = { ...rh };
           town.recruitedHeroes[i].onAdventure = adventure.uuid;
@@ -451,11 +504,13 @@ export class GameState {
       });
 
       const modAdventure = { ...adventure };
+      const isThereACaveWorkerMultiplier = town.buildings[Building.Cave].currentWorkerId ? 0.75 : 1;
+      const totalMultiplier = isThereACaveWorkerMultiplier * ADVENTURE_TIME_MULTIPLIER;
 
       modAdventure.activeHeroes = heroes.map(h => h.uuid);
 
       // scale these down for dev to make testing less painful
-      modAdventure.encounterTicks = modAdventure.encounterTicks.map(x => x * ADVENTURE_TIME_MULTIPLIER);
+      modAdventure.encounterTicks = modAdventure.encounterTicks.map(x => Math.floor(Math.max(1, x * totalMultiplier)));
 
       state.towns[state.currentTown].activeAdventures.push(modAdventure);
       state.towns[state.currentTown].potentialAdventures = state.towns[state.currentTown].potentialAdventures

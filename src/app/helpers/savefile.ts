@@ -68,7 +68,7 @@ export function afterDeserialize(obj: IGameState): IGameState {
 }
 
 export function createBuildingAtLevel(level: number, features = {}): BuildingInfo {
-  return { level, features, featureConstruction: {} };
+  return { level, features, featureConstruction: {}, currentWorkerId: '' };
 }
 
 export function createBasicTown(name: string): IGameTown {

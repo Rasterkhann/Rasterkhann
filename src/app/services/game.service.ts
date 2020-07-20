@@ -255,7 +255,7 @@ export class GameService {
     const expNeeded = hero.stats[HeroStat.EXP] - getCurrentStat(hero, HeroStat.EXP);
     const cost = this.heroCreator.heroTrainCost(town, hero);
 
-    this.store.dispatch(new HeroGainEXP(hero, expNeeded))
+    this.store.dispatch(new HeroGainEXP(hero.uuid, expNeeded))
       .subscribe(() => {
         this.store.dispatch(new SpendGold(cost));
       });

@@ -13,7 +13,9 @@ export function formatNumber(value: bigint | number): string {
 
 export function calculateGlobalCostMultiplier(town: IGameTown): number {
   let multiplier = 1;
+
   multiplier += 0.01 * town.buildings[Building.Bazaar].level;
+  if (town.buildings[Building.Bazaar].currentWorkerId)  { multiplier += 0.25; }
   if (doesTownHaveFeature(town, 'Better Prices'))       { multiplier += 0.1; }
   if (doesTownHaveFeature(town, 'Even Better Prices'))  { multiplier += 0.1; }
   if (doesTownHaveFeature(town, 'Higher Prices'))       { multiplier += 0.1; }

@@ -35,6 +35,7 @@ export interface BuildingInfo {
   constructionDoneAt?: number;
   features: Record<string, number>;
   featureConstruction: Record<string, number>;
+  currentWorkerId: string | null;
 }
 
 export interface BuildingFeature {

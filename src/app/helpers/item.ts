@@ -27,12 +27,13 @@ export function calculateMaxCreatableItems(town: IGameTown, itemType: ItemType):
 export function calculateSecondsUntilNextItem(town: IGameTown, itemType: ItemType): number {
   let base = 0;
 
-  if (town.buildings[buildingsRequiredPerItemType[itemType]].level > 0) { base += 900; }
-  if (doesTownHaveFeature(town, `Faster ${itemType} Creation I`))       { base -= 150; }
-  if (doesTownHaveFeature(town, `Faster ${itemType} Creation II`))      { base -= 150; }
-  if (doesTownHaveFeature(town, `Faster ${itemType} Creation III`))     { base -= 150; }
+  if (town.buildings[buildingsRequiredPerItemType[itemType]].level > 0)       { base += 900; }
+  if (doesTownHaveFeature(town, `Faster ${itemType} Creation I`))             { base -= 150; }
+  if (doesTownHaveFeature(town, `Faster ${itemType} Creation II`))            { base -= 150; }
+  if (doesTownHaveFeature(town, `Faster ${itemType} Creation III`))           { base -= 150; }
+  if (town.buildings[buildingsRequiredPerItemType[itemType]].currentWorkerId) { base /= 2; }
 
-  return base;
+  return Math.floor(base);
 }
 
 export function generateItem(town: IGameTown, itemType: ItemType): HeroItem {

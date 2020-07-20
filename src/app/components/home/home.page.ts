@@ -4,10 +4,10 @@ import { Observable, forkJoin, combineLatest, interval } from 'rxjs';
 import { first, throttle } from 'rxjs/operators';
 import { sample } from 'lodash';
 
-import { GameService } from '../services/game.service';
-import { GameState } from '../states';
-import { IGameTown, ProspectiveHero, Adventure, GameOption, Building, IGameState } from '../interfaces';
-import { getCurrentTownFromState, getCurrentTownCanDoAnyAdventures } from '../helpers';
+import { GameService } from '../../services/game.service';
+import { GameState } from '../../states';
+import { IGameTown, ProspectiveHero, Adventure, GameOption, Building, IGameState } from '../../interfaces';
+import { getCurrentTownFromState, getCurrentTownCanDoAnyAdventures } from '../../helpers';
 
 @Component({
   selector: 'app-home',

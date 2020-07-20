@@ -82,6 +82,7 @@ export function calculateRestingRate(town: IGameTown): number {
   let baseRate = 1;
 
   if (town.buildings[Building.Inn])                 { baseRate += 1; }
+  if (town.buildings[Building.Inn].currentWorkerId) { baseRate += 3; }
   if (doesTownHaveFeature(town, 'Restful Sleep'))   { baseRate += 1; }
   if (doesTownHaveFeature(town, 'Blissful Sleep'))  { baseRate += 2; }
 
@@ -93,6 +94,7 @@ export function calculateRestingCost(town: IGameTown): number {
   let baseRate = 0;
 
   if (town.buildings[Building.Inn])                 { baseRate += town.buildings[Building.Inn].level; }
+  if (town.buildings[Building.Inn].currentWorkerId) { baseRate += 25; }
   if (doesTownHaveFeature(town, 'Restful Sleep'))   { baseRate += 50; }
   if (doesTownHaveFeature(town, 'Blissful Sleep'))  { baseRate += 100; }
 
@@ -203,6 +205,7 @@ export function generateHero(town: IGameTown, level?: number): Hero {
     name: jobStatic.chooseName(),
     sprite: take(shuffle(jobStatic.sprites))[0],
     onAdventure: '',
+    currentlyWorkingAt: null,
 
     job,
     traits,
@@ -222,7 +225,8 @@ export function generateHero(town: IGameTown, level?: number): Hero {
       [HeroTrackedStat.ItemsBought]: 0,
       [HeroTrackedStat.PotionsUsed]: 0,
       [HeroTrackedStat.TotalAdventures]: 0,
-      [HeroTrackedStat.TotalEncounters]: 0
+      [HeroTrackedStat.TotalEncounters]: 0,
+      [HeroTrackedStat.OddJobsDone]: 0
     }
   };
 

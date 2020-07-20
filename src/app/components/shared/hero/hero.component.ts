@@ -27,6 +27,7 @@ export class HeroComponent implements OnInit {
   ];
 
   public get status(): string {
+    if (this.hero.currentlyWorkingAt)     { return `Working at the ${this.hero.currentlyWorkingAt}`; }
     if (this.hero.onAdventure)            { return 'Adventuring'; }
     if (!canHeroGoOnAdventure(this.hero)) { return 'Resting'; }
     return 'Idle';

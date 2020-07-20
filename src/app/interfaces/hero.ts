@@ -2,6 +2,7 @@
 import { Trait, TriggerType, TraitTriggerFunction } from './trait';
 import { HeroArmor, HeroItem, HeroWeapon, ItemType, WeaponSubType } from './item';
 import { Combat } from './adventure';
+import { Building } from './buildings';
 
 export enum HeroJob {
   Adventurer = 'Adventurer',
@@ -30,7 +31,8 @@ export enum HeroTrackedStat {
   ItemsBought = 'Items Bought',
   PotionsUsed = 'Potions Used',
   GoldEarned = 'GOLD Earned',
-  EXPEarned = 'EXP Earned'
+  EXPEarned = 'EXP Earned',
+  OddJobsDone = 'Odd Jobs'
 }
 
 export interface HeroJobStatic {
@@ -83,6 +85,7 @@ export interface Hero {
   sprite: string;
 
   onAdventure: string;
+  currentlyWorkingAt: Building | null;
 
   job: HeroJob;
   traits: Trait[];

@@ -83,3 +83,12 @@ export function getCurrentTownCanDoAnyAdventures(state: IGameState): boolean {
   const town = getCurrentTownFromState(state);
   return getCurrentTownAnyHeroesFree(state) && getCurrentTownActiveAdventures(state).length < calculateMaxActiveAdventures(town);
 }
+
+export function getCurrentTownFreeOddJobBuildings(state: IGameState): Building[] {
+  const town = getCurrentTownFromState(state);
+  const potentialBuildings = [
+    Building.Alchemist, Building.Armory, Building.Bazaar, Building.Cave, Building.Inn
+  ];
+
+  return potentialBuildings.filter(b => town.buildings[b].level > 0 && !town.buildings[b].currentWorkerId);
+}
