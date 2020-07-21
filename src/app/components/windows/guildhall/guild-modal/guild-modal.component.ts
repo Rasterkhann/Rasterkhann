@@ -8,7 +8,7 @@ import { Observable, Subscription, combineLatest } from 'rxjs';
 import { GameState } from '../../../../states';
 import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait, ItemType, HeroItem } from '../../../../interfaces';
 import { GameService } from '../../../../services/game.service';
-import { allEquippableWeapons, calculateHeroMaxTotal, formatNumber } from '../../../../helpers';
+import { allEquippableArmorClasses, allEquippableWeapons, calculateHeroMaxTotal, formatNumber } from '../../../../helpers';
 import { JobEffects, TraitEffects } from '../../../../static';
 import { HeroService } from '../../../../services/hero.service';
 
@@ -103,6 +103,12 @@ export class GuildModalComponent implements OnDestroy, OnInit {
     if (!this.viewingHero) { return []; }
 
     return allEquippableWeapons(this.town, this.viewingHero);
+  }
+
+  getAllArmorsForViewingHero(): string[] {
+    if (!this.viewingHero) { return []; }
+
+    return allEquippableArmorClasses(this.town, this.viewingHero);
   }
 
   dismissCurrentHero(): void {

@@ -3,7 +3,7 @@ import { shuffle, take, random, noop, uniq, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
-  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon, WeaponSubType, HeroTrackedStat } from '../interfaces';
+  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon, WeaponSubType, HeroTrackedStat, ArmorWeight, HeroArmor, ArmorSubTypeWeight } from '../interfaces';
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
@@ -40,8 +40,24 @@ export function allEquippableWeapons(town: IGameTown, hero: Hero): WeaponSubType
   return uniq(base);
 }
 
+export function allEquippableArmorClasses(town: IGameTown, hero: Hero): ArmorWeight[] {
+  const base = JobEffects[hero.job].validArmorClasses;
+
+  Object.values(ArmorWeight).forEach(subType => {
+    if (!doesHeroHaveTrait(hero, `${subType} Armor User` as Trait)) { return; }
+
+    base.push(subType);
+  });
+
+  return uniq(base);
+}
+
 export function canEquipWeapon(town: IGameTown, hero: Hero, item: HeroWeapon): boolean {
   return allEquippableWeapons(town, hero).includes(item.subType);
+}
+
+export function canEquipArmor(town: IGameTown, hero: Hero, item: HeroArmor): boolean {
+  return allEquippableArmorClasses(town, hero).includes(ArmorSubTypeWeight[item.subType]);
 }
 
 export function unequipItem(hero: Hero, unequippedItem: HeroItem): void {

@@ -66,6 +66,25 @@ export enum ArmorSubType {
   LeatherArmor = 'Leather Armor'
 }
 
+export enum ArmorWeight {
+  Light = 'Light',
+  Medium = 'Medium',
+  Heavy = 'Heavy'
+}
+
+export const ArmorSubTypeWeight: Record<ArmorSubType, ArmorWeight> = {
+  [ArmorSubType.Shirt]: ArmorWeight.Light,
+  [ArmorSubType.Fur]: ArmorWeight.Light,
+  [ArmorSubType.Cloak]: ArmorWeight.Light,
+  [ArmorSubType.FurCloak]: ArmorWeight.Light,
+  [ArmorSubType.RoyalCloak]: ArmorWeight.Light,
+  [ArmorSubType.Fullplate]: ArmorWeight.Heavy,
+  [ArmorSubType.TravelingCloak]: ArmorWeight.Medium,
+  [ArmorSubType.ArmoredCloak]: ArmorWeight.Heavy,
+  [ArmorSubType.HideArmor]: ArmorWeight.Medium,
+  [ArmorSubType.LeatherArmor]: ArmorWeight.Medium,
+};
+
 export enum ArmorElement {
   None = 'None',
   Red = 'Red',

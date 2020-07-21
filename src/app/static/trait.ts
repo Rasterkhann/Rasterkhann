@@ -1,6 +1,6 @@
 
 import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait,
-  BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait, WeaponUseTrait, HeroJob } from '../interfaces';
+  BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait, WeaponUseTrait, HeroJob, ArmorUseTrait } from '../interfaces';
 import { ensureHeroStatValue } from '../helpers/trait';
 import { giveHeroGold } from '../helpers/global';
 
@@ -470,6 +470,30 @@ export const WeaponTraits: Record<WeaponUseTrait, TraitEffect> = {
   },
 };
 
+export const ArmorTraits: Record<ArmorUseTrait, TraitEffect> = {
+  'Light Armor User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use light armor.',
+    cantAttachToClass: [HeroJob.Adventurer, HeroJob.Mage, HeroJob.Thief],
+    triggers: {}
+  },
+  'Medium Armor User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use medium armor.',
+    cantAttachToClass: [HeroJob.Adventurer, HeroJob.Cleric, HeroJob.Thief],
+    triggers: {}
+  },
+  'Heavy Armor User': {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero can additionally use heavy armor.',
+    cantAttachToClass: [HeroJob.Warrior, HeroJob.Cleric],
+    triggers: {}
+  },
+};
+
 export const GearTraits: Record<GearTrait, TraitEffect> = {
   'Multi-armed': {
     priority: TraitPriority.Any,
@@ -499,5 +523,6 @@ export const TraitEffects: Record<Trait, TraitEffect> = {
   ...SimpleNegativeTraits,
   ...FirstTierGoodTraits,
   ...WeaponTraits,
+  ...ArmorTraits,
   ...GearTraits
 };

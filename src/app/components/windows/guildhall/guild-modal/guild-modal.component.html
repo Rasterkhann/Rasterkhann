@@ -56,6 +56,9 @@
             Lv.{{ viewingHero.stats.lvl }} {{ viewingHero.job }} &middot; {{ viewingHeroJobDescription }}
           </p>
           <p>
+            Usable Armor Classes: {{ getAllArmorsForViewingHero().join(', ') }}
+          </p>
+          <p>
             Usable Weapons: {{ getAllWeaponsForViewingHero().join(', ') }}
           </p>
           <p class="exp-row" *ngIf="!viewingProspectiveHero">

@@ -2,7 +2,7 @@
 import { species } from 'fantastical';
 import { random } from 'lodash';
 
-import { HeroJobStatic, HeroJob, HeroStat, TriggerType, WeaponSubType, Hero } from '../interfaces';
+import { HeroJobStatic, HeroJob, HeroStat, TriggerType, WeaponSubType, Hero, ArmorWeight } from '../interfaces';
 import { getCurrentStat } from '../helpers/global';
 
 import * as JobActions from './actions';
@@ -65,7 +65,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
 
       return base;
     },
-    validWeaponTypes: [WeaponSubType.Hatchet, WeaponSubType.Sword, WeaponSubType.Knife, WeaponSubType.Longbow, WeaponSubType.Shortbow]
+    validWeaponTypes: [WeaponSubType.Hatchet, WeaponSubType.Sword, WeaponSubType.Knife, WeaponSubType.Longbow, WeaponSubType.Shortbow],
+    validArmorClasses: [ArmorWeight.Light, ArmorWeight.Medium]
   },
 
   [HeroJob.Cleric]: {
@@ -130,7 +131,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
 
       return base;
     },
-    validWeaponTypes: [WeaponSubType.Mace, WeaponSubType.Staff]
+    validWeaponTypes: [WeaponSubType.Mace, WeaponSubType.Staff],
+    validArmorClasses: [ArmorWeight.Medium, ArmorWeight.Heavy]
   },
 
   [HeroJob.Mage]: {
@@ -195,7 +197,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
 
       return base;
     },
-    validWeaponTypes: [WeaponSubType.Wand, WeaponSubType.Staff]
+    validWeaponTypes: [WeaponSubType.Wand, WeaponSubType.Staff],
+    validArmorClasses: [ArmorWeight.Light]
   },
 
   [HeroJob.Thief]: {
@@ -263,7 +266,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
 
       return base;
     },
-    validWeaponTypes: [WeaponSubType.Knife, WeaponSubType.Katar, WeaponSubType.Shuriken]
+    validWeaponTypes: [WeaponSubType.Knife, WeaponSubType.Katar, WeaponSubType.Shuriken],
+    validArmorClasses: [ArmorWeight.Light, ArmorWeight.Medium]
   },
 
   [HeroJob.Warrior]: {
@@ -328,6 +332,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
 
       return base;
     },
-    validWeaponTypes: [WeaponSubType.Sword, WeaponSubType.Hatchet, WeaponSubType.Spear, WeaponSubType.Mace]
+    validWeaponTypes: [WeaponSubType.Sword, WeaponSubType.Hatchet, WeaponSubType.Spear, WeaponSubType.Mace],
+    validArmorClasses: [ArmorWeight.Heavy]
   }
 };

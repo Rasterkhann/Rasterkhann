@@ -1,6 +1,6 @@
 
 import { Trait, TriggerType, TraitTriggerFunction } from './trait';
-import { HeroArmor, HeroItem, HeroWeapon, ItemType, WeaponSubType } from './item';
+import { ArmorWeight, HeroArmor, HeroItem, HeroWeapon, ItemType, WeaponSubType } from './item';
 import { Combat } from './adventure';
 import { Building } from './buildings';
 
@@ -47,6 +47,7 @@ export interface HeroJobStatic {
   combatTriggers: Partial<Record<TriggerType, HeroAction[]>>;
   actions: (hero: Hero) => HeroAction[];
   validWeaponTypes: WeaponSubType[];
+  validArmorClasses: ArmorWeight[];
 }
 
 export interface HeroActionTargetting {
