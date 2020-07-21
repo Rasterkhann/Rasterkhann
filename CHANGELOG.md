@@ -1,4 +1,22 @@
-## [0.5.27](https://github.com/seiyria/Rasterkhann/compare/v0.5.25...v0.5.27) (2020-07-20)
+## [0.5.28](https://github.com/seiyria/Rasterkhann/compare/v0.5.27...v0.5.28) (2020-07-21)
+
+
+### Bug Fixes
+
+* **ui:** don't scroll up when rerolling ([197a064](https://github.com/seiyria/Rasterkhann/commit/197a0644d1804d45ec4ba44c997a5e0a7c5d1105))
+* **ui:** don't show a notification for 0 gold earned ([e9e1cb2](https://github.com/seiyria/Rasterkhann/commit/e9e1cb2a9dd460f81160a5a29c3bacd3a5b9bf81))
+
+
+### Features
+
+* **combat:** all heroes will learn new skills based on their level ([9125e3d](https://github.com/seiyria/Rasterkhann/commit/9125e3d135d105633e4faf185f6eabad97dcb82d)), closes [#63](https://github.com/seiyria/Rasterkhann/issues/63)
+* **map:** make it a pixi.application so animations are easier ([84c3965](https://github.com/seiyria/Rasterkhann/commit/84c39654efe5b3b9b5f56151d2913e80b8143c45))
+* **oddjobs:** track more odd jobs stats, add notifications ([4584bdb](https://github.com/seiyria/Rasterkhann/commit/4584bdbe185e9ffb23bd634b38e405eb30e174d5))
+* **ui:** show hero blurb on profile page ([8ff9ef0](https://github.com/seiyria/Rasterkhann/commit/8ff9ef0b7980f1b6f9894f36763a1c2fd3664d76))
+
+
+
+## [0.5.27](https://github.com/seiyria/Rasterkhann/compare/v0.5.26...v0.5.27) (2020-07-20)
 
 
 ### Bug Fixes
@@ -9,14 +27,22 @@
 
 ### Features
 
-* **adventures:** boost adventure rewards at the end ([25c6871](https://github.com/seiyria/Rasterkhann/commit/25c6871860b3e57bbe5e76b4d2b2d6184075f686)), closes [#58](https://github.com/seiyria/Rasterkhann/issues/58)
-* **combat:** combat logs now have real skill names ([b918c96](https://github.com/seiyria/Rasterkhann/commit/b918c9635e89ac51ec790b470f7afa49d5ac3492)), closes [#61](https://github.com/seiyria/Rasterkhann/issues/61)
 * **core:** shim bigint, so the game should work on unsupported environments like safari ([07ed213](https://github.com/seiyria/Rasterkhann/commit/07ed213e71bb8406d25a5ce0f14c3860d2e68438)), closes [#62](https://github.com/seiyria/Rasterkhann/issues/62)
 * **hero:** heroes will now commit to doing odd jobs around town when not adventuring ([ffa837c](https://github.com/seiyria/Rasterkhann/commit/ffa837c968039002aa7382733467f9f0548d1e06)), closes [#57](https://github.com/seiyria/Rasterkhann/issues/57)
-* **hero:** track hero stats for eventual retirement ([fc4e0ed](https://github.com/seiyria/Rasterkhann/commit/fc4e0edab6023cf839f1c572c12cbfc78ea36564)), closes [#56](https://github.com/seiyria/Rasterkhann/issues/56)
 * **trait:** traits that give weapon proficiency will no longer double up on a class that already has it ([ce51200](https://github.com/seiyria/Rasterkhann/commit/ce512001936cd9fe2265ea94b670e4cba270cfbd))
-* **ui:** alerts now have a border color so they're more visible from the rest of the ui ([48eb26f](https://github.com/seiyria/Rasterkhann/commit/48eb26f72169a80f33ddbe7824d020627bf02324)), closes [#60](https://github.com/seiyria/Rasterkhann/issues/60)
 * **ui:** allow right click to work anywhere even if the building is currently selected ([851f374](https://github.com/seiyria/Rasterkhann/commit/851f37447545768f0e6df61c310df7f91c012e1e))
+
+
+
+## [0.5.26](https://github.com/seiyria/Rasterkhann/compare/v0.5.25...v0.5.26) (2020-07-18)
+
+
+### Features
+
+* **adventures:** boost adventure rewards at the end ([25c6871](https://github.com/seiyria/Rasterkhann/commit/25c6871860b3e57bbe5e76b4d2b2d6184075f686)), closes [#58](https://github.com/seiyria/Rasterkhann/issues/58)
+* **combat:** combat logs now have real skill names ([b918c96](https://github.com/seiyria/Rasterkhann/commit/b918c9635e89ac51ec790b470f7afa49d5ac3492)), closes [#61](https://github.com/seiyria/Rasterkhann/issues/61)
+* **hero:** track hero stats for eventual retirement ([fc4e0ed](https://github.com/seiyria/Rasterkhann/commit/fc4e0edab6023cf839f1c572c12cbfc78ea36564)), closes [#56](https://github.com/seiyria/Rasterkhann/issues/56)
+* **ui:** alerts now have a border color so they're more visible from the rest of the ui ([48eb26f](https://github.com/seiyria/Rasterkhann/commit/48eb26f72169a80f33ddbe7824d020627bf02324)), closes [#60](https://github.com/seiyria/Rasterkhann/issues/60)
 
 
 
@@ -117,14 +143,12 @@
 
 
 
-## [0.5.7](https://github.com/seiyria/Rasterkhann/compare/v0.5.5...v0.5.7) (2020-07-15)
+## [0.5.7](https://github.com/seiyria/Rasterkhann/compare/v0.5.6...v0.5.7) (2020-07-15)
 
 
 ### Bug Fixes
 
 * **rush:** rush should not be spammable to lose more gold for no benefit ([d4d0dac](https://github.com/seiyria/Rasterkhann/commit/d4d0dac1c84d52d1cf5a1ce161f7860fb1c9f548))
-* **ui:** disable reroll buttons if you don't have enough gold ([0714c54](https://github.com/seiyria/Rasterkhann/commit/0714c544da1a112cd25a78b438e9323040f8a691))
-* **ui:** modals would not always have a fresh, updated copy of the town instance and now they do. fixes a bug where heroes could be trained with not enough money ([2fb62a2](https://github.com/seiyria/Rasterkhann/commit/2fb62a2038887ec89c7033c3bed2b059b2dfccdf))
 
 
 ### Features
@@ -132,6 +156,20 @@
 * **cave:** heroes can team up ([f14aeb7](https://github.com/seiyria/Rasterkhann/commit/f14aeb73200edf65e9bd11660f18ba10d71a5164)), closes [#12](https://github.com/seiyria/Rasterkhann/issues/12)
 * **core:** add google analytics ([a751c2c](https://github.com/seiyria/Rasterkhann/commit/a751c2c1bab55ca7de69884b64668266d8ca6434)), closes [#39](https://github.com/seiyria/Rasterkhann/issues/39)
 * **map:** show red dot for buildings with upgrades ([2e3a9a3](https://github.com/seiyria/Rasterkhann/commit/2e3a9a304a8fd92ff7e32aa249f18e42689d01a1)), closes [#26](https://github.com/seiyria/Rasterkhann/issues/26)
+
+
+
+## [0.5.6](https://github.com/seiyria/Rasterkhann/compare/v0.5.5...v0.5.6) (2020-07-15)
+
+
+### Bug Fixes
+
+* **ui:** disable reroll buttons if you don't have enough gold ([0714c54](https://github.com/seiyria/Rasterkhann/commit/0714c544da1a112cd25a78b438e9323040f8a691))
+* **ui:** modals would not always have a fresh, updated copy of the town instance and now they do. fixes a bug where heroes could be trained with not enough money ([2fb62a2](https://github.com/seiyria/Rasterkhann/commit/2fb62a2038887ec89c7033c3bed2b059b2dfccdf))
+
+
+### Features
+
 * **ui:** modals are now taller and a bit wider ([6407345](https://github.com/seiyria/Rasterkhann/commit/64073451205369a4bd6cafa6d3e72fae7a476627))
 * **ui:** right click on certain buildings will quick-open them to their view ([faa222b](https://github.com/seiyria/Rasterkhann/commit/faa222b3a10ce0b6f6aa410c7a5aa7dc192449d7))
 
@@ -162,17 +200,14 @@
 
 
 
-## [0.5.3](https://github.com/seiyria/Rasterkhann/compare/v0.5.1...v0.5.3) (2020-07-14)
+## [0.5.3](https://github.com/seiyria/Rasterkhann/compare/v0.5.2...v0.5.3) (2020-07-14)
 
 
 ### Bug Fixes
 
 * **armory:** should not boost all stats by level, just non-zero ones ([33cb2f4](https://github.com/seiyria/Rasterkhann/commit/33cb2f4fffa3a2cba5c3eabf3ca664fe6dd18b1b))
-* **automation:** buildings should not be able to be built from automation if the requirements aren't met ([3aa8ae8](https://github.com/seiyria/Rasterkhann/commit/3aa8ae88e33f06d82084e47e7982f676301d2953)), closes [#34](https://github.com/seiyria/Rasterkhann/issues/34)
 * **bazaar:** heroes should buy weapon and armor upgrades if needed ([cda0a1b](https://github.com/seiyria/Rasterkhann/commit/cda0a1bd18bc771069e27f8a573be284e52f4059))
 * **bazaar:** heroes should not unequip nonexistent items ([fbb5b76](https://github.com/seiyria/Rasterkhann/commit/fbb5b7673c35e2ae16e1532ce3509aba4ec3df33))
-* **building:** armory and alchemist should require the bazaar to be built, not the other way around ([0b3a7fe](https://github.com/seiyria/Rasterkhann/commit/0b3a7fe8ee0784a8b53d0d184c6c660dbc023a7f))
-* **ui:** able to open buildings before they're constructed ([e713c2d](https://github.com/seiyria/Rasterkhann/commit/e713c2d282e79bcb300c21a4eb6a6aae719d56dd)), closes [#29](https://github.com/seiyria/Rasterkhann/issues/29)
 * **ui:** disallow holding dialogs for train/dismiss ([9ff1619](https://github.com/seiyria/Rasterkhann/commit/9ff1619fd7f4d731eee89865e431db8b8192c0e8))
 * **ui:** remove absurdly long decimals from cave screen ([745c3de](https://github.com/seiyria/Rasterkhann/commit/745c3de12f4b9b8d7e68695431a60ea420f5e21f))
 
@@ -181,12 +216,27 @@
 
 * **adventure:** add some lower-timer encounter ticks and remove the highest one ([53424b6](https://github.com/seiyria/Rasterkhann/commit/53424b638877bd4e82c1021c26f464cf14454e49))
 * **adventure:** adventures are failed immediately if any encounter fails ([a9d55df](https://github.com/seiyria/Rasterkhann/commit/a9d55df2bdc5324254eaebe2a45a618c614d8432)), closes [#36](https://github.com/seiyria/Rasterkhann/issues/36)
+* **ui:** show the currently active building with an arrow on the map ([96adfe0](https://github.com/seiyria/Rasterkhann/commit/96adfe0dd3fa17d75445b764c0fee98c0f803d8e)), closes [#24](https://github.com/seiyria/Rasterkhann/issues/24)
+
+
+
+## [0.5.2](https://github.com/seiyria/Rasterkhann/compare/v0.5.1...v0.5.2) (2020-07-14)
+
+
+### Bug Fixes
+
+* **automation:** buildings should not be able to be built from automation if the requirements aren't met ([3aa8ae8](https://github.com/seiyria/Rasterkhann/commit/3aa8ae88e33f06d82084e47e7982f676301d2953)), closes [#34](https://github.com/seiyria/Rasterkhann/issues/34)
+* **building:** armory and alchemist should require the bazaar to be built, not the other way around ([0b3a7fe](https://github.com/seiyria/Rasterkhann/commit/0b3a7fe8ee0784a8b53d0d184c6c660dbc023a7f))
+* **ui:** able to open buildings before they're constructed ([e713c2d](https://github.com/seiyria/Rasterkhann/commit/e713c2d282e79bcb300c21a4eb6a6aae719d56dd)), closes [#29](https://github.com/seiyria/Rasterkhann/issues/29)
+
+
+### Features
+
 * **armory:** weapons+armor get a bonus based on armory level ([9a9b09f](https://github.com/seiyria/Rasterkhann/commit/9a9b09f61585fbc0c7092640d799a28511c752d0)), closes [#32](https://github.com/seiyria/Rasterkhann/issues/32)
 * **bazaar:** bazaar gives +1% cost per level ([a9f8618](https://github.com/seiyria/Rasterkhann/commit/a9f861889bed1ead595e533ccb4a2bdae20aa676)), closes [#35](https://github.com/seiyria/Rasterkhann/issues/35)
 * **building:** improve text of all buildings to include what their upgrades do ([f76bf77](https://github.com/seiyria/Rasterkhann/commit/f76bf7763da7940c6405c03ac27f83007c14a9b6))
 * **cave:** show adventure total time end instead of next tick ([7ddcd3b](https://github.com/seiyria/Rasterkhann/commit/7ddcd3bd5e4dcdc71eceebfbb9a43e2aa2144800)), closes [#31](https://github.com/seiyria/Rasterkhann/issues/31)
 * **ui:** show help text in modals ([18545a5](https://github.com/seiyria/Rasterkhann/commit/18545a5a0e06cf6d252354523e508d740c62fc26)), closes [#33](https://github.com/seiyria/Rasterkhann/issues/33)
-* **ui:** show the currently active building with an arrow on the map ([96adfe0](https://github.com/seiyria/Rasterkhann/commit/96adfe0dd3fa17d75445b764c0fee98c0f803d8e)), closes [#24](https://github.com/seiyria/Rasterkhann/issues/24)
 * **workshop:** workshop costs lowered to 5k each ([2e7e202](https://github.com/seiyria/Rasterkhann/commit/2e7e2024cf606b9676aa560793224bf33f6e4aac))
 
 
@@ -239,7 +289,16 @@
 
 
 
-# [0.4.0](https://github.com/seiyria/Rasterkhann/compare/v0.3.1...v0.4.0) (2020-07-11)
+# [0.4.0](https://github.com/seiyria/Rasterkhann/compare/v0.3.2...v0.4.0) (2020-07-11)
+
+
+### Features
+
+* **bazaar:** heroes will shop at the bazaar before embarking on an adventure ([b8edf9c](https://github.com/seiyria/Rasterkhann/commit/b8edf9ca7227d8c7d5c2ed2fee25bdfa8e1331b8))
+
+
+
+## [0.3.2](https://github.com/seiyria/Rasterkhann/compare/v0.3.1...v0.3.2) (2020-07-10)
 
 
 ### Bug Fixes
@@ -254,7 +313,6 @@
 
 * **alchemist:** quick info for alchemist highlights ([eca846f](https://github.com/seiyria/Rasterkhann/commit/eca846f8d937c99b438f3a8b2ae4cb02d7c7ef62))
 * **armory:** quick info for armory highlights ([15e94eb](https://github.com/seiyria/Rasterkhann/commit/15e94ebe357e176f688f3b01a5b8756ee1c26019))
-* **bazaar:** heroes will shop at the bazaar before embarking on an adventure ([b8edf9c](https://github.com/seiyria/Rasterkhann/commit/b8edf9ca7227d8c7d5c2ed2fee25bdfa8e1331b8))
 * **cave:** cave info box ([ac47db3](https://github.com/seiyria/Rasterkhann/commit/ac47db32515359ed568f85bebd17f41648d29ecc))
 * **guildhall:** show info panel for guild hall ([4e8f2f2](https://github.com/seiyria/Rasterkhann/commit/4e8f2f268ceccffb5a15d99f85fbfb619991f644))
 * **inn:** info panel ([c7944ea](https://github.com/seiyria/Rasterkhann/commit/c7944ea18921c0bf563d335d34d2c424351902ae))
