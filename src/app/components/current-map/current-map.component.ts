@@ -65,8 +65,13 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
         const textStyle = new (window as any).PIXI.TextStyle({
           fontFamily: 'VT323',
-          fontSize: 12,
-          stroke: '#fff'
+          fontSize: '12px',
+          // fill: '#fff',
+          // stroke: '#000',
+          // strokeThickness: 3,
+          dropShadow: true,
+          dropShadowDistance: 0,
+          letterSpacing: 0.5
         });
 
         this.tileMap.children[4].children.forEach((obj: any) => {
@@ -98,7 +103,8 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
               this.textMap[obj.name].y = obj.y - 16;
               this.textMap[obj.name].anchor.set(0.5, 0);
               this.textMap[obj.name].visible = isVisible;
-              this.textMap[obj.name].resolution = 2;
+              this.textMap[obj.name].resolution = 1;
+              this.textMap[obj.name].roundPixels = true;
 
               this.tileMap.addChild(this.textMap[obj.name]);
 
@@ -119,6 +125,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
               this.featureMap[obj.name].y = obj.y - 24;
               this.featureMap[obj.name].visible = false;
               this.featureMap[obj.name].anchor.set(0.5);
+              this.featureMap[obj.name].roundPixels = false;
 
               this.tileMap.addChild(this.featureMap[obj.name]);
             }
