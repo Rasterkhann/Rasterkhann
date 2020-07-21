@@ -3,7 +3,8 @@ import { shuffle, take, random, noop, uniq, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
-  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon, WeaponSubType, HeroTrackedStat, ArmorWeight, HeroArmor, ArmorSubTypeWeight } from '../interfaces';
+  Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon, 
+  WeaponSubType, HeroTrackedStat, ArmorWeight, HeroArmor, ArmorSubTypeWeight } from '../interfaces';
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
