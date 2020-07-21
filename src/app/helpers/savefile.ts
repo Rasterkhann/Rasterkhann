@@ -1,5 +1,5 @@
 
-import { Building, IGameTown, IGameState, BuildingInfo, ProspectiveHero, ItemType, HeroItem, GameOption } from '../interfaces';
+import { Building, IGameTown, IGameState, BuildingInfo, ProspectiveHero, ItemType, HeroItem, GameOption, Hero } from '../interfaces';
 import { calculateOfflineAdventureProgress, calculateOfflineGold } from './town';
 
 export function beforeSerialize(obj: any): IGameState {
@@ -24,6 +24,20 @@ export function beforeSerialize(obj: any): IGameState {
         town.itemsForSale[itemType] = town.itemsForSale[itemType].map((item: HeroItem) => ({ ...item, cost: item.cost.toString() }));
       });
 
+      town.recruitedHeroes = [...town.recruitedHeroes];
+
+      town.recruitedHeroes.forEach((hero: Hero, i: number) => {
+        town.recruitedHeroes[i] = { ...hero };
+
+        hero = town.recruitedHeroes[i];
+        hero.gear = { ...hero.gear };
+
+        Object.keys(hero.gear).forEach((gearSlot: ItemType) => {
+          (hero.gear[gearSlot] as any[]) = (hero.gear[gearSlot] as HeroItem[])
+            .map((item: HeroItem) => ({ ...item, cost: (item.cost || 0).toString() }));
+        });
+      });
+
       obj.towns[townName] = town;
     });
   }
@@ -45,6 +59,14 @@ export function afterDeserialize(obj: IGameState): IGameState {
 
         Object.keys(town.itemsForSale).forEach((itemType: ItemType) => {
           town.itemsForSale[itemType].forEach(item => item.cost = BigInt(item.cost));
+        });
+
+        town.recruitedHeroes.forEach((hero: Hero) => {
+          Object.keys(hero.gear).forEach((gearSlot: ItemType) => {
+            hero.gear[gearSlot].forEach((i: HeroItem) => {
+              i.cost = BigInt(i.cost || 0);
+            });
+          });
         });
       });
     }

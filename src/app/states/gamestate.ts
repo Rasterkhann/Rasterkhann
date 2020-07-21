@@ -511,10 +511,6 @@ export class GameState {
           town.recruitedHeroes[i].currentStats[HeroStat.GOLD] -= Number(totalEarned);
           this.store.dispatch(new GainGold(totalEarned));
 
-          allBoughtItems.forEach((item: HeroItem) => {
-            delete (item as any).cost;
-          });
-
           if (allBoughtItems.length > 0) {
             const allItemNames = allBoughtItems.map(item => item.name);
             this.store.dispatch(new NotifyMessage(`${town.recruitedHeroes[i].name} purchased ${allItemNames.join(', ')}.`));
