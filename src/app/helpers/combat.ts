@@ -147,7 +147,7 @@ class CombatTracker implements Combat {
   private potentialActions(creature: Hero, targetting: HeroActionTargetting): HeroAction[] {
 
     // base job actions
-    const potentialCreatureActions = JobEffects[creature.job].actions;
+    const potentialCreatureActions = JobEffects[creature.job].actions(creature);
 
     // weapon actions
     creature.gear[ItemType.Weapon].forEach(weapon => {
@@ -173,7 +173,7 @@ class CombatTracker implements Combat {
           hero.currentStats[stat] = Math.min(hero.stats[stat], hero.currentStats[stat] + value);
         });
 
-        this.addLogEntry(`${hero.name} used ${potion.name} and restored ${potion.boostStats.map(({ stat, value }) => `${value} ${stat}`).join(', ')}`);
+        this.addLogEntry(`${hero.name} used ${potion.name} and restored ${potion.boostStats.map(({ stat, value }) => `${value} ${stat.toUpperCase()}`).join(', ')}.`);
 
         usedPotions.push(potion.uuid);
       }

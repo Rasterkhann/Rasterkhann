@@ -19,15 +19,15 @@ export const ElementActions: Record<WeaponElement, HeroAction[]> = {
 
 export const SubTypeActions: Record<WeaponSubType, HeroAction[]> = {
   [WeaponSubType.Sword]: [],
-  [WeaponSubType.Knife]: [WeaponActions.EarnGold(WeaponActionMessages.FindGoldMessage, 100)],
+  [WeaponSubType.Knife]: [WeaponActions.EarnGold(WeaponActionMessages.FindGoldMessage, { gold: 100 })],
   [WeaponSubType.Katar]: [],
   [WeaponSubType.Hatchet]: [],
-  [WeaponSubType.Spear]: [WeaponActions.AttackSinglePercent(WeaponActionMessages.ThrustMessage, 5)],
+  [WeaponSubType.Spear]: [WeaponActions.AttackSinglePercent(WeaponActionMessages.ThrustMessage, { pct: 5 })],
   [WeaponSubType.Mace]: [],
   [WeaponSubType.Staff]: [],
-  [WeaponSubType.Shuriken]: [WeaponActions.AttackAllPercent(WeaponActionMessages.FlingShurikenMessage, 3)],
-  [WeaponSubType.Wand]: [WeaponActions.HealPercent(WeaponActionMessages.HealMessage, 10)],
+  [WeaponSubType.Shuriken]: [WeaponActions.AttackSomeOrAllPercent(WeaponActionMessages.FlingShurikenMessage, { pct: 3 })],
+  [WeaponSubType.Wand]: [WeaponActions.HealPercent(WeaponActionMessages.HealMessage, { pct: 10 })],
   [WeaponSubType.Arrow]: [],
-  [WeaponSubType.Shortbow]: [WeaponActions.AttackAllDiminishing(WeaponActionMessages.ShootArrowsMessage)],
-  [WeaponSubType.Longbow]: [WeaponActions.AttackAllDiminishing(WeaponActionMessages.ShootArrowsMessage)]
+  [WeaponSubType.Shortbow]: [WeaponActions.AttackSomeOrAllDiminishing(WeaponActionMessages.ShootArrowsMessage)],
+  [WeaponSubType.Longbow]: [WeaponActions.AttackSomeOrAllDiminishing(WeaponActionMessages.ShootArrowsMessage)]
 };

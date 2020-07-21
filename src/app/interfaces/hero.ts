@@ -45,7 +45,7 @@ export interface HeroJobStatic {
   statGrowth: Record<HeroStat, (hero?: Hero) => number>;
   triggers: Partial<Record<TriggerType, TraitTriggerFunction>>;
   combatTriggers: Partial<Record<TriggerType, HeroAction[]>>;
-  actions: HeroAction[];
+  actions: (hero: Hero) => HeroAction[];
   validWeaponTypes: WeaponSubType[];
 }
 
@@ -68,10 +68,21 @@ export interface HeroActionReplaceOpts {
   source: Hero;
   target: Hero;
   value: number;
+  valuegold?: number;
 }
 
 export interface HeroActionStringReplacer {
   replace: (opts: HeroActionReplaceOpts) => string;
+}
+
+export interface HeroActionOpts {
+  staCost?: number;
+  spCost?: number;
+  pct?: number;
+  gold?: number;
+  defMultiplier?: number;
+  atkMultiplier?: number;
+  targets?: number;
 }
 
 export interface HeroGear {
