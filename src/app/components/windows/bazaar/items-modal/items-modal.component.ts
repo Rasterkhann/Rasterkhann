@@ -64,4 +64,13 @@ export class ItemsModalComponent implements OnInit {
     return itemsForSale[type];
   }
 
+  public getConstructionType(type: ItemType): number {
+    return this.town.nextItemCreation[type];
+  }
+
+  formatPreDuration(text: string): string {
+    const split = text.split(':');
+    return `${split[0]}m ${split[1]}s`;
+  }
+
 }

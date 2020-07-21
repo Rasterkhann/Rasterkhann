@@ -16,7 +16,13 @@
 
   <ion-list *ngIf="currentTownItemsForSale$ | async as itemsForSale">
     <ng-container *ngFor="let type of itemTypes">
-      <ion-list-header>{{ type }}s ({{ getItems(itemsForSale, type).length }}/{{ getTypeTotal(type) }})</ion-list-header>
+      <ion-list-header>
+        {{ type }}s ({{ getItems(itemsForSale, type).length }}/{{ getTypeTotal(type) }})
+        
+        <span *ngIf="getItems(itemsForSale, type).length < getTypeTotal(type)">
+          &nbsp;&middot; Next {{ type }} in:&nbsp;<countdown [config]="{ stopTime: getConstructionType(type), format: 'mm:ss', prettyText: formatPreDuration }"></countdown>
+        </span>
+      </ion-list-header>
       <ion-item *ngIf="itemsForSale[type].length === 0">No {{ type.toLowerCase() }}s for sale.</ion-item>
       <app-item *ngFor="let item of itemsForSale[type]; trackBy: trackItemBy" [item]="item" showScrapIcon="true" showPassedOver="true" (click)="scrapItem(item)"></app-item>
     </ng-container>
