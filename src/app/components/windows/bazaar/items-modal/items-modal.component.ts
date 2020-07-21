@@ -31,6 +31,10 @@ export class ItemsModalComponent implements OnInit {
     this.modal.dismiss();
   }
 
+  trackItemBy(item: HeroItem): string {
+    return item.uuid;
+  }
+
   public async scrapItem(item: HeroItem): Promise<void> {
     const alert = await this.alert.create({
       header: 'Scrap Item',
