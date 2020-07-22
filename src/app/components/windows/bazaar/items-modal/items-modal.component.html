@@ -24,7 +24,7 @@
         </span>
       </ion-list-header>
       <ion-item *ngIf="itemsForSale[type].length === 0">No {{ type.toLowerCase() }}s for sale.</ion-item>
-      <app-item *ngFor="let item of itemsForSale[type]; trackBy: trackItemBy" [item]="item" showScrapIcon="true" showPassedOver="true" (click)="scrapItem(item)"></app-item>
+      <app-item *ngFor="let item of itemsForSale[type]; trackBy: trackItemBy" [item]="item" showScrapIcon="true" showCost="true" showPassedOver="true" (click)="scrapItem(item)"></app-item>
     </ng-container>
   </ion-list>
 </ion-content>

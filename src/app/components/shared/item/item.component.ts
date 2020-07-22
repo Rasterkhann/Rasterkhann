@@ -16,6 +16,7 @@ const SPRITESHEET_WIDTHS = {
 export class ItemComponent implements OnInit {
 
   @Input() public item: HeroItem;
+  @Input() public showCost: boolean;
   @Input() public showScrapIcon: boolean;
   @Input() public showPassedOver: boolean;
 
