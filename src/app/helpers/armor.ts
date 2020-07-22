@@ -3,7 +3,7 @@
 import { random, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { HeroItem, IGameTown, HeroStat, ItemType, ArmorElement, ArmorSubType, Building } from '../interfaces';
+import { IGameTown, HeroStat, ItemType, ArmorElement, ArmorSubType, Building, HeroArmor } from '../interfaces';
 import { getZeroStatBlock } from './hero';
 import { calculateItemCost, doesTownHaveFeature } from './global';
 import { chooseRandomItemTrait } from './itemtraits';
@@ -114,8 +114,9 @@ const ARMOR_HEAVY_PRESETS = [
   },
 ];
 
-export function pickArmorPreset(town: IGameTown): { name: string, sprite: number, stats: Record<HeroStat, number> } {
-
+export function pickArmorPreset(town: IGameTown): {
+  name: string, sprite: number, element: ArmorElement, subType: ArmorSubType, stats: Record<HeroStat, number>
+} {
   const presets: any[] = BASIC_ARMOR_SPECIFIC_PRESETS;
   if (doesTownHaveFeature(town, 'Cloaks'))        { presets.push(...ARMOR_CLOAK_PRESETS); }
   if (doesTownHaveFeature(town, 'Medium Armor'))  { presets.push(...ARMOR_MEDIUM_PRESETS); }
@@ -125,9 +126,13 @@ export function pickArmorPreset(town: IGameTown): { name: string, sprite: number
   let name = preset.type;
   let sprite = preset.sprite;
 
+  let element: ArmorElement = ArmorElement.None;
+  const subType: ArmorSubType = preset.type;
+
   if (preset.color) {
     const width = 12;
     const color = preset.color();
+    element = color;
     if (color !== ArmorElement.None) {
       name = `${color} ${name}`;
     }
@@ -141,11 +146,13 @@ export function pickArmorPreset(town: IGameTown): { name: string, sprite: number
   return {
     name,
     sprite,
+    subType,
+    element,
     stats: preset.stats
   };
 }
 
-export function generateArmor(town: IGameTown): HeroItem {
+export function generateArmor(town: IGameTown): HeroArmor {
 
   const preset = pickArmorPreset(town);
   const trait = chooseRandomItemTrait(town);
@@ -178,6 +185,8 @@ export function generateArmor(town: IGameTown): HeroItem {
     name: preset.name,
     uuid: uuid(),
     type: ItemType.Armor,
+    element: preset.element,
+    subType: preset.subType,
     sprite: preset.sprite,
     boostStats,
     cost,
