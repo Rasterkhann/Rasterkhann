@@ -1,3 +1,13 @@
+## [0.5.31](https://github.com/seiyria/Rasterkhann/compare/v0.5.30...v0.5.31) (2020-07-23)
+
+
+### Features
+
+* **gear:** add durability to equipment ([48ade68](https://github.com/seiyria/Rasterkhann/commit/48ade68214613068ec599ea8558d2957b77c2af0)), closes [#38](https://github.com/seiyria/Rasterkhann/issues/38)
+* **ui:** add /r/rasterkhann link ([a7130f7](https://github.com/seiyria/Rasterkhann/commit/a7130f78db443080d72ec5b085935cca6049e8d8))
+
+
+
 ## [0.5.30](https://github.com/seiyria/Rasterkhann/compare/v0.5.29...v0.5.30) (2020-07-23)
 
 
