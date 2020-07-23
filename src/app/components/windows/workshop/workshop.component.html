@@ -29,6 +29,11 @@
     <ion-label>Adventure</ion-label>
     <ion-toggle [(ngModel)]="optionValues.automationAdventures" (click)="toggleOption('automationAdventures')"></ion-toggle>
   </ion-item>
+
+  <ion-item *ngIf="hasSpecificAutomation('Automation: Scrap Items')">
+    <ion-label>Scrap Items</ion-label>
+    <ion-toggle [(ngModel)]="optionValues.automationScrap" (click)="toggleOption('automationScrap')"></ion-toggle>
+  </ion-item>
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="workshop"></app-feature-list>

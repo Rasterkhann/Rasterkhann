@@ -18,11 +18,13 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
   @Select((state: any) => state.gamestate.options[GameOption.AutomationHeroes]) autoHeroes$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationBuildings]) autoBuildings$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationAdventures]) autoAdventures$: Observable<boolean>;
+  @Select((state: any) => state.gamestate.options[GameOption.AutomationScrap]) autoScrap$: Observable<boolean>;
 
   public optionValues: Partial<Record<GameOption, boolean>> = {
     [GameOption.AutomationHeroes]: false,
     [GameOption.AutomationBuildings]: false,
-    [GameOption.AutomationAdventures]: false
+    [GameOption.AutomationAdventures]: false,
+    [GameOption.AutomationScrap]: false
   };
 
   private option$: Subscription;
@@ -33,16 +35,18 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
     this.option$ = combineLatest([
       this.autoHeroes$,
       this.autoBuildings$,
-      this.autoAdventures$
+      this.autoAdventures$,
+      this.autoScrap$
     ])
     .pipe(first())
     .subscribe(
-      ([heroes, buildings, adventures]) => {
+      ([heroes, buildings, adventures, scrap]) => {
         setTimeout(() => {
           this.optionValues = {
             [GameOption.AutomationHeroes]: heroes,
             [GameOption.AutomationBuildings]: buildings,
-            [GameOption.AutomationAdventures]: adventures
+            [GameOption.AutomationAdventures]: adventures,
+            [GameOption.AutomationScrap]: scrap
           };
         }, 0);
     });
@@ -63,7 +67,8 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
   hasAnyAutomation(): boolean {
     return this.hasSpecificAutomation('Automation: Upgrade Buildings')
         || this.hasSpecificAutomation('Automation: Train Heroes')
-        || this.hasSpecificAutomation('Automation: Adventure');
+        || this.hasSpecificAutomation('Automation: Adventure')
+        || this.hasSpecificAutomation('Automation: Scrap Items');
   }
 
 }

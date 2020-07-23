@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { HeroItem, ItemType } from '../../../interfaces';
+import { HeroItem, ItemPassedOverThreshold, ItemType } from '../../../interfaces';
 
 const SPRITESHEET_WIDTHS = {
   [ItemType.Potion]: 14,
@@ -21,18 +21,18 @@ export class ItemComponent implements OnInit {
   @Input() public showPassedOver: boolean;
 
   public get color(): string {
-    if (this.item.timesPassedOver === 0) { return ''; }
-    if (this.item.timesPassedOver < 10)  { return 'primary'; }
-    if (this.item.timesPassedOver < 100)  { return 'secondary'; }
-    if (this.item.timesPassedOver < 250) { return 'warning'; }
+    if (this.item.timesPassedOver === ItemPassedOverThreshold.New)          { return ''; }
+    if (this.item.timesPassedOver < ItemPassedOverThreshold.MostlyFresh)    { return 'primary'; }
+    if (this.item.timesPassedOver < ItemPassedOverThreshold.MostlyIgnored)  { return 'secondary'; }
+    if (this.item.timesPassedOver < ItemPassedOverThreshold.TooMuch)        { return 'warning'; }
     return 'danger';
   }
 
   public get passedOverStatus(): string {
-    if (this.item.timesPassedOver === 0) { return ''; }
-    if (this.item.timesPassedOver < 10)  { return 'Not many heroes have ignored this.'; }
-    if (this.item.timesPassedOver < 100) { return 'This has been a bit ignored.'; }
-    if (this.item.timesPassedOver < 250) { return 'This has been ignored quite a bit.'; }
+    if (this.item.timesPassedOver === ItemPassedOverThreshold.New)          { return ''; }
+    if (this.item.timesPassedOver < ItemPassedOverThreshold.MostlyFresh)    { return 'Not many heroes have ignored this.'; }
+    if (this.item.timesPassedOver < ItemPassedOverThreshold.MostlyIgnored)  { return 'This has been a bit ignored.'; }
+    if (this.item.timesPassedOver < ItemPassedOverThreshold.TooMuch)        { return 'This has been ignored quite a bit.'; }
     return 'This probably will not be bought.';
   }
 

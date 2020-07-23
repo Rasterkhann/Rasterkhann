@@ -6,7 +6,7 @@ import { sample } from 'lodash';
 
 import { GameService } from '../../services/game.service';
 import { GameState } from '../../states';
-import { IGameTown, ProspectiveHero, Adventure, GameOption, Building, IGameState } from '../../interfaces';
+import { IGameTown, ProspectiveHero, Adventure, GameOption, Building, IGameState, ItemType, ItemPassedOverThreshold } from '../../interfaces';
 import { getCurrentTownFromState, getCurrentTownCanDoAnyAdventures } from '../../helpers';
 
 @Component({
@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
   @Select((state: any) => state.gamestate.options[GameOption.AutomationHeroes]) autoHeroes$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationBuildings]) autoBuildings$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationAdventures]) autoAdventures$: Observable<boolean>;
+  @Select((state: any) => state.gamestate.options[GameOption.AutomationScrap]) autoScrap$: Observable<boolean>;
 
   constructor(public game: GameService) {}
 
@@ -55,13 +56,15 @@ export class HomePage implements OnInit {
       interval(5000),
       this.autoHeroes$,
       this.autoBuildings$,
-      this.autoAdventures$
+      this.autoAdventures$,
+      this.autoScrap$
     ]).pipe(throttle(() => interval(5000))).subscribe(async ([_, ...opts]) => {
-      const [heroes, buildings, adventures] = opts;
+      const [heroes, buildings, adventures, scrap] = opts;
       const state = await this.state$.pipe(first()).toPromise();
       if (heroes)     { this.checkAutoHeroes(state); }
       if (buildings)  { this.checkAutoBuildings(state); }
       if (adventures) { this.checkAutoAdventures(state); }
+      if (scrap)      { this.checkAutoScrap(state); }
     });
   }
 
@@ -93,6 +96,19 @@ export class HomePage implements OnInit {
     if (!chosenAdventure) { return; }
 
     this.game.startAdventure(town, chosenAdventure);
+  }
+
+  private checkAutoScrap(state: IGameState): void {
+    const town = getCurrentTownFromState(state);
+
+    const weapons = town.itemsForSale[ItemType.Weapon] || [];
+    const armors = town.itemsForSale[ItemType.Armor] || [];
+
+    const item = sample(weapons.concat(armors));
+    if (item && item.timesPassedOver > ItemPassedOverThreshold.TooMuch) {
+      this.game.scrapItem(item);
+    }
+
   }
 
 }

@@ -5,6 +5,7 @@ export enum GameOption {
   AutomationHeroes = 'automationHeroes',
   AutomationBuildings = 'automationBuildings',
   AutomationAdventures = 'automationAdventures',
+  AutomationScrap = 'automationScrap',
   ShowHelpText = 'showHelpText'
 }
 

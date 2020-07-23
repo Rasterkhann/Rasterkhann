@@ -101,6 +101,13 @@ export enum ArmorElement {
   White = 'White'
 }
 
+export enum ItemPassedOverThreshold {
+  New = 0,
+  MostlyFresh = 10,
+  MostlyIgnored = 100,
+  TooMuch = 250
+}
+
 export interface HeroItem {
   uuid: string;
   name: string;

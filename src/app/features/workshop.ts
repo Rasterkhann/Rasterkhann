@@ -22,4 +22,14 @@ export const WorkshopFeatures: BuildingFeature[] = [
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 1
   },
+  {
+    name: 'Automation: Scrap Items',
+    description: 'Unlock an option to automatically go on adventures.',
+    cost: 5000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 1,
+    requiresFeature: {
+      'Better Prices': 1
+    }
+  },
 ];
