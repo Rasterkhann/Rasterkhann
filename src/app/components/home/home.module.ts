@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
 import { CountdownModule } from 'ngx-countdown';
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 import { HomePage } from './home.page';
 
@@ -50,6 +51,7 @@ import { HelpTextComponent } from '../shared/help-text/help-text.component';
     IonicModule,
     HomePageRoutingModule,
 
+    TooltipModule,
     CountdownModule
   ],
   declarations: [

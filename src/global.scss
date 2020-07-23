@@ -107,3 +107,15 @@ ion-button:not(.in-toolbar) {
 .alert-wrapper {
   outline: 1px solid #530053;
 }
+
+tooltip {
+  border: 1px solid #530053;
+
+  &::after {
+    border-color: transparent #530053 transparent transparent !important;
+  }
+}
+
+.has-info {
+  border-bottom: 1px dashed #fff;
+}

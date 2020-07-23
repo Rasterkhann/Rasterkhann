@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
-import { Hero, IGameTown, HeroStat } from '../../../interfaces';
+import { Hero, IGameTown, HeroStat, Building } from '../../../interfaces';
 import { canHeroGoOnAdventure } from '../../../helpers';
 
 @Component({
@@ -31,6 +31,17 @@ export class HeroComponent implements OnInit {
     if (this.hero.onAdventure)            { return 'Adventuring'; }
     if (!canHeroGoOnAdventure(this.hero)) { return 'Resting'; }
     return 'Idle';
+  }
+
+  public get workingExplanation(): string {
+    switch (this.hero.currentlyWorkingAt) {
+      case Building.Alchemist: return 'Decreases potion production time by 50%';
+      case Building.Armory:    return 'Decreases armor/weapon production time by 50%';
+      case Building.Bazaar:    return 'Increases prices by 25%';
+      case Building.Cave:      return 'Decreases adventure time by 25%';
+      case Building.Inn:       return 'Increases cost by 25 and restfulness by 3';
+      default:                 return 'Not sure - this probably needs to be updated';
+    }
   }
 
   public get stars(): string[] {

@@ -13,7 +13,7 @@
 
     <p *ngIf="showTraits">Traits: {{ hero.traits.join(', ') }}</p>
 
-    <p *ngIf="!cost">Status: {{ status }}</p>
+    <p *ngIf="!cost">Status: <span [class.has-info]="hero.currentlyWorkingAt" [display]="hero.currentlyWorkingAt" [tooltip]="workingExplanation" placement="right">{{ status }}</span></p>
 
     <p *ngIf="cost">Recruitment Fee: {{ cost | bignum }} gold</p>
 

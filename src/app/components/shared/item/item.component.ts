@@ -23,9 +23,17 @@ export class ItemComponent implements OnInit {
   public get color(): string {
     if (this.item.timesPassedOver === 0) { return ''; }
     if (this.item.timesPassedOver < 10)  { return 'primary'; }
-    if (this.item.timesPassedOver < 50)  { return 'secondary'; }
-    if (this.item.timesPassedOver < 100) { return 'warning'; }
+    if (this.item.timesPassedOver < 100)  { return 'secondary'; }
+    if (this.item.timesPassedOver < 250) { return 'warning'; }
     return 'danger';
+  }
+
+  public get passedOverStatus(): string {
+    if (this.item.timesPassedOver === 0) { return ''; }
+    if (this.item.timesPassedOver < 10)  { return 'Not many heroes have ignored this.'; }
+    if (this.item.timesPassedOver < 100) { return 'This has been a bit ignored.'; }
+    if (this.item.timesPassedOver < 250) { return 'This has been ignored quite a bit.'; }
+    return 'This probably will not be bought.';
   }
 
   public get spritesheet(): string {
