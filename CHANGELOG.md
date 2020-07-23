@@ -1,3 +1,20 @@
+## [0.5.30](https://github.com/seiyria/Rasterkhann/compare/v0.5.29...v0.5.30) (2020-07-23)
+
+
+### Bug Fixes
+
+* **armor:** armor was not being bought correctly as it had no subtype ([dc7a574](https://github.com/seiyria/Rasterkhann/commit/dc7a574a7422fe4c3864f7a635d4e8aae53fb6fe))
+* **ui:** only show cost in bazaar, never in inventory ([7efdad6](https://github.com/seiyria/Rasterkhann/commit/7efdad6cc0a251aa4936d3f9f5a7a631736ddf40))
+
+
+### Features
+
+* **library:** library levels increase chance of ignoring bad traits for heroes ([da0a987](https://github.com/seiyria/Rasterkhann/commit/da0a987b4aaba3373b704f31cc7d39245836ed7f)), closes [#66](https://github.com/seiyria/Rasterkhann/issues/66)
+* **ui:** add tooltip component to help out with some more complicated aspects ([bbf78c7](https://github.com/seiyria/Rasterkhann/commit/bbf78c75ae4db012cdf6dd62c2faf5b3476363f3)), closes [#65](https://github.com/seiyria/Rasterkhann/issues/65)
+* **workshop:** auto scrap bad items option ([7b087cd](https://github.com/seiyria/Rasterkhann/commit/7b087cd172ac7318b9c2cd92b7b0f7d7135a616e)), closes [#67](https://github.com/seiyria/Rasterkhann/issues/67)
+
+
+
 ## [0.5.29](https://github.com/seiyria/Rasterkhann/compare/v0.5.27...v0.5.29) (2020-07-21)
 
 
