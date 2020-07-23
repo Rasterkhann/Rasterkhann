@@ -12,6 +12,10 @@
   <ion-item>
     Max Traits For Hero: {{ maxTraits }}
   </ion-item>
+
+  <ion-item>
+    Bad Trait Ignore Chance: {{ traitBonus | number:'1.0-3' }}%
+  </ion-item>
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="library"></app-feature-list>

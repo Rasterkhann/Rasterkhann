@@ -9,6 +9,7 @@ import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
 import { filteredUnlocksEarnedByTown, doesTownHaveFeature, getCurrentStat } from './global';
+import { getLibraryTraitModifier } from './library';
 
 export function calculateMaxHeldWeapons(town: IGameTown, hero: Hero): number {
   let base = 1;
@@ -196,12 +197,26 @@ export function generateHero(town: IGameTown, level?: number): Hero {
 
   const jobStatic: HeroJobStatic = JobEffects[job];
 
+  const ignoreChance = getLibraryTraitModifier(town);
+
+  const pickTraitFromList = (traitList: Trait[]) => {
+    let trait: Trait | null = null;
+    do {
+      trait = sample(traitList.filter(t => !traits.includes(t))) as Trait;
+      if (random(1, 100) <= ignoreChance) { trait = null; }
+    } while (!trait);
+
+    return trait;
+  };
+
   // pick traits
   if (numTraits > 1) {
-    traits.push(...take(shuffle(allTraits.filter(t => TraitEffects[t].priority !== TraitPriority.Last)), numTraits - 1));
+    for (let i = 0; i < numTraits - 1; i++) {
+      traits.push(pickTraitFromList(allTraits.filter(t => TraitEffects[t].priority !== TraitPriority.Last)));
+    }
   }
 
-  traits.push(...take(shuffle(allTraits.filter(t => TraitEffects[t].priority === TraitPriority.Last))));
+  traits.push(pickTraitFromList(allTraits.filter(t => TraitEffects[t].priority === TraitPriority.Last)));
 
   // pick a hero level
   const heroLevel = random(1, generateLevel);
