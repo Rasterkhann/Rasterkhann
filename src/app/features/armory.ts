@@ -205,4 +205,21 @@ export const ArmoryFeatures: BuildingFeature[] = [
       'Job: Warrior': 1
     }
   },
+  {
+    name: 'Fast Repair',
+    description: 'Item repair happens faster.',
+    cost: 150000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 2
+  },
+  {
+    name: 'Faster Repair',
+    description: 'Item repair happens even faster.',
+    cost: 350000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 10,
+    requiresFeature: {
+      'Fast Repair': 1
+    }
+  },
 ];

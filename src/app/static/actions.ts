@@ -1,19 +1,37 @@
 
 import { sample, sampleSize, random } from 'lodash';
 
-import { Combat, Hero, HeroAction, HeroActionTargetting, HeroStat, HeroActionStringReplacer, HeroActionOpts } from '../interfaces';
+import { Combat, Hero, HeroAction, HeroActionTargetting, HeroStat,
+  HeroActionStringReplacer, HeroActionOpts, ItemType } from '../interfaces';
 import { getCurrentStat, giveHeroGold } from '../helpers/global';
+import { decreaseDurability } from '../helpers/durability';
 
 function heal(creature: Hero, healed: number): void {
   creature.currentStats[HeroStat.HP] = Math.min(creature.stats[HeroStat.HP], creature.currentStats[HeroStat.HP] + healed);
 }
 
-function takeDamage(creature: Hero, damage: number): void {
-  creature.currentStats[HeroStat.HP] = Math.max(0, creature.currentStats[HeroStat.HP] - damage);
+function takeDamage(attacker: Hero, defender: Hero, damage: number): void {
+  defender.currentStats[HeroStat.HP] = Math.max(0, defender.currentStats[HeroStat.HP] - damage);
+  takeRandomArmorDamage(defender);
+  takeRandomWeaponDamage(attacker);
 }
 
 function calculateDamage(atk: number, def: number): number {
   return Math.floor(Math.max(1, random(-def, atk)));
+}
+
+function takeRandomArmorDamage(creature: Hero): void {
+  const armorItem = sample(creature.gear[ItemType.Armor]);
+  if (!armorItem) { return; }
+
+  decreaseDurability(creature, armorItem, 1);
+}
+
+function takeRandomWeaponDamage(creature: Hero): void {
+  const weaponItem = sample(creature.gear[ItemType.Weapon]);
+  if (!weaponItem) { return; }
+
+  decreaseDurability(creature, weaponItem, 1);
 }
 
 // ***** ATTACK ABILITIES ***** //
@@ -28,18 +46,21 @@ export const Attack: (replacer: HeroActionStringReplacer, opts?: HeroActionOpts)
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const defMultiplier = opts.defMultiplier || 1;
     const atkMultiplier = opts.atkMultiplier || 1;
+    const times = opts.times || 1;
 
-    targets.forEach(target => {
-      const damage = calculateDamage(
-        getCurrentStat(hero, HeroStat.ATK) * atkMultiplier,
-        getCurrentStat(target, HeroStat.DEF) * defMultiplier
-      );
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const damage = calculateDamage(
+          getCurrentStat(hero, HeroStat.ATK) * atkMultiplier,
+          getCurrentStat(target, HeroStat.DEF) * defMultiplier
+        );
 
-      takeDamage(target, damage);
+        takeDamage(hero, target, damage);
 
-      const message = replacer.replace({ source: hero, target, value: damage });
-      combat.addLogEntry(message);
-    });
+        const message = replacer.replace({ source: hero, target, value: damage });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });
 
@@ -54,18 +75,21 @@ export const AttackSomeOrAll: (replacer: HeroActionStringReplacer, opts?: HeroAc
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const defMultiplier = opts.defMultiplier || 1;
     const atkMultiplier = opts.atkMultiplier || 1;
+    const times = opts.times || 1;
 
-    targets.forEach(target => {
-      const damage = calculateDamage(
-        getCurrentStat(hero, HeroStat.ATK) * atkMultiplier,
-        getCurrentStat(target, HeroStat.DEF) * defMultiplier
-      );
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const damage = calculateDamage(
+          getCurrentStat(hero, HeroStat.ATK) * atkMultiplier,
+          getCurrentStat(target, HeroStat.DEF) * defMultiplier
+        );
 
-      takeDamage(target, damage);
+        takeDamage(hero, target, damage);
 
-      const message = replacer.replace({ source: hero, target, value: damage });
-      combat.addLogEntry(message);
-    });
+        const message = replacer.replace({ source: hero, target, value: damage });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });
 
@@ -80,18 +104,21 @@ export const AttackSomeOrAllDiminishing: (replacer: HeroActionStringReplacer, op
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const defMultiplier = opts.defMultiplier || 1;
     const atkMultiplier = opts.atkMultiplier || 1;
+    const times = opts.times || 1;
 
-    targets.forEach(target => {
-      const damage = calculateDamage(
-        (getCurrentStat(hero, HeroStat.ATK) / targets.length) * atkMultiplier,
-        getCurrentStat(target, HeroStat.DEF) * defMultiplier
-      );
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const damage = calculateDamage(
+          (getCurrentStat(hero, HeroStat.ATK) / targets.length) * atkMultiplier,
+          getCurrentStat(target, HeroStat.DEF) * defMultiplier
+        );
 
-      takeDamage(target, damage);
+        takeDamage(hero, target, damage);
 
-      const message = replacer.replace({ source: hero, target, value: damage });
-      combat.addLogEntry(message);
-    });
+        const message = replacer.replace({ source: hero, target, value: damage });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });
 
@@ -104,14 +131,17 @@ export const AttackSinglePercent: (replacer: HeroActionStringReplacer, opts?: He
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const pct = opts.pct || 1;
+    const times = opts.times || 1;
 
-    targets.forEach(target => {
-      const damage = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
-      takeDamage(target, damage);
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const damage = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
+        takeDamage(hero, target, damage);
 
-      const message = replacer.replace({ source: hero, target, value: damage });
-      combat.addLogEntry(message);
-    });
+        const message = replacer.replace({ source: hero, target, value: damage });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });
 
@@ -125,14 +155,17 @@ export const AttackSomeOrAllPercent: (replacer: HeroActionStringReplacer, opts?:
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const pct = opts.pct || 1;
+    const times = opts.times || 1;
 
-    targets.forEach(target => {
-      const damage = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
-      takeDamage(target, damage);
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const damage = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
+        takeDamage(hero, target, damage);
 
-      const message = replacer.replace({ source: hero, target, value: damage });
-      combat.addLogEntry(message);
-    });
+        const message = replacer.replace({ source: hero, target, value: damage });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });
 
@@ -147,13 +180,17 @@ export const Heal: (replacer: HeroActionStringReplacer, opts?: HeroActionOpts) =
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const defMultiplier = opts.defMultiplier || 1;
-    targets.forEach(target => {
-      const healed = getCurrentStat(hero, HeroStat.DEF) * defMultiplier;
-      heal(target, healed);
+    const times = opts.times || 1;
 
-      const message = replacer.replace({ source: hero, target, value: healed });
-      combat.addLogEntry(message);
-    });
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const healed = getCurrentStat(hero, HeroStat.DEF) * defMultiplier;
+        heal(target, healed);
+
+        const message = replacer.replace({ source: hero, target, value: healed });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });
 
@@ -167,14 +204,17 @@ export const HealPercent: (replacer: HeroActionStringReplacer, opts?: HeroAction
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const pct = opts.pct || 1;
+    const times = opts.times || 1;
 
-    targets.forEach(target => {
-      const healed = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
-      heal(target, healed);
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const healed = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
+        heal(target, healed);
 
-      const message = replacer.replace({ source: hero, target, value: healed });
-      combat.addLogEntry(message);
-    });
+        const message = replacer.replace({ source: hero, target, value: healed });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });
 
@@ -187,13 +227,17 @@ export const HealSomeOrAll: (replacer: HeroActionStringReplacer, opts?: HeroActi
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const defMultiplier = opts.defMultiplier || 1;
-    targets.forEach(target => {
-      const healed = getCurrentStat(hero, HeroStat.DEF) * defMultiplier;
-      heal(target, healed);
+    const times = opts.times || 1;
 
-      const message = replacer.replace({ source: hero, target, value: healed });
-      combat.addLogEntry(message);
-    });
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const healed = getCurrentStat(hero, HeroStat.DEF) * defMultiplier;
+        heal(target, healed);
+
+        const message = replacer.replace({ source: hero, target, value: healed });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });
 
@@ -206,14 +250,17 @@ export const HealSomeOrAllPercent: (replacer: HeroActionStringReplacer, opts?: H
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const pct = opts.pct || 1;
+    const times = opts.times || 1;
 
-    targets.forEach(target => {
-      const healed = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
-      heal(target, healed);
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const healed = Math.floor(getCurrentStat(target, HeroStat.HP) * (pct / 100));
+        heal(target, healed);
 
-      const message = replacer.replace({ source: hero, target, value: healed });
-      combat.addLogEntry(message);
-    });
+        const message = replacer.replace({ source: hero, target, value: healed });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });
 
@@ -227,14 +274,17 @@ export const EarnGold: (replacer: HeroActionStringReplacer, opts?: HeroActionOpt
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const gold = opts.gold || 1;
+    const times = opts.times || 1;
 
-    targets.forEach(target => {
-      const earnedGold = target.currentStats[HeroStat.LVL] * gold;
-      giveHeroGold(target, earnedGold);
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const earnedGold = target.currentStats[HeroStat.LVL] * gold;
+        giveHeroGold(target, earnedGold);
 
-      const message = replacer.replace({ source: hero, target, value: earnedGold });
-      combat.addLogEntry(message);
-    });
+        const message = replacer.replace({ source: hero, target, value: earnedGold });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });
 
@@ -249,20 +299,23 @@ export const Mug: (replacer: HeroActionStringReplacer, opts?: HeroActionOpts) =>
     const gold = opts.gold || 1;
     const defMultiplier = opts.defMultiplier || 1;
     const atkMultiplier = opts.atkMultiplier || 1;
+    const times = opts.times || 1;
 
-    targets.forEach(target => {
-      const earnedGold = target.currentStats[HeroStat.LVL] * gold;
-      giveHeroGold(hero, earnedGold);
+    for (let i = 0; i < times; i++) {
+      targets.forEach(target => {
+        const earnedGold = target.currentStats[HeroStat.LVL] * gold;
+        giveHeroGold(hero, earnedGold);
 
-      const damage = calculateDamage(
-        getCurrentStat(hero, HeroStat.ATK) * atkMultiplier,
-        getCurrentStat(target, HeroStat.DEF) * defMultiplier
-      );
+        const damage = calculateDamage(
+          getCurrentStat(hero, HeroStat.ATK) * atkMultiplier,
+          getCurrentStat(target, HeroStat.DEF) * defMultiplier
+        );
 
-      takeDamage(target, damage);
+        takeDamage(hero, target, damage);
 
-      const message = replacer.replace({ source: hero, target, value: damage, valuegold: earnedGold });
-      combat.addLogEntry(message);
-    });
+        const message = replacer.replace({ source: hero, target, value: damage, valuegold: earnedGold });
+        combat.addLogEntry(message);
+      });
+    }
   }
 });

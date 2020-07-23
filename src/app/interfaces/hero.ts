@@ -84,6 +84,7 @@ export interface HeroActionOpts {
   defMultiplier?: number;
   atkMultiplier?: number;
   targets?: number;
+  times?: number;
 }
 
 export interface HeroGear {

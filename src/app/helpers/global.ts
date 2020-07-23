@@ -11,7 +11,7 @@ export function formatNumber(value: bigint | number): string {
   return NumberFormat.format(value.toString(), { flavor: 'short', sigfigs: 3 });
 }
 
-export function calculateGlobalCostMultiplier(town: IGameTown): number {
+export function calculateGlobalItemCostMultiplier(town: IGameTown): number {
   let multiplier = 1;
 
   multiplier += 0.01 * town.buildings[Building.Bazaar].level;
@@ -25,9 +25,24 @@ export function calculateGlobalCostMultiplier(town: IGameTown): number {
   return multiplier;
 }
 
+export function calculateItemDurability(town: IGameTown, boostStats: Array<{ stat: HeroStat, value: number }>): number {
+  const statMultipliers: Record<HeroStat, number> = {
+    [HeroStat.ATK]: 2,
+    [HeroStat.DEF]: 5,
+    [HeroStat.EXP]: 1,
+    [HeroStat.GOLD]: 1,
+    [HeroStat.LVL]: 10,
+    [HeroStat.SP]: 1,
+    [HeroStat.HP]: 3,
+    [HeroStat.STA]: 4
+  };
+
+  return Math.floor(sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat])));
+}
+
 export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
 
-  const multiplier = calculateGlobalCostMultiplier(town);
+  const multiplier = calculateGlobalItemCostMultiplier(town);
 
   const statMultipliers: Record<HeroStat, number> = {
     [HeroStat.ATK]: 150,

@@ -25,7 +25,7 @@ export const SubTypeActions: Record<WeaponSubType, HeroAction[]> = {
   [WeaponSubType.Spear]: [WeaponActions.AttackSinglePercent(WeaponActionMessages.ThrustMessage, { pct: 5 })],
   [WeaponSubType.Mace]: [],
   [WeaponSubType.Staff]: [],
-  [WeaponSubType.Shuriken]: [WeaponActions.AttackSomeOrAllPercent(WeaponActionMessages.FlingShurikenMessage, { pct: 3 })],
+  [WeaponSubType.Shuriken]: [WeaponActions.Attack(WeaponActionMessages.FlingShurikenMessage, { times: 3 })],
   [WeaponSubType.Wand]: [WeaponActions.HealPercent(WeaponActionMessages.HealMessage, { pct: 10 })],
   [WeaponSubType.Arrow]: [],
   [WeaponSubType.Shortbow]: [WeaponActions.AttackSomeOrAllDiminishing(WeaponActionMessages.ShootArrowsMessage)],

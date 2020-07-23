@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IGameTown, ItemType } from '../../../interfaces';
-import { calculateMaxCreatableItems, calculateSecondsUntilNextItem } from '../../../helpers';
+import { calculateMaxCreatableItems, calculateRepairCost, calculateRepairRate, calculateSecondsUntilNextItem } from '../../../helpers';
 
 @Component({
   selector: 'app-armory',
@@ -25,6 +25,14 @@ export class ArmoryComponent implements OnInit {
 
   public get weaponCreationTime(): number {
     return calculateSecondsUntilNextItem(this.town, ItemType.Weapon);
+  }
+
+  public get repairRate(): number {
+    return calculateRepairRate(this.town);
+  }
+
+  public get goldPerRepairTick(): number {
+    return calculateRepairCost(this.town);
   }
 
   constructor() { }

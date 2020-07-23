@@ -116,6 +116,8 @@ export interface HeroItem {
   boostStats: Array<{ stat: HeroStat, value: number }>;
   cost: bigint;
   timesPassedOver: number;
+  curDurability: number;
+  maxDurability: number;
 }
 
 export interface HeroWeapon extends HeroItem {

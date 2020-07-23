@@ -44,23 +44,15 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       const base = [JobActions.Attack(JobActionMessages.AttackMessage)];
 
       if (level >= 25) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 3, staCost: 5, defMultiplier: 0.9 }));
-      }
-
-      if (level >= 50) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 7, staCost: 9, defMultiplier: 0.8 }));
+        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 3, staCost: 5, times: 2 }));
       }
 
       if (level >= 75) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 11, staCost: 13, defMultiplier: 0.7 }));
-      }
-
-      if (level >= 100) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 15, staCost: 17, defMultiplier: 0.6 }));
+        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 7, staCost: 9, times: 3 }));
       }
 
       if (level >= 150) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 20, staCost: 25, defMultiplier: 0.5 }));
+        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 11, staCost: 13, times: 4 }));
       }
 
       return base;
@@ -106,7 +98,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       ];
 
       if (level >= 25) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 5, staCost: 7, defMultiplier: 0.95 }));
+        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 5, staCost: 7, defMultiplier: 0.9 }));
       }
 
       if (level >= 50) {
@@ -114,7 +106,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       }
 
       if (level >= 75) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 14, staCost: 16, defMultiplier: 0.9 }));
+        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 14, staCost: 16, defMultiplier: 0.8 }));
       }
 
       if (level >= 100) {
@@ -122,7 +114,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       }
 
       if (level >= 125) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 23, staCost: 25, defMultiplier: 0.8 }));
+        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 23, staCost: 25, defMultiplier: 0.65 }));
       }
 
       if (level >= 150) {

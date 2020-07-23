@@ -1,6 +1,6 @@
 
 
-import { HeroItem, IGameTown, ItemType, Building } from '../interfaces';
+import { HeroItem, IGameTown, ItemType, Building, Hero } from '../interfaces';
 import { doesTownHaveFeature } from './global';
 import { generateArmor } from './armor';
 import { generatePotion } from './potion';

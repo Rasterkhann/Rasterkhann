@@ -10,19 +10,15 @@
   </app-building-info>
 
   <ion-item *ngIf="maximumArmors > 0">
-    Maximum Armors: {{ maximumArmors }}
-  </ion-item>
-
-  <ion-item *ngIf="maximumArmors > 0">
-    Armor Creation Time: {{ armorCreationTime / 60 }}m
+    Armor Creation: {{ armorCreationTime / 60 }}m per armor (max: {{ maximumArmors }})
   </ion-item>
 
   <ion-item *ngIf="maximumWeapons > 0">
-    Maximum Weapons: {{ maximumWeapons }}
+    Weapon Creation: {{ weaponCreationTime / 60 }}m per weapon (max: {{ maximumWeapons }})
   </ion-item>
 
-  <ion-item *ngIf="maximumWeapons > 0">
-    Weapon Creation Time: {{ weaponCreationTime / 60 }}m
+  <ion-item>
+    Repair Rate: {{ repairRate }} DUR per second (cost: {{ goldPerRepairTick }} gold)
   </ion-item>
 </ion-list>
 

@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid';
 
 import { IGameTown, HeroStat, ItemType, WeaponSubType, WeaponElement, HeroWeapon, HeroAction, Building } from '../interfaces';
 import { ElementActions, SubTypeActions } from '../static';
-import { calculateItemCost, doesTownHaveFeature } from './global';
+import { calculateItemCost, calculateItemDurability, doesTownHaveFeature } from './global';
 import { getZeroStatBlock } from './hero';
 import { chooseRandomItemTrait } from './itemtraits';
 
@@ -132,6 +132,9 @@ export function generateWeapon(town: IGameTown): HeroWeapon {
   let cost = calculateItemCost(town, boostStats) * 10n;
   if (cost < 0n) { cost = 1000n; }
 
+  let durability = calculateItemDurability(town, boostStats);
+  if (durability < 100) { durability = 100; }
+
   return {
     name: `${trait ? trait.name + ' ' : ''}${element} ${subType}`,
     subType,
@@ -141,7 +144,9 @@ export function generateWeapon(town: IGameTown): HeroWeapon {
     sprite: getSpriteForWeapon(subType, element),
     boostStats,
     cost,
-    timesPassedOver: 0
+    timesPassedOver: 0,
+    curDurability: durability,
+    maxDurability: durability
   };
 }
 

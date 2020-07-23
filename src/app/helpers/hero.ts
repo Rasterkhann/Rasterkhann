@@ -10,6 +10,7 @@ import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
 import { filteredUnlocksEarnedByTown, doesTownHaveFeature, getCurrentStat } from './global';
 import { getLibraryTraitModifier } from './library';
+import { addItemStats, removeItemStats } from './durability';
 
 export function calculateMaxHeldWeapons(town: IGameTown, hero: Hero): number {
   let base = 1;
@@ -63,19 +64,16 @@ export function canEquipArmor(town: IGameTown, hero: Hero, item: HeroArmor): boo
 }
 
 export function unequipItem(hero: Hero, unequippedItem: HeroItem): void {
-  unequippedItem.boostStats.forEach(({ stat, value }) => {
-    hero.stats[stat] -= value;
-    hero.currentStats[stat] -= value;
-  });
+  removeItemStats(hero, unequippedItem);
 }
 
 export function equipItem(hero: Hero, equippedItem: HeroItem, slot: number): void {
   hero.gear[equippedItem.type][slot] = equippedItem;
 
-  equippedItem.boostStats.forEach(({ stat, value }) => {
-    hero.stats[stat] += value;
-    hero.currentStats[stat] += value;
-  });
+  if (!equippedItem.curDurability) { equippedItem.curDurability = 100; }
+  if (!equippedItem.maxDurability) { equippedItem.maxDurability = 100; }
+
+  addItemStats(hero, equippedItem);
 }
 
 export function getZeroStatBlock(): Record<HeroStat, number> {
@@ -115,6 +113,30 @@ export function calculateRestingCost(town: IGameTown): number {
   if (town.buildings[Building.Inn].currentWorkerId) { baseRate += 25; }
   if (doesTownHaveFeature(town, 'Restful Sleep'))   { baseRate += 50; }
   if (doesTownHaveFeature(town, 'Blissful Sleep'))  { baseRate += 100; }
+
+  return baseRate;
+}
+
+export function calculateRepairRate(town: IGameTown): number {
+
+  let baseRate = 1;
+
+  if (town.buildings[Building.Armory])                  { baseRate += 1; }
+  if (town.buildings[Building.Armory].currentWorkerId)  { baseRate += 3; }
+  if (doesTownHaveFeature(town, 'Fast Repair'))         { baseRate += 10; }
+  if (doesTownHaveFeature(town, 'Faster Repair'))       { baseRate += 25; }
+
+  return baseRate;
+}
+
+export function calculateRepairCost(town: IGameTown): number {
+
+  let baseRate = 0;
+
+  if (town.buildings[Building.Armory])                  { baseRate += 5; }
+  if (town.buildings[Building.Armory].currentWorkerId)  { baseRate += 10; }
+  if (doesTownHaveFeature(town, 'Fast Repair'))         { baseRate += 25; }
+  if (doesTownHaveFeature(town, 'Faster Repair'))       { baseRate += 60; }
 
   return baseRate;
 }

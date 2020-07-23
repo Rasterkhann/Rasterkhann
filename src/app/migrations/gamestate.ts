@@ -97,6 +97,29 @@ export const migrations = [
     versionKey: 'version',
     migrate: (state: IGameState) => {
       console.log('Savefile version 3...');
+
+      console.log('Setting armor/weapon durability to 100/100...');
+      state.towns.Rasterkhann.recruitedHeroes.forEach(h => {
+        h.gear.Armor.forEach(a => {
+          if (!a.curDurability) { a.curDurability = 100; }
+          if (!a.maxDurability) { a.maxDurability = 100; }
+        });
+        h.gear.Weapon.forEach(w => {
+          if (!w.curDurability) { w.curDurability = 100; }
+          if (!w.maxDurability) { w.maxDurability = 100; }
+        });
+      });
+
+      state.version = 4;
+      return state;
+    }
+  },
+  {
+    version: 4,
+    key: 'gamestate',
+    versionKey: 'version',
+    migrate: (state: IGameState) => {
+      console.log('Savefile version 4...');
       return state;
     }
   }

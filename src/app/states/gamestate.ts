@@ -28,7 +28,8 @@ import {
   generateItem,
   calculateSecondsUntilNextItem,
   heroBuyItemsBeforeAdventure, unequipItem, equipItem,
-  getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp, getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber
+  getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp,
+  getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber, calculateRepairRate, calculateRepairCost, increaseDurability
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -256,20 +257,47 @@ export class GameState {
       const restValue = calculateRestingRate(town);
       const restCost = calculateRestingCost(town);
 
+      const repairValue = calculateRepairRate(town);
+      const repairCost = calculateRepairCost(town);
+
       town.recruitedHeroes.forEach(h => {
         if (h.onAdventure || canHeroGoOnAdventure(h)) { return; }
 
-        const heroSpendValue = getCurrentStat(h, HeroStat.GOLD) >= restCost ? restCost : 0;
-        const heroRestValue = heroSpendValue === 0 ? 1 : restValue;
+        let heroSpentGold = 0;
 
-        if (heroSpendValue > 0) {
-          giveHeroGold(h, -heroSpendValue);
-          this.store.dispatch(new GainGold(BigInt(heroSpendValue)));
+        // resting
+        const heroRestSpendValue = getCurrentStat(h, HeroStat.GOLD) >= restCost ? restCost : 0;
+        const heroRestValue = heroRestSpendValue === 0 ? 1 : restValue;
+
+        if (heroRestSpendValue > 0) {
+          giveHeroGold(h, -heroRestSpendValue);
+          heroSpentGold += heroRestSpendValue;
         }
 
         [HeroStat.HP, HeroStat.SP, HeroStat.STA].forEach(stat => {
           h.currentStats[stat] = Math.min(h.currentStats[stat] + heroRestValue, h.stats[stat]);
         });
+
+        // repairs
+        const heroRepairSpendValue = getCurrentStat(h, HeroStat.GOLD) >= repairCost ? repairCost : 0;
+        const heroRepairValue = heroRepairSpendValue === 0 ? 1 : repairValue;
+
+        // only repair items that need it
+        const items = (h.gear[ItemType.Weapon] as HeroItem[]).concat(h.gear[ItemType.Armor] as HeroItem[])
+          .filter(i => i.curDurability !== i.maxDurability);
+
+        items.forEach((item: HeroItem) => {
+          increaseDurability(h, item, heroRepairValue);
+        });
+
+        if (items.length > 0 && heroRepairSpendValue > 0) {
+          giveHeroGold(h, -heroRepairSpendValue);
+          heroSpentGold += heroRepairSpendValue;
+        }
+
+        if (heroSpentGold > 0) {
+          this.store.dispatch(new GainGold(BigInt(heroSpentGold)));
+        }
 
         if (canHeroGoOnAdventure(h)) {
           this.store.dispatch(new NotifyMessage(`${h.name} is now fully rested and ready to adventure again!`));

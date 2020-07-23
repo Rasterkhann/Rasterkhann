@@ -112,7 +112,9 @@ export function generatePotion(town: IGameTown): HeroItem {
     sprite: pickPotionSprite(chosenStatCombo, itemTier),
     boostStats,
     cost: calculateItemCost(town, boostStats),
-    timesPassedOver: 0
+    timesPassedOver: 0,
+    curDurability: 1,
+    maxDurability: 1
   };
 
   return item;

@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid';
 
 import { IGameTown, HeroStat, ItemType, ArmorElement, ArmorSubType, Building, HeroArmor } from '../interfaces';
 import { getZeroStatBlock } from './hero';
-import { calculateItemCost, doesTownHaveFeature } from './global';
+import { calculateItemCost, calculateItemDurability, doesTownHaveFeature } from './global';
 import { chooseRandomItemTrait } from './itemtraits';
 
 const ARMOR_BASIC_SPRITE_COLOR_OFFSET: Partial<Record<ArmorElement, number>> = {
@@ -181,6 +181,9 @@ export function generateArmor(town: IGameTown): HeroArmor {
   let cost = calculateItemCost(town, boostStats) * 10n;
   if (cost < 0n) { cost = 1000n; }
 
+  let durability = calculateItemDurability(town, boostStats);
+  if (durability < 100) { durability = 100; }
+
   return {
     name: preset.name,
     uuid: uuid(),
@@ -190,6 +193,8 @@ export function generateArmor(town: IGameTown): HeroArmor {
     sprite: preset.sprite,
     boostStats,
     cost,
-    timesPassedOver: 0
+    timesPassedOver: 0,
+    curDurability: durability,
+    maxDurability: durability
   };
 }

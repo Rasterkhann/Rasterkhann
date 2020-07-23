@@ -19,6 +19,7 @@ export class ItemComponent implements OnInit {
   @Input() public showCost: boolean;
   @Input() public showScrapIcon: boolean;
   @Input() public showPassedOver: boolean;
+  @Input() public showStatus: boolean;
 
   public get color(): string {
     if (this.item.timesPassedOver === ItemPassedOverThreshold.New)          { return ''; }
@@ -34,6 +35,21 @@ export class ItemComponent implements OnInit {
     if (this.item.timesPassedOver < ItemPassedOverThreshold.MostlyIgnored)  { return 'This has been a bit ignored.'; }
     if (this.item.timesPassedOver < ItemPassedOverThreshold.TooMuch)        { return 'This has been ignored quite a bit.'; }
     return 'This probably will not be bought.';
+  }
+
+  public get statusString(): string {
+    const pct = this.item.curDurability / this.item.maxDurability * 100;
+    if (pct <= 0)  { return 'Broken'; }
+    if (pct <= 10) { return 'In Shambles'; }
+    if (pct <= 20) { return 'Tattered'; }
+    if (pct <= 30) { return 'Falling Apart'; }
+    if (pct <= 40) { return 'Below Average'; }
+    if (pct <= 50) { return 'Average'; }
+    if (pct <= 60) { return 'Above Average'; }
+    if (pct <= 70) { return 'Excellent'; }
+    if (pct <= 80) { return 'Amazing'; }
+    if (pct <= 90) { return 'Mint'; }
+    return 'Pristine';
   }
 
   public get spritesheet(): string {
