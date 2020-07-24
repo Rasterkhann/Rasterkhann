@@ -104,8 +104,8 @@ export enum ArmorElement {
 export enum ItemPassedOverThreshold {
   New = 0,
   MostlyFresh = 10,
-  MostlyIgnored = 100,
-  TooMuch = 250
+  MostlyIgnored = 50,
+  TooMuch = 100
 }
 
 export interface HeroItem {
