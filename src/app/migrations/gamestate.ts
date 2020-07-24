@@ -120,6 +120,16 @@ export const migrations = [
     versionKey: 'version',
     migrate: (state: IGameState) => {
       console.log('Savefile version 4...');
+
+      console.log('Fixing buildings with stale worker refs...');
+      Object.values(state.towns.Rasterkhann.buildings).forEach(b => {
+        if (!b.currentWorkerId) { return; }
+
+        const heroRef = state.towns.Rasterkhann.recruitedHeroes.find(h => h.uuid === b.currentWorkerId);
+        if (!heroRef) {
+          b.currentWorkerId = null;
+        }
+      });
       return state;
     }
   }

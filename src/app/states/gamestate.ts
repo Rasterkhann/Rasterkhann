@@ -448,10 +448,12 @@ export class GameState {
 
   @Action(DismissHero)
   @ImmutableContext()
-  dismissHero({ setState }: StateContext<IGameState>, { hero }: DismissHero): void {
+  dismissHero({ setState }: StateContext<IGameState>, { heroId }: DismissHero): void {
     setState((state: IGameState) => {
       state.towns[state.currentTown].recruitedHeroes = state.towns[state.currentTown].recruitedHeroes
-        .filter(x => x.uuid !== hero.uuid);
+        .filter(x => x.uuid !== heroId);
+
+      this.store.dispatch(new HeroStopOddJob(heroId));
 
       return state;
     });

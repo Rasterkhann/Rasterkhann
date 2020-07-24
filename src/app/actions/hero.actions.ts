@@ -13,7 +13,7 @@ export class RecruitHero {
 
 export class DismissHero {
   static readonly type = '[Hero] Dismiss Hero';
-  constructor(public hero: Hero) {}
+  constructor(public heroId: string) {}
 }
 
 export class HeroGainEXP {

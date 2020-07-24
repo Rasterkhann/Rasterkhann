@@ -262,7 +262,7 @@ export class GameService {
   }
 
   public dismissHero(town: IGameTown, hero: Hero): void {
-    this.store.dispatch(new DismissHero(hero));
+    this.store.dispatch(new DismissHero(hero.uuid));
   }
 
   // cave functions
