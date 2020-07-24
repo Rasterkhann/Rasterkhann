@@ -104,6 +104,7 @@ export enum ArmorElement {
 export enum ItemPassedOverThreshold {
   New = 0,
   MostlyFresh = 10,
+  AutoSellThreshold = 25,
   MostlyIgnored = 50,
   TooMuch = 100
 }
