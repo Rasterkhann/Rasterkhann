@@ -1,5 +1,12 @@
 
 <ion-content>
+
+  <div class="update-notification-container" *ngIf="hasUpdate">
+    <div class="update-notification">
+      Update available! <ion-button class="thin-button" fill="outline" (click)="refresh()">Refresh</ion-button>
+    </div>
+  </div>
+
   <ion-grid class="ion-no-padding" *ngIf="(currentTown$ | async) as town">
     <ion-row class="ion-no-padding">
       <ion-col class="ion-no-padding map-container" size="8">
