@@ -3,7 +3,7 @@ import { Select } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { visibleBuildingFeatures } from '../../helpers';
 
-import { IGameTown, Building } from '../../interfaces';
+import { IGameTown, Building, Hero } from '../../interfaces';
 import { GameService } from '../../services/game.service';
 import { GameState } from '../../states';
 
@@ -19,6 +19,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
   @ViewChild('container') container: ElementRef;
 
   @Select(GameState.currentInfoWindow) currentInfo$: Observable<{ window: string, autoOpen: boolean }>;
+  @Select(GameState.currentTownRecruitedHeroes) recruitedHeroes$: Observable<Hero[]>;
 
   @Input() public town: IGameTown;
 
@@ -32,6 +33,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
   private spriteMap: Record<string, any> = {};
   private textMap: Record<string, any> = {};
   private featureMap: Record<string, any> = {};
+  private heroMap: Record<string, any> = {};
 
   private currentSprite: any;
 
@@ -90,7 +92,6 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
     PIXI.loader
       .load((loader: any, resources: any) => {
-        console.log(resources);
         this.tileMap = new PIXI.extras.TiledMap('assets/game/town/Rasterkhann.tmx');
 
         const textStyle = new PIXI.TextStyle({
@@ -175,6 +176,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
         this.app.stage.addChild(this.tileMap);
 
         this.addAnimations();
+        this.watchAndMoveHeroes(resources);
       });
   }
 
@@ -210,6 +212,18 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
       });
 
       this.currentSprite.y -= 0.02 * delta;
+    });
+  }
+
+  private watchAndMoveHeroes(resources: any): void {
+    this.recruitedHeroes$.subscribe(heroes => {
+      heroes.forEach(hero => {
+        if (this.heroMap[hero.uuid]) { return; }
+
+        this.heroMap[hero.uuid] = new PIXI.extras.MovieClip(
+          this.getFramesFromSpriteSheet(resources[hero.sprite].texture, 16, 16)
+        );
+      });
     });
   }
 
