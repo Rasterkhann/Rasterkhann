@@ -7,6 +7,8 @@ import { IGameTown, Building } from '../../interfaces';
 import { GameService } from '../../services/game.service';
 import { GameState } from '../../states';
 
+const PIXI = (window as any).PIXI;
+
 @Component({
   selector: 'app-current-map',
   templateUrl: './current-map.component.html',
@@ -35,6 +37,19 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
   private spriteSub: Subscription;
 
+  private maps = [
+    'assets/game/town/Rasterkhann.tmx'
+  ];
+
+  private sprites = [
+    Array(4).fill(0).map((x, i) => `adventurer_f${i + 1}.png`),
+    Array(4).fill(0).map((x, i) => `adventurer_m${i + 1}.png`),
+    [
+      'cleric', 'fighter', 'guard', 'hunter', 'knight', 'mage', 'ninja',
+      'oldman', 'rogue', 'templar', 'thief', 'warrior', 'wizard'
+    ].map(job => Array(4).fill(0).map((x, i) => `${job}${i + 1}.png`))
+  ].flat(2);
+
   constructor(public game: GameService) { }
 
   ngAfterViewInit(): void {
@@ -42,10 +57,22 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
       e.preventDefault();
     }, false);
 
-    (window as any).PIXI.settings.PRECISION_FRAGMENT = 'highp';
-    (window as any).PIXI.utils.skipHello();
+    this.initRenderer();
+  }
 
-    this.app = new (window as any).PIXI.Application({
+  getFramesFromSpriteSheet(texture: any, frameWidth: number, frameHeight: number): any[] {
+    const frames = [];
+    for (let i = 0; i < texture.width - frameWidth; i += frameWidth) {
+        frames.push(new PIXI.Texture(texture.baseTexture, new PIXI.Rectangle(i, 0, frameWidth, frameHeight)));
+    }
+    return frames;
+  }
+
+  private initRenderer(): void {
+    PIXI.settings.PRECISION_FRAGMENT = 'highp';
+    PIXI.utils.skipHello();
+
+    this.app = new PIXI.Application({
       width: 480,
       height: 480,
       resolution: window.devicePixelRatio || 1,
@@ -58,12 +85,15 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
     this.app.renderer.view.style.width = '100%';
     this.app.renderer.view.style.height = '100%';
 
-    (window as any).PIXI.loader
-      .add('assets/game/town/Rasterkhann.tmx')
-      .load(() => {
-        this.tileMap = new (window as any).PIXI.extras.TiledMap('assets/game/town/Rasterkhann.tmx');
+    this.maps.forEach(map => PIXI.loader.add(map));
+    this.sprites.forEach(sprite => PIXI.loader.add(sprite.split('.')[0], `assets/game/hero/${sprite}`));
 
-        const textStyle = new (window as any).PIXI.TextStyle({
+    PIXI.loader
+      .load((loader: any, resources: any) => {
+        console.log(resources);
+        this.tileMap = new PIXI.extras.TiledMap('assets/game/town/Rasterkhann.tmx');
+
+        const textStyle = new PIXI.TextStyle({
           fontFamily: 'VT323',
           fontSize: '12px',
           // fill: '#fff',
@@ -98,7 +128,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
             if (obj.properties && obj.properties.aboveText) {
               // add text
-              this.textMap[obj.name] = new (window as any).PIXI.Text(obj.properties.aboveText, textStyle);
+              this.textMap[obj.name] = new PIXI.Text(obj.properties.aboveText, textStyle);
               this.textMap[obj.name].x = obj.x + 8;
               this.textMap[obj.name].y = obj.y - 16;
               this.textMap[obj.name].anchor.set(0.5, 0);
@@ -120,7 +150,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
               });
 
               // add abovedot
-              this.featureMap[obj.name] = (window as any).PIXI.Sprite.from('assets/game/ui/orb.png');
+              this.featureMap[obj.name] = PIXI.Sprite.from('assets/game/ui/orb.png');
               this.featureMap[obj.name].x = obj.x + 8;
               this.featureMap[obj.name].y = obj.y - 24;
               this.featureMap[obj.name].visible = false;
@@ -132,7 +162,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
           }
         });
 
-        this.currentSprite = (window as any).PIXI.Sprite.from('assets/game/ui/arrow.png');
+        this.currentSprite = PIXI.Sprite.from('assets/game/ui/arrow.png');
         this.tileMap.addChild(this.currentSprite);
 
         if (this.spriteSub) { this.spriteSub.unsubscribe(); }
