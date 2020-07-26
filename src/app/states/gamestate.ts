@@ -36,6 +36,7 @@ import { environment } from '../../environments/environment';
 import { BuildingData } from '../static';
 import { HeroService } from '../services/hero.service';
 import { AdventureService } from '../services/adventure.service';
+import { Subject } from 'rxjs';
 
 const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
 const ADVENTURE_TIME_MULTIPLIER = environment.production ? 1 : 0.01;
@@ -46,6 +47,10 @@ const ADVENTURE_TIME_MULTIPLIER = environment.production ? 1 : 0.01;
 })
 @Injectable()
 export class GameState {
+
+  public removeHero$ = new Subject<string>();
+  public hideHero$ = new Subject<string>();
+  public showHero$ = new Subject<string>();
 
   @Selector()
   public static entireSavefile(state: IGameState): IGameState {
@@ -301,6 +306,7 @@ export class GameState {
 
         if (canHeroGoOnAdventure(h)) {
           this.store.dispatch(new NotifyMessage(`${h.name} is now fully rested and ready to adventure again!`));
+          this.showHero$.next(h.uuid);
         }
       });
 
@@ -454,6 +460,7 @@ export class GameState {
         .filter(x => x.uuid !== heroId);
 
       this.store.dispatch(new HeroStopOddJob(heroId));
+      this.removeHero$.next(heroId);
 
       return state;
     });
@@ -486,6 +493,7 @@ export class GameState {
           if (h.uuid !== rh.uuid) { return; }
 
           this.store.dispatch(new HeroStopOddJob(rh.uuid));
+          this.hideHero$.next(rh.uuid);
 
           town.recruitedHeroes[i] = { ...rh };
           town.recruitedHeroes[i].onAdventure = adventure.uuid;

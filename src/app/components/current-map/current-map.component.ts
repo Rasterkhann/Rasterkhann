@@ -52,7 +52,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
     ].map(job => Array(4).fill(0).map((x, i) => `${job}${i + 1}.png`))
   ].flat(2);
 
-  constructor(public game: GameService) { }
+  constructor(private state: GameState, public game: GameService) { }
 
   ngAfterViewInit(): void {
     window.addEventListener('contextmenu', (e) => {
@@ -62,10 +62,27 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
     this.initRenderer();
   }
 
-  getFramesFromSpriteSheet(texture: any, frameWidth: number, frameHeight: number): any[] {
+  ngOnChanges(changes: any): void {
+    if (changes.town) {
+      const currentBuildings = Object.fromEntries(Object.keys(changes.town.currentValue.buildings).map(x => {
+        if (!changes.town.currentValue.buildings[x] || !changes.town.currentValue.buildings[x].level) { return []; }
+        return [x, true];
+      }));
+
+      Object.keys(this.spriteMap).forEach((buildingName: Building) => {
+        this.toggleVisible(buildingName, false);
+        if (!currentBuildings[buildingName]) { return; }
+
+        this.toggleVisible(buildingName, true);
+        this.featureMap[buildingName].visible = visibleBuildingFeatures(this.town, buildingName).length > 0;
+      });
+    }
+  }
+
+  private getFramesFromSpriteSheet(texture: any, frameWidth: number, frameHeight: number): any[] {
     const frames = [];
-    for (let i = 0; i < texture.width - frameWidth; i += frameWidth) {
-        frames.push(new PIXI.Texture(texture.baseTexture, new PIXI.Rectangle(i, 0, frameWidth, frameHeight)));
+    for (let i = 0; i < texture.width; i += frameWidth) {
+      frames.push(new PIXI.Texture(texture.baseTexture, new PIXI.Rectangle(i, 0, frameWidth, frameHeight)));
     }
     return frames;
   }
@@ -180,23 +197,6 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
       });
   }
 
-  ngOnChanges(changes: any): void {
-    if (changes.town) {
-      const currentBuildings = Object.fromEntries(Object.keys(changes.town.currentValue.buildings).map(x => {
-        if (!changes.town.currentValue.buildings[x] || !changes.town.currentValue.buildings[x].level) { return []; }
-        return [x, true];
-      }));
-
-      Object.keys(this.spriteMap).forEach((buildingName: Building) => {
-        this.toggleVisible(buildingName, false);
-        if (!currentBuildings[buildingName]) { return; }
-
-        this.toggleVisible(buildingName, true);
-        this.featureMap[buildingName].visible = visibleBuildingFeatures(this.town, buildingName).length > 0;
-      });
-    }
-  }
-
   private toggleVisible(buildingName: string, visible: boolean): void {
     const allObjs = this.spriteMap[buildingName];
     (allObjs || []).forEach((obj: any) => obj.setVisibility(visible));
@@ -217,14 +217,39 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
   private watchAndMoveHeroes(resources: any): void {
     this.recruitedHeroes$.subscribe(heroes => {
-      heroes.forEach(hero => {
+      heroes.forEach((hero, i) => {
         if (this.heroMap[hero.uuid]) { return; }
 
-        this.heroMap[hero.uuid] = new PIXI.extras.MovieClip(
+        this.heroMap[hero.uuid] = new PIXI.extras.AnimatedSprite(
           this.getFramesFromSpriteSheet(resources[hero.sprite].texture, 16, 16)
         );
+
+        this.heroMap[hero.uuid].x = 80 + (16 * i);
+        this.heroMap[hero.uuid].y = 128;
+        this.heroMap[hero.uuid].animationSpeed = 0.05;
+        this.heroMap[hero.uuid].gotoAndPlay(0);
+        this.app.stage.addChild(this.heroMap[hero.uuid]);
+
+        this.heroMap[hero.uuid].visible = !hero.onAdventure;
       });
     });
+
+    this.state.removeHero$.subscribe(heroId => this.removeHero(heroId));
+    this.state.showHero$.subscribe(heroId => this.setVisible(heroId, true));
+    this.state.hideHero$.subscribe(heroId => this.setVisible(heroId, false));
+  }
+
+  private setVisible(heroId: string, visible: boolean): void {
+    if (!this.heroMap[heroId]) { return; }
+
+    this.heroMap[heroId].visible = visible;
+  }
+
+  private removeHero(heroId: string): void {
+    if (!this.heroMap[heroId]) { return; }
+
+    this.app.stage.removeChild(this.heroMap[heroId]);
+    this.heroMap[heroId] = null;
   }
 
 }
