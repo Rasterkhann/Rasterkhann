@@ -263,6 +263,9 @@ export function generateHero(town: IGameTown, level?: number): Hero {
     currentlyWorkingTicks: 0,
     currentlyWorkingEarned: 0,
 
+    currentlyAtBuilding: null,
+    goingToBuilding: null,
+
     job,
     traits,
 

@@ -8,7 +8,7 @@ import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, UpgradeBuildingFeature, RerollHeroes,
   RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
-  ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob
+  ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation, HeroSetDestination
 } from '../actions';
 import {
   IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat
@@ -51,6 +51,7 @@ export class GameState {
   public removeHero$ = new Subject<string>();
   public hideHero$ = new Subject<string>();
   public showHero$ = new Subject<string>();
+  public walkHero$ = new Subject<string>();
 
   @Selector()
   public static entireSavefile(state: IGameState): IGameState {
@@ -265,6 +266,7 @@ export class GameState {
       const repairValue = calculateRepairRate(town);
       const repairCost = calculateRepairCost(town);
 
+      // rest
       town.recruitedHeroes.forEach(h => {
         if (h.onAdventure || canHeroGoOnAdventure(h)) { return; }
 
@@ -310,6 +312,7 @@ export class GameState {
         }
       });
 
+      // start odd job
       town.recruitedHeroes.forEach(h => {
         if (h.onAdventure || h.currentlyWorkingAt || !canHeroGoOnAdventure(h)) { return; }
         if (random(1, 10) !== 1) { return; }
@@ -317,6 +320,7 @@ export class GameState {
         this.store.dispatch(new HeroStartOddJob(h.uuid));
       });
 
+      // earn gold from odd job
       town.recruitedHeroes.forEach(h => {
         if (!h.currentlyWorkingAt) { return; }
 
@@ -426,6 +430,8 @@ export class GameState {
       town.buildings[building].currentWorkerId = null;
       heroRef.currentlyWorkingAt = null;
 
+      heroRef.currentlyAtBuilding = null;
+
       increaseTrackedStat(heroRef, HeroTrackedStat.OddJobsDone);
       increaseTrackedStat(heroRef, HeroTrackedStat.OddJobsMoney, heroRef.currentlyWorkingEarned);
 
@@ -436,6 +442,45 @@ export class GameState {
 
       return state;
     });
+  }
+
+  @Action(HeroSetLocation)
+  @ImmutableContext()
+  heroSetLocation({ setState }: StateContext<IGameState>, { heroId, building }: HeroSetLocation): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      heroRef.currentlyAtBuilding = building;
+      heroRef.goingToBuilding = null;
+
+      return state;
+    });
+
+    // we don't want them to all walk right away
+    setTimeout(() => {
+      this.walkHero$.next(heroId);
+    }, random(1000, 10000));
+  }
+
+  @Action(HeroSetDestination)
+  @ImmutableContext()
+  heroSetDestination({ setState }: StateContext<IGameState>, { heroId, building }: HeroSetDestination): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      heroRef.goingToBuilding = building;
+
+      return state;
+    });
+
+    // we don't want them to all walk right away
+    setTimeout(() => {
+      this.walkHero$.next(heroId);
+    }, random(1000, 10000));
   }
 
   @Action(HeroGainGold)
@@ -488,6 +533,7 @@ export class GameState {
   startAdventure({ setState }: StateContext<IGameState>, { heroes, adventure }: StartAdventure): void {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
+
       heroes.forEach(h => {
         town.recruitedHeroes.forEach((rh, i) => {
           if (h.uuid !== rh.uuid) { return; }
@@ -576,22 +622,39 @@ export class GameState {
 
       return state;
     });
+
+    setTimeout(() => {
+      heroes.forEach(h => {
+        this.store.dispatch(new HeroSetLocation(h.uuid, Building.Cave));
+      });
+    }, 0);
   }
 
   @Action(GameLoop)
   @ImmutableContext()
   adventureTick({ setState }: StateContext<IGameState>): void {
+
+    const bumpHeroIds: string[] = [];
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
       town.activeAdventures.forEach(adv => {
         const result = tickAdventure(state.towns[state.currentTown], adv);
+
+        // adventure over
         if (result) {
           this.store.dispatch(new NotifyMessage(result));
+
+          adv.activeHeroes.forEach(heroId => bumpHeroIds.push(heroId));
         }
       });
 
       return state;
     });
+
+    setTimeout(() => {
+      bumpHeroIds.forEach(heroId => this.store.dispatch(new HeroSetLocation(heroId, Building.Inn)));
+    }, 0);
   }
 
   // item functions

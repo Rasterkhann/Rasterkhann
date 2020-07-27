@@ -1,4 +1,4 @@
-import { IGameState, ItemType } from '../interfaces';
+import { Building, IGameState, ItemType } from '../interfaces';
 import { createBuildingAtLevel } from '../helpers';
 
 export const migrations = [
@@ -130,6 +130,24 @@ export const migrations = [
           b.currentWorkerId = null;
         }
       });
+
+      state.version = 5;
+
+      return state;
+    }
+  },
+  {
+    version: 5,
+    key: 'gamestate',
+    versionKey: 'version',
+    migrate: (state: IGameState) => {
+      console.log('Savefile version 5...');
+
+      console.log('Setting heroes default location to the inn...');
+      state.towns.Rasterkhann.recruitedHeroes.forEach(h => {
+        h.currentlyAtBuilding = h.currentlyAtBuilding || Building.Inn;
+      });
+
       return state;
     }
   }

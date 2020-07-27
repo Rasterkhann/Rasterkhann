@@ -103,6 +103,9 @@ export interface Hero {
   currentlyWorkingTicks: number;
   currentlyWorkingEarned: number;
 
+  currentlyAtBuilding: Building | null;
+  goingToBuilding: Building | null;
+
   job: HeroJob;
   traits: Trait[];
 

@@ -1,5 +1,5 @@
 
-import { ProspectiveHero } from '../interfaces';
+import { Building, ProspectiveHero } from '../interfaces';
 
 export class RerollHeroes {
   static readonly type = '[Hero] Reroll Heroes';
@@ -34,4 +34,14 @@ export class HeroStartOddJob {
 export class HeroStopOddJob {
   static readonly type = '[Hero] Stop Odd Job';
   constructor(public heroId: string) {}
+}
+
+export class HeroSetLocation {
+  static readonly type = '[Hero] Set Location';
+  constructor(public heroId: string, public building: Building | null) {}
+}
+
+export class HeroSetDestination {
+  static readonly type = '[Hero] Set Destination';
+  constructor(public heroId: string, public building: Building | null) {}
 }
