@@ -345,7 +345,6 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
       .flat()
       .filter(({ x, y }: { x: number, y: number }) => x >= 0 && y >= 0 && x < this.tileMap._width && y < this.tileMap._height);
 
-    const tiles = this.tileMap.layers[3].tiles;
     this.navGrid = new Pathfinding.Grid(this.tileMap._width, this.tileMap._height);
 
     for (let x = 0; x < this.tileMap._width; x++) {
