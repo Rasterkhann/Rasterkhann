@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content padding>
-  <app-help-text helpText="The Bazaar is a place for your heroes to come and buy items. You don't directly purchase anything here, but you can remove items you think are bad or items that just aren't getting bought."></app-help-text>
+  <app-help-text helpText="The Bazaar is a place for your heroes to come and buy items. You don't directly purchase anything here, but you can remove items you think are bad or items that just aren't getting bought. You'll need an Armory and an Alchemist to make use of the Bazaar's selling capabilities."></app-help-text>
 
   <ion-list *ngIf="currentTownItemsForSale$ | async as itemsForSale">
     <ng-container *ngFor="let type of itemTypes">
