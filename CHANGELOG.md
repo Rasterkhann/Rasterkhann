@@ -1,3 +1,22 @@
+# [0.6.0](https://github.com/seiyria/Rasterkhann/compare/v0.5.31...v0.6.0) (2020-07-27)
+
+
+### Bug Fixes
+
+* **bazaar:** help text should mention that you need an alchemist and/or an armory ([71e76a6](https://github.com/seiyria/Rasterkhann/commit/71e76a683cf97ab488620905d889915c2074c683)), closes [#73](https://github.com/seiyria/Rasterkhann/issues/73)
+* **bazaar:** pass-over threshold for autoscrap lowered to 100 ([e70562b](https://github.com/seiyria/Rasterkhann/commit/e70562b955145d50b1c673312d4d359d093b6a72))
+* **dismiss:** dismissing a hero now will stop their odd job ([4457868](https://github.com/seiyria/Rasterkhann/commit/4457868611fd4bd4aaebdf13339b92950c8f9cfb))
+* **ui:** scrap item description was incorrect ([797a095](https://github.com/seiyria/Rasterkhann/commit/797a095d9a8d5e1e603c6aa00f248f16c6fdfec8))
+
+
+### Features
+
+* **map:** heroes walk around the map ([c70808e](https://github.com/seiyria/Rasterkhann/commit/c70808e2002365774c3e55b26a090f526dee633e)), closes [#59](https://github.com/seiyria/Rasterkhann/issues/59)
+* **ui:** watch for updates in the web version ([2e40c7e](https://github.com/seiyria/Rasterkhann/commit/2e40c7ebe8d158cdc2983e818c58ffedf1d6dfac)), closes [#68](https://github.com/seiyria/Rasterkhann/issues/68)
+* **workshop:** scrap after 25 passed over instead of 250 ([8221efe](https://github.com/seiyria/Rasterkhann/commit/8221efeef5b2401d60f51da70b4401f734a69b5f))
+
+
+
 ## [0.5.31](https://github.com/seiyria/Rasterkhann/compare/v0.5.30...v0.5.31) (2020-07-23)
 
 
