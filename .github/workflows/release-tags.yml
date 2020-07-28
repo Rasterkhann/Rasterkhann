@@ -44,7 +44,7 @@ jobs:
         draft: false
         prerelease: false
       
-    - name: Upload Release Asset (Windows)
+    - name: Upload Release Asset (Github-Windows)
       id: upload-release-asset-win
       if: startsWith(matrix.os, 'windows')
       uses: actions/upload-release-asset@v1
@@ -55,6 +55,16 @@ jobs:
         asset_path: ./dist/Rasterkhann.exe
         asset_name: Rasterkhann.exe
         asset_content_type: application/vnd.microsoft.portable-executable
+
+    - name: Upload Release Asset (Itch-Windows)
+      uses: josephbmanley/butler-publish-itchio-action@master
+      env:
+        BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+        CHANNEL: windows
+        ITCH_GAME: rasterkhann
+        ITCH_USER: seiyria
+        VERSION: ${{ github.ref }}
+        PACKAGE: ./dist/Rasterkhann.exe
       
     #- name: Upload Release Asset (OSX)
     #  id: upload-release-asset-osx
