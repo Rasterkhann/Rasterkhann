@@ -61,6 +61,7 @@ export class HomePage implements OnInit {
   }
 
   private watchVersion(): void {
+    console.log('version watch:', !(window as any).isDownloaded && environment.production);
     // only do this in production and when the app is run in the browser
     if ((window as any).isDownloaded) { return; }
     if (!environment.production) { return; }
@@ -70,6 +71,7 @@ export class HomePage implements OnInit {
       interval(environment.production ? 1800000 : 5000),
       this.http.get('https://api.github.com/repos/seiyria/Rasterkhann/commits/main')
     ]).subscribe(([_, data]) => {
+      console.log('checking version - data', data);
       if ((data as any).sha.includes(environment.version.revision)) { return; }
       this.hasUpdate = true;
     });
