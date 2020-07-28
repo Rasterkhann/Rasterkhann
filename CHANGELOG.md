@@ -1,3 +1,12 @@
+## [0.6.3](https://github.com/seiyria/Rasterkhann/compare/v0.6.2...v0.6.3) (2020-07-28)
+
+
+### Bug Fixes
+
+* **ui:** update notification should show up correctly now ([599adee](https://github.com/seiyria/Rasterkhann/commit/599adee649b6485b394efd6eb26cabe511e157e6))
+
+
+
 ## [0.6.2](https://github.com/seiyria/Rasterkhann/compare/v0.6.1...v0.6.2) (2020-07-28)
 
 
