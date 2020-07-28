@@ -1,3 +1,19 @@
+## [0.6.2](https://github.com/seiyria/Rasterkhann/compare/v0.6.1...v0.6.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* **hero:** xp scaling is fixed to go up more as levels go up ([3f9f833](https://github.com/seiyria/Rasterkhann/commit/3f9f833dee91291c3ddf6e9a3377c5053022cfd4)), closes [#70](https://github.com/seiyria/Rasterkhann/issues/70)
+
+
+### Features
+
+* **hero:** heroes will now roll their levelup traits on spawn - they will not get normal levelup bonuses so only +/- traits will have a major effect. % effects will apply to the sum of those bonuses ([356a304](https://github.com/seiyria/Rasterkhann/commit/356a3045a325633b263ef453939ecf502d7c63e0)), closes [#71](https://github.com/seiyria/Rasterkhann/issues/71)
+* **hero:** post-adventure, while repairing, hero gear has a chance of taking permanent durability damage and losing value to encourage gear cycling ([c7d476f](https://github.com/seiyria/Rasterkhann/commit/c7d476f2e344ae6ea4453737f5ec6690d312d4eb)), closes [#72](https://github.com/seiyria/Rasterkhann/issues/72)
+* **library:** add durability-related traits ([bcbfb37](https://github.com/seiyria/Rasterkhann/commit/bcbfb373f13f5167277d9cbebf7a46104cf39f49)), closes [#69](https://github.com/seiyria/Rasterkhann/issues/69)
+
+
+
 ## [0.6.1](https://github.com/seiyria/Rasterkhann/compare/v0.6.0...v0.6.1) (2020-07-28)
 
 
