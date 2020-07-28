@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin, combineLatest, interval } from 'rxjs';
-import { first, throttle } from 'rxjs/operators';
+import { first, switchMap, throttle } from 'rxjs/operators';
 import { sample } from 'lodash';
 
 import { GameService } from '../../services/game.service';
@@ -67,14 +67,12 @@ export class HomePage implements OnInit {
     if (!environment.production) { return; }
 
     // check for a new version every half-hour
-    combineLatest([
-      interval(environment.production ? 1800000 : 5000),
-      this.http.get('https://api.github.com/repos/seiyria/Rasterkhann/commits/main')
-    ]).subscribe(([_, data]) => {
-      console.log('checking version - data', data);
-      if ((data as any).sha.includes(environment.version.revision)) { return; }
-      this.hasUpdate = true;
-    });
+    interval(environment.production ? 1800000 : 5000)
+      .pipe(switchMap(() => this.http.get('https://api.github.com/repos/seiyria/Rasterkhann/commits/main')))
+      .subscribe(data => {
+        if ((data as any).sha.includes(environment.version.revision)) { return; }
+        this.hasUpdate = true;
+      });
   }
 
   private watchAutomation(): void {
