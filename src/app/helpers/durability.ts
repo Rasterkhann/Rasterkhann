@@ -1,4 +1,4 @@
-import { clamp } from 'lodash';
+import { clamp, random } from 'lodash';
 
 import { Hero, HeroItem } from '../interfaces';
 
@@ -29,6 +29,12 @@ export function increaseDurability(hero: Hero, item: HeroItem, gain: number = 1)
   } else if (item.curDurability !== 0 && curDurability === 0) {
     addItemStats(hero, item);
 
+  }
+
+  // randomly lose max durability/value
+  if (gain > 0 && item.maxDurability > 25 && item.curDurability < item.maxDurability && random(1, 10) === 1) {
+    item.cost -= (item.cost / 100n);
+    item.maxDurability -= 1;
   }
 }
 
