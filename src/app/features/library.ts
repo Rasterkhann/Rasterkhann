@@ -197,7 +197,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   },
   {
     name: 'Trait: Careful',
-    description: 'Heroes can hold an additional potion.',
+    description: 'Heroes use their armor more wisely.',
     cost: 100000n,
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
