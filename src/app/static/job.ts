@@ -29,7 +29,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => random(800, 1000),
+      [HeroStat.EXP]: (level) => level * random(20, 30),
       [HeroStat.HP]: () => 12,
       [HeroStat.SP]: () => 4,
       [HeroStat.ATK]: () => 2,
@@ -78,7 +78,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => random(1100, 1300),
+      [HeroStat.EXP]: (level) => level * random(30, 35),
       [HeroStat.HP]: () => 10,
       [HeroStat.SP]: () => 3,
       [HeroStat.ATK]: () => 2,
@@ -144,7 +144,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => random(1200, 1500),
+      [HeroStat.EXP]: (level) => level * random(35, 40),
       [HeroStat.HP]: () => 5,
       [HeroStat.SP]: () => 3,
       [HeroStat.ATK]: () => 3,
@@ -210,7 +210,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => random(600, 700),
+      [HeroStat.EXP]: (level) => level * random(15, 20),
       [HeroStat.HP]: () => 7,
       [HeroStat.SP]: () => 5,
       [HeroStat.ATK]: () => 3,
@@ -279,7 +279,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     },
     statGrowth: {
       [HeroStat.LVL]: () => 1,
-      [HeroStat.EXP]: () => random(1300, 1800),
+      [HeroStat.EXP]: (level) => level * random(30, 40),
       [HeroStat.HP]: () => 15,
       [HeroStat.SP]: () => 1,
       [HeroStat.ATK]: () => 4,

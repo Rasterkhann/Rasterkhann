@@ -250,7 +250,7 @@ export function generateHero(town: IGameTown, level?: number): Hero {
   // create the random stat block
   Object.values(HeroStat).forEach(stat => {
     if (stats[stat]) { return; }
-    stats[stat] = random(1, heroLevel * jobStatic.statGrowth[stat]() * jobStatic.statBaseMultiplier[stat]);
+    stats[stat] = random(1, heroLevel * jobStatic.statGrowth[stat](heroLevel) * jobStatic.statBaseMultiplier[stat]);
   });
 
   // create the hero
@@ -362,22 +362,23 @@ export function generateMonster(town: IGameTown, adventure: Adventure): Hero {
 export function checkHeroLevelUp(hero: Hero): void {
   if (getCurrentStat(hero, HeroStat.EXP) < hero.stats[HeroStat.EXP]) { return; }
 
-  const getLevelupStat = (stat: HeroStat) => {
-    return Math.floor(JobEffects[hero.job].statGrowth[stat](hero));
+  const getLevelupStat = (stat: HeroStat, nextLevel: number) => {
+    return Math.floor(JobEffects[hero.job].statGrowth[stat](nextLevel));
   };
 
-  const numLevels = getLevelupStat(HeroStat.LVL);
+  const curLevel = hero.stats[HeroStat.LVL];
+  const numLevels = getLevelupStat(HeroStat.LVL, curLevel);
 
   for (let i = 0; i < numLevels; i++) {
     const levelupStats: Record<HeroStat, number> = {
       [HeroStat.LVL]:   1,
-      [HeroStat.EXP]:   getLevelupStat(HeroStat.EXP),
-      [HeroStat.GOLD]:  getLevelupStat(HeroStat.GOLD),
-      [HeroStat.HP]:    getLevelupStat(HeroStat.HP),
-      [HeroStat.SP]:    getLevelupStat(HeroStat.SP),
-      [HeroStat.STA]:   getLevelupStat(HeroStat.STA),
-      [HeroStat.ATK]:   getLevelupStat(HeroStat.ATK),
-      [HeroStat.DEF]:   getLevelupStat(HeroStat.DEF)
+      [HeroStat.EXP]:   getLevelupStat(HeroStat.EXP,  curLevel + i),
+      [HeroStat.GOLD]:  getLevelupStat(HeroStat.GOLD, curLevel + i),
+      [HeroStat.HP]:    getLevelupStat(HeroStat.HP,   curLevel + i),
+      [HeroStat.SP]:    getLevelupStat(HeroStat.SP,   curLevel + i),
+      [HeroStat.STA]:   getLevelupStat(HeroStat.STA,  curLevel + i),
+      [HeroStat.ATK]:   getLevelupStat(HeroStat.ATK,  curLevel + i),
+      [HeroStat.DEF]:   getLevelupStat(HeroStat.DEF,  curLevel + i)
     };
 
     const levelUpJobEffect = JobEffects[hero.job].triggers[TriggerType.LevelUp];

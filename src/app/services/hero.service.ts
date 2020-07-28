@@ -71,7 +71,7 @@ export class HeroService {
     // calculate the max for each stat
     Object.values(contributingStats).forEach(stat => {
       if (maxStats[stat]) { return; }
-      maxStats[stat] = hero.stats[HeroStat.LVL] * jobStatic.statGrowth[stat]() * jobStatic.statBaseMultiplier[stat];
+      maxStats[stat] = hero.stats[HeroStat.LVL] * jobStatic.statGrowth[stat](hero.stats[HeroStat.LVL]) * jobStatic.statBaseMultiplier[stat];
     });
 
     // normalize the stats between 1-5 (if it goes over, that's ok)

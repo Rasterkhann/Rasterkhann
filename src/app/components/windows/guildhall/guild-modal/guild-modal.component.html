@@ -106,9 +106,9 @@
         <app-item *ngFor="let item of getHeroGearTypeItems(viewingHero, type)" [item]="item" [showStatus]="type !== 'Potion'"></app-item>
       </ng-container>
   
-      <ion-list-header>Tracked Statistics</ion-list-header>
+      <ion-list-header [class.ion-hide]="viewingProspectiveHero">Tracked Statistics</ion-list-header>
 
-      <ion-item *ngFor="let stat of viewingHero.trackedStats | keyvalue">
+      <ion-item [class.ion-hide]="viewingProspectiveHero" *ngFor="let stat of viewingHero.trackedStats | keyvalue">
         <ion-label>
           {{ stat.key }}
         </ion-label>
