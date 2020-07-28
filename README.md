@@ -20,10 +20,6 @@ The default exported savefiles aren't super useful, but luckily they're easy to 
 * `npm run savefile:tojson mysavefile.sav`
 * `npm run savefile:fromjson mysavefile.json`
 
-## Design
-
-WIP Design [in this Google Doc](https://docs.google.com/document/d/1Pecc--sRZj-DKdZyzmnUy1wXZyEDoUtYtG7Mtt0ZdqU/edit).
-
 ## Art Credits
 
 * 7Soul (Humble Bundle): Hero sprites, weapon sprites, armor sprites, skill sprites, potion sprites
