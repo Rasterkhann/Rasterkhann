@@ -164,6 +164,8 @@ export class GameState {
   @Action(GameLoop)
   @ImmutableContext()
   validateBuildingConstructions({ setState }: StateContext<IGameState>): void {
+    const messages: string[] = [];
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
       const now = Date.now();
@@ -175,7 +177,7 @@ export class GameState {
           town.buildings[building].constructionDoneAt = 0;
           town.buildings[building].level += 1;
 
-          this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has finished construction for level ${town.buildings[building].level}!`));
+          messages.push(`${BuildingData[building].name} has finished construction for level ${town.buildings[building].level}!`);
         }
 
         Object.keys(town.buildings[building].featureConstruction || {}).forEach(feature => {
@@ -189,18 +191,22 @@ export class GameState {
             town.buildings[building].features[feature] = town.buildings[building].features[feature] || 0;
             town.buildings[building].features[feature]++;
 
-            this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has finished work for the feature "${feature}"!`));
+            messages.push(`${BuildingData[building].name} has finished work for the feature "${feature}"!`);
           }
         });
       });
 
       return state;
     });
+
+    messages.forEach(msg => this.store.dispatch(new NotifyMessage(msg)));
   }
 
   @Action(UpgradeBuilding)
   @ImmutableContext()
   upgradeBuilding({ setState }: StateContext<IGameState>, { building }: UpgradeBuilding): void {
+    let msg = '';
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
@@ -208,9 +214,11 @@ export class GameState {
       buildingRef.constructionStartedAt = Date.now();
       buildingRef.constructionDoneAt = Date.now() + (GLOBAL_TIME_MULTIPLIER * BuildingData[building].upgradeTime(buildingRef.level + 1));
 
-      this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has started construction for level ${town.buildings[building].level + 1}!`));
+      msg = `${BuildingData[building].name} has started construction for level ${town.buildings[building].level + 1}!`;
       return state;
     });
+
+    this.store.dispatch(new NotifyMessage(msg));
   }
 
   @Action(RushBuilding)
@@ -235,10 +243,10 @@ export class GameState {
       town.buildings[building].featureConstruction[`${feature}-start`] = Date.now();
       town.buildings[building].featureConstruction[feature] = Date.now() + (GLOBAL_TIME_MULTIPLIER * constructionTime);
 
-      this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has started work for the feature "${feature}"!`));
-
       return state;
     });
+
+    this.store.dispatch(new NotifyMessage(`${BuildingData[building].name} has started work for the feature "${feature}"!`));
   }
 
   @Action(RushBuildingFeature)
@@ -257,6 +265,11 @@ export class GameState {
   @Action(GameLoop)
   @ImmutableContext()
   heroLoop({ setState }: StateContext<IGameState>): void {
+    const oddJobHeroes: string[] = [];
+    const oddJobEarned: Record<string, number> = {};
+    const messages: string[] = [];
+    let totalEarned = 0;
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
@@ -302,12 +315,10 @@ export class GameState {
           heroSpentGold += heroRepairSpendValue;
         }
 
-        if (heroSpentGold > 0) {
-          this.store.dispatch(new GainGold(BigInt(heroSpentGold)));
-        }
+        totalEarned += heroSpentGold;
 
         if (canHeroGoOnAdventure(h)) {
-          this.store.dispatch(new NotifyMessage(`${h.name} is now fully rested and ready to adventure again!`));
+          messages.push(`${h.name} is now fully rested and ready to adventure again!`);
           this.showHero$.next(h.uuid);
         }
       });
@@ -317,7 +328,7 @@ export class GameState {
         if (h.onAdventure || h.currentlyWorkingAt || !canHeroGoOnAdventure(h)) { return; }
         if (random(1, 10) !== 1) { return; }
 
-        this.store.dispatch(new HeroStartOddJob(h.uuid));
+        oddJobHeroes.push(h.uuid);
       });
 
       // earn gold from odd job
@@ -332,11 +343,20 @@ export class GameState {
         h.currentlyWorkingEarned = h.currentlyWorkingEarned || 0;
         h.currentlyWorkingEarned += earnedGold;
 
-        this.store.dispatch(new HeroGainGold(h.uuid, earnedGold));
+        oddJobEarned[h.uuid] = earnedGold;
       });
 
       return state;
     });
+
+    if (totalEarned > 0) {
+      this.store.dispatch(new GainGold(BigInt(totalEarned)));
+    }
+
+    oddJobHeroes.forEach(h => this.store.dispatch(new HeroStartOddJob(h)));
+    Object.keys(oddJobEarned).forEach(heroId => this.store.dispatch(new HeroGainGold(heroId, oddJobEarned[heroId])));
+
+    messages.forEach(msg => this.store.dispatch(new NotifyMessage(msg)));
   }
 
   @Action(RerollHeroes)
@@ -396,6 +416,8 @@ export class GameState {
   @Action(HeroStartOddJob)
   @ImmutableContext()
   heroStartOddJob({ setState }: StateContext<IGameState>, { heroId }: HeroStartOddJob): void {
+    let resMsg = '';
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
       const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
@@ -412,15 +434,21 @@ export class GameState {
       heroRef.currentlyWorkingEarned = 0;
       town.buildings[building].currentWorkerId = heroId;
 
-      this.store.dispatch(new NotifyMessage(`${heroRef.name} has begun working at the ${building}!`));
+      resMsg = `${heroRef.name} has begun working at the ${building}!`;
 
       return state;
     });
+
+    if (resMsg) {
+      this.store.dispatch(new NotifyMessage(resMsg));
+    }
   }
 
   @Action(HeroStopOddJob)
   @ImmutableContext()
   heroStopOddJob({ setState }: StateContext<IGameState>, { heroId }: HeroStopOddJob): void {
+    let resMsg = '';
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
       const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
@@ -437,11 +465,15 @@ export class GameState {
 
       if (heroRef.currentlyWorkingEarned > 0) {
         const totalEarned = formatNumber(heroRef.currentlyWorkingEarned);
-        this.store.dispatch(new NotifyMessage(`${heroRef.name} earned ${totalEarned} GOLD from working at the ${building}!`));
+        resMsg = `${heroRef.name} earned ${totalEarned} GOLD from working at the ${building}!`;
       }
 
       return state;
     });
+
+    if (resMsg) {
+      this.store.dispatch(new NotifyMessage(resMsg));
+    }
   }
 
   @Action(HeroSetLocation)
@@ -500,11 +532,12 @@ export class GameState {
   @Action(DismissHero)
   @ImmutableContext()
   dismissHero({ setState }: StateContext<IGameState>, { heroId }: DismissHero): void {
+
+    this.store.dispatch(new HeroStopOddJob(heroId));
+
     setState((state: IGameState) => {
       state.towns[state.currentTown].recruitedHeroes = state.towns[state.currentTown].recruitedHeroes
         .filter(x => x.uuid !== heroId);
-
-      this.store.dispatch(new HeroStopOddJob(heroId));
       this.removeHero$.next(heroId);
 
       return state;
@@ -531,6 +564,11 @@ export class GameState {
   @Action(StartAdventure)
   @ImmutableContext()
   startAdventure({ setState }: StateContext<IGameState>, { heroes, adventure }: StartAdventure): void {
+    const heroStops: string[] = [];
+    const messages: string[] = [];
+
+    let totalEarnedFromAdventurers: bigint = 0n;
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
@@ -538,7 +576,7 @@ export class GameState {
         town.recruitedHeroes.forEach((rh, i) => {
           if (h.uuid !== rh.uuid) { return; }
 
-          this.store.dispatch(new HeroStopOddJob(rh.uuid));
+          heroStops.push(rh.uuid);
           this.hideHero$.next(rh.uuid);
 
           town.recruitedHeroes[i] = { ...rh };
@@ -593,11 +631,11 @@ export class GameState {
           const totalEarned: bigint = BigInt(sum(allBoughtItems.map(item => item.cost)));
 
           town.recruitedHeroes[i].currentStats[HeroStat.GOLD] -= Number(totalEarned);
-          this.store.dispatch(new GainGold(totalEarned));
+          totalEarnedFromAdventurers += totalEarned;
 
           if (allBoughtItems.length > 0) {
             const allItemNames = allBoughtItems.map(item => item.name);
-            this.store.dispatch(new NotifyMessage(`${town.recruitedHeroes[i].name} purchased ${allItemNames.join(', ')}.`));
+            messages.push(`${town.recruitedHeroes[i].name} purchased ${allItemNames.join(', ')}.`);
           }
 
         });
@@ -618,10 +656,17 @@ export class GameState {
 
       state.towns[state.currentTown].potentialAdventures.push(this.advCreator.generateAdventure(town));
 
-      this.store.dispatch(new NotifyMessage(`${heroes.map(x => x.name).join(', ')} ${heroes.length === 1 ? 'has' : 'have'} embarked on an adventure.`));
+      messages.push(`${heroes.map(x => x.name).join(', ')} ${heroes.length === 1 ? 'has' : 'have'} embarked on an adventure.`);
 
       return state;
     });
+
+    if (totalEarnedFromAdventurers > 0n) {
+      this.store.dispatch(new GainGold(totalEarnedFromAdventurers));
+    }
+
+    heroStops.forEach(heroId => this.store.dispatch(new HeroStopOddJob(heroId)));
+    messages.forEach(msg => this.store.dispatch(new NotifyMessage(msg)));
 
     setTimeout(() => {
       heroes.forEach(h => {
@@ -633,6 +678,7 @@ export class GameState {
   @Action(GameLoop)
   @ImmutableContext()
   adventureTick({ setState }: StateContext<IGameState>): void {
+    let resMsg = '';
 
     const bumpHeroIds: string[] = [];
 
@@ -643,7 +689,7 @@ export class GameState {
 
         // adventure over
         if (result) {
-          this.store.dispatch(new NotifyMessage(result));
+          resMsg = result;
 
           adv.activeHeroes.forEach(heroId => bumpHeroIds.push(heroId));
         }
@@ -651,6 +697,10 @@ export class GameState {
 
       return state;
     });
+
+    if (resMsg) {
+      this.store.dispatch(new NotifyMessage(resMsg));
+    }
 
     setTimeout(() => {
       bumpHeroIds.forEach(heroId => this.store.dispatch(new HeroSetLocation(heroId, Building.Inn)));
@@ -661,6 +711,8 @@ export class GameState {
   @Action(GameLoop)
   @ImmutableContext()
   itemCreationTick({ setState }: StateContext<IGameState>): void {
+    const messages: string[] = [];
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
@@ -679,11 +731,13 @@ export class GameState {
         town.itemsForSale[itemType].push(item);
         town.nextItemCreation[itemType] = Date.now() + (GLOBAL_TIME_MULTIPLIER * calculateSecondsUntilNextItem(town, itemType));
 
-        this.store.dispatch(new NotifyMessage(`A new item "${item.name}" was listed for sale.`));
+        messages.push(`A new item "${item.name}" was listed for sale.`);
       });
 
       return state;
     });
+
+    messages.forEach(msg => this.store.dispatch(new NotifyMessage(msg)));
   }
 
   // item functions
