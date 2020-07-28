@@ -196,6 +196,19 @@ export const LibraryFeatures: BuildingFeature[] = [
     }
   },
   {
+    name: 'Trait: Careful',
+    description: 'Heroes can hold an additional potion.',
+    cost: 100000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 15,
+    requiresFeature: {
+      'Fast Repair': 1
+    },
+    unlocks: {
+      trait: ['Careful', 'Reckless']
+    }
+  },
+  {
     name: 'Trait: Small Weapon Proficiency',
     description: 'Heroes can also use small weapons.',
     cost: 100000n,

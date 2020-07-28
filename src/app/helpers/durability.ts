@@ -32,6 +32,6 @@ export function increaseDurability(hero: Hero, item: HeroItem, gain: number = 1)
   }
 }
 
-export function decreaseDurability(hero: Hero, item: HeroItem, loss: number = -1): void {
+export function decreaseDurability(hero: Hero, item: HeroItem, loss: number = 2): void {
   increaseDurability(hero, item, -loss);
 }

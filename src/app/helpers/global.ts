@@ -4,7 +4,7 @@ import { sum } from 'lodash';
 import * as NumberFormat from 'swarm-numberformat';
 
 // this file cannot import any helpers or statics
-import { IGameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog, Hero, HeroTrackedStat } from '../interfaces';
+import { IGameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog, Hero, HeroTrackedStat, Trait } from '../interfaces';
 import { featureNameToBuildingHash, featureNameToUnlockHash, getBuildingData } from './building';
 
 export function formatNumber(value: bigint | number): string {
@@ -129,4 +129,8 @@ export function giveHeroGold(hero: Hero, gold: number): void {
 export function getHeroTag(hero: Hero): string {
   const bracketed = `[HP ${hero.currentStats[HeroStat.HP]}/SP ${hero.currentStats[HeroStat.SP]}/STA ${hero.currentStats[HeroStat.STA]}]`;
   return `${hero.name} ${bracketed}`;
+}
+
+export function doesHeroHaveTrait(hero: Hero, trait: Trait): boolean {
+  return hero.traits.includes(trait);
 }

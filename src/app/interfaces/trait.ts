@@ -28,10 +28,10 @@ export type BadTrait =
   'Weak' | 'Frail' | 'Ill' | 'Clumsy' | 'Reclusive' | 'Sedentary' | 'Poor' | 'Inexperienced';
 
 export type SimpleModifierPositiveTrait =
-  'ATK+' | 'DEF+' | 'STA+' | 'HP+' | 'SP+';
+  'ATK+' | 'DEF+' | 'STA+' | 'HP+' | 'SP+' | 'Careful';
 
 export type SimpleModifierNegativeTrait =
-  'ATK-' | 'DEF-' | 'STA-';
+  'ATK-' | 'DEF-' | 'STA-' | 'Reckless';
 
 export type FirstTierGoodTrait =
   'Strong' | 'Fortified' | 'Healthy' | 'Skilled' | 'Advanced' | 'Active' | 'Modest' | 'Experienced';

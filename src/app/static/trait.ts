@@ -209,13 +209,19 @@ const SimplePositiveTraits: Record<SimpleModifierPositiveTrait, TraitEffect> = {
         statBlock[HeroStat.STA] += 1;
       }
     }
+  },
+  Careful: {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.SlightlyGood,
+    description: 'Hero takes 50% less durability damage',
+    triggers: {}
   }
 };
 
 const SimpleNegativeTraits: Record<SimpleModifierNegativeTrait, TraitEffect> = {
   'ATK-': {
     priority: TraitPriority.Any,
-    valueProp: TraitValueProp.SlightlyGood,
+    valueProp: TraitValueProp.SlightlyBad,
     description: 'Hero gets -10 ATK on spawn, -1 ATK per level',
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
@@ -230,7 +236,7 @@ const SimpleNegativeTraits: Record<SimpleModifierNegativeTrait, TraitEffect> = {
   },
   'DEF-': {
     priority: TraitPriority.Any,
-    valueProp: TraitValueProp.SlightlyGood,
+    valueProp: TraitValueProp.SlightlyBad,
     description: 'Hero gets -10 DEF on spawn, -1 DEF per level',
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
@@ -245,7 +251,7 @@ const SimpleNegativeTraits: Record<SimpleModifierNegativeTrait, TraitEffect> = {
   },
   'STA-': {
     priority: TraitPriority.Any,
-    valueProp: TraitValueProp.SlightlyGood,
+    valueProp: TraitValueProp.SlightlyBad,
     description: 'Hero gets -10 STA on spawn, -1 STA per level',
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
@@ -257,6 +263,12 @@ const SimpleNegativeTraits: Record<SimpleModifierNegativeTrait, TraitEffect> = {
         statBlock[HeroStat.STA] -= 1;
       }
     }
+  },
+  Reckless: {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.SlightlyBad,
+    description: 'Hero takes 50% more durability damage',
+    triggers: {}
   }
 };
 

@@ -3,7 +3,7 @@ import { sample, sampleSize, random } from 'lodash';
 
 import { Combat, Hero, HeroAction, HeroActionTargetting, HeroStat,
   HeroActionStringReplacer, HeroActionOpts, ItemType } from '../interfaces';
-import { getCurrentStat, giveHeroGold } from '../helpers/global';
+import { getCurrentStat, giveHeroGold, doesHeroHaveTrait } from '../helpers/global';
 import { decreaseDurability } from '../helpers/durability';
 
 function heal(creature: Hero, healed: number): void {
@@ -24,14 +24,22 @@ function takeRandomArmorDamage(creature: Hero): void {
   const armorItem = sample(creature.gear[ItemType.Armor]);
   if (!armorItem) { return; }
 
-  decreaseDurability(creature, armorItem, 1);
+  let base = 2;
+  if (doesHeroHaveTrait(creature, 'Reckless')) { base += 1; }
+  if (doesHeroHaveTrait(creature, 'Careful'))  { base -= 1; }
+
+  decreaseDurability(creature, armorItem, base);
 }
 
 function takeRandomWeaponDamage(creature: Hero): void {
   const weaponItem = sample(creature.gear[ItemType.Weapon]);
   if (!weaponItem) { return; }
 
-  decreaseDurability(creature, weaponItem, 1);
+  let base = 2;
+  if (doesHeroHaveTrait(creature, 'Reckless')) { base += 1; }
+  if (doesHeroHaveTrait(creature, 'Careful'))  { base -= 1; }
+
+  decreaseDurability(creature, weaponItem, base);
 }
 
 // ***** ATTACK ABILITIES ***** //

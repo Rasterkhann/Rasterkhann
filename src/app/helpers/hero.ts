@@ -8,7 +8,7 @@ import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
-import { filteredUnlocksEarnedByTown, doesTownHaveFeature, getCurrentStat } from './global';
+import { filteredUnlocksEarnedByTown, doesTownHaveFeature, getCurrentStat, doesHeroHaveTrait } from './global';
 import { getLibraryTraitModifier } from './library';
 import { addItemStats, removeItemStats } from './durability';
 
@@ -87,10 +87,6 @@ export function getZeroStatBlock(): Record<HeroStat, number> {
     [HeroStat.SP]: 0,
     [HeroStat.STA]: 0
   };
-}
-
-export function doesHeroHaveTrait(hero: Hero, trait: Trait): boolean {
-  return hero.traits.includes(trait);
 }
 
 export function calculateRestingRate(town: IGameTown): number {
