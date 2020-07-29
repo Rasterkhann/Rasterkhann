@@ -61,7 +61,6 @@ export class HomePage implements OnInit {
   }
 
   private watchVersion(): void {
-    console.log('version watch:', !(window as any).isDownloaded && environment.production);
     // only do this in production and when the app is run in the browser
     if ((window as any).isDownloaded) { return; }
     if (!environment.production) { return; }
