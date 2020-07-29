@@ -7,6 +7,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     cost: 50000n,
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 2,
+    requiresFeature: {
+      'Dual Trait': 1
+    },
     unlocks: {
       trait: ['ATK+', 'ATK-']
     }
@@ -17,6 +20,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     cost: 50000n,
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 4,
+    requiresFeature: {
+      'Dual Trait': 1
+    },
     unlocks: {
       trait: ['DEF+', 'DEF-']
     }
@@ -27,6 +33,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     cost: 50000n,
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 6,
+    requiresFeature: {
+      'Dual Trait': 1
+    },
     unlocks: {
       trait: ['STA+', 'STA-']
     }
@@ -37,6 +46,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     cost: 50000n,
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 8,
+    requiresFeature: {
+      'Dual Trait': 1
+    },
     unlocks: {
       trait: ['HP+']
     }
@@ -47,6 +59,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     cost: 50000n,
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 12,
+    requiresFeature: {
+      'Dual Trait': 1
+    },
     unlocks: {
       trait: ['SP+']
     }
@@ -56,14 +71,7 @@ export const LibraryFeatures: BuildingFeature[] = [
     description: 'Heroes can spawn with two traits.',
     cost: 150000n,
     upgradeTime: BuildingFeatureTime.Long,
-    requiresLevel: 1,
-    requiresFeature: {
-      'Trait: ATK+': 1,
-      'Trait: DEF+': 1,
-      'Trait: STA+': 1,
-      'Trait: HP+': 1,
-      'Trait: SP+': 1
-    }
+    requiresLevel: 1
   },
   {
     name: 'Tri Trait',
@@ -81,6 +89,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     cost: 50000n,
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 10,
+    requiresFeature: {
+      'Dual Trait': 1
+    },
     unlocks: {
       trait: ['ATK+', 'ATK-']
     }
@@ -171,6 +182,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     cost: 100000n,
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 35,
+    requiresFeature: {
+      'Dual Trait': 1
+    },
     unlocks: {
       trait: ['Multi-armed']
     }
@@ -181,6 +195,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     cost: 100000n,
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 25,
+    requiresFeature: {
+      'Dual Trait': 1
+    },
     unlocks: {
       trait: ['Tiny Body']
     }
@@ -191,6 +208,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     cost: 100000n,
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
+    requiresFeature: {
+      'Dual Trait': 1
+    },
     unlocks: {
       trait: ['Big Satchel']
     }
@@ -202,7 +222,8 @@ export const LibraryFeatures: BuildingFeature[] = [
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
     requiresFeature: {
-      'Fast Repair': 1
+      'Fast Repair': 1,
+      'Dual Trait': 1
     },
     unlocks: {
       trait: ['Careful', 'Reckless']
@@ -215,7 +236,8 @@ export const LibraryFeatures: BuildingFeature[] = [
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 7,
     requiresFeature: {
-      'Small Weapons': 1
+      'Small Weapons': 1,
+      'Dual Trait': 1
     },
     unlocks: {
       trait: ['Shuriken User', 'Katar User']
@@ -228,7 +250,8 @@ export const LibraryFeatures: BuildingFeature[] = [
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 10,
     requiresFeature: {
-      'Martial Weapons': 1
+      'Martial Weapons': 1,
+      'Dual Trait': 1
     },
     unlocks: {
       trait: ['Spear User', 'Mace User']
@@ -241,7 +264,8 @@ export const LibraryFeatures: BuildingFeature[] = [
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 19,
     requiresFeature: {
-      'Ranged Weapons': 1
+      'Ranged Weapons': 1,
+      'Dual Trait': 1
     },
     unlocks: {
       trait: ['Longbow User', 'Shortbow User']
@@ -254,7 +278,8 @@ export const LibraryFeatures: BuildingFeature[] = [
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
     requiresFeature: {
-      'Magical Weapons': 1
+      'Magical Weapons': 1,
+      'Dual Trait': 1
     },
     unlocks: {
       trait: ['Staff User', 'Wand User']
