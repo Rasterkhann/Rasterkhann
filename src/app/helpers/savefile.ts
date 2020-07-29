@@ -78,8 +78,8 @@ export function afterDeserialize(obj: IGameState): IGameState {
           });
         });
 
-        Object.keys(town.stats).forEach((majorKey: TownStat) => {
-          Object.keys(town.stats[majorKey]).forEach((minorKey: HeroJob) => {
+        Object.keys(town.stats || {}).forEach((majorKey: TownStat) => {
+          Object.keys(town.stats[majorKey] || {}).forEach((minorKey: HeroJob) => {
             town.stats[majorKey][minorKey] = BigInt(town.stats[majorKey][minorKey]);
           });
         });
