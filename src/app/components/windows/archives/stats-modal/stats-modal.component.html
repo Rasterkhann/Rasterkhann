@@ -15,7 +15,7 @@
   <ng-container *ngIf="currentTown$ | async as town">
     <ion-list>
       <ng-container *ngFor="let stat of town.stats | keyvalue">
-        <ion-list-header>{{ headers[stat.key] }}</ion-list-header>
+        <ion-list-header>{{ getHeader(stat.key) }}</ion-list-header>
 
         <ng-container *ngFor="let substat of stat.value | keyvalue">
           <ion-item>

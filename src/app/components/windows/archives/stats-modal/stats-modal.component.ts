@@ -31,4 +31,8 @@ export class TownStatsModalComponent implements OnInit {
     this.modal.dismiss();
   }
 
+  getHeader(header: TownStat): string {
+    return this.headers[header];
+  }
+
 }
