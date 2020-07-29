@@ -69,7 +69,7 @@ export class HomePage implements OnInit {
     interval(environment.production ? 1800000 : 5000)
       .pipe(switchMap(() => this.http.get('https://api.github.com/repos/seiyria/Rasterkhann/commits/main')))
       .subscribe(data => {
-        if ((data as any).sha.includes(environment.version.revision)) { return; }
+        if ((data as any).sha.startsWith(environment.version.revision)) { return; }
         this.hasUpdate = true;
       });
   }
