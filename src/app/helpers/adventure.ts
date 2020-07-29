@@ -1,9 +1,9 @@
 import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType,
-  HeroStat, HeroGear, HeroWeapon, HeroArmor, CombatLog, HeroTrackedStat } from '../interfaces';
+  HeroStat, HeroGear, HeroWeapon, HeroArmor, CombatLog, HeroTrackedStat, TownStat } from '../interfaces';
 import { getTownHeroByUUID, checkHeroLevelUp, calculateMaxHeldPotions,
   calculateMaxHeldWeapons, canEquipWeapon, calculateMaxHeldArmors, canEquipArmor } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
-import { addCombatLogToTown, doesTownHaveFeature, formatNumber, giveHeroEXP, giveHeroGold, increaseTrackedStat } from './global';
+import { addCombatLogToTown, doesTownHaveFeature, formatNumber, giveHeroEXP, giveHeroGold, increaseTrackedStat, increaseTownStat } from './global';
 
 export function formatDifficulty(difficulty: AdventureDifficulty): string {
   switch (difficulty) {
@@ -162,6 +162,7 @@ export function doAdventureEncounter(town: IGameTown, adventure: Adventure): boo
     increaseTrackedStat(hero, HeroTrackedStat.TotalEncounters, 1);
     if (didWin) {
       increaseTrackedStat(hero, HeroTrackedStat.EncountersSucceeded, 1);
+      increaseTownStat(town, TownStat.Encounters, hero, 1);
     }
   });
 
@@ -201,14 +202,15 @@ export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolea
 
     chosenHeroes.forEach(h => {
       increaseTrackedStat(h, HeroTrackedStat.AdventuresSucceeded, 1);
+      increaseTownStat(town, TownStat.Adventures, h, 1);
 
       giveHeroEXP(h, expReward);
       checkHeroLevelUp(h);
       giveHeroGold(h, goldReward);
 
-      combatLog.logs.push(`${h.name} earned ${formatNumber(expReward)} EXP and ${formatNumber(goldReward)} GOLD.`);
+      increaseTownStat(town, TownStat.Gold, h, goldReward);
 
-      checkHeroLevelUp(h);
+      combatLog.logs.push(`${h.name} earned ${formatNumber(expReward)} EXP and ${formatNumber(goldReward)} GOLD.`);
     });
 
     addCombatLogToTown(town, combatLog);

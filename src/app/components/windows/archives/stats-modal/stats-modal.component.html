@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Town Records
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ng-container *ngIf="currentTown$ | async as town">
+    <ion-list>
+      <ng-container *ngFor="let stat of town.stats | keyvalue">
+        <ion-list-header>{{ headers[stat.key] }}</ion-list-header>
+
+        <ng-container *ngFor="let substat of stat.value | keyvalue">
+          <ion-item>
+            <ion-label>
+              {{ substat.key }}
+            </ion-label>
+            <ion-label slot="end" class="ion-text-right">
+              {{ (substat.value || 0) | bignum }}
+            </ion-label>
+          </ion-item>
+        </ng-container>
+
+      </ng-container>
+    </ion-list>
+  </ng-container>
+</ion-content>

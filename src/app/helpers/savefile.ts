@@ -1,5 +1,6 @@
 
-import { Building, IGameTown, IGameState, BuildingInfo, ProspectiveHero, ItemType, HeroItem, GameOption, Hero } from '../interfaces';
+import { Building, IGameTown, IGameState, BuildingInfo,
+  ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob } from '../interfaces';
 import { calculateOfflineAdventureProgress, calculateOfflineGold } from './town';
 
 export function beforeSerialize(obj: any): IGameState {
@@ -38,6 +39,14 @@ export function beforeSerialize(obj: any): IGameState {
         });
       });
 
+      town.stats = { ...town.stats };
+      Object.keys(town.stats).forEach(majorKey => {
+        town.stats[majorKey] = { ...town.stats[majorKey] };
+        Object.keys(town.stats[majorKey]).forEach(minorKey => {
+          town.stats[majorKey][minorKey] = town.stats[majorKey][minorKey].toString();
+        });
+      });
+
       obj.towns[townName] = town;
     });
   }
@@ -68,6 +77,12 @@ export function afterDeserialize(obj: IGameState): IGameState {
             });
           });
         });
+
+        Object.keys(town.stats).forEach((majorKey: TownStat) => {
+          Object.keys(town.stats[majorKey]).forEach((minorKey: HeroJob) => {
+            town.stats[majorKey][minorKey] = BigInt(town.stats[majorKey][minorKey]);
+          });
+        });
       });
     }
 
@@ -91,6 +106,16 @@ export function afterDeserialize(obj: IGameState): IGameState {
 
 export function createBuildingAtLevel(level: number, features = {}): BuildingInfo {
   return { level, features, featureConstruction: {}, currentWorkerId: '' };
+}
+
+export function createStatBlock(): Record<HeroJob, bigint> {
+  return {
+    [HeroJob.Adventurer]: 0n,
+    [HeroJob.Mage]: 0n,
+    [HeroJob.Thief]: 0n,
+    [HeroJob.Cleric]: 0n,
+    [HeroJob.Warrior]: 0n
+  };
 }
 
 export function createBasicTown(name: string): IGameTown {
@@ -132,6 +157,14 @@ export function createBasicTown(name: string): IGameTown {
       [Building.Workshop]:      createBuildingAtLevel(0),
       [Building.Archives]:      createBuildingAtLevel(0),
       [Building.Library]:       createBuildingAtLevel(0)
+    },
+
+    stats: {
+      [TownStat.Adventures]: createStatBlock(),
+      [TownStat.Encounters]: createStatBlock(),
+      [TownStat.Gold]: createStatBlock(),
+      [TownStat.Levels]: createStatBlock(),
+      [TownStat.Retires]: createStatBlock()
     }
   };
 }

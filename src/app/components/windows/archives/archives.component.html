@@ -8,6 +8,16 @@
   <app-building-info [town]="town"
                      buildingId="archives">
   </app-building-info>
+
+  <ion-list-header>Actions</ion-list-header>
+
+  <ion-item (click)="openStatsWindow()">
+    <ion-label>
+      View Town Records
+    </ion-label>
+
+    <ion-button slot="end">View</ion-button>
+  </ion-item>
 </ion-list>
 
 <ion-list>

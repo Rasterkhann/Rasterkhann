@@ -36,6 +36,7 @@ import { GuildModalComponent } from '../windows/guildhall/guild-modal/guild-moda
 import { AdventureModalComponent } from '../windows/cave/adventure-modal/adventure-modal.component';
 import { ItemsModalComponent } from '../windows/bazaar/items-modal/items-modal.component';
 import { CombatLogModalComponent } from '../windows/cave/combat-log-modal/combat-log-modal.component';
+import { TownStatsModalComponent } from '../windows/archives/stats-modal/stats-modal.component';
 
 import { HeroComponent } from '../shared/hero/hero.component';
 import { HeroSpriteComponent } from '../shared/hero-sprite/hero-sprite.component';
@@ -86,6 +87,7 @@ import { HelpTextComponent } from '../shared/help-text/help-text.component';
     AdventureModalComponent,
     ItemsModalComponent,
     CombatLogModalComponent,
+    TownStatsModalComponent,
 
     BignumPipe
   ],
@@ -93,7 +95,8 @@ import { HelpTextComponent } from '../shared/help-text/help-text.component';
     GuildModalComponent,
     AdventureModalComponent,
     ItemsModalComponent,
-    CombatLogModalComponent
+    CombatLogModalComponent,
+    TownStatsModalComponent
   ]
 })
 export class HomePageModule {}

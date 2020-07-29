@@ -1,5 +1,5 @@
-import { Building, IGameState, ItemType } from '../interfaces';
-import { createBuildingAtLevel } from '../helpers';
+import { Building, IGameState, ItemType, TownStat } from '../interfaces';
+import { createBuildingAtLevel, createStatBlock } from '../helpers';
 
 export const migrations = [
   {
@@ -147,6 +147,15 @@ export const migrations = [
       state.towns.Rasterkhann.recruitedHeroes.forEach(h => {
         h.currentlyAtBuilding = h.currentlyAtBuilding || Building.Inn;
       });
+
+      console.log('Setting default town stats records...');
+      state.towns.Rasterkhann.stats = state.towns.Rasterkhann.stats || {
+        [TownStat.Adventures]: createStatBlock(),
+        [TownStat.Encounters]: createStatBlock(),
+        [TownStat.Gold]: createStatBlock(),
+        [TownStat.Levels]: createStatBlock(),
+        [TownStat.Retires]: createStatBlock()
+      };
 
       return state;
     }
