@@ -329,13 +329,6 @@ export function generateHero(town: IGameTown, level?: number): Hero {
     console.log(hero.name, baseLevelupStats, heroLevel);
   }
 
-
-  /*
-  Object.keys(hero.stats).forEach((stat: HeroStat) => {
-    hero.stats[stat] = Math.floor(hero.stats[stat] + baseLevelupStats[stat]);
-  });
-  */
-
   // make sure heroes have at least a base of stats after they get ruined by traits
   validateHeroStats();
 
