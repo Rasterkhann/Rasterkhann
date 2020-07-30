@@ -45,3 +45,8 @@ export class HeroSetDestination {
   static readonly type = '[Hero] Set Destination';
   constructor(public heroId: string, public building: Building | null) {}
 }
+
+export class HeroRetire {
+  static readonly type = '[Hero] Do Retire';
+  constructor(public heroId: string) {}
+}

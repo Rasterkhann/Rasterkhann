@@ -47,6 +47,14 @@
     </ion-list>
   
     <ion-list *ngIf="viewingHero">
+      <ion-item *ngIf="game.canRetireHero(viewingHero)">
+        <ion-label class="ion-text-wrap">
+          This hero is eligible for retirement!
+        </ion-label>
+
+        <ion-button slot="end" fill="outline" (click)="retireHero(viewingHero)">Retire</ion-button>
+      </ion-item>
+      
       <ion-item>
         <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="viewingHero.sprite"></app-hero-sprite>
   

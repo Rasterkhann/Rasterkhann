@@ -106,6 +106,7 @@ ion-button:not(.in-toolbar) {
 
 .alert-wrapper {
   outline: 1px solid #530053;
+  --min-width: 400px;
 }
 
 tooltip {

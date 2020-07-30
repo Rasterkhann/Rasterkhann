@@ -23,6 +23,8 @@ export interface GameTown {
   gold: bigint;
   goldPerTick: bigint;
 
+  crystalCurrency: Record<HeroJob, number>;
+
   buildings: Record<Building, BuildingInfo>;
 
   recruitedHeroes: Hero[];

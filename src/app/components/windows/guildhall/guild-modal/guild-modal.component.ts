@@ -200,6 +200,30 @@ export class GuildModalComponent implements OnDestroy, OnInit {
     await alert.present();
   }
 
+  async retireHero(hero: Hero): Promise<void> {
+    const alert = await this.alert.create({
+      header: 'Retire Hero',
+      message: `Are you sure you want to retire ${hero.name}, the level ${hero.stats[HeroStat.LVL]} ${hero.job}?
+      You will gain the ability to allocate this hero to a building, increasing that buildings capabilities.
+      You will also gain a Job Crystal to symbolize this heros adventure.`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Yes, Retire',
+          handler: async () => {
+            this.game.retireHero(hero);
+            this.viewingHero = null;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   unviewHero(): void {
     this.viewingHero = null;
     this.viewingProspectiveHero = null;

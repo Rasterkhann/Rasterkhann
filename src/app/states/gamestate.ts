@@ -8,10 +8,10 @@ import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, UpgradeBuildingFeature, RerollHeroes,
   RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
-  ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation, HeroSetDestination
+  ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation, HeroSetDestination, HeroRetire
 } from '../actions';
 import {
-  GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat
+  GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat, TownStat
 } from '../interfaces';
 import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
@@ -527,6 +527,29 @@ export class GameState {
 
       return state;
     });
+  }
+
+  @Action(HeroRetire)
+  @ImmutableContext()
+  heroRetire({ setState }: StateContext<IGameState>, { heroId }: HeroRetire): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      town.stats[TownStat.Levels][heroRef.job] += BigInt(getCurrentStat(heroRef, HeroStat.LVL));
+      town.stats[TownStat.Retires][heroRef.job] += 1n;
+
+      town.crystalCurrency = town.crystalCurrency || {};
+      town.crystalCurrency[heroRef.job] = town.crystalCurrency[heroRef.job] || 0;
+      town.crystalCurrency[heroRef.job] += 1;
+
+      console.log(town.crystalCurrency)
+
+      return state;
+    });
+
+    this.store.dispatch(new DismissHero(heroId));
   }
 
   @Action(DismissHero)

@@ -105,7 +105,7 @@ export function afterDeserialize(obj: IGameState): IGameState {
 }
 
 export function createBuildingAtLevel(level: number, features = {}): BuildingInfo {
-  return { level, features, featureConstruction: {}, currentWorkerId: '' };
+  return { level, features, featureConstruction: {}, currentWorkerId: '', numRetiredAllocated: 0 };
 }
 
 export function createStatBlock(): Record<HeroJob, bigint> {
@@ -134,12 +134,12 @@ export function createBasicTown(name: string): GameTown {
     combatLogs: [],
 
     itemsForSale: {
-      [ItemType.Armor]: [],
+      [ItemType.Armor]:  [],
       [ItemType.Weapon]: [],
       [ItemType.Potion]: [],
     },
     nextItemCreation: {
-      [ItemType.Armor]: 0,
+      [ItemType.Armor]:  0,
       [ItemType.Weapon]: 0,
       [ItemType.Potion]: 0
     },
@@ -160,11 +160,19 @@ export function createBasicTown(name: string): GameTown {
     },
 
     stats: {
-      [TownStat.Adventures]: createStatBlock(),
-      [TownStat.Encounters]: createStatBlock(),
-      [TownStat.Gold]: createStatBlock(),
-      [TownStat.Levels]: createStatBlock(),
-      [TownStat.Retires]: createStatBlock()
+      [TownStat.Adventures]:    createStatBlock(),
+      [TownStat.Encounters]:    createStatBlock(),
+      [TownStat.Gold]:          createStatBlock(),
+      [TownStat.Levels]:        createStatBlock(),
+      [TownStat.Retires]:       createStatBlock()
+    },
+
+    crystalCurrency: {
+      [HeroJob.Adventurer]:     0,
+      [HeroJob.Cleric]:         0,
+      [HeroJob.Mage]:           0,
+      [HeroJob.Thief]:          0,
+      [HeroJob.Warrior]:        0
     }
   };
 }

@@ -6,8 +6,9 @@ import { delay } from 'rxjs/operators';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures,
-  StartAdventure, HeroGainEXP, OptionToggle, ScrapItem, RushBuilding, RushBuildingFeature } from '../actions';
-import { Building, GameTown, IGameState, BuildingFeature, Hero, ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem } from '../interfaces';
+  StartAdventure, HeroGainEXP, OptionToggle, ScrapItem, RushBuilding, RushBuildingFeature, HeroRetire } from '../actions';
+import { Building, GameTown, IGameState, BuildingFeature, Hero,
+  ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem, HeroTrackedStat } from '../interfaces';
 import { doesTownHaveFeature, featureByName, getCurrentStat } from '../helpers';
 import { BuildingData } from '../static';
 import { AdventureService } from './adventure.service';
@@ -304,6 +305,15 @@ export class GameService {
   // item functions
   public scrapItem(item: HeroItem): void {
     this.store.dispatch(new ScrapItem(item));
+  }
+
+  // retire functions
+  public canRetireHero(hero: Hero): boolean {
+    return hero.trackedStats[HeroTrackedStat.TotalEncounters] >= 25;
+  }
+
+  public retireHero(hero: Hero): void {
+    this.store.dispatch(new HeroRetire(hero.uuid));
   }
 
 }
