@@ -115,7 +115,8 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
       height: 480,
       resolution: window.devicePixelRatio || 1,
       transparent: true,
-      antialias: false
+      antialias: false,
+      resizeTo: this.container
     });
 
     this.container.nativeElement.appendChild(this.app.view);

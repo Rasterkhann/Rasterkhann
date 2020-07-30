@@ -158,6 +158,11 @@ export const migrations = [
         [TownStat.CrystalsSpent]: createStatBlock()
       };
 
+      console.log('Setting stage 2 UI if available...');
+      if (Object.values(state.towns.Rasterkhann.stats.retires).some(Boolean)) {
+        state.towns.Rasterkhann.showStage2UI = true;
+      }
+
       console.log('Setting new town stat...');
       state.towns.Rasterkhann.stats.crystals = state.towns.Rasterkhann.stats.crystals || createStatBlock();
 

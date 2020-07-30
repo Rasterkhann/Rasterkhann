@@ -174,7 +174,9 @@ export function createBasicTown(name: string): GameTown {
       [HeroJob.Mage]:           0,
       [HeroJob.Thief]:          0,
       [HeroJob.Warrior]:        0
-    }
+    },
+
+    showStage2UI: false
   };
 }
 

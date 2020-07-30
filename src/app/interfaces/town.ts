@@ -41,4 +41,6 @@ export interface GameTown {
 
   combatLogs: CombatLog[];
   stats: Record<TownStat, Record<HeroJob, bigint>>;
+
+  showStage2UI: boolean;
 }
