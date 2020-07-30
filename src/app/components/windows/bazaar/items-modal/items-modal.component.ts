@@ -4,7 +4,7 @@ import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
 import { GameService } from '../../../../services/game.service';
-import { HeroItem, IGameTown, ItemType } from '../../../../interfaces';
+import { HeroItem, GameTown, ItemType } from '../../../../interfaces';
 import { calculateMaxCreatableItems } from '../../../../helpers';
 import { GameState } from '../../../../states';
 
@@ -17,7 +17,7 @@ export class ItemsModalComponent implements OnInit {
 
   @Select(GameState.currentTownItemsForSale) currentTownItemsForSale$: Observable<Record<ItemType, HeroItem[]>>;
 
-  @Input() public town: IGameTown;
+  @Input() public town: GameTown;
 
   public get itemTypes(): ItemType[] {
     return [ItemType.Weapon, ItemType.Armor, ItemType.Potion];

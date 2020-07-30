@@ -4,7 +4,7 @@ import { random, sum, sample, sortBy, take } from 'lodash';
 import { v4 as uuid } from 'uuid';
 import { adventure as adventureName } from 'fantastical';
 
-import { IGameTown, Adventure, Building, Hero, AdventureDifficulty, HeroStat } from '../interfaces';
+import { GameTown, Adventure, Building, Hero, AdventureDifficulty, HeroStat } from '../interfaces';
 import { calculateMaxNumberAdventureEncounters, calculateAvailableDifficulties, getTownAllHeroesFree, calculateMaxMembersPerTeam } from '../helpers';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class AdventureService {
 
   constructor() { }
 
-  generateAdventure(town: IGameTown): Adventure {
+  generateAdventure(town: GameTown): Adventure {
 
     const encounterCount = random(1, calculateMaxNumberAdventureEncounters(town));
     const difficulty = sample(calculateAvailableDifficulties(town)) as AdventureDifficulty;
@@ -38,7 +38,7 @@ export class AdventureService {
     return adventure;
   }
 
-  pickHeroesForAdventure(town: IGameTown, adventure: Adventure): Hero[] {
+  pickHeroesForAdventure(town: GameTown, adventure: Adventure): Hero[] {
     const maxHeroes = random(1, calculateMaxMembersPerTeam(town));
     const freeHeroes = getTownAllHeroesFree(town);
 

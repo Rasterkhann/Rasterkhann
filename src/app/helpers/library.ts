@@ -1,7 +1,7 @@
 
-import { Building, IGameTown } from '../interfaces';
+import { Building, GameTown } from '../interfaces';
 
-export function getLibraryTraitModifier(town: IGameTown): number {
+export function getLibraryTraitModifier(town: GameTown): number {
   let base = 0;
 
   // level 1 = 6%, level 100 = 20%

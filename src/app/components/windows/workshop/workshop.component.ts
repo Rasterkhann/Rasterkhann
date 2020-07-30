@@ -3,7 +3,7 @@ import { Select } from '@ngxs/store';
 import { Observable, combineLatest, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { IGameTown, GameOption } from '../../../interfaces';
+import { GameTown, GameOption } from '../../../interfaces';
 import { doesTownHaveFeature } from '../../../helpers';
 import { GameService } from '../../../services/game.service';
 
@@ -14,7 +14,7 @@ import { GameService } from '../../../services/game.service';
 })
 export class WorkshopComponent implements AfterViewInit, OnDestroy {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationHeroes]) autoHeroes$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationBuildings]) autoBuildings$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationAdventures]) autoAdventures$: Observable<boolean>;

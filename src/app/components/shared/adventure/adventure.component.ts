@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 import { AlertController } from '@ionic/angular';
 import { sum } from 'lodash';
 
-import { IGameTown, Adventure, AdventureDifficulty } from '../../../interfaces';
+import { GameTown, Adventure, AdventureDifficulty } from '../../../interfaces';
 import { GameService } from '../../../services/game.service';
 import { formatDifficulty, getTownHeroByUUID } from '../../../helpers';
 
@@ -14,7 +14,7 @@ import { formatDifficulty, getTownHeroByUUID } from '../../../helpers';
 })
 export class AdventureComponent implements OnInit {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
   @Input() adventure: Adventure;
   @Input() canDoAdventure: boolean;
   @Input() isActive: boolean;

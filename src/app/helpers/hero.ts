@@ -2,7 +2,7 @@
 import { shuffle, take, random, noop, uniq, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { Trait, HeroJob, IGameTown, Hero, HeroStat, TriggerType, TraitEffect,
+import { Trait, HeroJob, GameTown, Hero, HeroStat, TriggerType, TraitEffect,
   Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon,
   WeaponSubType, HeroTrackedStat, ArmorWeight, HeroArmor, ArmorSubTypeWeight } from '../interfaces';
 import { JobEffects } from '../static/job';
@@ -12,25 +12,25 @@ import { filteredUnlocksEarnedByTown, doesTownHaveFeature, getCurrentStat, doesH
 import { getLibraryTraitModifier } from './library';
 import { addItemStats, removeItemStats } from './durability';
 
-export function calculateMaxHeldWeapons(town: IGameTown, hero: Hero): number {
+export function calculateMaxHeldWeapons(town: GameTown, hero: Hero): number {
   let base = 1;
   if (doesHeroHaveTrait(hero, 'Multi-armed')) { base += 1; }
   return base;
 }
 
-export function calculateMaxHeldArmors(town: IGameTown, hero: Hero): number {
+export function calculateMaxHeldArmors(town: GameTown, hero: Hero): number {
   let base = 1;
   if (doesHeroHaveTrait(hero, 'Tiny Body')) { base += 1; }
   return base;
 }
 
-export function calculateMaxHeldPotions(town: IGameTown, hero: Hero): number {
+export function calculateMaxHeldPotions(town: GameTown, hero: Hero): number {
   let base = 1;
   if (doesHeroHaveTrait(hero, 'Big Satchel')) { base += 1; }
   return base;
 }
 
-export function allEquippableWeapons(town: IGameTown, hero: Hero): WeaponSubType[] {
+export function allEquippableWeapons(town: GameTown, hero: Hero): WeaponSubType[] {
   const base = JobEffects[hero.job].validWeaponTypes;
 
   Object.values(WeaponSubType).forEach(subType => {
@@ -43,7 +43,7 @@ export function allEquippableWeapons(town: IGameTown, hero: Hero): WeaponSubType
   return uniq(base);
 }
 
-export function allEquippableArmorClasses(town: IGameTown, hero: Hero): ArmorWeight[] {
+export function allEquippableArmorClasses(town: GameTown, hero: Hero): ArmorWeight[] {
   const base = JobEffects[hero.job].validArmorClasses;
 
   Object.values(ArmorWeight).forEach(subType => {
@@ -55,11 +55,11 @@ export function allEquippableArmorClasses(town: IGameTown, hero: Hero): ArmorWei
   return uniq(base);
 }
 
-export function canEquipWeapon(town: IGameTown, hero: Hero, item: HeroWeapon): boolean {
+export function canEquipWeapon(town: GameTown, hero: Hero, item: HeroWeapon): boolean {
   return allEquippableWeapons(town, hero).includes(item.subType);
 }
 
-export function canEquipArmor(town: IGameTown, hero: Hero, item: HeroArmor): boolean {
+export function canEquipArmor(town: GameTown, hero: Hero, item: HeroArmor): boolean {
   return allEquippableArmorClasses(town, hero).includes(ArmorSubTypeWeight[item.subType]);
 }
 
@@ -89,7 +89,7 @@ export function getZeroStatBlock(): Record<HeroStat, number> {
   };
 }
 
-export function calculateRestingRate(town: IGameTown): number {
+export function calculateRestingRate(town: GameTown): number {
 
   let baseRate = 1;
 
@@ -101,7 +101,7 @@ export function calculateRestingRate(town: IGameTown): number {
   return baseRate;
 }
 
-export function calculateRestingCost(town: IGameTown): number {
+export function calculateRestingCost(town: GameTown): number {
 
   let baseRate = 0;
 
@@ -113,7 +113,7 @@ export function calculateRestingCost(town: IGameTown): number {
   return baseRate;
 }
 
-export function calculateRepairRate(town: IGameTown): number {
+export function calculateRepairRate(town: GameTown): number {
 
   let baseRate = 1;
 
@@ -125,7 +125,7 @@ export function calculateRepairRate(town: IGameTown): number {
   return baseRate;
 }
 
-export function calculateRepairCost(town: IGameTown): number {
+export function calculateRepairCost(town: GameTown): number {
 
   let baseRate = 0;
 
@@ -137,7 +137,7 @@ export function calculateRepairCost(town: IGameTown): number {
   return baseRate;
 }
 
-export function calculateMaxNumberOfTraits(town: IGameTown): number {
+export function calculateMaxNumberOfTraits(town: GameTown): number {
 
   let baseNum = 1;
 
@@ -147,11 +147,11 @@ export function calculateMaxNumberOfTraits(town: IGameTown): number {
   return baseNum;
 }
 
-export function calculateAvailableJobs(town: IGameTown): HeroJob[] {
+export function calculateAvailableJobs(town: GameTown): HeroJob[] {
   return [HeroJob.Adventurer].concat(filteredUnlocksEarnedByTown(town, 'job'));
 }
 
-export function calculateAvailableTraits(town: IGameTown, job: HeroJob): Trait[] {
+export function calculateAvailableTraits(town: GameTown, job: HeroJob): Trait[] {
   const baseTraits = ['Weak', 'Frail', 'Ill', 'Clumsy', 'Reclusive', 'Sedentary', 'Poor', 'Inexperienced'] as Trait[];
   const bonusTraits = filteredUnlocksEarnedByTown(town, 'trait') as Trait[];
   return baseTraits
@@ -163,7 +163,7 @@ export function calculateAvailableTraits(town: IGameTown, job: HeroJob): Trait[]
     });
 }
 
-export function calculateProspectiveHeroMaxTotal(town: IGameTown): number {
+export function calculateProspectiveHeroMaxTotal(town: GameTown): number {
   let base = 3;
 
   if (doesTownHaveFeature(town, 'Enticing Army I'))  { base += 1; }
@@ -172,7 +172,7 @@ export function calculateProspectiveHeroMaxTotal(town: IGameTown): number {
   return base;
 }
 
-export function calculateHeroMaxTotal(town: IGameTown): number {
+export function calculateHeroMaxTotal(town: GameTown): number {
   let base = 3;
 
   if (doesTownHaveFeature(town, 'Bigger Barracks I'))  { base += 1; }
@@ -181,7 +181,7 @@ export function calculateHeroMaxTotal(town: IGameTown): number {
   return base;
 }
 
-export function calculateHeroTrainingGoldPerXP(town: IGameTown): bigint {
+export function calculateHeroTrainingGoldPerXP(town: GameTown): bigint {
   let base = 10n;
 
   if (doesTownHaveFeature(town, 'Cheaper Training I'))   { base -= 1n; }
@@ -200,7 +200,7 @@ export function canHeroGoOnAdventure(hero: Hero): boolean {
       && getCurrentStat(hero, HeroStat.SP) === hero.stats[HeroStat.SP];
 }
 
-export function generateHero(town: IGameTown, level?: number): Hero {
+export function generateHero(town: GameTown, level?: number): Hero {
 
   const generateLevel = level || town.buildings[Building.GuildHall].level || 1;
 
@@ -337,7 +337,7 @@ export function generateHero(town: IGameTown, level?: number): Hero {
   return hero;
 }
 
-export function generateMonster(town: IGameTown, adventure: Adventure): Hero {
+export function generateMonster(town: GameTown, adventure: Adventure): Hero {
   const baseHero = generateHero(town, adventure.encounterLevel);
 
   const adjectives = ['Tiny', 'Small', 'Short', 'Stout', 'Large', 'Gigantic', 'Humongous', 'Gargantuan', 'Colossal'];
@@ -425,6 +425,6 @@ export function checkHeroLevelUp(hero: Hero): void {
   }
 }
 
-export function getTownHeroByUUID(town: IGameTown, checkUUID: string): Hero | undefined {
+export function getTownHeroByUUID(town: GameTown, checkUUID: string): Hero | undefined {
   return town.recruitedHeroes.find(h => h.uuid === checkUUID);
 }

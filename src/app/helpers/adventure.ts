@@ -1,4 +1,4 @@
-import { IGameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType,
+import { GameTown, Adventure, Hero, AdventureDifficulty, HeroItem, ItemType,
   HeroStat, HeroGear, HeroWeapon, HeroArmor, CombatLog, HeroTrackedStat, TownStat } from '../interfaces';
 import { getTownHeroByUUID, checkHeroLevelUp, calculateMaxHeldPotions,
   calculateMaxHeldWeapons, canEquipWeapon, calculateMaxHeldArmors, canEquipArmor } from './hero';
@@ -17,7 +17,7 @@ export function formatDifficulty(difficulty: AdventureDifficulty): string {
   }
 }
 
-export function calculateMaxMembersPerTeam(town: IGameTown): number {
+export function calculateMaxMembersPerTeam(town: GameTown): number {
   let base = 1;
 
   if (doesTownHaveFeature(town, 'Teamwork I'))  { base += 1; }
@@ -26,7 +26,7 @@ export function calculateMaxMembersPerTeam(town: IGameTown): number {
   return base;
 }
 
-export function calculateMaxActiveAdventures(town: IGameTown): number {
+export function calculateMaxActiveAdventures(town: GameTown): number {
   let base = 1;
 
   if (doesTownHaveFeature(town, 'Tunnels I'))  { base += 1; }
@@ -35,7 +35,7 @@ export function calculateMaxActiveAdventures(town: IGameTown): number {
   return base;
 }
 
-export function calculateMaxPotentialAdventures(town: IGameTown): number {
+export function calculateMaxPotentialAdventures(town: GameTown): number {
   let base = 3;
 
   if (doesTownHaveFeature(town, 'Infestation I'))  { base += 1; }
@@ -44,7 +44,7 @@ export function calculateMaxPotentialAdventures(town: IGameTown): number {
   return base;
 }
 
-export function calculateMaxNumberAdventureEncounters(town: IGameTown): number {
+export function calculateMaxNumberAdventureEncounters(town: GameTown): number {
   let base = 3;
 
   if (doesTownHaveFeature(town, 'Deeper Cave I'))  { base += 2; }
@@ -53,7 +53,7 @@ export function calculateMaxNumberAdventureEncounters(town: IGameTown): number {
   return base;
 }
 
-export function calculateAvailableDifficulties(town: IGameTown): AdventureDifficulty[] {
+export function calculateAvailableDifficulties(town: GameTown): AdventureDifficulty[] {
   return [
     AdventureDifficulty.VeryEasy, AdventureDifficulty.Easy,
     AdventureDifficulty.Normal,
@@ -61,7 +61,7 @@ export function calculateAvailableDifficulties(town: IGameTown): AdventureDiffic
   ];
 }
 
-export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGear {
+export function heroBuyItemsBeforeAdventure(town: GameTown, hero: Hero): HeroGear {
   let totalCost = 0n;
 
   // buy potions
@@ -130,7 +130,7 @@ export function heroBuyItemsBeforeAdventure(town: IGameTown, hero: Hero): HeroGe
   };
 }
 
-export function tickAdventure(town: IGameTown, adv: Adventure): string | undefined {
+export function tickAdventure(town: GameTown, adv: Adventure): string | undefined {
   adv.encounterTicks[0]--;
 
   let isTeamFighting = true;
@@ -152,7 +152,7 @@ export function tickAdventure(town: IGameTown, adv: Adventure): string | undefin
   }
 }
 
-export function doAdventureEncounter(town: IGameTown, adventure: Adventure): boolean {
+export function doAdventureEncounter(town: GameTown, adventure: Adventure): boolean {
   const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean) as Hero[];
   doCombat(town, chosenHeroes, adventure);
 
@@ -169,7 +169,7 @@ export function doAdventureEncounter(town: IGameTown, adventure: Adventure): boo
   return didWin;
 }
 
-export function finalizeAdventure(town: IGameTown, adventure: Adventure): boolean {
+export function finalizeAdventure(town: GameTown, adventure: Adventure): boolean {
   const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean) as Hero[];
 
   const expMult = getTownExpMultiplier(town);

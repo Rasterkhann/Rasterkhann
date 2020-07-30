@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
-import { Hero, IGameTown, HeroStat, Building } from '../../../interfaces';
+import { Hero, GameTown, HeroStat, Building } from '../../../interfaces';
 import { canHeroGoOnAdventure } from '../../../helpers';
 
 @Component({
@@ -11,7 +11,7 @@ import { canHeroGoOnAdventure } from '../../../helpers';
 })
 export class HeroComponent implements OnInit {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
   @Input() hero: Hero;
   @Input() rating?: number;
   @Input() cost?: bigint;

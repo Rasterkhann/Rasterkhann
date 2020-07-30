@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { GameService } from '../../../services/game.service';
-import { IGameTown, Building, BuildingFeature } from '../../../interfaces';
+import { GameTown, Building, BuildingFeature } from '../../../interfaces';
 import { visibleBuildingFeatures } from '../../../helpers';
 
 @Component({
@@ -12,7 +12,7 @@ import { visibleBuildingFeatures } from '../../../helpers';
 })
 export class FeatureListComponent implements OnInit {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
   @Input() buildingId: Building;
 
   public get allFeatures(): BuildingFeature[] {

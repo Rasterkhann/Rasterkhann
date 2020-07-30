@@ -2,7 +2,7 @@
 import { random, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { HeroItem, IGameTown, HeroStat, ItemTier, ItemType, Building } from '../interfaces';
+import { HeroItem, GameTown, HeroStat, ItemTier, ItemType, Building } from '../interfaces';
 import { calculateItemCost, doesTownHaveFeature } from './global';
 
 
@@ -46,7 +46,7 @@ function pickPotionSprite(statsModified: HeroStat[], tier: ItemTier): number {
   return 13;
 }
 
-export function generatePotion(town: IGameTown): HeroItem {
+export function generatePotion(town: GameTown): HeroItem {
 
   // stat combos
   const potentialStatCombos = [

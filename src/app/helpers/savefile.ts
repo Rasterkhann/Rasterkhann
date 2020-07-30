@@ -1,5 +1,5 @@
 
-import { Building, IGameTown, IGameState, BuildingInfo,
+import { Building, GameTown, IGameState, BuildingInfo,
   ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob } from '../interfaces';
 import { calculateOfflineAdventureProgress, calculateOfflineGold } from './town';
 
@@ -118,7 +118,7 @@ export function createStatBlock(): Record<HeroJob, bigint> {
   };
 }
 
-export function createBasicTown(name: string): IGameTown {
+export function createBasicTown(name: string): GameTown {
   return {
     name,
     gold: 0n,
@@ -176,7 +176,7 @@ export function createDefaultSavefile(): IGameState {
     currentInfo: Building.TownHall,
     currentTown: 'Rasterkhann',
     towns: {
-      Rasterkhann: createBasicTown('Rasterkhann') as IGameTown
+      Rasterkhann: createBasicTown('Rasterkhann') as GameTown
     },
     options: {
       [GameOption.ShowHelpText]: true

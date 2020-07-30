@@ -4,14 +4,14 @@ import { sum } from 'lodash';
 import * as NumberFormat from 'swarm-numberformat';
 
 // this file cannot import any helpers or statics
-import { IGameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog, Hero, HeroTrackedStat, Trait, TownStat } from '../interfaces';
+import { GameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog, Hero, HeroTrackedStat, Trait, TownStat } from '../interfaces';
 import { featureNameToBuildingHash, featureNameToUnlockHash, getBuildingData } from './building';
 
 export function formatNumber(value: bigint | number): string {
   return NumberFormat.format(value.toString(), { flavor: 'short', sigfigs: 3 });
 }
 
-export function calculateGlobalItemCostMultiplier(town: IGameTown): number {
+export function calculateGlobalItemCostMultiplier(town: GameTown): number {
   let multiplier = 1;
 
   multiplier += 0.01 * town.buildings[Building.Bazaar].level;
@@ -25,7 +25,7 @@ export function calculateGlobalItemCostMultiplier(town: IGameTown): number {
   return multiplier;
 }
 
-export function calculateItemDurability(town: IGameTown, boostStats: Array<{ stat: HeroStat, value: number }>): number {
+export function calculateItemDurability(town: GameTown, boostStats: Array<{ stat: HeroStat, value: number }>): number {
   const statMultipliers: Record<HeroStat, number> = {
     [HeroStat.ATK]: 2,
     [HeroStat.DEF]: 5,
@@ -40,7 +40,7 @@ export function calculateItemDurability(town: IGameTown, boostStats: Array<{ sta
   return Math.floor(sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat])));
 }
 
-export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
+export function calculateItemCost(town: GameTown, boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
 
   const multiplier = calculateGlobalItemCostMultiplier(town);
 
@@ -58,20 +58,20 @@ export function calculateItemCost(town: IGameTown, boostStats: Array<{ stat: Her
   return BigInt(Math.floor(multiplier * sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat]))));
 }
 
-export function addCombatLogToTown(town: IGameTown, log: CombatLog): void {
+export function addCombatLogToTown(town: GameTown, log: CombatLog): void {
   town.combatLogs = town.combatLogs || [];
   town.combatLogs.unshift(log);
   if (town.combatLogs.length > 10) { town.combatLogs.length = 10; }
 }
 
-export function doesTownHaveFeature(town: IGameTown, feature: string): boolean {
+export function doesTownHaveFeature(town: GameTown, feature: string): boolean {
   if (!featureNameToBuildingHash[feature]) { throw new Error(`Feature ${feature} does not exist.`); }
   if (!town.buildings[featureNameToBuildingHash[feature]]) { return false; }
   if (!town.buildings[featureNameToBuildingHash[feature]].features) { return false; }
   return !!town.buildings[featureNameToBuildingHash[feature]].features[feature];
 }
 
-export function filteredUnlocksEarnedByTown(town: IGameTown, unlock: keyof BuildingUnlock): any[] {
+export function filteredUnlocksEarnedByTown(town: GameTown, unlock: keyof BuildingUnlock): any[] {
   return Object.keys(featureNameToBuildingHash)
     .filter(featName => doesTownHaveFeature(town, featName))
     .filter(featName => featureNameToUnlockHash[featName][unlock])
@@ -83,7 +83,7 @@ export function featureByName(building: Building, feature: string): BuildingFeat
   return getBuildingData(building).features[feature];
 }
 
-export function canSeeBuildingFeature(town: IGameTown, building: Building, feature: string): boolean {
+export function canSeeBuildingFeature(town: GameTown, building: Building, feature: string): boolean {
   const featureRef: BuildingFeature = featureByName(building, feature);
   if (!featureRef) { return false; }
 
@@ -100,7 +100,7 @@ export function canSeeBuildingFeature(town: IGameTown, building: Building, featu
   return true;
 }
 
-export function visibleBuildingFeatures(town: IGameTown, buildingId: Building): BuildingFeature[] {
+export function visibleBuildingFeatures(town: GameTown, buildingId: Building): BuildingFeature[] {
   return Object.values(getBuildingData(buildingId).features || {})
           .filter(feature => canSeeBuildingFeature(town, buildingId, feature.name));
 }
@@ -135,7 +135,7 @@ export function doesHeroHaveTrait(hero: Hero, trait: Trait): boolean {
   return hero.traits.includes(trait);
 }
 
-export function increaseTownStat(town: IGameTown, stat: TownStat, hero: Hero, value: bigint | number = 1n): void {
+export function increaseTownStat(town: GameTown, stat: TownStat, hero: Hero, value: bigint | number = 1n): void {
   town.stats[stat] = town.stats[stat] || {};
   town.stats[stat][hero.job] = town.stats[stat][hero.job] || 0n;
   town.stats[stat][hero.job] += BigInt(value);

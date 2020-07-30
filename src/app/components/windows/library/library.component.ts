@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IGameTown } from '../../../interfaces';
+import { GameTown } from '../../../interfaces';
 import { calculateMaxNumberOfTraits, getLibraryTraitModifier } from '../../../helpers';
 
 @Component({
@@ -9,7 +9,7 @@ import { calculateMaxNumberOfTraits, getLibraryTraitModifier } from '../../../he
 })
 export class LibraryComponent implements OnInit {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
 
   public get maxTraits(): number {
     return calculateMaxNumberOfTraits(this.town);

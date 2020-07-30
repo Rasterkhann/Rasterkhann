@@ -1,6 +1,6 @@
 
 
-import { HeroItem, IGameTown, ItemType, Building } from '../interfaces';
+import { HeroItem, GameTown, ItemType, Building } from '../interfaces';
 import { doesTownHaveFeature } from './global';
 import { generateArmor } from './armor';
 import { generatePotion } from './potion';
@@ -13,7 +13,7 @@ const buildingsRequiredPerItemType = {
 };
 
 // calculator helper functions
-export function calculateMaxCreatableItems(town: IGameTown, itemType: ItemType): number {
+export function calculateMaxCreatableItems(town: GameTown, itemType: ItemType): number {
   let base = 0;
 
   if (town.buildings[buildingsRequiredPerItemType[itemType]].level > 0) { base += 3; }
@@ -24,7 +24,7 @@ export function calculateMaxCreatableItems(town: IGameTown, itemType: ItemType):
   return base;
 }
 
-export function calculateSecondsUntilNextItem(town: IGameTown, itemType: ItemType): number {
+export function calculateSecondsUntilNextItem(town: GameTown, itemType: ItemType): number {
   let base = 0;
 
   if (town.buildings[buildingsRequiredPerItemType[itemType]].level > 0)       { base += 900; }
@@ -36,7 +36,7 @@ export function calculateSecondsUntilNextItem(town: IGameTown, itemType: ItemTyp
   return Math.floor(base);
 }
 
-export function generateItem(town: IGameTown, itemType: ItemType): HeroItem {
+export function generateItem(town: GameTown, itemType: ItemType): HeroItem {
   switch (itemType) {
     case ItemType.Potion: return generatePotion(town);
     case ItemType.Armor:  return generateArmor(town);

@@ -3,7 +3,7 @@
 import { random, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { IGameTown, HeroStat, ItemType, ArmorElement, ArmorSubType, Building, HeroArmor } from '../interfaces';
+import { GameTown, HeroStat, ItemType, ArmorElement, ArmorSubType, Building, HeroArmor } from '../interfaces';
 import { getZeroStatBlock } from './hero';
 import { calculateItemCost, calculateItemDurability, doesTownHaveFeature } from './global';
 import { chooseRandomItemTrait } from './itemtraits';
@@ -114,7 +114,7 @@ const ARMOR_HEAVY_PRESETS = [
   },
 ];
 
-export function pickArmorPreset(town: IGameTown): {
+export function pickArmorPreset(town: GameTown): {
   name: string, sprite: number, element: ArmorElement, subType: ArmorSubType, stats: Record<HeroStat, number>
 } {
   const presets: any[] = BASIC_ARMOR_SPECIFIC_PRESETS;
@@ -152,7 +152,7 @@ export function pickArmorPreset(town: IGameTown): {
   };
 }
 
-export function generateArmor(town: IGameTown): HeroArmor {
+export function generateArmor(town: GameTown): HeroArmor {
 
   const preset = pickArmorPreset(town);
   const trait = chooseRandomItemTrait(town);

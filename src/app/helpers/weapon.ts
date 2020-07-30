@@ -3,7 +3,7 @@
 import { random, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { IGameTown, HeroStat, ItemType, WeaponSubType, WeaponElement, HeroWeapon, HeroAction, Building } from '../interfaces';
+import { GameTown, HeroStat, ItemType, WeaponSubType, WeaponElement, HeroWeapon, HeroAction, Building } from '../interfaces';
 import { ElementActions, SubTypeActions } from '../static';
 import { calculateItemCost, calculateItemDurability, doesTownHaveFeature } from './global';
 import { getZeroStatBlock } from './hero';
@@ -69,7 +69,7 @@ const WEAPON_ELEMENT_BASE_STATS: Record<WeaponElement, Partial<Record<HeroStat, 
   [WeaponElement.Melfrost]:   { [HeroStat.ATK]: 5, [HeroStat.SP]: 10 }
 };
 
-function getValidSubtypesForGeneration(town: IGameTown): WeaponSubType[] {
+function getValidSubtypesForGeneration(town: GameTown): WeaponSubType[] {
   const validTypes = [WeaponSubType.Sword, WeaponSubType.Knife, WeaponSubType.Hatchet];
 
   if (doesTownHaveFeature(town, 'Martial Weapons')) { validTypes.push(WeaponSubType.Spear, WeaponSubType.Mace); }
@@ -80,7 +80,7 @@ function getValidSubtypesForGeneration(town: IGameTown): WeaponSubType[] {
   return validTypes;
 }
 
-function getValidElementsForGeneration(town: IGameTown): WeaponElement[] {
+function getValidElementsForGeneration(town: GameTown): WeaponElement[] {
   const validElements = [WeaponElement.Iron];
 
   [
@@ -100,7 +100,7 @@ function getSpriteForWeapon(subType: WeaponSubType, element: WeaponElement): num
   return (WEAPON_BASIC_SPRITE_INFO_WEAPON[subType] * width) + WEAPON_BASIC_SPRITE_INFO_TYPE[element];
 }
 
-export function generateWeapon(town: IGameTown): HeroWeapon {
+export function generateWeapon(town: GameTown): HeroWeapon {
 
   const trait = chooseRandomItemTrait(town);
   const subType = sample(getValidSubtypesForGeneration(town)) as WeaponSubType;

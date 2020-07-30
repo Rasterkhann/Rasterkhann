@@ -11,7 +11,7 @@ import {
   ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation, HeroSetDestination
 } from '../actions';
 import {
-  IGameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat
+  GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat
 } from '../interfaces';
 import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
@@ -59,7 +59,7 @@ export class GameState {
   }
 
   @Selector()
-  public static currentTown(state: IGameState): IGameTown {
+  public static currentTown(state: IGameState): GameTown {
     return getCurrentTownFromState(state);
   }
 

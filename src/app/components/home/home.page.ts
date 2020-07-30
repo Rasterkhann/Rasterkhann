@@ -7,7 +7,7 @@ import { sample } from 'lodash';
 
 import { GameService } from '../../services/game.service';
 import { GameState } from '../../states';
-import { IGameTown, ProspectiveHero, Adventure, GameOption, Building, IGameState, ItemType, ItemPassedOverThreshold } from '../../interfaces';
+import { GameTown, ProspectiveHero, Adventure, GameOption, Building, IGameState, ItemType, ItemPassedOverThreshold } from '../../interfaces';
 import { getCurrentTownFromState, getCurrentTownCanDoAnyAdventures } from '../../helpers';
 import { environment } from '../../../environments/environment';
 
@@ -19,7 +19,7 @@ import { environment } from '../../../environments/environment';
 export class HomePage implements OnInit {
 
   @Select(GameState) state$: Observable<IGameState>;
-  @Select(GameState.currentTown) currentTown$: Observable<IGameTown>;
+  @Select(GameState.currentTown) currentTown$: Observable<GameTown>;
   @Select(GameState.currentTownProspectiveHeroes) prospectiveHeroes$: Observable<ProspectiveHero[]>;
   @Select(GameState.currentTownPotentialAdventures) potentialAdventures$: Observable<Adventure[]>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationHeroes]) autoHeroes$: Observable<boolean>;

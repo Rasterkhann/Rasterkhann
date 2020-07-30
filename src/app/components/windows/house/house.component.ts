@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IGameTown } from '../../../interfaces';
+import { GameTown } from '../../../interfaces';
 
 @Component({
   selector: 'app-house',
@@ -8,7 +8,7 @@ import { IGameTown } from '../../../interfaces';
 })
 export class HouseComponent implements OnInit {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
 
   constructor() { }
 

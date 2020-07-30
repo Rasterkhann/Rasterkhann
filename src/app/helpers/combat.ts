@@ -1,7 +1,7 @@
 
 import { random, sample, sum } from 'lodash';
 
-import { Hero, Adventure, IGameTown, HeroStat, HeroActionTargetting,
+import { Hero, Adventure, GameTown, HeroStat, HeroActionTargetting,
   HeroAction, TriggerType, ItemType, CombatLog, Combat, HeroTrackedStat } from '../interfaces';
 import { generateMonster, checkHeroLevelUp } from './hero';
 import { JobEffects } from '../static';
@@ -9,7 +9,7 @@ import { addCombatLogToTown, doesTownHaveFeature, formatNumber,
   getCurrentStat, giveHeroEXP, giveHeroGold, increaseTrackedStat, getHeroTag } from './global';
 import { getActionsForWeapon } from './weapon';
 
-export function getTownExpMultiplier(town: IGameTown): number {
+export function getTownExpMultiplier(town: GameTown): number {
   let base = 1.1;
 
   if (doesTownHaveFeature(town, 'Monster Experience I'))   { base += 0.1; }
@@ -19,7 +19,7 @@ export function getTownExpMultiplier(town: IGameTown): number {
   return base;
 }
 
-export function getTownGoldMultiplier(town: IGameTown): number {
+export function getTownGoldMultiplier(town: GameTown): number {
   let base = 1.3;
 
   if (doesTownHaveFeature(town, 'Monster Gold I'))   { base += 0.15; }
@@ -57,7 +57,7 @@ class CombatTracker implements Combat {
 
   private combatLog: CombatLog;
 
-  constructor(private town: IGameTown, private heroes: Hero[], private adventure: Adventure) {}
+  constructor(private town: GameTown, private heroes: Hero[], private adventure: Adventure) {}
 
   public start(): void {
 
@@ -230,7 +230,7 @@ class CombatTracker implements Combat {
   }
 }
 
-export function doCombat(town: IGameTown, heroes: Hero[], adventure: Adventure): void {
+export function doCombat(town: GameTown, heroes: Hero[], adventure: Adventure): void {
   const combat = new CombatTracker(town, heroes, adventure);
   combat.start();
 }

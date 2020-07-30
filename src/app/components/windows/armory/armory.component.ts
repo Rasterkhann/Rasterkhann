@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IGameTown, ItemType } from '../../../interfaces';
+import { GameTown, ItemType } from '../../../interfaces';
 import { calculateMaxCreatableItems, calculateRepairCost, calculateRepairRate, calculateSecondsUntilNextItem } from '../../../helpers';
 
 @Component({
@@ -9,7 +9,7 @@ import { calculateMaxCreatableItems, calculateRepairCost, calculateRepairRate, c
 })
 export class ArmoryComponent implements OnInit {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
 
   public get maximumArmors(): number {
     return calculateMaxCreatableItems(this.town, ItemType.Armor);

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IGameTown } from '../../../interfaces';
+import { GameTown } from '../../../interfaces';
 import { GameService } from '../../../services/game.service';
 import { BuildingData } from '../../../static';
 
@@ -10,7 +10,7 @@ import { BuildingData } from '../../../static';
 })
 export class TownHallComponent implements OnInit {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
 
   public allBuildingKeys = Object.keys(BuildingData);
 

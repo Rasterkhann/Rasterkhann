@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { IGameTown, Building } from '../../../interfaces';
+import { GameTown, Building } from '../../../interfaces';
 import { AdventureModalComponent } from './adventure-modal/adventure-modal.component';
 import { getTownExpMultiplier, getTownGoldMultiplier, calculateMaxActiveAdventures,
   calculateMaxNumberAdventureEncounters, calculateMaxMembersPerTeam } from '../../../helpers';
@@ -16,7 +16,7 @@ import { Store } from '@ngxs/store';
 })
 export class CaveComponent implements OnInit, OnChanges {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
   @Input() autoOpen: boolean;
 
   public get maxEncounters(): number {

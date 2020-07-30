@@ -1,5 +1,5 @@
 
-import { IGameTown } from './town';
+import { GameTown } from './town';
 
 export enum GameOption {
   AutomationHeroes = 'automationHeroes',
@@ -15,6 +15,6 @@ export interface IGameState {
   currentInfo: string;
   autoOpenInfo?: boolean;
   currentTown: string;
-  towns: Record<string, IGameTown>;
+  towns: Record<string, GameTown>;
   options: Partial<Record<GameOption, boolean|string>>;
 }

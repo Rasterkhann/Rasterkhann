@@ -5,7 +5,7 @@ import * as Pathfinding from 'pathfinding';
 
 import { visibleBuildingFeatures } from '../../helpers';
 
-import { IGameTown, Building, Hero } from '../../interfaces';
+import { GameTown, Building, Hero } from '../../interfaces';
 import { GameService } from '../../services/game.service';
 import { GameState } from '../../states';
 import { sample } from 'lodash';
@@ -36,7 +36,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
   @Select(GameState.currentInfoWindow) currentInfo$: Observable<{ window: string, autoOpen: boolean }>;
   @Select(GameState.currentTownRecruitedHeroes) recruitedHeroes$: Observable<Hero[]>;
 
-  @Input() public town: IGameTown;
+  @Input() public town: GameTown;
 
   public get availableBuildings(): Building[] {
     return Object.keys(this.town.buildings || {}) as Building[];

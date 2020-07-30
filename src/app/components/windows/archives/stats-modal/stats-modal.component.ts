@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
-import { IGameTown, TownStat } from '../../../../interfaces';
+import { GameTown, TownStat } from '../../../../interfaces';
 import { GameState } from '../../../../states';
 
 @Component({
@@ -13,7 +13,7 @@ import { GameState } from '../../../../states';
 })
 export class TownStatsModalComponent implements OnInit {
 
-  @Select(GameState.currentTown) currentTown$: Observable<IGameTown>;
+  @Select(GameState.currentTown) currentTown$: Observable<GameTown>;
 
   public headers: Record<TownStat, string> = {
     [TownStat.Adventures]: 'Adventures Completed',

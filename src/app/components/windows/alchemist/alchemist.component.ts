@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IGameTown, ItemType } from '../../../interfaces';
+import { GameTown, ItemType } from '../../../interfaces';
 import { calculateMaxCreatableItems, calculateSecondsUntilNextItem } from '../../../helpers';
 
 @Component({
@@ -9,7 +9,7 @@ import { calculateMaxCreatableItems, calculateSecondsUntilNextItem } from '../..
 })
 export class AlchemistComponent implements OnInit {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
 
   public get maximumPotions(): number {
     return calculateMaxCreatableItems(this.town, ItemType.Potion);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { sum } from 'lodash';
 
-import { Hero, IGameTown, ProspectiveHero, HeroStat,
+import { Hero, GameTown, ProspectiveHero, HeroStat,
   Building, HeroJobStatic, Adventure, Trait, TraitValueMultipliers } from '../interfaces';
 import { calculateHeroTrainingGoldPerXP, generateHero, generateMonster, getCurrentStat, getZeroStatBlock } from '../helpers';
 import { JobEffects, TraitEffects } from '../static';
@@ -14,11 +14,11 @@ export class HeroService {
 
   constructor() { }
 
-  generateMonster(town: IGameTown, adventure: Adventure): Hero {
+  generateMonster(town: GameTown, adventure: Adventure): Hero {
     return generateMonster(town, adventure);
   }
 
-  generateHero(town: IGameTown): Hero {
+  generateHero(town: GameTown): Hero {
     return generateHero(town);
   }
 
@@ -30,7 +30,7 @@ export class HeroService {
     })) / traits.length;
   }
 
-  generateProspectiveHero(town: IGameTown): ProspectiveHero {
+  generateProspectiveHero(town: GameTown): ProspectiveHero {
 
     const guildHallLevel = town.buildings[Building.GuildHall].level || 1;
 
@@ -52,11 +52,11 @@ export class HeroService {
     };
   }
 
-  heroTrainCost(town: IGameTown, hero: Hero): bigint {
+  heroTrainCost(town: GameTown, hero: Hero): bigint {
     return BigInt(Math.floor(hero.stats[HeroStat.EXP] - getCurrentStat(hero, HeroStat.EXP))) * calculateHeroTrainingGoldPerXP(town);
   }
 
-  private getRatingForHero(town: IGameTown, hero: Hero): number {
+  private getRatingForHero(town: GameTown, hero: Hero): number {
     const guildHallLevel = town.buildings[Building.GuildHall].level || 1;
 
     if (guildHallLevel < 5) { return 0.5; }

@@ -1,5 +1,5 @@
 import { random, sample } from 'lodash';
-import { HeroStat, IGameTown, ItemTrait } from '../interfaces';
+import { HeroStat, GameTown, ItemTrait } from '../interfaces';
 import { filteredUnlocksEarnedByTown } from './global';
 
 const ALL_TRAITS: Record<ItemTrait, Partial<Record<HeroStat, number>>> = {
@@ -107,7 +107,7 @@ const ALL_TRAITS: Record<ItemTrait, Partial<Record<HeroStat, number>>> = {
   Terrible:   { [HeroStat.ATK]: -3, [HeroStat.DEF]: -3, [HeroStat.STA]: -3, [HeroStat.HP]: -10, [HeroStat.SP]: -10 },
 };
 
-export function chooseRandomItemTrait(town: IGameTown): { name: ItemTrait, stats: Partial<Record<HeroStat, number>> } | null {
+export function chooseRandomItemTrait(town: GameTown): { name: ItemTrait, stats: Partial<Record<HeroStat, number>> } | null {
   if (random(0, 10) <= 5) { return null; }
 
   const baseTraits: ItemTrait[] = [

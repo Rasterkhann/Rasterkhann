@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { formatDifficulty } from '../../../../helpers';
-import { AdventureDifficulty, CombatLog, IGameTown } from '../../../../interfaces';
+import { AdventureDifficulty, CombatLog, GameTown } from '../../../../interfaces';
 
 @Component({
   selector: 'app-combat-log-modal',
@@ -10,7 +10,7 @@ import { AdventureDifficulty, CombatLog, IGameTown } from '../../../../interface
 })
 export class CombatLogModalComponent implements OnInit {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
 
   public isLogVisible: Record<string, boolean> = {};
 

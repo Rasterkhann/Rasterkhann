@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { IGameTown, Building } from '../../../interfaces';
+import { GameTown, Building } from '../../../interfaces';
 import { GuildModalComponent } from './guild-modal/guild-modal.component';
 import { calculateAvailableJobs, calculateHeroMaxTotal } from '../../../helpers';
 import { Store } from '@ngxs/store';
@@ -14,7 +14,7 @@ import { ChooseInfo } from '../../../actions';
 })
 export class GuildHallComponent implements OnInit, OnChanges {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
   @Input() autoOpen: boolean;
 
   public get maxHeroes(): number {

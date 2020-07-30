@@ -17,7 +17,7 @@ export interface NewsItem {
   message: string;
 }
 
-export interface IGameTown {
+export interface GameTown {
   name: string;
 
   gold: bigint;

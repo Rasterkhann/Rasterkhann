@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IGameTown } from '../../../interfaces';
+import { GameTown } from '../../../interfaces';
 import { calculateRestingRate, calculateRestingCost } from '../../../helpers';
 
 @Component({
@@ -9,7 +9,7 @@ import { calculateRestingRate, calculateRestingCost } from '../../../helpers';
 })
 export class InnComponent implements OnInit {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
 
   public get restingRate(): number {
     return calculateRestingRate(this.town);

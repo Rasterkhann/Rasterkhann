@@ -6,7 +6,7 @@ import { Select } from '@ngxs/store';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 
 import { GameState } from '../../../../states';
-import { ProspectiveHero, Hero, IGameTown, HeroStat, Trait, ItemType, HeroItem } from '../../../../interfaces';
+import { ProspectiveHero, Hero, GameTown, HeroStat, Trait, ItemType, HeroItem } from '../../../../interfaces';
 import { GameService } from '../../../../services/game.service';
 import { allEquippableArmorClasses, allEquippableWeapons, calculateHeroMaxTotal, formatNumber } from '../../../../helpers';
 import { JobEffects, TraitEffects } from '../../../../static';
@@ -19,14 +19,14 @@ import { HeroService } from '../../../../services/hero.service';
 })
 export class GuildModalComponent implements OnDestroy, OnInit {
 
-  @Select(GameState.currentTown) currentTown$: Observable<IGameTown>;
+  @Select(GameState.currentTown) currentTown$: Observable<GameTown>;
   @Select(GameState.currentTownProspectiveHeroes) prospectiveHeroes$: Observable<ProspectiveHero[]>;
   @Select(GameState.currentTownRecruitedHeroes) recruitedHeroes$: Observable<Hero[]>;
 
   private canBuyHeroes: boolean;
   private activeHeroes$: Subscription;
 
-  public town: IGameTown;
+  public town: GameTown;
 
   public get maxHeroes(): number {
     return calculateHeroMaxTotal(this.town);
@@ -85,7 +85,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
     return this.town.gold > prosHero.cost && this.canBuyHeroes;
   }
 
-  rerollHeroes(town: IGameTown): void {
+  rerollHeroes(town: GameTown): void {
     setTimeout(() => {
       this.game.rerollProspectiveHeroes(town, true);
     }, 100);
@@ -126,7 +126,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
     this.recruitHero(this.viewingProspectiveHero);
   }
 
-  canRecruitHero(town: IGameTown, prosHero: ProspectiveHero): boolean {
+  canRecruitHero(town: GameTown, prosHero: ProspectiveHero): boolean {
     return this.canBuyHeroes && this.game.canRecruitHero(town, prosHero);
   }
 

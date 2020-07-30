@@ -3,7 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 
-import { IGameTown, NewsItem, Building } from '../../../interfaces';
+import { GameTown, NewsItem, Building } from '../../../interfaces';
 import { GameState } from '../../../states';
 import { TownStatsModalComponent } from './stats-modal/stats-modal.component';
 import { ChooseInfo } from '../../../actions';
@@ -15,7 +15,7 @@ import { ChooseInfo } from '../../../actions';
 })
 export class ArchivesComponent implements OnInit, OnChanges {
 
-  @Input() town: IGameTown;
+  @Input() town: GameTown;
   @Input() autoOpen: boolean;
 
   @Select(GameState.currentTownNotifications) notifications$: Observable<NewsItem[]>;

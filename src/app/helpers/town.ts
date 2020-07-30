@@ -1,10 +1,10 @@
 
-import { IGameState, IGameTown, Hero, ProspectiveHero, Building, Adventure, ItemType, HeroItem } from '../interfaces';
+import { IGameState, GameTown, Hero, ProspectiveHero, Building, Adventure, ItemType, HeroItem } from '../interfaces';
 import { calculateMaxActiveAdventures, tickAdventure } from './adventure';
 import { canHeroGoOnAdventure } from './hero';
 import { doesTownHaveFeature } from './global';
 
-export function getCurrentTownFromState(state: IGameState): IGameTown {
+export function getCurrentTownFromState(state: IGameState): GameTown {
   return { name: state.currentTown, ...state.towns[state.currentTown] };
 }
 
@@ -65,7 +65,7 @@ export function getCurrentTownPotentialAdventures(state: IGameState): Adventure[
 }
 
 // heroes are only free if they're not on an adventure and have full STA
-export function getTownAllHeroesFree(town: IGameTown): Hero[] {
+export function getTownAllHeroesFree(town: GameTown): Hero[] {
   return town.recruitedHeroes.filter((h: Hero) => canHeroGoOnAdventure(h));
 }
 

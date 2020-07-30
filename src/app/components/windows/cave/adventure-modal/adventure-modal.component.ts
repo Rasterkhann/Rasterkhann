@@ -5,7 +5,7 @@ import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
 import { GameService } from '../../../../services/game.service';
-import { IGameTown, Adventure } from '../../../../interfaces';
+import { GameTown, Adventure } from '../../../../interfaces';
 import { GameState } from '../../../../states';
 import { calculateMaxActiveAdventures } from '../../../../helpers';
 
@@ -16,7 +16,7 @@ import { calculateMaxActiveAdventures } from '../../../../helpers';
 })
 export class AdventureModalComponent implements OnInit {
 
-  @Select(GameState.currentTown) currentTown$: Observable<IGameTown>;
+  @Select(GameState.currentTown) currentTown$: Observable<GameTown>;
   @Select(GameState.currentTownCanDoAdventures) canDoAdventures$: Observable<boolean>;
   @Select(GameState.currentTownActiveAdventures) activeAdventures$: Observable<Adventure[]>;
   @Select(GameState.currentTownPotentialAdventures) potentialAdventures$: Observable<Adventure[]>;
@@ -29,13 +29,13 @@ export class AdventureModalComponent implements OnInit {
     this.modal.dismiss();
   }
 
-  rerollAdventures(town: IGameTown): void {
+  rerollAdventures(town: GameTown): void {
     setTimeout(() => {
       this.game.rerollAdventures(town, true);
     }, 100);
   }
 
-  public simultaneousAdventures(town: IGameTown): number {
+  public simultaneousAdventures(town: GameTown): number {
     return calculateMaxActiveAdventures(town);
   }
 
