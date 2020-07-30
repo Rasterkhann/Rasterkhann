@@ -319,14 +319,12 @@ export function generateHero(town: IGameTown, level?: number): Hero {
       if (!traitEff.triggers) { return; }
 
       // levelup if possible; final traits will be ignored though. only +/- traits really are considered here.
-      console.log('level', i, JSON.stringify(baseLevelupStats));
       (traitEff.triggers[TriggerType.LevelUp] || noop)({ hero, statBlock: baseLevelupStats });
     });
 
     Object.keys(hero.stats).forEach((stat: HeroStat) => {
       hero.stats[stat] = Math.floor(hero.stats[stat] + baseLevelupStats[stat]);
     });
-    console.log(hero.name, baseLevelupStats, heroLevel);
   }
 
   // make sure heroes have at least a base of stats after they get ruined by traits
