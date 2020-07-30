@@ -6,7 +6,7 @@ import { delay } from 'rxjs/operators';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures,
-  StartAdventure, HeroGainEXP, OptionToggle, ScrapItem, RushBuilding, RushBuildingFeature, HeroRetire } from '../actions';
+  StartAdventure, HeroGainEXP, OptionToggle, ScrapItem, RushBuilding, RushBuildingFeature, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding, UnallocateAllFromBuilding } from '../actions';
 import { Building, GameTown, IGameState, BuildingFeature, Hero,
   ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem, HeroTrackedStat } from '../interfaces';
 import { doesTownHaveFeature, featureByName, getCurrentStat } from '../helpers';
@@ -314,6 +314,19 @@ export class GameService {
 
   public retireHero(hero: Hero): void {
     this.store.dispatch(new HeroRetire(hero.uuid));
+  }
+
+  // worker allocation functions
+  public allocateAllWorkersToBuilding(building: Building): void {
+    this.store.dispatch(new AllocateAllToBuilding(building));
+  }
+
+  public allocateSomeWorkersToBuilding(building: Building, num: number): void {
+    this.store.dispatch(new AllocateSomeToBuilding(building, num));
+  }
+
+  public unallocateAllWorkersFromBuilding(building: Building): void {
+    this.store.dispatch(new UnallocateAllFromBuilding(building));
   }
 
 }

@@ -6,3 +6,4 @@ export * from './gold.actions';
 export * from './hero.actions';
 export * from './item.actions';
 export * from './ui.actions';
+export * from './worker.actions';

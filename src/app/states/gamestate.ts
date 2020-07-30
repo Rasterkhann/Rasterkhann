@@ -8,7 +8,7 @@ import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, UpgradeBuildingFeature, RerollHeroes,
   RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
-  ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation, HeroSetDestination, HeroRetire
+  ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation, HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding, UnallocateAllFromBuilding
 } from '../actions';
 import {
   GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat, TownStat
@@ -768,6 +768,47 @@ export class GameState {
     setState((state: IGameState) => {
       state.towns[state.currentTown].itemsForSale[item.type] = state.towns[state.currentTown].itemsForSale[item.type]
                                                                  .filter(i => i.uuid !== item.uuid);
+      return state;
+    });
+  }
+
+  // worker functions
+  @Action(AllocateAllToBuilding)
+  @ImmutableContext()
+  allocateAllToBuilding({ setState }: StateContext<IGameState>, { building }: AllocateAllToBuilding): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const totalWorkers = Number(Object.values(town.stats[TownStat.Retires]).reduce((prev, cur) => prev + cur, 0n));
+
+      Object.keys(town.buildings).forEach((buildingKey: Building) => {
+        if (buildingKey === building) {
+          town.buildings[buildingKey].numRetiredAllocated = totalWorkers;
+          return;
+        }
+
+        town.buildings[buildingKey].numRetiredAllocated = 0;
+      });
+
+      return state;
+    });
+  }
+
+  @Action(AllocateSomeToBuilding)
+  @ImmutableContext()
+  allocateSomeToBuilding({ setState }: StateContext<IGameState>, { building, num }: AllocateSomeToBuilding): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      town.buildings[building].numRetiredAllocated = num;
+      return state;
+    });
+  }
+
+  @Action(UnallocateAllFromBuilding)
+  @ImmutableContext()
+  unallocateAllFromBuilding({ setState }: StateContext<IGameState>, { building }: UnallocateAllFromBuilding): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      town.buildings[building].numRetiredAllocated = 0;
       return state;
     });
   }

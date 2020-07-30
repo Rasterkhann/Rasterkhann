@@ -6,3 +6,4 @@ export * from './item';
 export * from './game';
 export * from './town';
 export * from './trait';
+export * from './version';

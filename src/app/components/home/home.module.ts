@@ -37,6 +37,7 @@ import { AdventureModalComponent } from '../windows/cave/adventure-modal/adventu
 import { ItemsModalComponent } from '../windows/bazaar/items-modal/items-modal.component';
 import { CombatLogModalComponent } from '../windows/cave/combat-log-modal/combat-log-modal.component';
 import { TownStatsModalComponent } from '../windows/archives/stats-modal/stats-modal.component';
+import { WorkerAllocationModalComponent } from '../shared/building-info/allocation-modal/allocation-modal.component';
 
 import { HeroComponent } from '../shared/hero/hero.component';
 import { HeroSpriteComponent } from '../shared/hero-sprite/hero-sprite.component';
@@ -44,6 +45,14 @@ import { AdventureComponent } from '../shared/adventure/adventure.component';
 import { ItemComponent } from '../shared/item/item.component';
 import { HelpTextComponent } from '../shared/help-text/help-text.component';
 
+const modals = [
+  GuildModalComponent,
+  AdventureModalComponent,
+  ItemsModalComponent,
+  CombatLogModalComponent,
+  TownStatsModalComponent,
+  WorkerAllocationModalComponent
+];
 
 @NgModule({
   imports: [
@@ -83,20 +92,12 @@ import { HelpTextComponent } from '../shared/help-text/help-text.component';
     ItemComponent,
     HelpTextComponent,
 
-    GuildModalComponent,
-    AdventureModalComponent,
-    ItemsModalComponent,
-    CombatLogModalComponent,
-    TownStatsModalComponent,
+    ...modals,
 
     BignumPipe
   ],
   entryComponents: [
-    GuildModalComponent,
-    AdventureModalComponent,
-    ItemsModalComponent,
-    CombatLogModalComponent,
-    TownStatsModalComponent
+    ...modals
   ]
 })
 export class HomePageModule {}

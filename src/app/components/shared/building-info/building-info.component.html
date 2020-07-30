@@ -26,5 +26,5 @@
 <ion-item *ngIf="town.showStage2UI && town.buildings[buildingId].level > 1">
   Allocated Workers: {{ (town.buildings[buildingId].numRetiredAllocated || 0) | bignum }}
 
-  <ion-button slot="end" fill="outline" color="tertiary">Change</ion-button>
+  <ion-button slot="end" fill="outline" color="tertiary" (click)="openAllocationWindow()">Change</ion-button>
 </ion-item>

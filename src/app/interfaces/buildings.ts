@@ -52,6 +52,7 @@ export interface BuildingFeature {
 export interface BuildingStatic {
   name: string;
   description: string;
+  workerHelp: string;
   requires?: Partial<Record<Building, number>>;
   upgradeTime: (level: number) => number;
   levelCost: (level: number) => bigint;

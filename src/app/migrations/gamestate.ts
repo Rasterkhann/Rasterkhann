@@ -1,13 +1,12 @@
-import { Building, IGameState, ItemType, TownStat, HeroJob } from '../interfaces';
+import { Building, IGameState, ItemType, TownStat, HeroJob, Version } from '../interfaces';
 import { createBuildingAtLevel, createStatBlock } from '../helpers';
 
 export const migrations = [
   {
-    version: 1,
+    version: Version.First,
     key: 'gamestate',
     versionKey: 'version',
     migrate: (state: IGameState) => {
-      // state.version = 2;
       console.log('Savefile version 1...');
 
       console.log('Running migrations...');
@@ -65,13 +64,13 @@ export const migrations = [
       console.log('Adding combat log support...');
       state.towns.Rasterkhann.combatLogs = state.towns.Rasterkhann.combatLogs || [];
 
-      state.version = 2;
+      state.version = Version.TrackedStats;
 
       return state;
     }
   },
   {
-    version: 2,
+    version: Version.TrackedStats,
     key: 'gamestate',
     versionKey: 'version',
     migrate: (state: IGameState) => {
@@ -86,13 +85,13 @@ export const migrations = [
         ph.hero.trackedStats = ph.hero.trackedStats || {};
       });
 
-      state.version = 3;
+      state.version = Version.Durability;
 
       return state;
     }
   },
   {
-    version: 3,
+    version: Version.Durability,
     key: 'gamestate',
     versionKey: 'version',
     migrate: (state: IGameState) => {
@@ -110,12 +109,12 @@ export const migrations = [
         });
       });
 
-      state.version = 4;
+      state.version = Version.CleanRefs;
       return state;
     }
   },
   {
-    version: 4,
+    version: Version.CleanRefs,
     key: 'gamestate',
     versionKey: 'version',
     migrate: (state: IGameState) => {
@@ -131,13 +130,13 @@ export const migrations = [
         }
       });
 
-      state.version = 5;
+      state.version = Version.HeroRetire;
 
       return state;
     }
   },
   {
-    version: 5,
+    version: Version.HeroRetire,
     key: 'gamestate',
     versionKey: 'version',
     migrate: (state: IGameState) => {

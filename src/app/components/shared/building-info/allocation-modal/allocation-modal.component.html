@@ -1,0 +1,61 @@
+  
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Allocate Workers to {{ buildingName }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <app-help-text [helpText]="buildingWorkerHelp"></app-help-text>
+  <ng-container *ngIf="town">
+    <ion-row class="ion-margin-top">
+      <ion-col class="ion-text-center">
+        You have {{ getTotalWorkersAllocatedHere() | bignum }}/{{ getTotalWorkers() | bignum }} workers allocated here. 
+        <br>
+        {{ getTotalWorkersUnallocated() | bignum }} of your workers are idle and {{ getTotalWorkersAllocatedElsewhere() | bignum }} are allocated elsewhere.
+      </ion-col>
+    </ion-row>
+  
+    <ion-row class="ion-margin-top ion-margin-horizontal">
+      <ion-col class="text-center">
+        <ion-button expand="block" color="secondary" fill="outline" (click)="allocateAllIdle()" [disabled]="getTotalWorkersUnallocated() === 0">Allocate All Idle Here</ion-button>
+      </ion-col>
+      <ion-col class="text-center">
+        <ion-button expand="block" color="secondary" fill="outline" (click)="allocateAll()" [disabled]="getTotalWorkersAllocatedHere() === getTotalWorkers()">Allocate All Here</ion-button>
+      </ion-col>
+      <ion-col class="text-center">
+        <ion-button expand="block" color="secondary" fill="outline" (click)="unallocateAll()" [disabled]="getTotalWorkersAllocatedHere() === 0">Unallocate All From Here</ion-button>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row class="ion-margin-top">
+      <ion-col></ion-col>
+      <ion-col size="8">
+        <ion-range min="0" [max]="getTotalWorkers()" pin="true" snaps="true" ticks="false" [(ngModel)]="currentAllocated">
+          <ion-label slot="start">0</ion-label>
+          <ion-label slot="end">{{ getTotalWorkers() }}</ion-label>
+        </ion-range>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row class="margin-top" *ngIf="errorMessage">
+      <ion-col class="ion-text-center error-message">
+        {{ errorMessage }}
+      </ion-col>
+    </ion-row>
+  
+    <ion-row class="ion-margin-top">
+      <ion-col class="ion-text-center">
+        <ion-button color="secondary" (click)="allocateCurrent()" [disabled]="errorMessage || originalCurrentAllocated === currentAllocated">Change Allocation</ion-button>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+</ion-content>

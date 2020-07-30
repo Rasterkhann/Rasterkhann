@@ -1,6 +1,6 @@
 
 import { Building, GameTown, IGameState, BuildingInfo,
-  ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob } from '../interfaces';
+  ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob, LatestVersion } from '../interfaces';
 import { calculateOfflineAdventureProgress, calculateOfflineGold } from './town';
 
 export function beforeSerialize(obj: any): IGameState {
@@ -182,7 +182,7 @@ export function createBasicTown(name: string): GameTown {
 
 export function createDefaultSavefile(): IGameState {
   return {
-    version: 1,
+    version: LatestVersion,
     lastTimestamp: 0,
     currentInfo: Building.TownHall,
     currentTown: 'Rasterkhann',

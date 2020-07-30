@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { GameTown, Building, GameOption } from '../../../interfaces';
 import { GameService } from '../../../services/game.service';
 import { BuildingData } from '../../../static';
+import { ModalController } from '@ionic/angular';
+import { WorkerAllocationModalComponent } from './allocation-modal/allocation-modal.component';
 
 @Component({
   selector: 'app-building-info',
@@ -27,7 +29,7 @@ export class BuildingInfoComponent implements OnInit {
     return BuildingData[this.buildingId].description;
   }
 
-  constructor(public game: GameService) { }
+  constructor(private modal: ModalController, public game: GameService) { }
 
   ngOnInit(): void {}
 
@@ -60,6 +62,17 @@ export class BuildingInfoComponent implements OnInit {
     const building = this.buildingId;
 
     this.game.rushBuilding(this.town, building);
+  }
+
+  async openAllocationWindow(): Promise<void> {
+    const modal = await this.modal.create({
+      component: WorkerAllocationModalComponent,
+      componentProps: {
+        buildingId: this.buildingId
+      }
+    });
+
+    await modal.present();
   }
 
 }
