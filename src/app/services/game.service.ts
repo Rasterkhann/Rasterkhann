@@ -309,7 +309,7 @@ export class GameService {
 
   // retire functions
   public canRetireHero(hero: Hero): boolean {
-    return hero.trackedStats[HeroTrackedStat.TotalEncounters] >= 25;
+    return !hero.onAdventure && hero.trackedStats[HeroTrackedStat.TotalEncounters] >= 25;
   }
 
   public retireHero(hero: Hero): void {

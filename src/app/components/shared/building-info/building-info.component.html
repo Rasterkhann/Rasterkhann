@@ -22,3 +22,9 @@
   <ion-button slot="end" *ngIf="town.buildings[buildingId].level > 0 && game.canUpgradeBuilding(town, buildingId)" (click)="build()">Upgrade</ion-button>
   <ion-button slot="end" *ngIf="town.buildings[buildingId].level > 0 && game.canRushBuilding(town, buildingId)" (click)="rush()">Rush</ion-button>
 </ion-item>
+
+<ion-item *ngIf="town.showStage2UI && town.buildings[buildingId].level > 1">
+  Allocated Workers: {{ (town.buildings[buildingId].numRetiredAllocated || 0) | bignum }}
+
+  <ion-button slot="end" fill="outline" color="tertiary">Change</ion-button>
+</ion-item>
