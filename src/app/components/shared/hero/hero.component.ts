@@ -40,7 +40,7 @@ export class HeroComponent implements OnInit {
       case Building.Bazaar:    return 'Increases prices by 25%';
       case Building.Cave:      return 'Decreases adventure time by 25%';
       case Building.Inn:       return 'Increases cost by 25 and restfulness by 3';
-      default:                 return 'Not sure - this probably needs to be updated';
+      default:                 return '';
     }
   }
 
