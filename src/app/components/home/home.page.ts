@@ -7,7 +7,8 @@ import { sample } from 'lodash';
 
 import { GameService } from '../../services/game.service';
 import { GameState } from '../../states';
-import { GameTown, ProspectiveHero, Adventure, GameOption, Building, IGameState, ItemType, ItemPassedOverThreshold } from '../../interfaces';
+import { GameTown, ProspectiveHero, Adventure, GameOption, Building,
+  IGameState, ItemType, ItemPassedOverThreshold } from '../../interfaces';
 import { getCurrentTownFromState, getCurrentTownCanDoAnyAdventures } from '../../helpers';
 import { environment } from '../../../environments/environment';
 

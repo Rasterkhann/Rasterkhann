@@ -544,8 +544,6 @@ export class GameState {
       town.crystalCurrency[heroRef.job] = town.crystalCurrency[heroRef.job] || 0;
       town.crystalCurrency[heroRef.job] += 1;
 
-      console.log(town.crystalCurrency)
-
       return state;
     });
 
