@@ -540,7 +540,6 @@ export class GameState {
       town.stats[TownStat.Levels][heroRef.job] += BigInt(getCurrentStat(heroRef, HeroStat.LVL));
       town.stats[TownStat.Retires][heroRef.job] += 1n;
 
-      town.crystalCurrency = town.crystalCurrency || {};
       town.crystalCurrency[heroRef.job] = town.crystalCurrency[heroRef.job] || 0;
       town.crystalCurrency[heroRef.job] += 1;
 
@@ -553,15 +552,14 @@ export class GameState {
   @Action(DismissHero)
   @ImmutableContext()
   dismissHero({ setState }: StateContext<IGameState>, { heroId }: DismissHero): void {
+    this.store.dispatch(new HeroStopOddJob(heroId)).subscribe(() => {
+      setState((state: IGameState) => {
+        state.towns[state.currentTown].recruitedHeroes = state.towns[state.currentTown].recruitedHeroes
+          .filter(x => x.uuid !== heroId);
+        this.removeHero$.next(heroId);
 
-    this.store.dispatch(new HeroStopOddJob(heroId));
-
-    setState((state: IGameState) => {
-      state.towns[state.currentTown].recruitedHeroes = state.towns[state.currentTown].recruitedHeroes
-        .filter(x => x.uuid !== heroId);
-      this.removeHero$.next(heroId);
-
-      return state;
+        return state;
+      });
     });
   }
 

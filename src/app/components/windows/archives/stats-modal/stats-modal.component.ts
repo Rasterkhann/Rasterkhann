@@ -16,11 +16,12 @@ export class TownStatsModalComponent implements OnInit {
   @Select(GameState.currentTown) currentTown$: Observable<GameTown>;
 
   public headers: Record<TownStat, string> = {
-    [TownStat.Adventures]: 'Adventures Completed',
-    [TownStat.Encounters]: 'Encounters Completed',
-    [TownStat.Gold]: 'Gold Earned',
-    [TownStat.Levels]: 'Retired Level Total',
-    [TownStat.Retires]: 'Retirements'
+    [TownStat.Adventures]:    'Adventures Won',
+    [TownStat.Encounters]:    'Encounters Won',
+    [TownStat.Gold]:          'Gold Earned',
+    [TownStat.Levels]:        'Retired Level Total',
+    [TownStat.Retires]:       'Retirements',
+    [TownStat.CrystalsSpent]: 'Job Crystals Spent'
   };
 
   constructor(private modal: ModalController) { }
@@ -33,6 +34,10 @@ export class TownStatsModalComponent implements OnInit {
 
   getHeader(header: TownStat): string {
     return this.headers[header];
+  }
+
+  sumSection(section: Record<string, bigint>): bigint {
+    return Object.values(section).reduce((prev, cur) => prev + cur, 0n);
   }
 
 }

@@ -9,7 +9,8 @@ export enum TownStat {
   Adventures = 'adventures',
   Encounters = 'encounters',
   Levels = 'levels',
-  Gold = 'gold'
+  Gold = 'gold',
+  CrystalsSpent = 'crystals'
 }
 
 export interface NewsItem {

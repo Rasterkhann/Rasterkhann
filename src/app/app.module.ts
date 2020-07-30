@@ -20,7 +20,7 @@ import { environment } from '../environments/environment';
 import { migrations } from './migrations';
 import { GameState } from './states';
 import { beforeSerialize, afterDeserialize } from './helpers';
-import { GameLoop, GainGold, HeroGainGold, HeroGainEXP } from './actions';
+import { GameLoop, GainGold, HeroGainGold, HeroGainEXP, HeroSetLocation, HeroSetDestination, ChooseInfo } from './actions';
 
 export class FilesystemStorageEngine implements StorageEngine {
 
@@ -86,7 +86,9 @@ const imports = [
     filter: action => {
       const ignoreActions: any = {
         [GameLoop.type]: true, [GainGold.type]: true,
-        [HeroGainEXP.type]: true, [HeroGainGold.type]: true
+        [HeroGainEXP.type]: true, [HeroGainGold.type]: true,
+        [HeroSetLocation.type]: true, [HeroSetDestination.type]: true,
+        [ChooseInfo.type]: true
       };
       const actionType: string = getActionTypeFromInstance(action) as string;
       return !ignoreActions[actionType];

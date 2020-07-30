@@ -1,4 +1,4 @@
-import { Building, IGameState, ItemType, TownStat } from '../interfaces';
+import { Building, IGameState, ItemType, TownStat, HeroJob } from '../interfaces';
 import { createBuildingAtLevel, createStatBlock } from '../helpers';
 
 export const migrations = [
@@ -150,12 +150,34 @@ export const migrations = [
 
       console.log('Setting default town stats records...');
       state.towns.Rasterkhann.stats = state.towns.Rasterkhann.stats || {
-        [TownStat.Adventures]: createStatBlock(),
-        [TownStat.Encounters]: createStatBlock(),
-        [TownStat.Gold]: createStatBlock(),
-        [TownStat.Levels]: createStatBlock(),
-        [TownStat.Retires]: createStatBlock()
+        [TownStat.Adventures]:    createStatBlock(),
+        [TownStat.Encounters]:    createStatBlock(),
+        [TownStat.Gold]:          createStatBlock(),
+        [TownStat.Levels]:        createStatBlock(),
+        [TownStat.Retires]:       createStatBlock(),
+        [TownStat.CrystalsSpent]: createStatBlock()
       };
+
+      console.log('Setting new town stat...');
+      state.towns.Rasterkhann.stats.crystals = state.towns.Rasterkhann.stats.crystals || createStatBlock();
+
+      console.log('Setting crystal currency...');
+      state.towns.Rasterkhann.crystalCurrency = state.towns.Rasterkhann.crystalCurrency || {};
+
+      console.log('Resetting crystal currency...');
+      Object.keys(state.towns.Rasterkhann.stats.retires).forEach((job: HeroJob) => {
+        state.towns.Rasterkhann.crystalCurrency[job] = Number(state.towns.Rasterkhann.stats.retires[job]);
+      });
+
+      console.log('Fixing buildings with stale worker refs (again)...');
+      Object.values(state.towns.Rasterkhann.buildings).forEach(b => {
+        if (!b.currentWorkerId) { return; }
+
+        const heroRef = state.towns.Rasterkhann.recruitedHeroes.find(h => h.uuid === b.currentWorkerId);
+        if (!heroRef) {
+          b.currentWorkerId = null;
+        }
+      });
 
       return state;
     }

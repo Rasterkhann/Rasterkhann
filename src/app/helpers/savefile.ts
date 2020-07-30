@@ -164,7 +164,8 @@ export function createBasicTown(name: string): GameTown {
       [TownStat.Encounters]:    createStatBlock(),
       [TownStat.Gold]:          createStatBlock(),
       [TownStat.Levels]:        createStatBlock(),
-      [TownStat.Retires]:       createStatBlock()
+      [TownStat.Retires]:       createStatBlock(),
+      [TownStat.CrystalsSpent]: createStatBlock()
     },
 
     crystalCurrency: {

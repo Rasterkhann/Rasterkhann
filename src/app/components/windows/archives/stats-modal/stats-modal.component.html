@@ -15,7 +15,12 @@
   <ng-container *ngIf="currentTown$ | async as town">
     <ion-list>
       <ng-container *ngFor="let stat of town.stats | keyvalue">
-        <ion-list-header>{{ getHeader(stat.key) }}</ion-list-header>
+        <ion-list-header class="item-header">
+          <ion-row>
+            <ion-col>{{ getHeader(stat.key) }}</ion-col>
+            <ion-col class="ion-text-right ion-padding-end">{{ (sumSection(stat.value) || 0) | bignum }}</ion-col>
+          </ion-row>
+        </ion-list-header>
 
         <ng-container *ngFor="let substat of stat.value | keyvalue">
           <ion-item>
