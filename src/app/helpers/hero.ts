@@ -227,18 +227,6 @@ export function generateHero(town: IGameTown, level?: number): Hero {
     return trait;
   };
 
-  // make sure heroes have at least a base of stats when they get ruined by traits
-  const validateHeroStats = () => {
-    ensureHeroStatValue(hero, HeroStat.LVL,  1);
-    ensureHeroStatValue(hero, HeroStat.ATK,  1);
-    ensureHeroStatValue(hero, HeroStat.DEF,  1);
-    ensureHeroStatValue(hero, HeroStat.HP,   50);
-    ensureHeroStatValue(hero, HeroStat.SP,   10);
-    ensureHeroStatValue(hero, HeroStat.STA,  10);
-    ensureHeroStatValue(hero, HeroStat.GOLD, 0);
-    ensureHeroStatValue(hero, HeroStat.EXP,  100);
-  };
-
   // pick traits
   if (numTraits > 1) {
     for (let i = 0; i < numTraits - 1; i++) {
@@ -298,34 +286,60 @@ export function generateHero(town: IGameTown, level?: number): Hero {
     }
   };
 
+  // make sure heroes have at least a base of stats when they get ruined by traits
+  const validateHeroStats = () => {
+    ensureHeroStatValue(hero, HeroStat.LVL,  1);
+    ensureHeroStatValue(hero, HeroStat.ATK,  1);
+    ensureHeroStatValue(hero, HeroStat.DEF,  1);
+    ensureHeroStatValue(hero, HeroStat.HP,   50);
+    ensureHeroStatValue(hero, HeroStat.SP,   10);
+    ensureHeroStatValue(hero, HeroStat.STA,  10);
+    ensureHeroStatValue(hero, HeroStat.GOLD, 0);
+    ensureHeroStatValue(hero, HeroStat.EXP,  100);
+  };
+
   // make sure heroes have at least a base of stats before they get ruined by traits
   validateHeroStats();
-
-  const baseLevelupStats = getZeroStatBlock();
 
   // do onSpawn & levelUp for all traits
   traits.forEach(trait => {
     const traitEff: TraitEffect = TraitEffects[trait];
-    if (!traitEff.triggers || !traitEff.triggers[TriggerType.Spawn]) { return; }
+    if (!traitEff.triggers) { return; }
 
     // onspawn if possible
-    if (traitEff.triggers[TriggerType.Spawn]) {
-      (traitEff.triggers[TriggerType.Spawn] || noop)({ hero });
-    }
-
-    // levelup if possible; final traits will be ignored though. only +/- traits really are considered here.
-    if (traitEff.triggers[TriggerType.LevelUp]) {
-      for (let i = 0; i < heroLevel; i++) {
-        (traitEff.triggers[TriggerType.LevelUp] || noop)({ hero, statBlock: baseLevelupStats });
-      }
-    }
+    (traitEff.triggers[TriggerType.Spawn] || noop)({ hero });
   });
+
+  // do levelUp for all traits
+  for (let i = 0; i < heroLevel; i++) {
+    const baseLevelupStats = getZeroStatBlock();
+
+    traits.forEach(trait => {
+      const traitEff: TraitEffect = TraitEffects[trait];
+      if (!traitEff.triggers) { return; }
+
+      // levelup if possible; final traits will be ignored though. only +/- traits really are considered here.
+      console.log('level', i, JSON.stringify(baseLevelupStats));
+      (traitEff.triggers[TriggerType.LevelUp] || noop)({ hero, statBlock: baseLevelupStats });
+    });
+
+    Object.keys(hero.stats).forEach((stat: HeroStat) => {
+      hero.stats[stat] = Math.floor(hero.stats[stat] + baseLevelupStats[stat]);
+    });
+    console.log(hero.name, baseLevelupStats, heroLevel);
+  }
+
+
+  /*
+  Object.keys(hero.stats).forEach((stat: HeroStat) => {
+    hero.stats[stat] = Math.floor(hero.stats[stat] + baseLevelupStats[stat]);
+  });
+  */
 
   // make sure heroes have at least a base of stats after they get ruined by traits
   validateHeroStats();
 
   Object.keys(hero.stats).forEach((stat: HeroStat) => {
-    hero.stats[stat] = Math.floor(hero.stats[stat] + baseLevelupStats[stat]);
     hero.currentStats[stat] = hero.stats[stat];
   });
 
