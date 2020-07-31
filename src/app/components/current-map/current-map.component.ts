@@ -8,7 +8,7 @@ import { visibleBuildingFeatures } from '../../helpers';
 import { GameTown, Building, Hero } from '../../interfaces';
 import { GameService } from '../../services/game.service';
 import { GameState } from '../../states';
-import { sample, debounce } from 'lodash';
+import { sample } from 'lodash';
 import { HeroSetDestination, HeroSetLocation } from '../../actions';
 
 const PIXI = (window as any).PIXI;
