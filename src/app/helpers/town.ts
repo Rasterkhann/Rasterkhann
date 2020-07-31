@@ -2,7 +2,7 @@
 import { IGameState, GameTown, Hero, ProspectiveHero, Building, Adventure, ItemType, HeroItem } from '../interfaces';
 import { calculateMaxActiveAdventures, tickAdventure } from './adventure';
 import { canHeroGoOnAdventure } from './hero';
-import { doesTownHaveFeature } from './global';
+import { doesTownHaveFeature, numAllocatedToBuilding } from './global';
 
 export function getCurrentTownFromState(state: IGameState): GameTown {
   return { name: state.currentTown, ...state.towns[state.currentTown] };
@@ -41,7 +41,9 @@ export function calculateGoldGain(state: IGameState): bigint {
   if (doesTownHaveFeature(town, 'Another Child'))   { goldMultiplier += 1n; }
   if (doesTownHaveFeature(town, 'Grown Children'))  { goldMultiplier += 2n; }
 
-  return (BigInt(town.buildings[Building.House].level) * goldMultiplier) + town.goldPerTick;
+  const bonus = numAllocatedToBuilding(town, Building.House);
+
+  return (BigInt(town.buildings[Building.House].level) * goldMultiplier) + town.goldPerTick + BigInt(bonus * 5);
 }
 
 export function getCurrentTownRecruitedHeroes(state: IGameState): Hero[] {

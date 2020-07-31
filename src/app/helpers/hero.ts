@@ -8,8 +8,8 @@ import { Trait, HeroJob, GameTown, Hero, HeroStat, TriggerType, TraitEffect,
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
-import { filteredUnlocksEarnedByTown, doesTownHaveFeature, getCurrentStat, doesHeroHaveTrait } from './global';
-import { getLibraryTraitModifier } from './library';
+import { filteredUnlocksEarnedByTown, doesTownHaveFeature, getCurrentStat, doesHeroHaveTrait, numAllocatedToBuilding } from './global';
+import { getLibraryBadTraitModifier, getLibraryGoodTraitModifier } from './library';
 import { addItemStats, removeItemStats } from './durability';
 
 export function calculateMaxHeldWeapons(town: GameTown, hero: Hero): number {
@@ -98,6 +98,8 @@ export function calculateRestingRate(town: GameTown): number {
   if (doesTownHaveFeature(town, 'Restful Sleep'))   { baseRate += 1; }
   if (doesTownHaveFeature(town, 'Blissful Sleep'))  { baseRate += 2; }
 
+  baseRate += numAllocatedToBuilding(town, Building.Inn);
+
   return baseRate;
 }
 
@@ -109,6 +111,8 @@ export function calculateRestingCost(town: GameTown): number {
   if (town.buildings[Building.Inn].currentWorkerId) { baseRate += 25; }
   if (doesTownHaveFeature(town, 'Restful Sleep'))   { baseRate += 50; }
   if (doesTownHaveFeature(town, 'Blissful Sleep'))  { baseRate += 100; }
+
+  baseRate += numAllocatedToBuilding(town, Building.Inn) * 15;
 
   return baseRate;
 }
@@ -215,8 +219,13 @@ export function generateHero(town: GameTown, level?: number): Hero {
 
   const jobStatic: HeroJobStatic = JobEffects[job];
 
-  const ignoreChance = getLibraryTraitModifier(town);
+  const ignoreChance = getLibraryBadTraitModifier(town);
+  const overrideChance = getLibraryGoodTraitModifier(town);
 
+  const earlyTraits = allTraits.filter(t => TraitEffects[t].priority !== TraitPriority.Last);
+  const lastTraits = allTraits.filter(t => TraitEffects[t].priority === TraitPriority.Last);
+
+  // ignore bad traits sometimes (library)
   const pickTraitFromList = (traitList: Trait[]) => {
     let trait: Trait | null = null;
     do {
@@ -230,24 +239,51 @@ export function generateHero(town: GameTown, level?: number): Hero {
   // pick traits
   if (numTraits > 1) {
     for (let i = 0; i < numTraits - 1; i++) {
-      traits.push(pickTraitFromList(allTraits.filter(t => TraitEffects[t].priority !== TraitPriority.Last)));
+      traits.push(pickTraitFromList(earlyTraits));
     }
   }
 
-  traits.push(pickTraitFromList(allTraits.filter(t => TraitEffects[t].priority === TraitPriority.Last)));
+  traits.push(pickTraitFromList(lastTraits));
+
+  // do trait good overides if possible (library)
+  if (random(0, 100) <= overrideChance) {
+    let hasReplacedTrait = false;
+
+    for (let i = 0; i < traits.length; i++) {
+      const data = TraitEffects[traits[i]];
+      if (data.valueProp > 0 || hasReplacedTrait) { continue; }
+
+      let replaceTrait: Trait | undefined;
+
+      if (i === traits.length - 1) { replaceTrait = sample(lastTraits.filter(t => TraitEffects[t].valueProp > 0)); }
+      else                         { replaceTrait = sample(earlyTraits.filter(t => TraitEffects[t].valueProp > 0)); }
+
+      if (replaceTrait) {
+        traits[i] = replaceTrait;
+        hasReplacedTrait = true;
+      }
+    }
+  }
 
   // pick a hero level
   const heroLevel = random(1, generateLevel);
 
-  const stats: Partial<Record<HeroStat, number>> = {
-    [HeroStat.LVL]: heroLevel
-  };
+  const stats: Record<HeroStat, number> = getZeroStatBlock();
+
+  stats[HeroStat.LVL] = heroLevel;
 
   // create the random stat block
   Object.values(HeroStat).forEach(stat => {
     if (stats[stat]) { return; }
     stats[stat] = random(1, heroLevel * jobStatic.statGrowth[stat](heroLevel) * jobStatic.statBaseMultiplier[stat]);
   });
+
+  // boost stats with workers
+  const numWorkers = numAllocatedToBuilding(town, Building.GuildHall);
+  for (let i = 0; i < numWorkers; i++) {
+    const stat = sample([HeroStat.ATK, HeroStat.DEF, HeroStat.HP, HeroStat.SP, HeroStat.STA]) as HeroStat;
+    stats[stat] += 3;
+  }
 
   // create the hero
   const hero: Hero = {

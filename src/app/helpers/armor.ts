@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid';
 
 import { GameTown, HeroStat, ItemType, ArmorElement, ArmorSubType, Building, HeroArmor } from '../interfaces';
 import { getZeroStatBlock } from './hero';
-import { calculateItemCost, calculateItemDurability, doesTownHaveFeature } from './global';
+import { calculateItemCost, calculateItemDurability, doesTownHaveFeature, numAllocatedToBuilding } from './global';
 import { chooseRandomItemTrait } from './itemtraits';
 
 const ARMOR_BASIC_SPRITE_COLOR_OFFSET: Partial<Record<ArmorElement, number>> = {
@@ -177,6 +177,21 @@ export function generateArmor(town: GameTown): HeroArmor {
     .map((stat: HeroStat) => ({ stat, value: boostStatHash[stat] }))
     .filter(({ value }) => value !== 0)
     .map(obj => ({ ...obj, value: obj.value + random(1, town.buildings[Building.Armory].level) }));
+
+  // boost with workers
+  const totalWorkers = numAllocatedToBuilding(town, Building.Armory);
+  for (let i = 0; i < totalWorkers; i++) {
+    const stat = sample([HeroStat.ATK, HeroStat.DEF, HeroStat.HP, HeroStat.SP, HeroStat.STA]);
+    if (!stat) { continue; }
+
+    let boostStatRef = boostStats.find(s => s.stat === stat);
+    if (!boostStatRef) {
+      boostStatRef = { stat, value: 0 };
+      boostStats.push(boostStatRef);
+    }
+
+    boostStatRef.value += 1;
+  }
 
   let cost = calculateItemCost(town, boostStats) * 10n;
   if (cost < 0n) { cost = 1000n; }

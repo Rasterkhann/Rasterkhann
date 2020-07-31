@@ -4,6 +4,7 @@ import { getTownHeroByUUID, checkHeroLevelUp, calculateMaxHeldPotions,
   calculateMaxHeldWeapons, canEquipWeapon, calculateMaxHeldArmors, canEquipArmor } from './hero';
 import { doCombat, getTownExpMultiplier, getTownGoldMultiplier, canTeamFight } from './combat';
 import { addCombatLogToTown, doesTownHaveFeature, formatNumber, giveHeroEXP, giveHeroGold, increaseTrackedStat, increaseTownStat } from './global';
+import { getBazaarLoanPercent } from './bazaar';
 
 export function formatDifficulty(difficulty: AdventureDifficulty): string {
   switch (difficulty) {
@@ -62,7 +63,10 @@ export function calculateAvailableDifficulties(town: GameTown): AdventureDifficu
 }
 
 export function heroBuyItemsBeforeAdventure(town: GameTown, hero: Hero): HeroGear {
+  const discountMultiplier = 1 - (getBazaarLoanPercent(town) / 100);
   let totalCost = 0n;
+
+  const totalItemCost = (item: HeroItem) => BigInt(Math.floor(Number(item.cost) * discountMultiplier));
 
   // buy potions
   const potionsHeroWants: HeroItem[] = [];
@@ -72,8 +76,9 @@ export function heroBuyItemsBeforeAdventure(town: GameTown, hero: Hero): HeroGea
     let boughtPotions = 0;
 
     town.itemsForSale[ItemType.Potion].forEach(item => {
-      if (totalCost + item.cost > hero.currentStats[HeroStat.GOLD] || boughtPotions >= itemsToBuy) { return; }
-      totalCost += item.cost;
+      const itemCost = totalItemCost(item);
+      if (totalCost + itemCost > hero.currentStats[HeroStat.GOLD] || boughtPotions >= itemsToBuy) { return; }
+      totalCost += itemCost;
       potionsHeroWants.push(item);
       boughtPotions++;
     });
@@ -84,18 +89,19 @@ export function heroBuyItemsBeforeAdventure(town: GameTown, hero: Hero): HeroGea
   const boughtWeapons: HeroWeapon[] = [];
   for (let i = 0; i < maxWeapons; i++) {
     town.itemsForSale[ItemType.Weapon].forEach((item: HeroWeapon) => {
+      const itemCost = totalItemCost(item);
       if (boughtWeapons[i] || boughtWeapons.map(x => x.uuid).includes(item.uuid)) { return; }
-      if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
+      if (totalCost + itemCost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
       if (!canEquipWeapon(town, hero, item)) {
         item.timesPassedOver++;
         return;
       }
-      if (hero.gear[ItemType.Weapon][i] && hero.gear[ItemType.Weapon][i].cost > item.cost) {
+      if (hero.gear[ItemType.Weapon][i] && hero.gear[ItemType.Weapon][i].cost > itemCost) {
         item.timesPassedOver++;
         return;
       }
 
-      totalCost += item.cost;
+      totalCost += itemCost;
       boughtWeapons[i] = item;
     });
   }
@@ -105,18 +111,19 @@ export function heroBuyItemsBeforeAdventure(town: GameTown, hero: Hero): HeroGea
   const boughtArmors: HeroArmor[] = [];
   for (let i = 0; i < maxArmors; i++) {
     town.itemsForSale[ItemType.Armor].forEach((item: HeroArmor) => {
+      const itemCost = totalItemCost(item);
       if (boughtArmors[i] || boughtArmors.map(x => x.uuid).includes(item.uuid)) { return; }
-      if (totalCost + item.cost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
+      if (totalCost + itemCost > BigInt(hero.currentStats[HeroStat.GOLD])) { return; }
       if (!canEquipArmor(town, hero, item)) {
         item.timesPassedOver++;
         return;
       }
-      if (hero.gear[ItemType.Armor][i] && hero.gear[ItemType.Armor][i].cost > item.cost) {
+      if (hero.gear[ItemType.Armor][i] && hero.gear[ItemType.Armor][i].cost > itemCost) {
         item.timesPassedOver++;
         return;
       }
 
-      totalCost += item.cost;
+      totalCost += itemCost;
       boughtArmors[i] = item;
     });
   }

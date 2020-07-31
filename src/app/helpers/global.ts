@@ -11,6 +11,10 @@ export function formatNumber(value: bigint | number): string {
   return NumberFormat.format(value.toString(), { flavor: 'short', sigfigs: 3 });
 }
 
+export function numAllocatedToBuilding(town: GameTown, building: Building): number {
+  return town.buildings[building].numRetiredAllocated || 0;
+}
+
 export function calculateGlobalItemCostMultiplier(town: GameTown): number {
   let multiplier = 1;
 

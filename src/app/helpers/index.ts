@@ -1,6 +1,7 @@
 
 export * from './adventure';
 export * from './armor';
+export * from './bazaar';
 export * from './building';
 export * from './combat';
 export * from './durability';

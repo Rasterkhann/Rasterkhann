@@ -30,7 +30,7 @@ import {
   calculateSecondsUntilNextItem,
   heroBuyItemsBeforeAdventure, unequipItem, equipItem,
   getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp,
-  getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber, calculateRepairRate, calculateRepairCost, increaseDurability
+  getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber, calculateRepairRate, calculateRepairCost, increaseDurability, getBazaarLoanPercent
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -651,8 +651,10 @@ export class GameState {
           });
 
           const totalEarned: bigint = BigInt(sum(allBoughtItems.map(item => item.cost)));
+          const discountMultiplier = 1 - (getBazaarLoanPercent(town) / 100);
+          const totalSpent = Math.floor(Number(totalEarned) * discountMultiplier);
 
-          town.recruitedHeroes[i].currentStats[HeroStat.GOLD] -= Number(totalEarned);
+          town.recruitedHeroes[i].currentStats[HeroStat.GOLD] -= Number(totalSpent);
           totalEarnedFromAdventurers += totalEarned;
 
           if (allBoughtItems.length > 0) {

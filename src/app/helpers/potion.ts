@@ -3,7 +3,7 @@ import { random, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { HeroItem, GameTown, HeroStat, ItemTier, ItemType, Building } from '../interfaces';
-import { calculateItemCost, doesTownHaveFeature } from './global';
+import { calculateItemCost, doesTownHaveFeature, numAllocatedToBuilding } from './global';
 
 
 // potion functions
@@ -99,6 +99,15 @@ export function generatePotion(town: GameTown): HeroItem {
 
     return { stat, value };
   });
+
+  // boost with workers
+  const totalWorkers = numAllocatedToBuilding(town, Building.Alchemist);
+  for (let i = 0; i < totalWorkers; i++) {
+    const stat = sample(boostStats);
+    if (!stat) { continue; }
+
+    stat.value += 1;
+  }
 
   // give it a name
   let name = `${statToPotion[chosenStatCombo[0]]} Potion ${itemTier}`;

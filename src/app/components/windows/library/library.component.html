@@ -13,8 +13,12 @@
     Max Traits For Hero: {{ maxTraits }}
   </ion-item>
 
-  <ion-item>
-    Bad Trait Ignore Chance: {{ traitBonus | number:'1.0-3' }}%
+  <ion-item *ngIf="traitBadBonus > 0">
+    Bad Trait Ignore Chance: {{ traitBadBonus | number:'1.0-3' }}%
+  </ion-item>
+
+  <ion-item *ngIf="traitGoodBonus > 0">
+    Good Trait Override Chance: {{ traitGoodBonus | number:'1.0-3' }}%
   </ion-item>
 </ion-list>
 

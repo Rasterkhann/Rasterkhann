@@ -9,6 +9,7 @@ import { GameState } from '../../../../states';
 import { GameTown, Building, TownStat } from '../../../../interfaces';
 import { GameService } from '../../../../services/game.service';
 import { BuildingData } from '../../../../static';
+import { numAllocatedToBuilding } from '../../../../helpers';
 
 @Component({
   selector: 'app-allocation-modal',
@@ -79,7 +80,7 @@ export class WorkerAllocationModalComponent implements OnInit, OnDestroy {
   getTotalWorkersAllocated(): number {
     const town = this.town;
     return Object.keys(town.buildings)
-      .map((b: Building) => town.buildings[b].numRetiredAllocated || 0)
+      .map((b: Building) => numAllocatedToBuilding(town, b))
       .reduce((prev, cur) => prev + cur, 0);
   }
 
@@ -93,13 +94,13 @@ export class WorkerAllocationModalComponent implements OnInit, OnDestroy {
     const town = this.town;
     return Object.keys(town.buildings)
       .filter(b => b !== this.buildingId)
-      .map((b: Building) => town.buildings[b].numRetiredAllocated || 0)
+      .map((b: Building) => numAllocatedToBuilding(town, b))
       .reduce((prev, cur) => prev + cur, 0);
   }
 
   getTotalWorkersAllocatedHere(): number {
     const town = this.town;
-    return town.buildings[this.buildingId].numRetiredAllocated || 0;
+    return numAllocatedToBuilding(town, this.buildingId);
   }
 
   allocateAll(): void {

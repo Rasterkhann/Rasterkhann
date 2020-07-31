@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid';
 
 import { GameTown, HeroStat, ItemType, WeaponSubType, WeaponElement, HeroWeapon, HeroAction, Building } from '../interfaces';
 import { ElementActions, SubTypeActions } from '../static';
-import { calculateItemCost, calculateItemDurability, doesTownHaveFeature } from './global';
+import { calculateItemCost, calculateItemDurability, doesTownHaveFeature, numAllocatedToBuilding } from './global';
 import { getZeroStatBlock } from './hero';
 import { chooseRandomItemTrait } from './itemtraits';
 
@@ -128,6 +128,21 @@ export function generateWeapon(town: GameTown): HeroWeapon {
     .map((stat: HeroStat) => ({ stat, value: boostStatHash[stat] }))
     .filter(({ value }) => value !== 0)
     .map(obj => ({ ...obj, value: obj.value + random(1, town.buildings[Building.Armory].level) }));
+
+  // boost with workers
+  const totalWorkers = numAllocatedToBuilding(town, Building.Armory);
+  for (let i = 0; i < totalWorkers; i++) {
+    const stat = sample([HeroStat.ATK, HeroStat.DEF, HeroStat.HP, HeroStat.SP, HeroStat.STA]);
+    if (!stat) { continue; }
+
+    let boostStatRef = boostStats.find(s => s.stat === stat);
+    if (!boostStatRef) {
+      boostStatRef = { stat, value: 0 };
+      boostStats.push(boostStatRef);
+    }
+
+    boostStatRef.value += 1;
+  }
 
   let cost = calculateItemCost(town, boostStats) * 10n;
   if (cost < 0n) { cost = 1000n; }

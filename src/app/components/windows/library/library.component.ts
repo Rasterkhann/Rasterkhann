@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GameTown } from '../../../interfaces';
-import { calculateMaxNumberOfTraits, getLibraryTraitModifier } from '../../../helpers';
+import { calculateMaxNumberOfTraits, getLibraryBadTraitModifier, getLibraryGoodTraitModifier } from '../../../helpers';
 
 @Component({
   selector: 'app-library',
@@ -15,8 +15,12 @@ export class LibraryComponent implements OnInit {
     return calculateMaxNumberOfTraits(this.town);
   }
 
-  public get traitBonus(): number {
-    return getLibraryTraitModifier(this.town);
+  public get traitBadBonus(): number {
+    return getLibraryBadTraitModifier(this.town);
+  }
+
+  public get traitGoodBonus(): number {
+    return getLibraryGoodTraitModifier(this.town);
   }
 
   constructor() { }

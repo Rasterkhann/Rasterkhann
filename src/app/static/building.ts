@@ -47,7 +47,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.House]: {
     name: 'House',
     description: 'Acquire more citizens to increase your gold gain. Upgrades increase gold gained.',
-    workerHelp: 'The House will do something with allocated workers.',
+    workerHelp: 'Workers placed at the House will increase your gold gain per second by 5 per worker.',
     upgradeTime: (level) => level * 5,
     levelCost: (x) => BigInt(Math.floor((15 * x) + (2 * (1.25 ** x)))),
     features: featuresArrayToHash(HouseFeatures)
@@ -56,7 +56,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.GuildHall]: {
     name: 'Guild Hall',
     description: 'Recruit heroes to your cause. Upgrades increase level of recruited heroes.',
-    workerHelp: 'The Guild Hall will do something with allocated workers.',
+    workerHelp: 'Workers allocated to the Guild Hall will increase generated hero stats by 3 per worker.',
     upgradeTime: (level) => level * 20,
     levelCost: (x) => BigInt(Math.floor((500 * x) + (1.5 * (1.3 ** x)))),
     features: featuresArrayToHash(GuildHallFeatures)
@@ -65,7 +65,8 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.Armory]: {
     name: 'Armory',
     description: 'Create better gear for your heroes. Upgrades increase stat value of gear.',
-    workerHelp: 'The Armory will do something with allocated workers.',
+    workerHelp: `Workers allocated to the Armory will increase weapon/armor stats by 1 per worker.
+    This can also add new stats to the item.`,
     requires: {
       [Building.Bazaar]: 1,
       [Building.GuildHall]: 10
@@ -78,7 +79,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.Alchemist]: {
     name: 'Alchemist',
     description: 'Create better potions for your heroes. Upgrades increase stat values of potions.',
-    workerHelp: 'The Alchemist will do something with allocated workers.',
+    workerHelp: 'Workers allocated to the Alchemist will increase potion stats by 1 per worker.',
     requires: {
       [Building.Bazaar]: 1,
       [Building.GuildHall]: 20
@@ -91,7 +92,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.Inn]: {
     name: 'Inn',
     description: 'Allow your heroes to regain their stamina more quickly after an adventure. Upgrades increase cost for hero rest.',
-    workerHelp: 'The Inn will do something with allocated workers.',
+    workerHelp: 'Workers allocated to the Inn increase the resting rate of heroes by 1 per worker as well as the cost per rest tick by 5 per worker.',
     requires: {
       [Building.GuildHall]: 5
     },
@@ -103,7 +104,8 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.Bazaar]: {
     name: 'Bazaar',
     description: 'Allow your heroes to buy items before an adventure. Upgrades increase the cost of items sold.',
-    workerHelp: 'The Bazaar will do something with allocated workers.',
+    workerHelp: `Workers at the Bazaar collectively work to get loans for heroes that can\'t afford items, lowering the effective cost of items.
+    The Town still gets full purchase price of an item.`,
     requires: {
       [Building.GuildHall]: 1
     },
@@ -115,7 +117,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.Cave]: {
     name: 'Cave of Adventure',
     description: 'Allow your heroes to go on adventures. Upgrades increase the level of adventures found.',
-    workerHelp: 'The Cave will do something with allocated workers.',
+    workerHelp: 'Workers placed at the Cave will increase the XP and GOLD gain for all heroes by 1% per worker.',
     requires: {
       [Building.GuildHall]: 1
     },
@@ -127,7 +129,8 @@ export const BuildingData: Record<Building, BuildingStatic> = {
   [Building.Library]: {
     name: 'Library',
     description: 'Research new traits and abilities for your heroes. Upgrades unlock new traits.',
-    workerHelp: 'The Library will do something with allocated workers.',
+    workerHelp: `Workers placed at the Library will increase the chance of replacing
+    a bad Trait with a good Trait when rolling new heroes.`,
     requires: {
       [Building.GuildHall]: 5
     },

@@ -13,6 +13,10 @@
     Item Cost Multiplier: {{ costMultiplier * 100 | number }}%
   </ion-item>
 
+  <ion-item *ngIf="loanPercent > 0">
+    Hero Loan Percent: {{ loanPercent | number:'1.0-3' }}%
+  </ion-item>
+
   <ng-container *ngFor="let type of itemTypes">
     <ion-item *ngIf="getItems(type).length < getTypeTotal(type)">
       Next {{ type }}:&nbsp;<countdown [config]="{ stopTime: getConstructionType(type), format: 'mm:ss', prettyText: formatPreDuration }"></countdown>

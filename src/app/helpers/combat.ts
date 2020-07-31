@@ -2,29 +2,33 @@
 import { random, sample, sum } from 'lodash';
 
 import { Hero, Adventure, GameTown, HeroStat, HeroActionTargetting,
-  HeroAction, TriggerType, ItemType, CombatLog, Combat, HeroTrackedStat } from '../interfaces';
+  HeroAction, TriggerType, ItemType, CombatLog, Combat, HeroTrackedStat, Building } from '../interfaces';
 import { generateMonster, checkHeroLevelUp } from './hero';
 import { JobEffects } from '../static';
 import { addCombatLogToTown, doesTownHaveFeature, formatNumber,
-  getCurrentStat, giveHeroEXP, giveHeroGold, increaseTrackedStat, getHeroTag } from './global';
+  getCurrentStat, giveHeroEXP, giveHeroGold, increaseTrackedStat, getHeroTag, numAllocatedToBuilding } from './global';
 import { getActionsForWeapon } from './weapon';
 
 export function getTownExpMultiplier(town: GameTown): number {
   let base = 1.1;
 
-  if (doesTownHaveFeature(town, 'Monster Experience I'))   { base += 0.1; }
-  if (doesTownHaveFeature(town, 'Monster Experience II'))  { base += 0.1; }
-  if (doesTownHaveFeature(town, 'Monster Experience III')) { base += 0.1; }
+  if (doesTownHaveFeature(town, 'Monster Experience I'))   { base += 0.3; }
+  if (doesTownHaveFeature(town, 'Monster Experience II'))  { base += 0.3; }
+  if (doesTownHaveFeature(town, 'Monster Experience III')) { base += 0.3; }
+
+  base += numAllocatedToBuilding(town, Building.Cave) * 0.01;
 
   return base;
 }
 
 export function getTownGoldMultiplier(town: GameTown): number {
-  let base = 1.3;
+  let base = 1.1;
 
-  if (doesTownHaveFeature(town, 'Monster Gold I'))   { base += 0.15; }
-  if (doesTownHaveFeature(town, 'Monster Gold II'))  { base += 0.15; }
-  if (doesTownHaveFeature(town, 'Monster Gold III')) { base += 0.15; }
+  if (doesTownHaveFeature(town, 'Monster Gold I'))   { base += 0.3; }
+  if (doesTownHaveFeature(town, 'Monster Gold II'))  { base += 0.3; }
+  if (doesTownHaveFeature(town, 'Monster Gold III')) { base += 0.3; }
+
+  base += numAllocatedToBuilding(town, Building.Cave) * 0.01;
 
   return base;
 }

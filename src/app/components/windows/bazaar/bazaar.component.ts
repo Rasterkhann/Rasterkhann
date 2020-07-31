@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { GameTown, ItemType, HeroItem, Building } from '../../../interfaces';
-import { calculateGlobalItemCostMultiplier, calculateMaxCreatableItems } from '../../../helpers';
+import { calculateGlobalItemCostMultiplier, calculateMaxCreatableItems, getBazaarLoanPercent } from '../../../helpers';
 import { ItemsModalComponent } from './items-modal/items-modal.component';
 import { Store } from '@ngxs/store';
 import { ChooseInfo } from '../../../actions';
@@ -19,6 +19,10 @@ export class BazaarComponent implements OnInit, OnChanges {
 
   public get costMultiplier(): number {
     return calculateGlobalItemCostMultiplier(this.town);
+  }
+
+  public get loanPercent(): number {
+    return getBazaarLoanPercent(this.town);
   }
 
   public get itemTypes(): ItemType[] {
