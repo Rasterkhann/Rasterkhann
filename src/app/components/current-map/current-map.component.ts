@@ -8,7 +8,7 @@ import { visibleBuildingFeatures } from '../../helpers';
 import { GameTown, Building, Hero } from '../../interfaces';
 import { GameService } from '../../services/game.service';
 import { GameState } from '../../states';
-import { sample } from 'lodash';
+import { sample, debounce } from 'lodash';
 import { HeroSetDestination, HeroSetLocation } from '../../actions';
 
 const PIXI = (window as any).PIXI;
@@ -108,6 +108,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
   private initRenderer(): void {
     PIXI.settings.PRECISION_FRAGMENT = 'highp';
+    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
     PIXI.utils.skipHello();
 
     this.app = new PIXI.Application({
@@ -115,14 +116,13 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
       height: 480,
       resolution: window.devicePixelRatio || 1,
       transparent: true,
-      antialias: false,
-      resizeTo: this.container
+      antialias: false
     });
 
     this.container.nativeElement.appendChild(this.app.view);
 
-    this.app.renderer.view.style.width = '100%';
-    this.app.renderer.view.style.height = '100%';
+    this.app.view.style.width = '100%';
+    this.app.view.style.height = '100%';
 
     this.maps.forEach(map => PIXI.loader.add(map));
     this.sprites.forEach(sprite => PIXI.loader.add(sprite.split('.')[0], `assets/game/hero/${sprite}`));
