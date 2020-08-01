@@ -158,7 +158,9 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   async dismissHero(hero: Hero): Promise<void> {
     const alert = await this.alert.create({
       header: 'Dismiss Hero',
-      message: `Are you sure you want to dismiss ${hero.name}, the level ${hero.stats[HeroStat.LVL]} ${hero.job}?`,
+      message: `Are you sure you want to dismiss ${hero.name}, the level ${hero.stats[HeroStat.LVL]} ${hero.job}?
+
+      ${hero.onAdventure ? 'This hero will be retired upon adventure completion.' : ''}`,
       buttons: [
         {
           text: 'Cancel',
@@ -205,7 +207,9 @@ export class GuildModalComponent implements OnDestroy, OnInit {
       header: 'Retire Hero',
       message: `Are you sure you want to retire ${hero.name}, the level ${hero.stats[HeroStat.LVL]} ${hero.job}?
       You will gain the ability to allocate this hero to a building, increasing that buildings capabilities.
-      You will also gain a Job Crystal to symbolize this heros adventure.`,
+      You will also gain a Job Crystal to symbolize this heros adventure.
+
+      ${hero.onAdventure ? 'This hero will be retired upon adventure completion.' : ''}`,
       buttons: [
         {
           text: 'Cancel',

@@ -9,7 +9,9 @@ import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   StartAdventure, HeroGainEXP, OptionToggle, ScrapItem, RushBuilding, RushBuildingFeature,
   HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding, UnallocateAllFromBuilding,
   HeroQueueDismiss,
-  HeroQueueRetire} from '../actions';
+  HeroQueueRetire,
+  HeroQueueDismissCancel,
+  HeroQueueRetireCancel} from '../actions';
 import { Building, GameTown, IGameState, BuildingFeature, Hero,
   ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem, HeroTrackedStat } from '../interfaces';
 import { doesTownHaveFeature, featureByName, getCurrentStat } from '../helpers';
@@ -265,6 +267,10 @@ export class GameService {
       });
   }
 
+  public cancelHeroDismiss(hero: Hero): void {
+    this.store.dispatch(new HeroQueueDismissCancel(hero.uuid));
+  }
+
   public dismissHero(town: GameTown, hero: Hero): void {
     if (hero.onAdventure) {
       this.store.dispatch(new HeroQueueDismiss(hero.uuid));
@@ -327,6 +333,10 @@ export class GameService {
     }
 
     this.store.dispatch(new HeroRetire(hero.uuid));
+  }
+
+  public cancelHeroRetire(hero: Hero): void {
+    this.store.dispatch(new HeroQueueRetireCancel(hero.uuid));
   }
 
   // worker allocation functions

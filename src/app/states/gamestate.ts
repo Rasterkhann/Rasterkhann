@@ -10,7 +10,7 @@ import {
   HeroRecruit, HeroDismiss, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
   ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation,
   HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding,
-  UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire
+  UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire, HeroQueueDismissCancel, HeroQueueRetireCancel
 } from '../actions';
 import {
   GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat, TownStat
@@ -412,6 +412,34 @@ export class GameState {
         .filter(x => x.hero.uuid !== heroRecruit.uuid);
 
       state.towns[state.currentTown].prospectiveHeroes.push(this.heroCreator.generateProspectiveHero(state.towns[state.currentTown]));
+
+      return state;
+    });
+  }
+
+  @Action(HeroQueueDismissCancel)
+  @ImmutableContext()
+  heroQueueDismissCancel({ setState }: StateContext<IGameState>, { heroId }: HeroQueueDismissCancel): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      heroRef.queueDismissed = false;
+
+      return state;
+    });
+  }
+
+  @Action(HeroQueueRetireCancel)
+  @ImmutableContext()
+  heroQueueRetireCancel({ setState }: StateContext<IGameState>, { heroId }: HeroQueueRetireCancel): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      heroRef.queueRetired = false;
 
       return state;
     });

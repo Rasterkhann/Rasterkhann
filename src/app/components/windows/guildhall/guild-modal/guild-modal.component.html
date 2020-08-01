@@ -58,12 +58,16 @@
       <ion-item color="warning" *ngIf="viewingHero.queueDismissed">
         <ion-label class="ion-text-wrap">
           This hero is queued for dismissal.
+
+          <ion-button slot="end" color="tertiary" (click)="game.cancelHeroDismiss(viewingHero)">Cancel</ion-button>
         </ion-label>
       </ion-item>
 
       <ion-item color="warning" *ngIf="viewingHero.queueRetired">
         <ion-label class="ion-text-wrap">
           This hero is queued for retirement.
+
+          <ion-button slot="end" color="tertiary" (click)="game.cancelHeroRetire(viewingHero)">Cancel</ion-button>
         </ion-label>
       </ion-item>
       

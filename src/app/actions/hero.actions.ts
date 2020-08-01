@@ -21,6 +21,11 @@ export class HeroQueueDismiss {
   constructor(public heroId: string) {}
 }
 
+export class HeroQueueDismissCancel {
+  static readonly type = '[Hero] Cancel Queue Dismiss';
+  constructor(public heroId: string) {}
+}
+
 export class HeroGainEXP {
   static readonly type = '[Hero] Gain EXP';
   constructor(public heroId: string, public exp: number) {}
@@ -58,5 +63,10 @@ export class HeroRetire {
 
 export class HeroQueueRetire {
   static readonly type = '[Hero] Queue Retire';
+  constructor(public heroId: string) {}
+}
+
+export class HeroQueueRetireCancel {
+  static readonly type = '[Hero] Cancel Queue Retire';
   constructor(public heroId: string) {}
 }
