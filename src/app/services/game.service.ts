@@ -5,9 +5,11 @@ import { timer } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
-  UpgradeBuildingFeature, RerollHeroes, RecruitHero, DismissHero, RerollAdventures,
+  UpgradeBuildingFeature, RerollHeroes, HeroRecruit, HeroDismiss, RerollAdventures,
   StartAdventure, HeroGainEXP, OptionToggle, ScrapItem, RushBuilding, RushBuildingFeature,
-  HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding, UnallocateAllFromBuilding } from '../actions';
+  HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding, UnallocateAllFromBuilding,
+  HeroQueueDismiss,
+  HeroQueueRetire} from '../actions';
 import { Building, GameTown, IGameState, BuildingFeature, Hero,
   ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem, HeroTrackedStat } from '../interfaces';
 import { doesTownHaveFeature, featureByName, getCurrentStat } from '../helpers';
@@ -233,7 +235,7 @@ export class GameService {
   public recruitHero(town: GameTown, prosHero: ProspectiveHero): void {
     if (!this.canRecruitHero(town, prosHero)) { return; }
 
-    this.store.dispatch(new RecruitHero(prosHero)).subscribe(() => {
+    this.store.dispatch(new HeroRecruit(prosHero)).subscribe(() => {
       this.store.dispatch(new SpendGold(prosHero.cost));
     });
   }
@@ -264,7 +266,12 @@ export class GameService {
   }
 
   public dismissHero(town: GameTown, hero: Hero): void {
-    this.store.dispatch(new DismissHero(hero.uuid));
+    if (hero.onAdventure) {
+      this.store.dispatch(new HeroQueueDismiss(hero.uuid));
+      return;
+    }
+
+    this.store.dispatch(new HeroDismiss(hero.uuid));
   }
 
   // cave functions
@@ -310,10 +317,15 @@ export class GameService {
 
   // retire functions
   public canRetireHero(hero: Hero): boolean {
-    return !hero.onAdventure && hero.trackedStats[HeroTrackedStat.TotalEncounters] >= 25;
+    return !hero.queueRetired && !hero.queueDismissed && hero.trackedStats[HeroTrackedStat.TotalEncounters] >= 25;
   }
 
   public retireHero(hero: Hero): void {
+    if (hero.onAdventure) {
+      this.store.dispatch(new HeroQueueRetire(hero.uuid));
+      return;
+    }
+
     this.store.dispatch(new HeroRetire(hero.uuid));
   }
 

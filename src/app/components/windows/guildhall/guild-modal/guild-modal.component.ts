@@ -167,7 +167,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
         }, {
           text: 'Yes, Dismiss',
           handler: async () => {
-            if (hero.onAdventure) { return; }
+            if (hero.queueRetired || hero.queueDismissed) { return; }
             this.game.dismissHero(this.town, hero);
             this.viewingHero = null;
           }
@@ -214,6 +214,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
         }, {
           text: 'Yes, Retire',
           handler: async () => {
+            if (hero.queueRetired || hero.queueDismissed) { return; }
             this.game.retireHero(hero);
             this.viewingHero = null;
           }

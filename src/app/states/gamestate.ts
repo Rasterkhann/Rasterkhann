@@ -7,9 +7,10 @@ import { sample, sum, random } from 'lodash';
 import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
   LoadSaveData, UpgradeBuildingFeature, RerollHeroes,
-  RecruitHero, DismissHero, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
+  HeroRecruit, HeroDismiss, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
   ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation,
-  HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding, UnallocateAllFromBuilding
+  HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding,
+  UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire
 } from '../actions';
 import {
   GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat, TownStat
@@ -272,6 +273,9 @@ export class GameState {
     const messages: string[] = [];
     let totalEarned = 0;
 
+    const dismissHeroes: string[] = [];
+    const retireHeroes: string[] = [];
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
@@ -283,6 +287,16 @@ export class GameState {
 
       // rest
       town.recruitedHeroes.forEach(h => {
+        if (!h.onAdventure && h.queueDismissed) {
+          dismissHeroes.push(h.uuid);
+          return;
+        }
+
+        if (!h.onAdventure && h.queueRetired) {
+          retireHeroes.push(h.uuid);
+          return;
+        }
+
         if (h.onAdventure || canHeroGoOnAdventure(h)) { return; }
 
         let heroSpentGold = 0;
@@ -359,6 +373,9 @@ export class GameState {
     Object.keys(oddJobEarned).forEach(heroId => this.store.dispatch(new HeroGainGold(heroId, oddJobEarned[heroId])));
 
     messages.forEach(msg => this.store.dispatch(new NotifyMessage(msg)));
+
+    dismissHeroes.forEach(heroId => this.store.dispatch(new HeroDismiss(heroId)));
+    retireHeroes.forEach(heroId => this.store.dispatch(new HeroRetire(heroId)));
   }
 
   @Action(RerollHeroes)
@@ -379,9 +396,9 @@ export class GameState {
     });
   }
 
-  @Action(RecruitHero)
+  @Action(HeroRecruit)
   @ImmutableContext()
-  recruitHero({ setState }: StateContext<IGameState>, { hero }: RecruitHero): void {
+  recruitHero({ setState }: StateContext<IGameState>, { hero }: HeroRecruit): void {
     setState((state: IGameState) => {
       const heroRecruit = { ...hero.hero };
       heroRecruit.currentStats = { ...heroRecruit.currentStats };
@@ -395,6 +412,34 @@ export class GameState {
         .filter(x => x.hero.uuid !== heroRecruit.uuid);
 
       state.towns[state.currentTown].prospectiveHeroes.push(this.heroCreator.generateProspectiveHero(state.towns[state.currentTown]));
+
+      return state;
+    });
+  }
+
+  @Action(HeroQueueDismiss)
+  @ImmutableContext()
+  heroQueueDismiss({ setState }: StateContext<IGameState>, { heroId }: HeroQueueDismiss): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      heroRef.queueDismissed = true;
+
+      return state;
+    });
+  }
+
+  @Action(HeroQueueRetire)
+  @ImmutableContext()
+  heroQueueRetire({ setState }: StateContext<IGameState>, { heroId }: HeroQueueRetire): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      heroRef.queueRetired = true;
 
       return state;
     });
@@ -550,12 +595,12 @@ export class GameState {
       return state;
     });
 
-    this.store.dispatch(new DismissHero(heroId));
+    this.store.dispatch(new HeroDismiss(heroId));
   }
 
-  @Action(DismissHero)
+  @Action(HeroDismiss)
   @ImmutableContext()
-  dismissHero({ setState }: StateContext<IGameState>, { heroId }: DismissHero): void {
+  dismissHero({ setState }: StateContext<IGameState>, { heroId }: HeroDismiss): void {
     this.store.dispatch(new HeroStopOddJob(heroId)).subscribe(() => {
       setState((state: IGameState) => {
         state.towns[state.currentTown].recruitedHeroes = state.towns[state.currentTown].recruitedHeroes

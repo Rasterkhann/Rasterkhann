@@ -114,6 +114,9 @@ export interface Hero {
   gear: HeroGear;
 
   trackedStats: Record<HeroTrackedStat, number>;
+
+  queueDismissed: boolean;
+  queueRetired: boolean;
 }
 
 export interface ProspectiveHero {

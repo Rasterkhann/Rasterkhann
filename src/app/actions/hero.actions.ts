@@ -6,13 +6,18 @@ export class RerollHeroes {
   constructor() {}
 }
 
-export class RecruitHero {
+export class HeroRecruit {
   static readonly type = '[Hero] Recruit Hero';
   constructor(public hero: ProspectiveHero) {}
 }
 
-export class DismissHero {
+export class HeroDismiss {
   static readonly type = '[Hero] Dismiss Hero';
+  constructor(public heroId: string) {}
+}
+
+export class HeroQueueDismiss {
+  static readonly type = '[Hero] Queue Dismiss';
   constructor(public heroId: string) {}
 }
 
@@ -48,5 +53,10 @@ export class HeroSetDestination {
 
 export class HeroRetire {
   static readonly type = '[Hero] Do Retire';
+  constructor(public heroId: string) {}
+}
+
+export class HeroQueueRetire {
+  static readonly type = '[Hero] Queue Retire';
   constructor(public heroId: string) {}
 }

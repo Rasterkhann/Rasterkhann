@@ -199,6 +199,8 @@ export function calculateHeroTrainingGoldPerXP(town: GameTown): bigint {
 
 export function canHeroGoOnAdventure(hero: Hero): boolean {
   return !hero.onAdventure
+      && !hero.queueDismissed
+      && !hero.queueRetired
       && getCurrentStat(hero, HeroStat.STA) === hero.stats[HeroStat.STA]
       && getCurrentStat(hero, HeroStat.HP) === hero.stats[HeroStat.HP]
       && getCurrentStat(hero, HeroStat.SP) === hero.stats[HeroStat.SP];
@@ -297,6 +299,8 @@ export function generateHero(town: GameTown, level?: number): Hero {
 
     currentlyAtBuilding: null,
     goingToBuilding: null,
+    queueDismissed: false,
+    queueRetired: false,
 
     job,
     traits,
