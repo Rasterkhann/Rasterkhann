@@ -173,7 +173,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
             this.game.dismissHero(this.town, hero);
 
             // cancelable more easily
-            if(!hero.onAdventure) {
+            if (!hero.onAdventure) {
               this.viewingHero = null;
             }
           }
@@ -225,7 +225,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
             if (hero.queueRetired || hero.queueDismissed) { return; }
             this.game.retireHero(hero);
 
-            if(!hero.onAdventure) {
+            if (!hero.onAdventure) {
               this.viewingHero = null;
             }
           }
