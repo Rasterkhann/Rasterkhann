@@ -1,3 +1,27 @@
+# [0.7.0](https://github.com/seiyria/Rasterkhann/compare/v0.6.3...v0.7.0) (2020-08-03)
+
+
+### Bug Fixes
+
+* **hero:** hero gen could erroneously stack stats way too high when doing levelups ([43996d4](https://github.com/seiyria/Rasterkhann/commit/43996d4565c415dbf7bc8b0a4c429fa13d7ddf40)), closes [#78](https://github.com/seiyria/Rasterkhann/issues/78)
+* **library:** careful trait has wrong desc ([5dd2bdf](https://github.com/seiyria/Rasterkhann/commit/5dd2bdface6bf0d5c0039429770420e6947b5c7d))
+* **library:** upgrade tree for library is a bit better, dual trait is the first unlock and it's required ([228676a](https://github.com/seiyria/Rasterkhann/commit/228676a2ecb9c89f762d38099fd51401f43d3448))
+* **retire:** bump retire from 50 to 100 ([edf74aa](https://github.com/seiyria/Rasterkhann/commit/edf74aa3df5d7287df2b5424c9a4e86d8adacd7d))
+* **retire:** heroes are required to do 50 encounters (up from 25) to retire ([028cc13](https://github.com/seiyria/Rasterkhann/commit/028cc136ee6abc4aa25275991a5548892d710a6a))
+* **ui:** map is more clean and readable ([3b03fd1](https://github.com/seiyria/Rasterkhann/commit/3b03fd1afff7eeb4940b681695efa25e59c826f8))
+* **ui:** tooltips for heroes would sometimes show bad info ([ee0ce66](https://github.com/seiyria/Rasterkhann/commit/ee0ce66e1424e0a16b3c3b2881a8620ee9ea7340))
+
+
+### Features
+
+* **archives:** add new town stats window ([1201eb3](https://github.com/seiyria/Rasterkhann/commit/1201eb3ac580b860efb2ba4b75295480077f24fa)), closes [#76](https://github.com/seiyria/Rasterkhann/issues/76)
+* **hero:** can queue hero for retirement or dismissal while they're adventuring ([ff84954](https://github.com/seiyria/Rasterkhann/commit/ff8495444c8b6b0c1691f91663134b6e576a5927)), closes [#79](https://github.com/seiyria/Rasterkhann/issues/79)
+* **hero:** heroes can retire now, but they can't be allocated to anything yet ([bdffa85](https://github.com/seiyria/Rasterkhann/commit/bdffa85647439cdfaf13e01358fd75e11fed4d86)), closes [#76](https://github.com/seiyria/Rasterkhann/issues/76)
+* **hero:** queue retire/dismiss can be canceled ([16dccb4](https://github.com/seiyria/Rasterkhann/commit/16dccb4e7a6f8f25ecd654c5536884f687edae31))
+* **retire:** heroes can now retire, crystals can be spent on stat buffs for future heroes, town stats are tracked, and retired heroes can be allocated to buildings for additional bonuses ([b7d6c4a](https://github.com/seiyria/Rasterkhann/commit/b7d6c4a64c49ab9f844f510a16b65f6608d42d33)), closes [#76](https://github.com/seiyria/Rasterkhann/issues/76)
+
+
+
 ## [0.6.3](https://github.com/seiyria/Rasterkhann/compare/v0.6.2...v0.6.3) (2020-07-28)
 
 
