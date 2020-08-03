@@ -104,15 +104,15 @@
       <ion-list-header>Core Stats</ion-list-header>
   
       <ion-item>
-        <ion-col class="hero-stat">{{ viewingHero.currentStats.hp | bignum }} / {{ viewingHero.stats.hp | bignum }} HP</ion-col>
-        <ion-col class="hero-stat">{{ viewingHero.currentStats.sp | bignum }} / {{ viewingHero.stats.sp | bignum }} SP</ion-col>
-        <ion-col class="hero-stat">{{ viewingHero.currentStats.sta | bignum }} / {{ viewingHero.stats.sta | bignum }} STA</ion-col>
+        <ion-col class="ion-text-center">{{ viewingHero.currentStats.hp | bignum }} / {{ viewingHero.stats.hp | bignum }} HP</ion-col>
+        <ion-col class="ion-text-center">{{ viewingHero.currentStats.sp | bignum }} / {{ viewingHero.stats.sp | bignum }} SP</ion-col>
+        <ion-col class="ion-text-center">{{ viewingHero.currentStats.sta | bignum }} / {{ viewingHero.stats.sta | bignum }} STA</ion-col>
       </ion-item>
   
       <ion-item>
-        <ion-col class="hero-stat">{{ viewingHero.stats.atk | bignum }} ATK</ion-col>
-        <ion-col class="hero-stat">{{ viewingHero.stats.def | bignum }} DEF</ion-col>
-        <ion-col class="hero-stat" *ngIf="viewingProspectiveHero">{{ viewingHero.stats.gold | bignum }} GOLD</ion-col>
+        <ion-col class="ion-text-center">{{ viewingHero.stats.atk | bignum }} ATK</ion-col>
+        <ion-col class="ion-text-center">{{ viewingHero.stats.def | bignum }} DEF</ion-col>
+        <ion-col class="ion-text-center" *ngIf="viewingProspectiveHero">{{ viewingHero.stats.gold | bignum }} GOLD</ion-col>
       </ion-item>
   
       <ion-list-header>Traits</ion-list-header>

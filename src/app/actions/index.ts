@@ -1,6 +1,7 @@
 
 export * from './adventure.actions';
 export * from './building.actions';
+export * from './crystal.actions';
 export * from './game.actions';
 export * from './gold.actions';
 export * from './hero.actions';

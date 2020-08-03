@@ -1,0 +1,44 @@
+  
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Crystal Buffs
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <app-help-text helpText="You can allocate your retired job crystals here to boost the stats of future heroes."></app-help-text>
+
+  <ng-container *ngIf="currentTown$ | async as town">
+    <ion-list>
+      <ion-list-header>Current Boosts</ion-list-header>
+  
+      <ion-item class="ion-margin-top">
+        <ion-col class="ion-text-center">+{{ town.crystalBuffs.hp | bignum }} HP</ion-col>
+        <ion-col class="ion-text-center">+{{ town.crystalBuffs.sp | bignum }} SP</ion-col>
+        <ion-col class="ion-text-center">+{{ town.crystalBuffs.sta | bignum }} STA</ion-col>
+      </ion-item>
+  
+      <ion-item class="ion-margin-bottom">
+        <ion-col class="ion-text-center">+{{ town.crystalBuffs.atk | bignum }} ATK</ion-col>
+        <ion-col class="ion-text-center">+{{ town.crystalBuffs.def | bignum }} DEF</ion-col>
+      </ion-item>
+
+      <ion-list-header>Job Crystal Boosts</ion-list-header>
+      <ion-item *ngFor="let job of jobs">
+        <ion-label class="ion-text-wrap">
+          <h3>{{ job }} - {{ game.getAvailableJobCrystals(town, job) }} Crystal(s)</h3>
+          <p>Boosts {{ getJobStats(job).join(', ') }}.</p>
+        </ion-label>
+        
+        <ion-button slot="end" (click)="game.upgradeJobCrystalStat(town, job)" *ngIf="game.getAvailableJobCrystals(town, job) > 0">Spend 1</ion-button>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+</ion-content>

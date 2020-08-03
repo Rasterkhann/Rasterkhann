@@ -4,7 +4,7 @@ import { sum } from 'lodash';
 
 import { Hero, GameTown, ProspectiveHero, HeroStat,
   Building, HeroJobStatic, Adventure, Trait, TraitValueMultipliers } from '../interfaces';
-import { calculateHeroTrainingGoldPerXP, generateHero, generateMonster, getCurrentStat, getZeroStatBlock } from '../helpers';
+import { calculateHeroTrainingGoldPerXP, generateHero, generateMonster, getCurrentStat, getZeroStatBlock, getStatBoostFromCrystal } from '../helpers';
 import { JobEffects, TraitEffects } from '../static';
 
 @Injectable({
@@ -71,7 +71,10 @@ export class HeroService {
     // calculate the max for each stat
     Object.values(contributingStats).forEach(stat => {
       if (maxStats[stat]) { return; }
-      maxStats[stat] = hero.stats[HeroStat.LVL] * jobStatic.statGrowth[stat](hero.stats[HeroStat.LVL]) * jobStatic.statBaseMultiplier[stat];
+      maxStats[stat] = (hero.stats[HeroStat.LVL]
+                     * jobStatic.statGrowth[stat](hero.stats[HeroStat.LVL])
+                     * jobStatic.statBaseMultiplier[stat])
+                     + getStatBoostFromCrystal(town, stat);
     });
 
     // normalize the stats between 1-5 (if it goes over, that's ok)

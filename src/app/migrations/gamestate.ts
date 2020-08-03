@@ -1,5 +1,5 @@
 import { Building, IGameState, ItemType, TownStat, HeroJob, Version } from '../interfaces';
-import { createBuildingAtLevel, createStatBlock } from '../helpers';
+import { createBuildingAtLevel, createStatBlock, getZeroStatBlock } from '../helpers';
 
 export const migrations = [
   {
@@ -182,6 +182,9 @@ export const migrations = [
           b.currentWorkerId = null;
         }
       });
+
+      console.log('Creating crystal buffs blob...');
+      state.towns.Rasterkhann.crystalBuffs = state.towns.Rasterkhann.crystalBuffs || getZeroStatBlock();
 
       return state;
     }

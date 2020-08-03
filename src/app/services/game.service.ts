@@ -11,9 +11,10 @@ import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   HeroQueueDismiss,
   HeroQueueRetire,
   HeroQueueDismissCancel,
-  HeroQueueRetireCancel} from '../actions';
+  HeroQueueRetireCancel,
+  JobCrystalUpgradeStat} from '../actions';
 import { Building, GameTown, IGameState, BuildingFeature, Hero,
-  ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem, HeroTrackedStat } from '../interfaces';
+  ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem, HeroTrackedStat, HeroJob, TownStat } from '../interfaces';
 import { doesTownHaveFeature, featureByName, getCurrentStat } from '../helpers';
 import { BuildingData } from '../static';
 import { AdventureService } from './adventure.service';
@@ -350,6 +351,16 @@ export class GameService {
 
   public unallocateAllWorkersFromBuilding(building: Building): void {
     this.store.dispatch(new UnallocateAllFromBuilding(building));
+  }
+
+  // crystal allocation functions
+  public getAvailableJobCrystals(town: GameTown, job: HeroJob): bigint {
+    return town.stats[TownStat.Retires][job] - town.stats[TownStat.CrystalsSpent][job];
+  }
+
+  public upgradeJobCrystalStat(town: GameTown, job: HeroJob): void {
+    if (this.getAvailableJobCrystals(town, job) <= 0) { return; }
+    this.store.dispatch(new JobCrystalUpgradeStat(job));
   }
 
 }

@@ -1,6 +1,6 @@
 
 import { Building, BuildingInfo } from './buildings';
-import { Hero, ProspectiveHero, HeroJob } from './hero';
+import { Hero, ProspectiveHero, HeroJob, HeroStat } from './hero';
 import { Adventure, CombatLog } from './adventure';
 import { HeroItem, ItemType } from './item';
 
@@ -42,5 +42,6 @@ export interface GameTown {
   combatLogs: CombatLog[];
   stats: Record<TownStat, Record<HeroJob, bigint>>;
 
+  crystalBuffs: Record<HeroStat, number>;
   showStage2UI: boolean;
 }

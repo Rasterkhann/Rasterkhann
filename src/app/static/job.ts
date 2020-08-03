@@ -58,7 +58,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       return base;
     },
     validWeaponTypes: [WeaponSubType.Hatchet, WeaponSubType.Sword, WeaponSubType.Knife, WeaponSubType.Longbow, WeaponSubType.Shortbow],
-    validArmorClasses: [ArmorWeight.Light, ArmorWeight.Medium]
+    validArmorClasses: [ArmorWeight.Light, ArmorWeight.Medium],
+    crystalStats: [HeroStat.HP]
   },
 
   [HeroJob.Cleric]: {
@@ -124,7 +125,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       return base;
     },
     validWeaponTypes: [WeaponSubType.Mace, WeaponSubType.Staff],
-    validArmorClasses: [ArmorWeight.Medium, ArmorWeight.Heavy]
+    validArmorClasses: [ArmorWeight.Medium, ArmorWeight.Heavy],
+    crystalStats: [HeroStat.DEF]
   },
 
   [HeroJob.Mage]: {
@@ -190,7 +192,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       return base;
     },
     validWeaponTypes: [WeaponSubType.Wand, WeaponSubType.Staff],
-    validArmorClasses: [ArmorWeight.Light]
+    validArmorClasses: [ArmorWeight.Light],
+    crystalStats: [HeroStat.SP]
   },
 
   [HeroJob.Thief]: {
@@ -259,7 +262,8 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       return base;
     },
     validWeaponTypes: [WeaponSubType.Knife, WeaponSubType.Katar, WeaponSubType.Shuriken],
-    validArmorClasses: [ArmorWeight.Light, ArmorWeight.Medium]
+    validArmorClasses: [ArmorWeight.Light, ArmorWeight.Medium],
+    crystalStats: [HeroStat.STA]
   },
 
   [HeroJob.Warrior]: {
@@ -325,6 +329,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       return base;
     },
     validWeaponTypes: [WeaponSubType.Sword, WeaponSubType.Hatchet, WeaponSubType.Spear, WeaponSubType.Mace],
-    validArmorClasses: [ArmorWeight.Heavy]
+    validArmorClasses: [ArmorWeight.Heavy],
+    crystalStats: [HeroStat.ATK]
   }
 };

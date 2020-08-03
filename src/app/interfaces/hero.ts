@@ -48,6 +48,7 @@ export interface HeroJobStatic {
   actions: (hero: Hero) => HeroAction[];
   validWeaponTypes: WeaponSubType[];
   validArmorClasses: ArmorWeight[];
+  crystalStats: HeroStat[];
 }
 
 export interface HeroActionTargetting {

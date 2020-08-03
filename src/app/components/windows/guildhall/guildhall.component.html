@@ -28,6 +28,14 @@
 
     <ion-button slot="end">View</ion-button>
   </ion-item>
+
+  <ion-item (click)="openGuildCrystalWindow()" *ngIf="town.showStage2UI">
+    <ion-label>
+      View Crystal Buffs
+    </ion-label>
+
+    <ion-button slot="end">View</ion-button>
+  </ion-item>
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="guildhall"></app-feature-list>

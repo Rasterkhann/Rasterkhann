@@ -206,6 +206,10 @@ export function canHeroGoOnAdventure(hero: Hero): boolean {
       && getCurrentStat(hero, HeroStat.SP) === hero.stats[HeroStat.SP];
 }
 
+export function getStatBoostFromCrystal(town: GameTown, stat: HeroStat): number {
+  return town.crystalBuffs[stat];
+}
+
 export function generateHero(town: GameTown, level?: number): Hero {
 
   const generateLevel = level || town.buildings[Building.GuildHall].level || 1;
@@ -277,7 +281,9 @@ export function generateHero(town: GameTown, level?: number): Hero {
   // create the random stat block
   Object.values(HeroStat).forEach(stat => {
     if (stats[stat]) { return; }
-    stats[stat] = random(1, heroLevel * jobStatic.statGrowth[stat](heroLevel) * jobStatic.statBaseMultiplier[stat]);
+
+    const statBoost = getStatBoostFromCrystal(town, stat);
+    stats[stat] = random(1, heroLevel * jobStatic.statGrowth[stat](heroLevel) * jobStatic.statBaseMultiplier[stat]) + statBoost;
   });
 
   // boost stats with workers
@@ -467,4 +473,8 @@ export function checkHeroLevelUp(hero: Hero): void {
 
 export function getTownHeroByUUID(town: GameTown, checkUUID: string): Hero | undefined {
   return town.recruitedHeroes.find(h => h.uuid === checkUUID);
+}
+
+export function getBoostedStatsForJobType(job: HeroJob): HeroStat[] {
+  return JobEffects[job].crystalStats;
 }

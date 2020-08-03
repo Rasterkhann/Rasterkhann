@@ -10,7 +10,7 @@ import {
   HeroRecruit, HeroDismiss, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
   ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation,
   HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding,
-  UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire, HeroQueueDismissCancel, HeroQueueRetireCancel
+  UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire, HeroQueueDismissCancel, HeroQueueRetireCancel, JobCrystalUpgradeStat
 } from '../actions';
 import {
   GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat, TownStat
@@ -32,7 +32,7 @@ import {
   heroBuyItemsBeforeAdventure, unequipItem, equipItem,
   getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp,
   getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber, calculateRepairRate,
-  calculateRepairCost, increaseDurability, getBazaarLoanPercent
+  calculateRepairCost, increaseDurability, getBazaarLoanPercent, getBoostedStatsForJobType
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -886,6 +886,26 @@ export class GameState {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
       town.buildings[building].numRetiredAllocated = 0;
+      return state;
+    });
+  }
+
+  // crystal functions
+  @Action(JobCrystalUpgradeStat)
+  @ImmutableContext()
+  jobCrystalAllocateStat({ setState }: StateContext<IGameState>, { job }: JobCrystalUpgradeStat): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+
+      const availableCrystals = town.stats[TownStat.Retires][job] - town.stats[TownStat.CrystalsSpent][job];
+      if (availableCrystals <= 0) { return state; }
+
+      town.stats[TownStat.CrystalsSpent][job]++;
+      const stats = getBoostedStatsForJobType(job);
+      stats.forEach(stat => {
+        town.crystalBuffs[stat]++;
+      });
+
       return state;
     });
   }

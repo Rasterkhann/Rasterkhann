@@ -6,6 +6,7 @@ import { GuildModalComponent } from './guild-modal/guild-modal.component';
 import { calculateAvailableJobs, calculateHeroMaxTotal } from '../../../helpers';
 import { Store } from '@ngxs/store';
 import { ChooseInfo } from '../../../actions';
+import { GuildCrystalModalComponent } from './crystal-modal/crystal-modal.component';
 
 @Component({
   selector: 'app-guildhall',
@@ -48,6 +49,14 @@ export class GuildHallComponent implements OnInit, OnChanges {
   async openGuildWindow(): Promise<void> {
     const modal = await this.modal.create({
       component: GuildModalComponent
+    });
+
+    await modal.present();
+  }
+
+  async openGuildCrystalWindow(): Promise<void> {
+    const modal = await this.modal.create({
+      component: GuildCrystalModalComponent
     });
 
     await modal.present();

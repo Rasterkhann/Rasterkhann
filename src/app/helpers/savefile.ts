@@ -2,6 +2,7 @@
 import { Building, GameTown, IGameState, BuildingInfo,
   ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob, LatestVersion } from '../interfaces';
 import { calculateOfflineAdventureProgress, calculateOfflineGold } from './town';
+import { getZeroStatBlock } from './hero';
 
 export function beforeSerialize(obj: any): IGameState {
 
@@ -175,6 +176,8 @@ export function createBasicTown(name: string): GameTown {
       [HeroJob.Thief]:          0,
       [HeroJob.Warrior]:        0
     },
+
+    crystalBuffs: getZeroStatBlock(),
 
     showStage2UI: false
   };

@@ -33,6 +33,7 @@ import { BuildingInfoComponent } from '../shared/building-info/building-info.com
 import { FeatureListComponent } from '../shared/feature-list/feature-list.component';
 
 import { GuildModalComponent } from '../windows/guildhall/guild-modal/guild-modal.component';
+import { GuildCrystalModalComponent } from '../windows/guildhall/crystal-modal/crystal-modal.component';
 import { AdventureModalComponent } from '../windows/cave/adventure-modal/adventure-modal.component';
 import { ItemsModalComponent } from '../windows/bazaar/items-modal/items-modal.component';
 import { CombatLogModalComponent } from '../windows/cave/combat-log-modal/combat-log-modal.component';
@@ -51,7 +52,8 @@ const modals = [
   ItemsModalComponent,
   CombatLogModalComponent,
   TownStatsModalComponent,
-  WorkerAllocationModalComponent
+  WorkerAllocationModalComponent,
+  GuildCrystalModalComponent
 ];
 
 @NgModule({
