@@ -1,14 +1,26 @@
 
-<ion-list *ngIf="allFeatures.length > 0">
+<ion-list *ngIf="areAllUpgradesOwned">
   <ion-list-header>
     <h4>Features</h4>
   </ion-list-header>
 
-  <ion-item *ngIf="allFeatures.length === 0">
+  <ion-item>
+    <ion-label>
+      All features are built here!
+    </ion-label>
+  </ion-item>
+</ion-list>
+
+<ion-list *ngIf="allVisibleFeatures.length > 0">
+  <ion-list-header>
+    <h4>Features</h4>
+  </ion-list-header>
+
+  <ion-item *ngIf="allVisibleFeatures.length === 0">
     No features available for purchase.
   </ion-item>
 
-  <ion-item *ngFor="let feature of allFeatures">
+  <ion-item *ngFor="let feature of allVisibleFeatures">
     <ion-label class="ion-text-wrap">
       <h2>{{ feature.name }}</h2>
       <p>{{ feature.description }}</p>
