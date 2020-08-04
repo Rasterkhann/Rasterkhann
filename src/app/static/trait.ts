@@ -139,6 +139,7 @@ const SimplePositiveTraits: Record<SimpleModifierPositiveTrait, TraitEffect> = {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.SlightlyGood,
     description: 'Hero gets +10 ATK on spawn, +1 ATK per level',
+    cantAttachWithTrait: ['ATK-'],
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
         hero.stats[HeroStat.ATK] += 10;
@@ -154,6 +155,7 @@ const SimplePositiveTraits: Record<SimpleModifierPositiveTrait, TraitEffect> = {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.SlightlyGood,
     description: 'Hero gets +10 DEF on spawn, +1 DEF per level',
+    cantAttachWithTrait: ['DEF-'],
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
         hero.stats[HeroStat.DEF] += 10;
@@ -199,6 +201,7 @@ const SimplePositiveTraits: Record<SimpleModifierPositiveTrait, TraitEffect> = {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.SlightlyGood,
     description: 'Hero gets +10 STA on spawn, +1 STA per level',
+    cantAttachWithTrait: ['STA-'],
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
         hero.stats[HeroStat.STA] += 10;
@@ -214,6 +217,7 @@ const SimplePositiveTraits: Record<SimpleModifierPositiveTrait, TraitEffect> = {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.SlightlyGood,
     description: 'Hero takes 50% less durability damage',
+    cantAttachWithTrait: ['Reckless'],
     triggers: {}
   }
 };
@@ -223,6 +227,7 @@ const SimpleNegativeTraits: Record<SimpleModifierNegativeTrait, TraitEffect> = {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.SlightlyBad,
     description: 'Hero gets -10 ATK on spawn, -1 ATK per level',
+    cantAttachWithTrait: ['ATK+'],
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
         hero.stats[HeroStat.ATK] -= 10;
@@ -238,6 +243,7 @@ const SimpleNegativeTraits: Record<SimpleModifierNegativeTrait, TraitEffect> = {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.SlightlyBad,
     description: 'Hero gets -10 DEF on spawn, -1 DEF per level',
+    cantAttachWithTrait: ['DEF+'],
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
         hero.stats[HeroStat.DEF] -= 10;
@@ -253,6 +259,7 @@ const SimpleNegativeTraits: Record<SimpleModifierNegativeTrait, TraitEffect> = {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.SlightlyBad,
     description: 'Hero gets -10 STA on spawn, -1 STA per level',
+    cantAttachWithTrait: ['STA+'],
     triggers: {
       [TriggerType.Spawn]: ({ hero }) => {
         hero.stats[HeroStat.STA] -= 10;
@@ -268,6 +275,7 @@ const SimpleNegativeTraits: Record<SimpleModifierNegativeTrait, TraitEffect> = {
     priority: TraitPriority.Any,
     valueProp: TraitValueProp.SlightlyBad,
     description: 'Hero takes 50% more durability damage',
+    cantAttachWithTrait: ['Careful'],
     triggers: {}
   }
 };

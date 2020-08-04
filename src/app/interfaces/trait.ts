@@ -83,4 +83,5 @@ export interface TraitEffect {
   description: string;
   triggers: Partial<Record<TriggerType, TraitTriggerFunction>>;
   cantAttachToClass?: HeroJob[];
+  cantAttachWithTrait?: Trait[];
 }

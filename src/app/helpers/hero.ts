@@ -231,11 +231,15 @@ export function generateHero(town: GameTown, level?: number): Hero {
   const earlyTraits = allTraits.filter(t => TraitEffects[t].priority !== TraitPriority.Last);
   const lastTraits = allTraits.filter(t => TraitEffects[t].priority === TraitPriority.Last);
 
+  const canTraitBeAdded = (trait: Trait) => {
+    return !traits.includes(trait) && (TraitEffects[trait].cantAttachWithTrait || []).every(t => !traits.includes(t));
+  }
+
   // ignore bad traits sometimes (library)
   const pickTraitFromList = (traitList: Trait[]) => {
     let trait: Trait | null = null;
     do {
-      trait = sample(traitList.filter(t => !traits.includes(t))) as Trait;
+      trait = sample(traitList.filter(t => canTraitBeAdded(t))) as Trait;
       if (TraitEffects[trait].valueProp < 0 && random(1, 100) <= ignoreChance) { trait = null; }
     } while (!trait);
 
@@ -261,8 +265,8 @@ export function generateHero(town: GameTown, level?: number): Hero {
 
       let replaceTrait: Trait | undefined;
 
-      if (i === traits.length - 1) { replaceTrait = sample(lastTraits.filter(t => !traits.includes(t) && TraitEffects[t].valueProp > 0)); }
-      else                         { replaceTrait = sample(earlyTraits.filter(t => !traits.includes(t) && TraitEffects[t].valueProp > 0)); }
+      if (i === traits.length - 1) { replaceTrait = sample(lastTraits.filter(t => canTraitBeAdded(t) && TraitEffects[t].valueProp > 0)); }
+      else                         { replaceTrait = sample(earlyTraits.filter(t => canTraitBeAdded(t) && TraitEffects[t].valueProp > 0)); }
 
       if (replaceTrait) {
         traits[i] = replaceTrait;
