@@ -200,8 +200,8 @@ export function generateArmor(town: GameTown): HeroArmor {
   if (durability < 100) { durability = 100; }
 
   const weight = ArmorSubTypeWeight[preset.subType];
-  if(weight === ArmorWeight.Light) { durability = Math.floor(durability / 2); }
-  if(weight === ArmorWeight.Heavy) { durability *= 2; }
+  if (weight === ArmorWeight.Light) { durability = Math.floor(durability / 2); }
+  if (weight === ArmorWeight.Heavy) { durability *= 2; }
 
   return {
     name: preset.name,

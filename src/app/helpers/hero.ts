@@ -235,7 +235,7 @@ export function generateHero(town: GameTown, level?: number): Hero {
 
   const canTraitBeAdded = (trait: Trait) => {
     return !traits.includes(trait) && (TraitEffects[trait].cantAttachWithTrait || []).every(t => !traits.includes(t));
-  }
+  };
 
   // ignore bad traits sometimes (library)
   const pickTraitFromList = (traitList: Trait[]) => {

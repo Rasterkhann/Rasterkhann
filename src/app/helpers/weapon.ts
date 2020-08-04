@@ -154,8 +154,8 @@ export function generateWeapon(town: GameTown): HeroWeapon {
   let durability = calculateItemDurability(town, boostStats);
   if (durability < 100) { durability = 100; }
 
-  if(element === WeaponElement.Darksteel) durability = Math.floor(durability * 1.25);
-  if(element === WeaponElement.Earth) durability *= 2;
+  if (element === WeaponElement.Darksteel) { durability = Math.floor(durability * 1.25); }
+  if (element === WeaponElement.Earth) { durability *= 2; }
 
   return {
     name: `${trait ? trait.name + ' ' : ''}${element} ${subType}`,

@@ -31,8 +31,7 @@ import {
   calculateSecondsUntilNextItem,
   heroBuyItemsBeforeAdventure, unequipItem, equipItem,
   getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp,
-  getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber, calculateRepairRate,
-  calculateRepairCost, increaseDurability, getBazaarLoanPercent, getBoostedStatsForJobType
+  getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber, getBazaarLoanPercent, getBoostedStatsForJobType
 } from '../helpers';
 
 import { environment } from '../../environments/environment';

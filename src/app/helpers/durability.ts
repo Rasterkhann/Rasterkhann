@@ -22,9 +22,9 @@ export function increaseDurability(hero: Hero, item: HeroItem, gain: number = 1)
   item.curDurability = clamp(curDurability + gain, 0, item.maxDurability);
 
   // discard items with 0 durability
-  if(curDurability === 0) {
+  if (curDurability === 0) {
     hero.gear[item.type].forEach((checkItem, idx) => {
-      if(checkItem.uuid !== item.uuid) return;
+      if (checkItem.uuid !== item.uuid) { return; }
 
       delete hero.gear[item.type][idx];
       removeItemStats(hero, item);
