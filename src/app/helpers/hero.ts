@@ -236,7 +236,7 @@ export function generateHero(town: GameTown, level?: number): Hero {
     let trait: Trait | null = null;
     do {
       trait = sample(traitList.filter(t => !traits.includes(t))) as Trait;
-      if (random(1, 100) <= ignoreChance) { trait = null; }
+      if (TraitEffects[trait].valueProp < 0 && random(1, 100) <= ignoreChance) { trait = null; }
     } while (!trait);
 
     return trait;
@@ -261,8 +261,8 @@ export function generateHero(town: GameTown, level?: number): Hero {
 
       let replaceTrait: Trait | undefined;
 
-      if (i === traits.length - 1) { replaceTrait = sample(lastTraits.filter(t => TraitEffects[t].valueProp > 0)); }
-      else                         { replaceTrait = sample(earlyTraits.filter(t => TraitEffects[t].valueProp > 0)); }
+      if (i === traits.length - 1) { replaceTrait = sample(lastTraits.filter(t => !traits.includes(t) && TraitEffects[t].valueProp > 0)); }
+      else                         { replaceTrait = sample(earlyTraits.filter(t => !traits.includes(t) && TraitEffects[t].valueProp > 0)); }
 
       if (replaceTrait) {
         traits[i] = replaceTrait;
