@@ -31,14 +31,14 @@ export function calculateGlobalItemCostMultiplier(town: GameTown): number {
 
 export function calculateItemDurability(town: GameTown, boostStats: Array<{ stat: HeroStat, value: number }>): number {
   const statMultipliers: Record<HeroStat, number> = {
-    [HeroStat.ATK]: 2,
-    [HeroStat.DEF]: 5,
+    [HeroStat.ATK]: -1,
+    [HeroStat.DEF]: 3,
     [HeroStat.EXP]: 1,
     [HeroStat.GOLD]: 1,
     [HeroStat.LVL]: 10,
     [HeroStat.SP]: 1,
-    [HeroStat.HP]: 3,
-    [HeroStat.STA]: 4
+    [HeroStat.HP]: 2,
+    [HeroStat.STA]: 2
   };
 
   return Math.floor(sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat])));
@@ -90,6 +90,8 @@ export function featureByName(building: Building, feature: string): BuildingFeat
 export function canSeeBuildingFeature(town: GameTown, building: Building, feature: string): boolean {
   const featureRef: BuildingFeature = featureByName(building, feature);
   if (!featureRef) { return false; }
+
+  if (featureRef.hide) { return false; }
 
   if (doesTownHaveFeature(town, feature)) { return false; }
 

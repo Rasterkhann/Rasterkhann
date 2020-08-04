@@ -186,6 +186,13 @@ export const migrations = [
       console.log('Creating crystal buffs blob...');
       state.towns.Rasterkhann.crystalBuffs = state.towns.Rasterkhann.crystalBuffs || getZeroStatBlock();
 
+      console.log('Compacting hero gear...');
+      state.towns.Rasterkhann.recruitedHeroes.forEach(h => {
+        Object.keys(h.gear).forEach((itemType: ItemType) => {
+          h.gear[itemType] = h.gear[itemType].filter(Boolean) as any[];
+        });
+      });
+
       return state;
     }
   }

@@ -92,7 +92,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   }
 
   getHeroGearTypeItems(hero: Hero, type: ItemType): HeroItem[] {
-    return hero.gear[type];
+    return hero.gear[type].filter(Boolean);
   }
 
   getTraitData(trait: Trait): string {

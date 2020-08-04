@@ -210,7 +210,8 @@ export const ArmoryFeatures: BuildingFeature[] = [
     description: 'Item repair happens faster.',
     cost: 150000n,
     upgradeTime: BuildingFeatureTime.Short,
-    requiresLevel: 2
+    requiresLevel: 2,
+    hide: true
   },
   {
     name: 'Faster Repair',
@@ -218,6 +219,7 @@ export const ArmoryFeatures: BuildingFeature[] = [
     cost: 350000n,
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 10,
+    hide: true,
     requiresFeature: {
       'Fast Repair': 1
     }

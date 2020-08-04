@@ -282,8 +282,10 @@ export class GameState {
       const restValue = calculateRestingRate(town);
       const restCost = calculateRestingCost(town);
 
+      /*
       const repairValue = calculateRepairRate(town);
       const repairCost = calculateRepairCost(town);
+      */
 
       // rest
       town.recruitedHeroes.forEach(h => {
@@ -315,6 +317,7 @@ export class GameState {
         });
 
         // repairs
+        /*
         const heroRepairSpendValue = getCurrentStat(h, HeroStat.GOLD) >= repairCost ? repairCost : 0;
         const heroRepairValue = heroRepairSpendValue === 0 ? 1 : repairValue;
 
@@ -330,6 +333,7 @@ export class GameState {
           giveHeroGold(h, -heroRepairSpendValue);
           heroSpentGold += heroRepairSpendValue;
         }
+        */
 
         totalEarned += heroSpentGold;
 

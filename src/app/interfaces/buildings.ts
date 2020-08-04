@@ -47,6 +47,7 @@ export interface BuildingFeature {
   requiresLevel?: number;
   requiresFeature?: Record<string, number>;
   unlocks?: BuildingUnlock;
+  hide?: boolean;
 }
 
 export interface BuildingStatic {

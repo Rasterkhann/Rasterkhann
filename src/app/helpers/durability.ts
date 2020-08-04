@@ -1,4 +1,4 @@
-import { clamp, random } from 'lodash';
+import { clamp } from 'lodash';
 
 import { Hero, HeroItem } from '../interfaces';
 
@@ -19,9 +19,22 @@ export function addItemStats(hero: Hero, item: HeroItem): void {
 export function increaseDurability(hero: Hero, item: HeroItem, gain: number = 1): void {
   const curDurability = item.curDurability;
 
-  item.curDurability = clamp(item.curDurability + gain, 0, item.maxDurability);
+  item.curDurability = clamp(curDurability + gain, 0, item.maxDurability);
+
+  // discard items with 0 durability
+  if(curDurability === 0) {
+    hero.gear[item.type].forEach((checkItem, idx) => {
+      if(checkItem.uuid !== item.uuid) return;
+
+      delete hero.gear[item.type][idx];
+      removeItemStats(hero, item);
+    });
+
+    hero.gear[item.type] = hero.gear[item.type].filter(Boolean) as any[];
+  }
 
   // lose stats
+  /*
   if (item.curDurability === 0 && curDurability !== 0) {
     removeItemStats(hero, item);
 
@@ -36,6 +49,7 @@ export function increaseDurability(hero: Hero, item: HeroItem, gain: number = 1)
     item.cost -= (item.cost / 100n);
     item.maxDurability -= 1;
   }
+  */
 }
 
 export function decreaseDurability(hero: Hero, item: HeroItem, loss: number = 2): void {
