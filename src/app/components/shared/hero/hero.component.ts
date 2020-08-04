@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 
 import { Hero, GameTown, HeroStat, Building } from '../../../interfaces';
 import { canHeroGoOnAdventure } from '../../../helpers';
+import { GameService } from '../../../services/game.service';
 
 @Component({
   selector: 'app-hero',
@@ -65,7 +66,7 @@ export class HeroComponent implements OnInit {
     return this.rating - this.numStars >= 0.5;
   }
 
-  constructor() { }
+  constructor(public game: GameService) { }
 
   ngOnInit(): void {}
 

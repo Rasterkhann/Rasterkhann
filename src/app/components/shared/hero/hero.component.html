@@ -2,8 +2,8 @@
 <ion-item>
   <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="hero.sprite"></app-hero-sprite>
   
-  <ion-button class="info" icon-only color="secondary" slot="start">
-    <ion-icon name="information-circle-outline"></ion-icon>
+  <ion-button class="info" icon-only [color]="game.canRetireHero(hero) ? 'success' : 'secondary'" slot="start">
+    <ion-icon [name]="game.canRetireHero(hero) ? 'star' : 'information-circle-outline'"></ion-icon>
   </ion-button>
 
   <ion-label class="ion-text-wrap">

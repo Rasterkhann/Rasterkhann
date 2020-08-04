@@ -51,6 +51,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
   private spriteMap: Record<string, any> = {};
   private textMap: Record<string, any> = {};
   private featureMap: Record<string, any> = {};
+  private secondaryFeatureMap: Record<string, any> = {};
   private heroMap: Record<string, any> = {};
   private heroPathMap: Record<string, Array<[number, number]>> = {};
 
@@ -94,6 +95,10 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
 
         this.toggleVisible(buildingName, true);
         this.featureMap[buildingName].visible = visibleBuildingFeatures(this.town, buildingName).length > 0;
+
+        if (buildingName === Building.GuildHall) {
+          this.secondaryFeatureMap[buildingName].visible = this.town.recruitedHeroes.some(h => this.game.canRetireHero(h));
+        }
       });
     }
   }
@@ -197,6 +202,16 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
           this.featureMap[obj.name].roundPixels = false;
 
           this.tileMap.addChild(this.featureMap[obj.name]);
+
+          // add "important" abovedot
+          this.secondaryFeatureMap[obj.name] = PIXI.Sprite.from('assets/game/ui/heyorb.png');
+          this.secondaryFeatureMap[obj.name].x = obj.x + 24;
+          this.secondaryFeatureMap[obj.name].y = obj.y - 24;
+          this.secondaryFeatureMap[obj.name].visible = false;
+          this.secondaryFeatureMap[obj.name].anchor.set(0.5);
+          this.secondaryFeatureMap[obj.name].roundPixels = false;
+
+          this.tileMap.addChild(this.secondaryFeatureMap[obj.name]);
         }
       }
     });
@@ -232,11 +247,17 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
     const MOVE_SPEED_DELTA_MULT = 0.2;
 
     // rotate all of the "currently has upgrade" icons
+    /*
     this.app.ticker.add((delta: number) => {
       Object.values(this.featureMap).forEach(sprite => {
         sprite.rotation -= 0.05 * delta;
       });
+
+      Object.values(this.secondaryFeatureMap).forEach(sprite => {
+        sprite.rotation -= 0.05 * delta;
+      });
     });
+    */
 
     // move the arrow up and down slightly
     this.app.ticker.add((delta: number) => {
