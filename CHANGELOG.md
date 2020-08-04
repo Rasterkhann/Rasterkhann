@@ -1,3 +1,23 @@
+## [0.7.1](https://github.com/seiyria/Rasterkhann/compare/v0.7.0...v0.7.1) (2020-08-04)
+
+
+### Bug Fixes
+
+* **herogen:** hero generation should disallow getting duplicate traits entirely ([437766d](https://github.com/seiyria/Rasterkhann/commit/437766da7b1991cec95e3aface0eb26dd856b7f1)), closes [#82](https://github.com/seiyria/Rasterkhann/issues/82)
+* **herogen:** heroes should no longer be able to spawn with opposite traits (ie, ATK+ and ATK-) ([26c6892](https://github.com/seiyria/Rasterkhann/commit/26c689209e3dcf084110ec1eec4f9e8702513449)), closes [#83](https://github.com/seiyria/Rasterkhann/issues/83)
+* **repair:** remove repair mechanic; heroes cycle items more commonly; lower durability on average for items ([aecaa4f](https://github.com/seiyria/Rasterkhann/commit/aecaa4fda971b2b68835f2eb491cb07aa2c53680)), closes [#84](https://github.com/seiyria/Rasterkhann/issues/84)
+* **retire:** hero retirement should be on 100 won encounters, not total ([018f7e6](https://github.com/seiyria/Rasterkhann/commit/018f7e6f4353b1fddc120b59dd9348f13d1dc9f8)), closes [#86](https://github.com/seiyria/Rasterkhann/issues/86)
+
+
+### Features
+
+* **retire:** new upgrades that require retirements ([af37ca0](https://github.com/seiyria/Rasterkhann/commit/af37ca0e0fafec97668a3efb8fd1be7c059bcfad)), closes [#80](https://github.com/seiyria/Rasterkhann/issues/80)
+* **ui:** add more hero ready for retirement indicators ([7485acd](https://github.com/seiyria/Rasterkhann/commit/7485acd4186d8f4f88ce1186f4c9d63c2e37ab74)), closes [#81](https://github.com/seiyria/Rasterkhann/issues/81)
+* **ui:** hide level on buildings that do not level up ([02008b0](https://github.com/seiyria/Rasterkhann/commit/02008b045012ddcdfd00802f0435fba4de8dd6b1)), closes [#88](https://github.com/seiyria/Rasterkhann/issues/88)
+* **ui:** show a message when a building has no more features to build ([55453e6](https://github.com/seiyria/Rasterkhann/commit/55453e69d4ce5763ee7a3b62a77e6e76b4364462)), closes [#89](https://github.com/seiyria/Rasterkhann/issues/89)
+
+
+
 # [0.7.0](https://github.com/seiyria/Rasterkhann/compare/v0.6.3...v0.7.0) (2020-08-03)
 
 
