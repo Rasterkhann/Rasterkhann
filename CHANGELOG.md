@@ -1,3 +1,12 @@
+## [0.7.2](https://github.com/seiyria/Rasterkhann/compare/v0.7.1...v0.7.2) (2020-08-04)
+
+
+### Features
+
+* **ui:** rush button should be a different color ([64a148b](https://github.com/seiyria/Rasterkhann/commit/64a148b32f097a9375128bd6f4fe78b42f3951e5))
+
+
+
 ## [0.7.1](https://github.com/seiyria/Rasterkhann/compare/v0.7.0...v0.7.1) (2020-08-04)
 
 
