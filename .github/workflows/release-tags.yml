@@ -31,6 +31,8 @@ jobs:
       
     - run: npm run build:electron:full:demo
 
+    - run: npm run changelog:generate:current
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -39,8 +41,7 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
-        body: |
-          This is an automated release. See [the Changelog](https://github.com/seiyria/Rasterkhann/blob/main/CHANGELOG.md) for more info.
+        body: ${{ cat CHANGELOG-current.md }}
         draft: false
         prerelease: false
       
