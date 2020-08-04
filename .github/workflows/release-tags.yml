@@ -33,8 +33,11 @@ jobs:
 
     - run: npm run changelog:generate:current
 
-    - name: Store Changelog in env
+    - name: Store Changelog in ENV
       run: echo "::set-env name=CHANGELOG_DATA::${cat CHANGELOG_current.md | sed 's/\n/%0A/g'}"
+
+    - name: Store Version in ENV
+      run: echo "::set-env name=VERSION_DATA::${git describe --abbrev=0}"
 
     - name: Create Release
       id: create_release
@@ -47,6 +50,16 @@ jobs:
         body: ${{ env.CHANGELOG_DATA }}
         draft: false
         prerelease: false
+
+    - name: Post to Reddit
+      uses: bluwy/release-for-reddit-action@v1
+      with:
+        username: ${{ secrets.REDDIT_USERNAME }}
+        password: ${{ secrets.REDDIT_PASSWORD }}
+        app-id: ${{ secrets.REDDIT_APP_ID }}
+        app-secret: ${{ secrets.REDDIT_APP_SECRET }}
+        subreddit: Rasterkhann ${{ env.VERSION_DATA }}
+        comment: ${{ env.CHANGELOG_DATA }}
       
     - name: Upload Release Asset (Github-Windows)
       id: upload-release-asset-win
