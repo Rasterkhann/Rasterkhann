@@ -40,6 +40,7 @@ export function calculateGoldGain(state: IGameState): bigint {
   if (doesTownHaveFeature(town, 'Children'))        { goldMultiplier += 1n; }
   if (doesTownHaveFeature(town, 'Another Child'))   { goldMultiplier += 1n; }
   if (doesTownHaveFeature(town, 'Grown Children'))  { goldMultiplier += 2n; }
+  if (doesTownHaveFeature(town, 'Thievery'))        { goldMultiplier += 5n; }
 
   const bonus = numAllocatedToBuilding(town, Building.House);
 

@@ -7,15 +7,18 @@ import { addCombatLogToTown, doesTownHaveFeature, formatNumber, giveHeroEXP, giv
 import { getBazaarLoanPercent } from './bazaar';
 
 export function formatDifficulty(difficulty: AdventureDifficulty): string {
-  switch (difficulty) {
-    case AdventureDifficulty.VeryEasy:  return 'Very Easy';
-    case AdventureDifficulty.Easy:      return 'Easy';
-    case AdventureDifficulty.Normal:    return 'Normal';
-    case AdventureDifficulty.Hard:      return 'Hard';
-    case AdventureDifficulty.VeryHard:  return 'Very Hard';
+  const difficultyStrings: Record<AdventureDifficulty, string> = {
+    [AdventureDifficulty.VeryEasy]:       'Very Easy',
+    [AdventureDifficulty.Easy]:           'Easy',
+    [AdventureDifficulty.Normal]:         'Normal',
+    [AdventureDifficulty.Hard]:           'Hard',
+    [AdventureDifficulty.VeryHard]:       'Very Hard',
+    [AdventureDifficulty.Tough]:          'Tough',
+    [AdventureDifficulty.Challenging]:    'Challenging',
+    [AdventureDifficulty.Extreme]:        'Extreme'
+  };
 
-    default:                            return 'Unknown';
-  }
+  return difficultyStrings[difficulty] || 'Unknown';
 }
 
 export function calculateMaxMembersPerTeam(town: GameTown): number {
@@ -55,11 +58,17 @@ export function calculateMaxNumberAdventureEncounters(town: GameTown): number {
 }
 
 export function calculateAvailableDifficulties(town: GameTown): AdventureDifficulty[] {
-  return [
+  const base = [
     AdventureDifficulty.VeryEasy, AdventureDifficulty.Easy,
     AdventureDifficulty.Normal,
     AdventureDifficulty.Hard, AdventureDifficulty.VeryHard
   ];
+
+  if(doesTownHaveFeature(town, 'Tougher Adventures I'))   { base.push(AdventureDifficulty.Tough); }
+  if(doesTownHaveFeature(town, 'Tougher Adventures II'))  { base.push(AdventureDifficulty.Challenging); }
+  if(doesTownHaveFeature(town, 'Tougher Adventures III')) { base.push(AdventureDifficulty.Extreme); }
+
+  return base;
 }
 
 export function heroBuyItemsBeforeAdventure(town: GameTown, hero: Hero): HeroGear {

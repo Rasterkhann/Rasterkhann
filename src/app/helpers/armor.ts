@@ -3,7 +3,7 @@
 import { random, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import { GameTown, HeroStat, ItemType, ArmorElement, ArmorSubType, Building, HeroArmor } from '../interfaces';
+import { GameTown, HeroStat, ItemType, ArmorElement, ArmorSubType, Building, HeroArmor, ArmorSubTypeWeight, ArmorWeight } from '../interfaces';
 import { getZeroStatBlock } from './hero';
 import { calculateItemCost, calculateItemDurability, doesTownHaveFeature, numAllocatedToBuilding } from './global';
 import { chooseRandomItemTrait } from './itemtraits';
@@ -198,6 +198,10 @@ export function generateArmor(town: GameTown): HeroArmor {
 
   let durability = calculateItemDurability(town, boostStats);
   if (durability < 100) { durability = 100; }
+
+  const weight = ArmorSubTypeWeight[preset.subType];
+  if(weight === ArmorWeight.Light) { durability = Math.floor(durability / 2); }
+  if(weight === ArmorWeight.Heavy) { durability *= 2; }
 
   return {
     name: preset.name,

@@ -50,6 +50,10 @@ export class AdventureComponent implements OnInit {
     return formatDifficulty(difficulty);
   }
 
+  difficultyExplanation(difficulty: AdventureDifficulty): string {
+    return `Adventure has a difficulty multiplier of ${difficulty}x`;
+  }
+
   async go(): Promise<void> {
 
     const alert = await this.alert.create({

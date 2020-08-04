@@ -1,5 +1,5 @@
 
-import { sum } from 'lodash';
+import { sum, get, isUndefined, isObject } from 'lodash';
 
 import * as NumberFormat from 'swarm-numberformat';
 
@@ -25,6 +25,7 @@ export function calculateGlobalItemCostMultiplier(town: GameTown): number {
   if (doesTownHaveFeature(town, 'Higher Prices'))       { multiplier += 0.1; }
   if (doesTownHaveFeature(town, 'Even Higher Prices'))  { multiplier += 0.1; }
   if (doesTownHaveFeature(town, 'Stronger Prices'))     { multiplier += 0.1; }
+  if (doesTownHaveFeature(town, 'Highway Robbery'))     { multiplier += 0.25; }
 
   return multiplier;
 }
@@ -101,6 +102,35 @@ export function canSeeBuildingFeature(town: GameTown, building: Building, featur
     const allPreFeatures = Object.keys(featureRef.requiresFeature)
       .every(feat => doesTownHaveFeature(town, feat));
     if (!allPreFeatures) { return false; }
+  }
+
+  if (featureRef.requiresTownStat) {
+    let meetsStatRequirements = true;
+
+    Object.keys(featureRef.requiresTownStat).forEach(stat => {
+      const ref = featureRef.requiresTownStat;
+      if (!ref) { return; }
+
+      const val = get(town.stats, stat);
+
+      if (isUndefined(val)) {
+        console.error(`Error: Stat ${stat} is undefined; typo?`);
+        meetsStatRequirements = false;
+      }
+
+      if (isObject(val)) {
+        const totalChild = Object.values(val).reduce((prev, cur) => prev + cur, 0n);
+        if (Number(totalChild) < ref[stat]) {
+          meetsStatRequirements = false;
+        }
+      }
+
+      if (Number(val) < ref[stat]) {
+        meetsStatRequirements = false;
+      }
+    });
+
+    if (!meetsStatRequirements) { return false; }
   }
 
   return true;

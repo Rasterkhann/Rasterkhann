@@ -46,6 +46,7 @@ export interface BuildingFeature {
   upgradeTime: number;
   requiresLevel?: number;
   requiresFeature?: Record<string, number>;
+  requiresTownStat?: Record<string, number>;
   unlocks?: BuildingUnlock;
   hide?: boolean;
 }

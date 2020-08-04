@@ -97,6 +97,8 @@ export function calculateRestingRate(town: GameTown): number {
   if (town.buildings[Building.Inn].currentWorkerId) { baseRate += 3; }
   if (doesTownHaveFeature(town, 'Restful Sleep'))   { baseRate += 1; }
   if (doesTownHaveFeature(town, 'Blissful Sleep'))  { baseRate += 2; }
+  if (doesTownHaveFeature(town, 'Super Sleep'))     { baseRate += 5; }
+  if (doesTownHaveFeature(town, 'Mega Sleep'))      { baseRate += 5; }
 
   baseRate += numAllocatedToBuilding(town, Building.Inn);
 

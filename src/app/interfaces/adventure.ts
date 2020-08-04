@@ -5,7 +5,10 @@ export enum AdventureDifficulty {
   Easy = 1.25,
   Normal = 2,
   Hard = 3,
-  VeryHard = 5
+  VeryHard = 5,
+  Tough = 7,
+  Challenging = 9,
+  Extreme = 11
 }
 
 export interface Adventure {

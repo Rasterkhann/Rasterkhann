@@ -1,4 +1,4 @@
-import { BuildingFeature, BuildingFeatureTime } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob } from '../interfaces';
 
 export const AlchemistFeatures: BuildingFeature[] = [
   {
@@ -203,6 +203,9 @@ export const AlchemistFeatures: BuildingFeature[] = [
       'Health Potions II': 1,
       'Skill Potions II': 1,
       'Stamina Potions II': 1
+    },
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Mage}`]: 5
     }
   },
   {
@@ -215,6 +218,9 @@ export const AlchemistFeatures: BuildingFeature[] = [
       'Health Potions V': 1,
       'Skill Potions V': 1,
       'Stamina Potions V': 1
+    },
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Mage}`]: 25
     }
   },
 ];

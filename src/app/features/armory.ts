@@ -1,4 +1,4 @@
-import { BuildingFeature, BuildingFeatureTime } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, HeroJob, TownStat } from '../interfaces';
 
 export const ArmoryFeatures: BuildingFeature[] = [
   {
@@ -180,6 +180,55 @@ export const ArmoryFeatures: BuildingFeature[] = [
     cost: 500000n,
     upgradeTime: BuildingFeatureTime.XXLong,
     requiresLevel: 50
+  },
+  {
+    name: 'Fire Weapons',
+    description: 'Burning weapons can be created.',
+    cost: 10000000n,
+    upgradeTime: BuildingFeatureTime.XXLong,
+    requiresLevel: 50,
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Warrior}`]: 5
+    }
+  },
+  {
+    name: 'Ice Weapons',
+    description: 'Frozen weapons can be created.',
+    cost: 10000000n,
+    upgradeTime: BuildingFeatureTime.XXLong,
+    requiresLevel: 50,
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Warrior}`]: 15
+    }
+  },
+  {
+    name: 'Wind Weapons',
+    description: 'Swift weapons can be created.',
+    cost: 10000000n,
+    upgradeTime: BuildingFeatureTime.XXLong,
+    requiresLevel: 50,
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Warrior}`]: 25
+    }
+  },
+  {
+    name: 'Lightning Weapons',
+    description: 'Shocking weapons can be created.',
+    cost: 10000000n,
+    upgradeTime: BuildingFeatureTime.XXLong,
+    requiresLevel: 50,
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Warrior}`]: 45
+    }
+  },
+  {
+    name: 'Earth Weapons',
+    description: 'Rocky weapons can be created.',
+    cost: 10000000n,
+    upgradeTime: BuildingFeatureTime.XXLong,
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Warrior}`]: 75
+    }
   },
   {
     name: 'Cloaks',

@@ -1,4 +1,4 @@
-import { BuildingFeature, BuildingFeatureTime } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob } from '../interfaces';
 
 export const LibraryFeatures: BuildingFeature[] = [
   {
@@ -323,6 +323,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     requiresFeature: {
       'Item Traits III': 1
     },
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Cleric}`]: 5
+    },
     unlocks: {
       itemTrait: [
         'Warding', 'Menacing', 'Violent', 'Salubrious', 'Celestial'
@@ -337,6 +340,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     requiresLevel: 25,
     requiresFeature: {
       'Item Traits II': 1
+    },
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Cleric}`]: 15
     },
     unlocks: {
       itemTrait: [
@@ -355,6 +361,9 @@ export const LibraryFeatures: BuildingFeature[] = [
     requiresLevel: 45,
     requiresFeature: {
       'Item Traits Hybrids': 1
+    },
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Cleric}`]: 25
     },
     unlocks: {
       itemTrait: [

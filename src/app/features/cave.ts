@@ -1,4 +1,4 @@
-import { BuildingFeature, BuildingFeatureTime } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat } from '../interfaces';
 
 export const CaveFeatures: BuildingFeature[] = [
   {
@@ -121,6 +121,33 @@ export const CaveFeatures: BuildingFeature[] = [
     requiresLevel: 40,
     requiresFeature: {
       'Teamwork I': 1
+    }
+  },
+  {
+    name: 'Tougher Adventures I',
+    description: 'Unlock the "Tough" difficulty for adventures.',
+    cost: 10000000n,
+    upgradeTime: BuildingFeatureTime.Long,
+    requiresTownStat: {
+      [TownStat.Retires]: 5
+    }
+  },
+  {
+    name: 'Tougher Adventures II',
+    description: 'Unlock the "Challenging" difficulty for adventures.',
+    cost: 20000000n,
+    upgradeTime: BuildingFeatureTime.Long,
+    requiresTownStat: {
+      [TownStat.Retires]: 25
+    }
+  },
+  {
+    name: 'Tougher Adventures III',
+    description: 'Unlock the "Extreme" difficulty for adventures.',
+    cost: 30000000n,
+    upgradeTime: BuildingFeatureTime.Long,
+    requiresTownStat: {
+      [TownStat.Retires]: 75
     }
   },
 ];

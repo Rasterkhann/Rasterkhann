@@ -23,6 +23,30 @@ export const AttackMessage: HeroActionStringReplacer = {
   }
 };
 
+export const FireAttackMessage: HeroActionStringReplacer = {
+  replace: (opts: HeroActionReplaceOpts) => {
+    return valueReplacer(`%source% channeled the fire to pierce %target%'s defenses for %value% damage!`, opts);
+  }
+};
+
+export const WindAttackMessage: HeroActionStringReplacer = {
+  replace: (opts: HeroActionReplaceOpts) => {
+    return valueReplacer(`%source% channeled the wind to %target% for %value% damage!`, opts);
+  }
+};
+
+export const IceAttackMessage: HeroActionStringReplacer = {
+  replace: (opts: HeroActionReplaceOpts) => {
+    return valueReplacer(`%source% channeled the ice to heavily damage %target% for %value% damage!`, opts);
+  }
+};
+
+export const LightningAttackMessage: HeroActionStringReplacer = {
+  replace: (opts: HeroActionReplaceOpts) => {
+    return valueReplacer(`%source% channeled chain lightning to attack %target% for %value% damage!`, opts);
+  }
+};
+
 export const MagicMissileMessage: HeroActionStringReplacer = {
   replace: (opts: HeroActionReplaceOpts) => {
     return valueReplacer(`%source% cast magic missile at %target% for %value% damage!`, opts);
@@ -74,6 +98,12 @@ export const ThrustMessage: HeroActionStringReplacer = {
 export const HealMessage: HeroActionStringReplacer = {
   replace: (opts: HeroActionReplaceOpts) => {
     return valueReplacer(`%source% healed %target% for %value% HP!`, opts);
+  }
+};
+
+export const EarthHealMessage: HeroActionStringReplacer = {
+  replace: (opts: HeroActionReplaceOpts) => {
+    return valueReplacer(`%source% channeled the earth to heal %target% for %value% HP!`, opts);
   }
 };
 

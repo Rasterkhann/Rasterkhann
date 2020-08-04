@@ -1,4 +1,4 @@
-import { BuildingFeature, BuildingFeatureTime } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob } from '../interfaces';
 
 export const BazaarFeatures: BuildingFeature[] = [
   {
@@ -46,6 +46,18 @@ export const BazaarFeatures: BuildingFeature[] = [
     requiresLevel: 45,
     requiresFeature: {
       'Even Higher Prices': 1
+    }
+  },
+  {
+    name: 'Highway Robbery',
+    description: 'Imagine a world where Thieves run your market - costs go up.',
+    cost: 10000000n,
+    upgradeTime: BuildingFeatureTime.Long,
+    requiresFeature: {
+      'Stronger Prices': 1
+    },
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Thief}`]: 25
     }
   },
 ];

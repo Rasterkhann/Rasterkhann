@@ -10,7 +10,7 @@
     <p *ngIf="isActive && adventure.encounterTicks[0]">Adventuring...</p>
     <p *ngIf="isActive && !adventure.encounterTicks[0]">Battling...</p>
     <p *ngIf="!isActive">Duration: <countdown [config]="{ leftTime: adventure.duration, demand: true, format: 'HH:mm', prettyText: formatPreDuration }"></countdown></p>
-    <p *ngIf="!isActive">Encounters: {{ formatDifficulty(adventure.difficulty) }} &middot; Lv. {{ adventure.encounterLevel }} &middot; Enc. x{{ adventure.encounterCount }}</p>
+    <p *ngIf="!isActive">Encounters: <span class="has-info" [tooltip]="difficultyExplanation(adventure.difficulty)" placement="right">{{ formatDifficulty(adventure.difficulty) }}</span> &middot; Lv. {{ adventure.encounterLevel }} &middot; Enc. x{{ adventure.encounterCount }}</p>
   </ion-label>
 
   <ion-button *ngIf="!isActive" class="go" slot="end" (click)="go()" [disabled]="!canDoAdventure">

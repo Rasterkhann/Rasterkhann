@@ -1,4 +1,4 @@
-import { BuildingFeature, BuildingFeatureTime } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob } from '../interfaces';
 
 export const HouseFeatures: BuildingFeature[] = [
   {
@@ -26,6 +26,18 @@ export const HouseFeatures: BuildingFeature[] = [
     requiresLevel: 50,
     requiresFeature: {
       'Another Child': 1
+    }
+  },
+  {
+    name: 'Thievery',
+    description: 'Each citizen "gathers" an additional 5 gold per tick.',
+    cost: 10000000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresFeature: {
+      'Grown Children': 1
+    },
+    requiresTownStat: {
+      [`${TownStat.Retires}.${HeroJob.Thief}`]: 15
     }
   }
 ];
