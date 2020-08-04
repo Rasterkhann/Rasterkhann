@@ -33,6 +33,9 @@ jobs:
 
     - run: npm run changelog:generate:current
 
+    - name: Store Changelog in env
+      run: echo "::set-env name=CHANGELOG_DATA::${cat CHANGELOG_current.md | sed 's/\n/%0A/g'}"
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -41,7 +44,7 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
-        body: ${{ cat CHANGELOG-current.md }}
+        body: ${{ env.CHANGELOG_DATA }}
         draft: false
         prerelease: false
       
