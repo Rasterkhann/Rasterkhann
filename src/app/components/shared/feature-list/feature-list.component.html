@@ -42,7 +42,8 @@
                 (click)="game.upgradeBuildingFeature(town, buildingId, feature.name)" 
                 *ngIf="game.canUpgradeBuildingFeature(town, buildingId, feature.name)">Purchase</ion-button>
 
-    <ion-button slot="end"  
+    <ion-button slot="end" 
+                color="warning"
                 (click)="game.rushBuildingFeature(town, buildingId, feature.name)" 
                 *ngIf="game.canRushBuildingFeature(town, buildingId, feature.name)">Rush</ion-button>
   </ion-item>
