@@ -13,9 +13,9 @@
     </p>
 
     <ion-row>
-      <ng-container *ngFor="let statVal of book.actionOpts | keyvalue">
+      <ng-container *ngFor="let statVal of getActionOpts(book) | keyvalue">
         <ion-col *ngIf="showStat(statVal)" size="4">
-          {{ statNames[statVal.key] }} {{ statValue(statVal) }}
+          {{ getStatName(statVal.key) }} {{ statValue(statVal) }}
         </ion-col>
       </ng-container>
     </ion-row>

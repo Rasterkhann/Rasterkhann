@@ -25,7 +25,7 @@
     "changelog:generate": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "changelog:generate:current": "conventional-changelog -p angular -o CHANGELOG-current.md -r 2",
     "changelog:commit": "git commit CHANGELOG.md -m \"Update changelog\" || true",
-    "preversion": "npm run lint",
+    "preversion": "npm run lint && npm run build:full",
     "postversion": "npm run changelog:generate && npm run changelog:commit",
     "bump:patch": "npm version patch -m \"chore(release): Patch %s\"",
     "bump:minor": "npm version minor -m \"chore(release): Minor %s\"",

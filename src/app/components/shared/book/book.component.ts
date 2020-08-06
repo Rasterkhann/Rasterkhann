@@ -41,6 +41,14 @@ export class BookComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  getStatName(name: keyof HeroActionOpts): string {
+    return this.statNames[name];
+  }
+
+  getActionOpts(book: SkillBook): any {
+    return book.actionOpts;
+  }
+
   calculateBookLP(book: SkillBook): number {
     return skillBookOptsPoints(book.actionOpts);
   }
