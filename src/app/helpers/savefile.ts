@@ -39,21 +39,21 @@ export function beforeSerialize(obj: any): IGameState {
             .map((item: HeroItem) => ({ ...item, cost: (item.cost || 0).toString() }));
         });
 
-        hero.learnedSkills = [...hero.learnedSkills];
+        hero.learnedSkills = hero.learnedSkills ? [...hero.learnedSkills] : [];
         hero.learnedSkills.forEach((s, idx) => {
           hero.learnedSkills[idx] = { ...hero.learnedSkills[idx] };
           hero.learnedSkills[idx].cost = hero.learnedSkills[idx].cost.toString() as any;
         });
       });
 
-      town.ownedBooks = [...town.ownedBooks];
+      town.ownedBooks = town.ownedBooks ? [...town.ownedBooks] : [];
       town.ownedBooks.forEach((book: SkillBook, i: number) => {
         town.ownedBooks[i] = { ...book };
         book = town.ownedBooks[i];
         book.cost = book.cost.toString() as any;
       });
 
-      town.potentialBooks = [...town.potentialBooks];
+      town.potentialBooks = town.potentialBooks ? [...town.potentialBooks] : [];
       town.potentialBooks.forEach((book: SkillBook, i: number) => {
         town.potentialBooks[i] = { ...book };
         book = town.potentialBooks[i];
@@ -134,6 +134,7 @@ export function afterDeserialize(obj: IGameState): IGameState {
 
   } catch (e) {
     alert(`Your savefile could not be loaded correctly, the error is: ${e}`);
+    console.error(e); '';
   }
 
   return obj;
