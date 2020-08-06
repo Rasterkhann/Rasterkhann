@@ -3,7 +3,7 @@ import { random, sample, sum } from 'lodash';
 
 import { Hero, Adventure, GameTown, HeroStat, HeroActionTargetting,
   HeroAction, TriggerType, ItemType, CombatLog, Combat, HeroTrackedStat, Building } from '../interfaces';
-import { generateMonster, checkHeroLevelUp } from './hero';
+import { generateMonster, checkHeroLevelUp, convertHeroLearnedSkillsToSkills } from './hero';
 import { JobEffects } from '../static';
 import { addCombatLogToTown, doesTownHaveFeature, formatNumber,
   getCurrentStat, giveHeroEXP, giveHeroGold, increaseTrackedStat, getHeroTag, numAllocatedToBuilding } from './global';
@@ -158,6 +158,8 @@ class CombatTracker implements Combat {
       const bonusActions = getActionsForWeapon(weapon);
       potentialCreatureActions.push(...bonusActions);
     });
+
+    potentialCreatureActions.push(...convertHeroLearnedSkillsToSkills(creature));
 
     return potentialCreatureActions.filter(act => this.canTakeAction(creature, act, targetting));
   }

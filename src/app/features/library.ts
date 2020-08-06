@@ -372,4 +372,78 @@ export const LibraryFeatures: BuildingFeature[] = [
       ]
     }
   },
+  {
+    name: 'Shelf Space I',
+    description: 'You can hold onto more skill books at once.',
+    cost: 125000n,
+    upgradeTime: BuildingFeatureTime.XXXShort,
+    requiresLevel: 15
+  },
+  {
+    name: 'Shelf Space II',
+    description: 'You can hold onto more skill books at once.',
+    cost: 325000n,
+    upgradeTime: BuildingFeatureTime.XXShort,
+    requiresLevel: 25,
+    requiresFeature: {
+      'Shelf Space I': 1
+    }
+  },
+  {
+    name: 'Library Loan I',
+    description: 'You can peruse more skill books at once.',
+    cost: 125000n,
+    upgradeTime: BuildingFeatureTime.XXXShort,
+    requiresLevel: 20
+  },
+  {
+    name: 'Library Loan II',
+    description: 'You can peruse more skill books at once.',
+    cost: 325000n,
+    upgradeTime: BuildingFeatureTime.XXShort,
+    requiresLevel: 35,
+    requiresFeature: {
+      'Library Loan I': 1
+    }
+  },
+  {
+    name: 'Mage Books',
+    description: 'You can import books for Mages.',
+    cost: 125000n,
+    upgradeTime: BuildingFeatureTime.XXShort,
+    requiresLevel: 10,
+    requiresFeature: {
+      'Job: Mage': 1
+    }
+  },
+  {
+    name: 'Thief Books',
+    description: 'You can import books for Thieves.',
+    cost: 125000n,
+    upgradeTime: BuildingFeatureTime.XXShort,
+    requiresLevel: 10,
+    requiresFeature: {
+      'Job: Thief': 1
+    }
+  },
+  {
+    name: 'Cleric Books',
+    description: 'You can import books for Clerics.',
+    cost: 125000n,
+    upgradeTime: BuildingFeatureTime.XXShort,
+    requiresLevel: 10,
+    requiresFeature: {
+      'Job: Cleric': 1
+    }
+  },
+  {
+    name: 'Warrior Books',
+    description: 'You can import books for Warriors.',
+    cost: 125000n,
+    upgradeTime: BuildingFeatureTime.XXShort,
+    requiresLevel: 10,
+    requiresFeature: {
+      'Job: Warrior': 1
+    }
+  },
 ];

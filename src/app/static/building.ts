@@ -130,7 +130,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     name: 'Library',
     description: 'Research new traits and abilities for your heroes. Upgrades unlock new traits.',
     workerHelp: `Workers placed at the Library will increase the chance of replacing
-    a bad Trait with a good Trait when rolling new heroes.`,
+    a bad Trait with a good Trait when rolling new heroes. They also increases the level of your loaned skillbooks.`,
     requires: {
       [Building.GuildHall]: 5
     },

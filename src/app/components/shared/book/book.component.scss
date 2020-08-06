@@ -1,0 +1,13 @@
+
+h3 {
+  display: flex;
+}
+
+.buy-row {
+  display: flex;
+  align-items: center;
+
+  ion-button {
+    margin-left: 10px;
+  }
+}

@@ -6,7 +6,8 @@ export enum Version {
   TrackedStats = 2,
   Durability = 3,
   CleanRefs = 4,
-  HeroRetire = 5
+  HeroRetire = 5,
+  SkillBooks = 6
 }
 
 export const LatestVersion = max(Object.values(Version).filter(Number)) as number;

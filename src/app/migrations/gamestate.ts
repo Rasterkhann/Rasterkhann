@@ -193,6 +193,26 @@ export const migrations = [
         });
       });
 
+      state.version = Version.SkillBooks;
+
+      return state;
+    }
+  },
+  {
+    version: Version.SkillBooks,
+    key: 'gamestate',
+    versionKey: 'version',
+    migrate: (state: IGameState) => {
+      console.log('Savefile version 6...');
+
+      console.log('Setting up books arrays on town...');
+      state.towns.Rasterkhann.ownedBooks = state.towns.Rasterkhann.ownedBooks || [];
+      state.towns.Rasterkhann.potentialBooks = state.towns.Rasterkhann.potentialBooks || [];
+
+      console.log('Setting up book arrays on heroes...');
+      state.towns.Rasterkhann.recruitedHeroes.forEach(h => h.learnedSkills = h.learnedSkills || []);
+      state.towns.Rasterkhann.prospectiveHeroes.forEach(h => h.hero.learnedSkills = h.hero.learnedSkills || []);
+
       return state;
     }
   }

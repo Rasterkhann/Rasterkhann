@@ -20,7 +20,7 @@
 
   <ion-button slot="end" *ngIf="town.buildings[buildingId].level === 0" (click)="build()" [disabled]="!game.canUpgradeBuilding(town, buildingId)">Build</ion-button>
   <ion-button slot="end" *ngIf="town.buildings[buildingId].level > 0 && game.canUpgradeBuilding(town, buildingId)" (click)="build()">Upgrade</ion-button>
-  <ion-button slot="end" *ngIf="town.buildings[buildingId].level > 0 && game.canRushBuilding(town, buildingId)" (click)="rush()">Rush</ion-button>
+  <ion-button slot="end" color="warning" *ngIf="town.buildings[buildingId].level > 0 && game.canRushBuilding(town, buildingId)" (click)="rush()">Rush</ion-button>
 </ion-item>
 
 <ion-item *ngIf="town.showStage2UI && town.buildings[buildingId].level > 1">

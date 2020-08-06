@@ -20,6 +20,16 @@
   <ion-item *ngIf="traitGoodBonus > 0">
     Good Trait Override Chance: {{ traitGoodBonus | number:'1.0-3' }}%
   </ion-item>
+
+  <ion-list-header>Actions</ion-list-header>
+
+  <ion-item (click)="openBooksWindow()">
+    <ion-label>
+      View Books
+    </ion-label>
+
+    <ion-button slot="end">View</ion-button>
+  </ion-item>
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="library"></app-feature-list>

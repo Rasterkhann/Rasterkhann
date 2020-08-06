@@ -12,14 +12,21 @@ import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   HeroQueueRetire,
   HeroQueueDismissCancel,
   HeroQueueRetireCancel,
-  JobCrystalUpgradeStat} from '../actions';
+  JobCrystalUpgradeStat,
+  RerollBooks,
+  BookBuy,
+  HeroForgetSkill,
+  HeroLearnSkill,
+  BookDestroy
+} from '../actions';
 import { Building, GameTown, IGameState, BuildingFeature, Hero,
-  ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem, HeroTrackedStat, HeroJob, TownStat } from '../interfaces';
-import { doesTownHaveFeature, featureByName, getCurrentStat } from '../helpers';
+  ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem, HeroTrackedStat, HeroJob, TownStat, SkillBook } from '../interfaces';
+import { doesTownHaveFeature, featureByName, getCurrentStat, calculateMaxOwnedBooks } from '../helpers';
 import { BuildingData } from '../static';
 import { AdventureService } from './adventure.service';
 import { HeroService } from './hero.service';
 import { LoggerService } from './logger.service';
+import { BookService } from './book.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -31,6 +38,7 @@ export class GameService {
     private store: Store,
     private advCreator: AdventureService,
     private heroCreator: HeroService,
+    private bookCreator: BookService,
     public logger: LoggerService
   ) {
     this.init();
@@ -361,6 +369,52 @@ export class GameService {
   public upgradeJobCrystalStat(town: GameTown, job: HeroJob): void {
     if (this.getAvailableJobCrystals(town, job) <= 0) { return; }
     this.store.dispatch(new JobCrystalUpgradeStat(job));
+  }
+
+  // library functions
+  public canRerollBooks(town: GameTown): boolean {
+    const cost = this.bookRerollCost(town);
+    return town.gold >= cost;
+  }
+
+  public bookRerollCost(town: GameTown): bigint {
+    return BigInt(town.buildings[Building.Library].level * 100);
+  }
+
+  public rerollBooks(town: GameTown, doesCost = true): void {
+    if (doesCost) {
+      if (!this.canRerollBooks(town)) { return; }
+
+      const cost = this.bookRerollCost(town);
+      this.store.dispatch(new SpendGold(cost));
+    }
+
+    this.store.dispatch(new RerollBooks());
+  }
+
+  public canBuyBook(town: GameTown, book: SkillBook): boolean {
+    if (town.ownedBooks.length >= calculateMaxOwnedBooks(town)) { return false; }
+    return town.gold >= book.cost;
+  }
+
+  public buyBook(town: GameTown, book: SkillBook): void {
+    if (!this.canBuyBook(town, book)) { return; }
+
+    this.store.dispatch(new BookBuy(book)).subscribe(() => {
+      this.store.dispatch(new SpendGold(book.cost));
+    });
+  }
+
+  public destroySkill(book: SkillBook): void {
+    this.store.dispatch(new BookDestroy(book.uuid));
+  }
+
+  public learnSkill(hero: Hero, book: SkillBook): void {
+    this.store.dispatch(new HeroLearnSkill(hero.uuid, book.uuid));
+  }
+
+  public forgetSkill(hero: Hero, book: SkillBook): void {
+    this.store.dispatch(new HeroForgetSkill(hero.uuid, book.uuid));
   }
 
 }

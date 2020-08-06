@@ -12,6 +12,7 @@ export * from './itemtraits';
 export * from './library';
 export * from './potion';
 export * from './savefile';
+export * from './skillbook';
 export * from './town';
 export * from './trait';
 export * from './weapon';

@@ -8,7 +8,7 @@
   <app-guildhall  [town]="town" *ngSwitchCase="'guildhall'" [autoOpen]="win.autoOpen"></app-guildhall>
   <app-house      [town]="town" *ngSwitchCase="'house'"></app-house>
   <app-inn        [town]="town" *ngSwitchCase="'inn'"></app-inn>
-  <app-library    [town]="town" *ngSwitchCase="'library'"></app-library>
+  <app-library    [town]="town" *ngSwitchCase="'library'" [autoOpen]="win.autoOpen"></app-library>
   <app-townhall   [town]="town" *ngSwitchCase="'townhall'"></app-townhall>
   <app-watchtower [town]="town" *ngSwitchCase="'watchtower'"></app-watchtower>
   <app-workshop   [town]="town" *ngSwitchCase="'workshop'"></app-workshop>

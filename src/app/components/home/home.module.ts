@@ -39,12 +39,15 @@ import { ItemsModalComponent } from '../windows/bazaar/items-modal/items-modal.c
 import { CombatLogModalComponent } from '../windows/cave/combat-log-modal/combat-log-modal.component';
 import { TownStatsModalComponent } from '../windows/archives/stats-modal/stats-modal.component';
 import { WorkerAllocationModalComponent } from '../shared/building-info/allocation-modal/allocation-modal.component';
+import { SkillBookModalComponent } from '../windows/library/skill-modal/skill-modal.component';
 
 import { HeroComponent } from '../shared/hero/hero.component';
 import { HeroSpriteComponent } from '../shared/hero-sprite/hero-sprite.component';
 import { AdventureComponent } from '../shared/adventure/adventure.component';
 import { ItemComponent } from '../shared/item/item.component';
 import { HelpTextComponent } from '../shared/help-text/help-text.component';
+import { BookComponent } from '../shared/book/book.component';
+import { BookSpriteComponent } from '../shared/book-sprite/book-sprite.component';
 
 const modals = [
   GuildModalComponent,
@@ -53,7 +56,8 @@ const modals = [
   CombatLogModalComponent,
   TownStatsModalComponent,
   WorkerAllocationModalComponent,
-  GuildCrystalModalComponent
+  GuildCrystalModalComponent,
+  SkillBookModalComponent
 ];
 
 @NgModule({
@@ -93,6 +97,8 @@ const modals = [
     AdventureComponent,
     ItemComponent,
     HelpTextComponent,
+    BookComponent,
+    BookSpriteComponent,
 
     ...modals,
 

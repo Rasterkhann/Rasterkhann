@@ -70,3 +70,13 @@ export class HeroQueueRetireCancel {
   static readonly type = '[Hero] Cancel Queue Retire';
   constructor(public heroId: string) {}
 }
+
+export class HeroLearnSkill {
+  static readonly type = '[Hero] Learn Skill';
+  constructor(public heroId: string, public bookId: string) {}
+}
+
+export class HeroForgetSkill {
+  static readonly type = '[Hero] Forget Skill';
+  constructor(public heroId: string, public bookId: string) {}
+}

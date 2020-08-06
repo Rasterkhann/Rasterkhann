@@ -10,10 +10,12 @@ import {
   HeroRecruit, HeroDismiss, RerollAdventures, StartAdventure, HeroGainEXP, HeroGainGold, NotifyMessage, OptionToggle,
   ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation,
   HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding,
-  UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire, HeroQueueDismissCancel, HeroQueueRetireCancel, JobCrystalUpgradeStat
+  UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire, HeroQueueDismissCancel,
+  HeroQueueRetireCancel, JobCrystalUpgradeStat, RerollBooks, BookBuy, BookDestroy, HeroForgetSkill, HeroLearnSkill
 } from '../actions';
 import {
-  GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem, ItemType, HeroItem, HeroTrackedStat, TownStat
+  GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem,
+  ItemType, HeroItem, HeroTrackedStat, TownStat, SkillBook
 } from '../interfaces';
 import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
@@ -31,7 +33,9 @@ import {
   calculateSecondsUntilNextItem,
   heroBuyItemsBeforeAdventure, unequipItem, equipItem,
   getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp,
-  getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber, getBazaarLoanPercent, getBoostedStatsForJobType
+  getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber, getBazaarLoanPercent,
+  getBoostedStatsForJobType, getCurrentTownProspectiveBooks, getCurrentTownOwnedBooks,
+  calculateMaxPotentialBooks
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -39,6 +43,7 @@ import { BuildingData } from '../static';
 import { HeroService } from '../services/hero.service';
 import { AdventureService } from '../services/adventure.service';
 import { Subject } from 'rxjs';
+import { BookService } from '../services/book.service';
 
 const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
 const ADVENTURE_TIME_MULTIPLIER = environment.production ? 1 : 0.01;
@@ -101,6 +106,16 @@ export class GameState {
   }
 
   @Selector()
+  public static currentTownProspectiveBooks(state: IGameState): SkillBook[] {
+    return getCurrentTownProspectiveBooks(state);
+  }
+
+  @Selector()
+  public static currentTownOwnedBooks(state: IGameState): SkillBook[] {
+    return getCurrentTownOwnedBooks(state);
+  }
+
+  @Selector()
   public static currentTownNotifications(state: IGameState): NewsItem[] {
     return state.towns[state.currentTown].recentNews;
   }
@@ -113,7 +128,8 @@ export class GameState {
   constructor(
     private store: Store,
     private heroCreator: HeroService,
-    private advCreator: AdventureService
+    private advCreator: AdventureService,
+    private bookCreator: BookService
   ) {}
 
   // misc functions
@@ -908,6 +924,82 @@ export class GameState {
       stats.forEach(stat => {
         town.crystalBuffs[stat]++;
       });
+
+      return state;
+    });
+  }
+
+  // book functions
+  @Action(RerollBooks)
+  @ImmutableContext()
+  rerollBooks({ setState }: StateContext<IGameState>): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const potentialBooks: SkillBook[] = [];
+
+      const totalProspects = calculateMaxPotentialBooks(town);
+      for (let i = 0; i < totalProspects; i++) {
+        potentialBooks.push(this.bookCreator.generateBook(town));
+      }
+      state.towns[state.currentTown].potentialBooks = potentialBooks;
+      return state;
+    });
+  }
+
+  @Action(BookBuy)
+  @ImmutableContext()
+  buyBook({ setState }: StateContext<IGameState>, { book }: BookBuy): void {
+    setState((state: IGameState) => {
+
+      state.towns[state.currentTown].ownedBooks.push(book);
+      state.towns[state.currentTown].potentialBooks = state.towns[state.currentTown].potentialBooks
+        .filter(x => x.uuid !== book.uuid);
+
+      state.towns[state.currentTown].potentialBooks.push(this.bookCreator.generateBook(state.towns[state.currentTown]));
+
+      return state;
+    });
+  }
+
+  @Action(BookDestroy)
+  @ImmutableContext()
+  destroyBook({ setState }: StateContext<IGameState>, { bookId }: BookDestroy): void {
+    setState((state: IGameState) => {
+
+      state.towns[state.currentTown].ownedBooks = state.towns[state.currentTown].ownedBooks
+        .filter(f => f.uuid !== bookId);
+
+      return state;
+    });
+  }
+
+  @Action(HeroLearnSkill)
+  @ImmutableContext()
+  learnSkill({ setState }: StateContext<IGameState>, { bookId, heroId }: HeroLearnSkill): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      const bookRef = town.ownedBooks.find(b => b.uuid === bookId);
+      if (!bookRef) { return state; }
+
+      heroRef.learnedSkills.push(bookRef);
+      state.towns[state.currentTown].ownedBooks = state.towns[state.currentTown].ownedBooks.filter(b => b.uuid !== bookId);
+
+      return state;
+    });
+  }
+
+  @Action(HeroForgetSkill)
+  @ImmutableContext()
+  forgetSkill({ setState }: StateContext<IGameState>, { bookId, heroId }: HeroForgetSkill): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      heroRef.learnedSkills = heroRef.learnedSkills.filter(s => s.uuid !== bookId);
 
       return state;
     });

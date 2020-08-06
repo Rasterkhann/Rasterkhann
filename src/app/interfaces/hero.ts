@@ -3,6 +3,7 @@ import { Trait, TriggerType, TraitTriggerFunction } from './trait';
 import { ArmorWeight, HeroArmor, HeroItem, HeroWeapon, ItemType, WeaponSubType } from './item';
 import { Combat } from './adventure';
 import { Building } from './buildings';
+import { SkillBook } from './skillbook';
 
 export enum HeroJob {
   Adventurer = 'Adventurer',
@@ -113,6 +114,8 @@ export interface Hero {
   stats: Record<HeroStat, number>;
   currentStats: Record<HeroStat, number>;
   gear: HeroGear;
+
+  learnedSkills: SkillBook[];
 
   trackedStats: Record<HeroTrackedStat, number>;
 

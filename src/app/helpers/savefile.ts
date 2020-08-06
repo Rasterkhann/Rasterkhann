@@ -1,6 +1,6 @@
 
 import { Building, GameTown, IGameState, BuildingInfo,
-  ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob, LatestVersion } from '../interfaces';
+  ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob, LatestVersion, SkillBook } from '../interfaces';
 import { calculateOfflineAdventureProgress, calculateOfflineGold } from './town';
 import { getZeroStatBlock } from './hero';
 
@@ -38,6 +38,26 @@ export function beforeSerialize(obj: any): IGameState {
           (hero.gear[gearSlot] as any[]) = (hero.gear[gearSlot] as HeroItem[])
             .map((item: HeroItem) => ({ ...item, cost: (item.cost || 0).toString() }));
         });
+
+        hero.learnedSkills = [...hero.learnedSkills];
+        hero.learnedSkills.forEach((s, idx) => {
+          hero.learnedSkills[idx] = { ...hero.learnedSkills[idx] };
+          hero.learnedSkills[idx].cost = hero.learnedSkills[idx].cost.toString() as any;
+        });
+      });
+
+      town.ownedBooks = [...town.ownedBooks];
+      town.ownedBooks.forEach((book: SkillBook, i: number) => {
+        town.ownedBooks[i] = { ...book };
+        book = town.ownedBooks[i];
+        book.cost = book.cost.toString() as any;
+      });
+
+      town.potentialBooks = [...town.potentialBooks];
+      town.potentialBooks.forEach((book: SkillBook, i: number) => {
+        town.potentialBooks[i] = { ...book };
+        book = town.potentialBooks[i];
+        book.cost = book.cost.toString() as any;
       });
 
       town.stats = { ...town.stats };
@@ -77,6 +97,20 @@ export function afterDeserialize(obj: IGameState): IGameState {
               i.cost = BigInt(i.cost || 0);
             });
           });
+        });
+
+        town.recruitedHeroes.forEach(h => {
+          h.learnedSkills.forEach(s => {
+            s.cost = BigInt(s.cost || 0);
+          });
+        });
+
+        town.ownedBooks.forEach((book: SkillBook) => {
+          book.cost = BigInt(book.cost || 0);
+        });
+
+        town.potentialBooks.forEach((book: SkillBook) => {
+          book.cost = BigInt(book.cost || 0);
         });
 
         Object.keys(town.stats || {}).forEach((majorKey: TownStat) => {
@@ -130,6 +164,9 @@ export function createBasicTown(name: string): GameTown {
 
     activeAdventures: [],
     potentialAdventures: [],
+
+    ownedBooks: [],
+    potentialBooks: [],
 
     recentNews: [],
     combatLogs: [],

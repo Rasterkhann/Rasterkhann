@@ -1,10 +1,12 @@
 
 import { shuffle, take, random, noop, uniq, sample } from 'lodash';
 import { v4 as uuid } from 'uuid';
+import * as JobActions from '../static/actions';
+import * as JobActionMessages from '../static/action-messages';
 
 import { Trait, HeroJob, GameTown, Hero, HeroStat, TriggerType, TraitEffect,
   Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon,
-  WeaponSubType, HeroTrackedStat, ArmorWeight, HeroArmor, ArmorSubTypeWeight } from '../interfaces';
+  WeaponSubType, HeroTrackedStat, ArmorWeight, HeroArmor, ArmorSubTypeWeight, HeroAction, HeroActionStringReplacer } from '../interfaces';
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
@@ -314,6 +316,8 @@ export function generateHero(town: GameTown, level?: number): Hero {
     queueDismissed: false,
     queueRetired: false,
 
+    learnedSkills: [],
+
     job,
     traits,
 
@@ -483,4 +487,12 @@ export function getTownHeroByUUID(town: GameTown, checkUUID: string): Hero | und
 
 export function getBoostedStatsForJobType(job: HeroJob): HeroStat[] {
   return JobEffects[job].crystalStats;
+}
+
+export function convertHeroLearnedSkillsToSkills(hero: Hero): HeroAction[] {
+  return hero.learnedSkills.map(s => {
+    const calledAction = (JobActions as any)[s.actionCaller];
+    const calledMessage: HeroActionStringReplacer = (JobActionMessages as any)[s.messageCaller];
+    return calledAction(calledMessage, s.actionOpts);
+  });
 }

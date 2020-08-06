@@ -3,12 +3,13 @@ import { ModalController, AlertController } from '@ionic/angular';
 
 import { Select } from '@ngxs/store';
 
+import { sum } from 'lodash';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 
 import { GameState } from '../../../../states';
-import { ProspectiveHero, Hero, GameTown, HeroStat, Trait, ItemType, HeroItem } from '../../../../interfaces';
+import { ProspectiveHero, Hero, GameTown, HeroStat, Trait, ItemType, HeroItem, SkillBook } from '../../../../interfaces';
 import { GameService } from '../../../../services/game.service';
-import { allEquippableArmorClasses, allEquippableWeapons, calculateHeroMaxTotal, formatNumber } from '../../../../helpers';
+import { allEquippableArmorClasses, allEquippableWeapons, calculateHeroMaxTotal, formatNumber, skillBookOptsPoints } from '../../../../helpers';
 import { JobEffects, TraitEffects } from '../../../../static';
 import { HeroService } from '../../../../services/hero.service';
 
@@ -248,6 +249,18 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   viewProspectiveHero(prosHero: ProspectiveHero): void {
     this.viewingHero = prosHero.hero;
     this.viewingProspectiveHero = prosHero;
+  }
+
+  skillBookLP(book: SkillBook): number {
+    return skillBookOptsPoints(book.actionOpts);
+  }
+
+  totalHeroLPAvailable(hero: Hero): number {
+    return hero.stats[HeroStat.LVL] - sum(hero.learnedSkills.map(s => this.skillBookLP(s)));
+  }
+
+  learnableSkills(hero: Hero, books: SkillBook[]): SkillBook[] {
+    return books.filter(b => !b.requiredJobs || b.requiredJobs.includes(hero.job));
   }
 
 }

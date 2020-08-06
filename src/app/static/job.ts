@@ -40,20 +40,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
     triggers: {},
     combatTriggers: {},
     actions: (hero: Hero) => {
-      const level = getCurrentStat(hero, HeroStat.LVL);
       const base = [JobActions.Attack(JobActionMessages.AttackMessage)];
-
-      if (level >= 25) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 3, staCost: 5, times: 2 }));
-      }
-
-      if (level >= 75) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 7, staCost: 9, times: 3 }));
-      }
-
-      if (level >= 150) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 11, staCost: 13, times: 4 }));
-      }
 
       return base;
     },
@@ -92,35 +79,10 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [TriggerType.PostCombat]: [JobActions.HealSomeOrAllPercent(JobActionMessages.HealMessage, { pct: 10 })]
     },
     actions: (hero: Hero) => {
-      const level = getCurrentStat(hero, HeroStat.LVL);
       const base = [
         JobActions.Attack(JobActionMessages.AttackMessage),
         JobActions.Heal(JobActionMessages.HealMessage)
       ];
-
-      if (level >= 25) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 5, staCost: 7, defMultiplier: 0.9 }));
-      }
-
-      if (level >= 50) {
-        base.push(JobActions.HealSomeOrAll(JobActionMessages.HealMessage, { targets: 2 }));
-      }
-
-      if (level >= 75) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 14, staCost: 16, defMultiplier: 0.8 }));
-      }
-
-      if (level >= 100) {
-        base.push(JobActions.HealSomeOrAll(JobActionMessages.HealMessage, { targets: 2, defMultiplier: 1.1 }));
-      }
-
-      if (level >= 125) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 23, staCost: 25, defMultiplier: 0.65 }));
-      }
-
-      if (level >= 150) {
-        base.push(JobActions.HealSomeOrAll(JobActionMessages.HealMessage, { targets: 3, defMultiplier: 1.25 }));
-      }
 
       return base;
     },
@@ -159,35 +121,10 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [TriggerType.PreCombat]: [JobActions.AttackSomeOrAllPercent(JobActionMessages.FireballMessage, { pct: 15 })]
     },
     actions: (hero: Hero) => {
-      const level = getCurrentStat(hero, HeroStat.LVL);
       const base = [
         JobActions.Attack(JobActionMessages.AttackMessage),
         JobActions.AttackSomeOrAllDiminishing(JobActionMessages.MagicMissileMessage, { targets: 2 })
       ];
-
-      if (level >= 25) {
-        base.push(JobActions.AttackSomeOrAllDiminishing(JobActionMessages.MagicMissileMessage, { targets: 3 }));
-      }
-
-      if (level >= 50) {
-        base.push(JobActions.AttackSomeOrAllPercent(JobActionMessages.AcidSprayMessage, { pct: 5, targets: 2 }));
-      }
-
-      if (level >= 75) {
-        base.push(JobActions.AttackSomeOrAll(JobActionMessages.MagicMissileMessage, { targets: 2 }));
-      }
-
-      if (level >= 100) {
-        base.push(JobActions.AttackSomeOrAllPercent(JobActionMessages.AcidSprayMessage, { pct: 10, targets: 2 }));
-      }
-
-      if (level >= 125) {
-        base.push(JobActions.AttackSomeOrAll(JobActionMessages.MagicMissileMessage, { targets: 3 }));
-      }
-
-      if (level >= 150) {
-        base.push(JobActions.AttackSomeOrAllPercent(JobActionMessages.AcidSprayMessage, { pct: 10, targets: 3 }));
-      }
 
       return base;
     },
@@ -226,38 +163,7 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [TriggerType.Victory]: [JobActions.EarnGold(JobActionMessages.FindGoldMessage, { gold: 50 })]
     },
     actions: (hero: Hero) => {
-      const level = getCurrentStat(hero, HeroStat.LVL);
       const base = [JobActions.Attack(JobActionMessages.AttackMessage)];
-
-      if (level >= 25) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, {
-          spCost: 3, staCost: 5, defMultiplier: 0.95, atkMultiplier: 1.05
-        }));
-      }
-
-      if (level >= 50) {
-        base.push(JobActions.Mug(JobActionMessages.MugMessage, {
-          spCost: 7, staCost: 5, gold: 25
-        }));
-      }
-
-      if (level >= 75) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, {
-          spCost: 13, staCost: 15, defMultiplier: 0.9, atkMultiplier: 1.1
-        }));
-      }
-
-      if (level >= 100) {
-        base.push(JobActions.Mug(JobActionMessages.MugMessage, {
-          spCost: 17, staCost: 15, gold: 50
-        }));
-      }
-
-      if (level >= 150) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, {
-          spCost: 23, staCost: 25, defMultiplier: 0.8, atkMultiplier: 1.2
-        }));
-      }
 
       return base;
     },
@@ -296,35 +202,10 @@ export const JobEffects: Record<HeroJob, HeroJobStatic> = {
       [TriggerType.PreCombat]: [JobActions.AttackSinglePercent(JobActionMessages.CleaveMessage, { pct: 30 })]
     },
     actions: (hero: Hero) => {
-      const level = getCurrentStat(hero, HeroStat.LVL);
       const base = [
         JobActions.Attack(JobActionMessages.AttackMessage),
         JobActions.AttackSinglePercent(JobActionMessages.HamstringMessage, { pct: 5 })
       ];
-
-      if (level >= 25) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 3, staCost: 5, atkMultiplier: 1.15 }));
-      }
-
-      if (level >= 50) {
-        base.push(JobActions.AttackSinglePercent(JobActionMessages.HamstringMessage, { spCost: 7, staCost: 10, pct: 10 }));
-      }
-
-      if (level >= 75) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 7, staCost: 9, atkMultiplier: 1.3 }));
-      }
-
-      if (level >= 100) {
-        base.push(JobActions.AttackSinglePercent(JobActionMessages.HamstringMessage, { spCost: 15, staCost: 20, pct: 15 }));
-      }
-
-      if (level >= 125) {
-        base.push(JobActions.Attack(JobActionMessages.AttackMessage, { spCost: 7, staCost: 9, atkMultiplier: 1.5 }));
-      }
-
-      if (level >= 150) {
-        base.push(JobActions.AttackSinglePercent(JobActionMessages.HamstringMessage, { spCost: 30, staCost: 35, pct: 20 }));
-      }
 
       return base;
     },

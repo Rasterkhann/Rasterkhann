@@ -124,10 +124,20 @@
         </ion-label>
       </ion-item>
   
-      <ng-container *ngFor="let type of itemTypes">
-        <ion-list-header>{{ type }}s</ion-list-header>
-        <ion-item *ngIf="getHeroGearTypeItems(viewingHero, type).length === 0">No {{ type.toLowerCase() }}s.</ion-item>
-        <app-item *ngFor="let item of getHeroGearTypeItems(viewingHero, type)" [item]="item" [showStatus]="type !== 'Potion'"></app-item>
+      <ng-container *ngIf="!viewingProspectiveHero">
+        <ng-container *ngFor="let type of itemTypes">
+          <ion-list-header>{{ type }}s</ion-list-header>
+          <ion-item *ngIf="getHeroGearTypeItems(viewingHero, type).length === 0">No {{ type.toLowerCase() }}s.</ion-item>
+          <app-item *ngFor="let item of getHeroGearTypeItems(viewingHero, type)" [item]="item" [showStatus]="type !== 'Potion'"></app-item>
+        </ng-container>
+
+        <ion-list-header>Learned Skills ({{ totalHeroLPAvailable(viewingHero) }}/{{ viewingHero.stats.lvl }} LP)</ion-list-header>
+        <ion-item *ngIf="viewingHero.learnedSkills.length === 0">No learned skills.</ion-item>
+        <app-book *ngFor="let book of viewingHero.learnedSkills" [book]="book" [hero]="viewingHero" [town]="town" showForget="true"></app-book>
+  
+        <ion-list-header>Learnable Skills</ion-list-header>
+        <ion-item *ngIf="learnableSkills(viewingHero, town.ownedBooks).length === 0">No learnable skills.</ion-item>
+        <app-book *ngFor="let book of learnableSkills(viewingHero, town.ownedBooks)" [book]="book" [hero]="viewingHero" [town]="town" showLearn="true" [buttonDisabled]="totalHeroLPAvailable(viewingHero) - skillBookLP(book) < 0"></app-book>
       </ng-container>
   
       <ion-list-header [class.ion-hide]="viewingProspectiveHero">Tracked Statistics</ion-list-header>

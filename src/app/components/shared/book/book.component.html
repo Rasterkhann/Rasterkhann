@@ -1,0 +1,39 @@
+
+<ion-item>
+  <app-book-sprite slot="start" class="ion-margin-start" [sprite]="book.sprite"></app-book-sprite>
+
+  <ion-label class="ion-text-wrap">
+    <h3>
+      {{ book.name }} ({{ calculateBookLP(book) }} LP)
+    </h3>
+
+    <p>Usable By: {{ book.requiredJobs ? book.requiredJobs.join(', ') : 'Anyone' }}</p>
+    <p class="buy-row" *ngIf="showCost">
+      Purchase Price: {{ book.cost | bignum }} gold
+    </p>
+
+    <ion-row>
+      <ng-container *ngFor="let statVal of book.actionOpts | keyvalue">
+        <ion-col *ngIf="showStat(statVal)" size="4">
+          {{ statNames[statVal.key] }} {{ statValue(statVal) }}
+        </ion-col>
+      </ng-container>
+    </ion-row>
+  </ion-label>
+
+  <ion-button slot="end" *ngIf="showBuy" [disabled]="buttonDisabled" (click)="buyBook()">
+    Buy
+  </ion-button>
+
+  <ion-button slot="end" *ngIf="showLearn" [disabled]="buttonDisabled" (click)="learnSkill()">
+    Learn
+  </ion-button>
+
+  <ion-button slot="end" *ngIf="showForget" [disabled]="buttonDisabled" (click)="forgetSkill()" color="warning">
+    Forget
+  </ion-button>
+
+  <ion-button slot="end" *ngIf="showDestroy" [disabled]="buttonDisabled" (click)="destroyBook()" color="warning">
+    Destroy
+  </ion-button>
+</ion-item>

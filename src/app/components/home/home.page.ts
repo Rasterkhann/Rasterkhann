@@ -8,7 +8,7 @@ import { sample } from 'lodash';
 import { GameService } from '../../services/game.service';
 import { GameState } from '../../states';
 import { GameTown, ProspectiveHero, Adventure, GameOption, Building,
-  IGameState, ItemType, ItemPassedOverThreshold } from '../../interfaces';
+  IGameState, ItemType, ItemPassedOverThreshold, SkillBook } from '../../interfaces';
 import { getCurrentTownFromState, getCurrentTownCanDoAnyAdventures } from '../../helpers';
 import { environment } from '../../../environments/environment';
 
@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
   @Select(GameState.currentTown) currentTown$: Observable<GameTown>;
   @Select(GameState.currentTownProspectiveHeroes) prospectiveHeroes$: Observable<ProspectiveHero[]>;
   @Select(GameState.currentTownPotentialAdventures) potentialAdventures$: Observable<Adventure[]>;
+  @Select(GameState.currentTownProspectiveBooks) prospectiveBooks$: Observable<SkillBook[]>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationHeroes]) autoHeroes$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationBuildings]) autoBuildings$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationAdventures]) autoAdventures$: Observable<boolean>;
@@ -51,6 +52,16 @@ export class HomePage implements OnInit {
       if (adventures && adventures.length > 0) { return; }
 
       this.game.rerollAdventures(town, false);
+    });
+
+    // if we have no potential books, let's add some
+    forkJoin({
+      town: this.currentTown$.pipe(first()),
+      books: this.prospectiveBooks$.pipe(first())
+    }).subscribe(({ town, books }) => {
+      if (books && books.length > 0) { return; }
+
+      this.game.rerollBooks(town, false);
     });
 
     this.watchVersion();

@@ -1,5 +1,5 @@
 
-import { IGameState, GameTown, Hero, ProspectiveHero, Building, Adventure, ItemType, HeroItem } from '../interfaces';
+import { IGameState, GameTown, Hero, ProspectiveHero, Building, Adventure, ItemType, HeroItem, SkillBook } from '../interfaces';
 import { calculateMaxActiveAdventures, tickAdventure } from './adventure';
 import { canHeroGoOnAdventure } from './hero';
 import { doesTownHaveFeature, numAllocatedToBuilding } from './global';
@@ -55,6 +55,16 @@ export function getCurrentTownRecruitedHeroes(state: IGameState): Hero[] {
 export function getCurrentTownProspectiveHeroes(state: IGameState): ProspectiveHero[] {
   const town = getCurrentTownFromState(state);
   return town.prospectiveHeroes;
+}
+
+export function getCurrentTownOwnedBooks(state: IGameState): SkillBook[] {
+  const town = getCurrentTownFromState(state);
+  return town.ownedBooks;
+}
+
+export function getCurrentTownProspectiveBooks(state: IGameState): SkillBook[] {
+  const town = getCurrentTownFromState(state);
+  return town.potentialBooks;
 }
 
 export function getCurrentTownActiveAdventures(state: IGameState): Adventure[] {

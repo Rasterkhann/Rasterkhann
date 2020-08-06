@@ -3,6 +3,7 @@ import { Building, BuildingInfo } from './buildings';
 import { Hero, ProspectiveHero, HeroJob, HeroStat } from './hero';
 import { Adventure, CombatLog } from './adventure';
 import { HeroItem, ItemType } from './item';
+import { SkillBook } from './skillbook';
 
 export enum TownStat {
   Retires = 'retires',
@@ -33,6 +34,9 @@ export interface GameTown {
 
   activeAdventures: Adventure[];
   potentialAdventures: Adventure[];
+
+  ownedBooks: SkillBook[];
+  potentialBooks: SkillBook[];
 
   recentNews: NewsItem[];
 
