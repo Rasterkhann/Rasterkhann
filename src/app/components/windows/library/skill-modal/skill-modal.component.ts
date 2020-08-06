@@ -24,7 +24,6 @@ export class SkillBookModalComponent implements OnDestroy, OnInit {
 
   constructor(
     private modal: ModalController,
-    private alert: AlertController,
     public game: GameService,
     public heroCreator: HeroService
   ) { }

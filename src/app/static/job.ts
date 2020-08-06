@@ -3,7 +3,6 @@ import { species } from 'fantastical';
 import { random } from 'lodash';
 
 import { HeroJobStatic, HeroJob, HeroStat, TriggerType, WeaponSubType, Hero, ArmorWeight } from '../interfaces';
-import { getCurrentStat } from '../helpers/global';
 
 import * as JobActions from './actions';
 import * as JobActionMessages from './action-messages';

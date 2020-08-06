@@ -2,7 +2,7 @@
 import { v4 as uuid } from 'uuid';
 import { sample, sum, random } from 'lodash';
 
-import { GameTown, HeroActionOpts, SkillBook, Building, SkillBookPreset, HeroJob } from '../interfaces';
+import { GameTown, HeroActionOpts, SkillBook, Building, SkillBookPreset } from '../interfaces';
 import { calculateGlobalItemCostMultiplier, doesTownHaveFeature } from './global';
 import { SKILL_BOOK_PRESETS } from '../static/skill-presets';
 

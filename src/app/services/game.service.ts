@@ -26,7 +26,7 @@ import { BuildingData } from '../static';
 import { AdventureService } from './adventure.service';
 import { HeroService } from './hero.service';
 import { LoggerService } from './logger.service';
-import { BookService } from './book.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,7 +38,6 @@ export class GameService {
     private store: Store,
     private advCreator: AdventureService,
     private heroCreator: HeroService,
-    private bookCreator: BookService,
     public logger: LoggerService
   ) {
     this.init();
