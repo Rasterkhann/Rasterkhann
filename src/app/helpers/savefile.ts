@@ -91,7 +91,7 @@ export function afterDeserialize(obj: IGameState): IGameState {
           town.itemsForSale[itemType].forEach(item => item.cost = BigInt(item.cost));
         });
 
-        town.recruitedHeroes.forEach((hero: Hero) => {
+        (town.recruitedHeroes || []).forEach((hero: Hero) => {
           Object.keys(hero.gear).forEach((gearSlot: ItemType) => {
             hero.gear[gearSlot].forEach((i: HeroItem) => {
               i.cost = BigInt(i.cost || 0);
@@ -99,17 +99,17 @@ export function afterDeserialize(obj: IGameState): IGameState {
           });
         });
 
-        town.recruitedHeroes.forEach(h => {
-          h.learnedSkills.forEach(s => {
+        (town.recruitedHeroes || []).forEach(h => {
+          (h.learnedSkills || []).forEach(s => {
             s.cost = BigInt(s.cost || 0);
           });
         });
 
-        town.ownedBooks.forEach((book: SkillBook) => {
+        (town.ownedBooks || []).forEach((book: SkillBook) => {
           book.cost = BigInt(book.cost || 0);
         });
 
-        town.potentialBooks.forEach((book: SkillBook) => {
+        (town.potentialBooks || []).forEach((book: SkillBook) => {
           book.cost = BigInt(book.cost || 0);
         });
 
