@@ -1,3 +1,12 @@
+## [0.7.4](https://github.com/seiyria/Rasterkhann/compare/v0.7.3...v0.7.4) (2020-08-06)
+
+
+### Features
+
+* **skills:** basic hero skill implementation - they can be bought, destroyed, learned, and forgotten. more to come. ([7afbf73](https://github.com/seiyria/Rasterkhann/commit/7afbf7382327f7cca564dd54993c32ed15813805)), closes [#85](https://github.com/seiyria/Rasterkhann/issues/85)
+
+
+
 ## [0.7.3](https://github.com/seiyria/Rasterkhann/compare/v0.7.2...v0.7.3) (2020-08-04)
 
 
