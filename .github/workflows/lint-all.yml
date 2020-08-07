@@ -33,4 +33,4 @@ jobs:
       id: changelog
       run: |
         echo "::debug::Dumping Changelog"
-        echo "::debug::$(cat CHANGELOG-current.md | sed 's/\n/%0A/g')"
+        echo "::debug::$(cat CHANGELOG-current.md | sed 's/\r\n/%0A/g')"
