@@ -23,27 +23,16 @@ jobs:
     
     - run: npm install
 
-    - run: npm run changelog:generate:current
+    - run: npm run changelog:generate
 
     - uses: pCYSl5EDgo/cat@master
       id: test
       with:
-        path: CHANGELOG-current.md
+        path: CHANGELOG.md
 
     - name: Display Tentative Changelog
       id: changelog
       env:
         TEXT: ${{ steps.test.outputs.text }}
       run: |
-        CHANGELOG="$(cat CHANGELOG-current.md)"
-        CHANGELOG="${CHANGELOG//'%'/'%25'}"
-        CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
-        CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
-        echo "$CHANGELOG"
-        
-        echo "::debug::Displaying Changelog"
-        echo "::debug::$CHANGELOG"
-
         echo "$TEXT"
-
-        printenv

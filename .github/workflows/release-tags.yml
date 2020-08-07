@@ -20,9 +20,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - uses: olegtarasov/get-tag@v2
-      id: tagName
-    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -35,19 +32,14 @@ jobs:
     - run: npm run build:electron:full:demo
 
     - run: npm run changelog:generate:current
+    
+    - uses: olegtarasov/get-tag@v2
+      id: loadTagName
 
-    - name: Store Changelog in ENV
-      id: changelog
-      run: |
-        changelog="$(cat CHANGELOG-current.md)"
-        changelog="${changelog//'%'/'%25'}"
-        changelog="${changelog//$'\n'/'%0A'}"
-        changelog="${changelog//$'\r'/'%0D'}"
-
-        echo "::debug::Setting Changelog"
-        echo "::debug::$changelog"
-        echo "$changelog"
-        echo "::set-output name=changelog::$changelog"
+    - uses: pCYSl5EDgo/cat@master
+      id: loadChangelog
+      with:
+        path: CHANGELOG-current.md
 
     - name: Create Release
       id: create_release
@@ -57,7 +49,7 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
-        body: ${{ steps.changelog.outputs.changelog }}
+        body: ${{ steps.loadChangelog.outputs.text }}
         draft: false
         prerelease: false
       
@@ -81,8 +73,8 @@ jobs:
         app-id: ${{ secrets.REDDIT_APP_ID }}
         app-secret: ${{ secrets.REDDIT_APP_SECRET }}
         subreddit: Rasterkhann
-        title: Rasterkhann ${{ steps.tagName.outputs.tag }} Update
-        comment: ${{ steps.changelog.outputs.changelog }}
+        title: Rasterkhann ${{ steps.loadTagName.outputs.tag }} Update
+        comment: ${{ steps.loadChangelog.outputs.text }}
         url: ${{ steps.create_release.outputs.html_url }}
 
     #- name: Upload Release Asset (Itch-Windows)
