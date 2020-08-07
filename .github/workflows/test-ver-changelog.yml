@@ -1,0 +1,53 @@
+name: Fuck This Shit
+
+on: [push]
+
+jobs:
+  build:
+    name: For Real
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: olegtarasov/get-tag@v2
+      id: tagName
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - run: npm install
+
+    - run: npm run changelog:generate:current
+
+    - name: Display Tentative Changelog
+      id: changelog
+      run: |
+        CHANGELOG="$(cat CHANGELOG-current.md)"
+        CHANGELOG="${CHANGELOG//'%'/'%25'}"
+        CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+        CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
+        echo "$CHANGELOG"
+        echo "${{ steps.tagName.outputs.tag }}"
+        
+        echo "::debug::Displaying Version/Changelog"
+        echo "::debug::${{ steps.tagName.outputs.tag }}"
+        echo "::debug::$CHANGELOG"
+
+      - name: send custom message with args
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          args: |
+            ver ${{ steps.tagName.outputs.tag }}
+
+            ${{ env.CHANGELOG }}

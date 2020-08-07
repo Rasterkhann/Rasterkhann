@@ -26,18 +26,3 @@ jobs:
     - run: npm run lint
       
     - run: npm run build:full
-
-    - run: npm run changelog:generate:current
-
-    - name: Display Tentative Changelog
-      id: changelog
-      run: |
-        CHANGELOG="$(cat CHANGELOG-current.md)"
-        CHANGELOG="${CHANGELOG//'%'/'%25'}"
-        CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
-        CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
-        echo "$CHANGELOG"
-        
-        echo "::debug::Displaying Version/Changelog"
-        echo "::debug::$(GITHUB_REF#refs/*/)"
-        echo "::debug::$CHANGELOG"
