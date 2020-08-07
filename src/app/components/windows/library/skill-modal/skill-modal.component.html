@@ -5,6 +5,11 @@
       Skill Books
     </ion-title>
     <ion-buttons slot="end">
+      <ng-container *ngIf="currentTown$ | async as town">
+        <ion-button class="ion-hide-xl-down" color="secondary" [disabled]="!game.canRerollBooks(town)" (click)="rerollBooks(town)">
+          Reroll for {{ game.bookRerollCost(town) | bignum }} gold
+        </ion-button>
+      </ng-container>
       <ion-button (click)="dismiss()">
         Close
       </ion-button>
@@ -31,7 +36,7 @@
           <ion-list-header>
             <ion-label>Books Available For Purchase</ion-label>
     
-            <ion-button class="ion-margin-end thin-button" 
+            <ion-button class="ion-margin-end thin-button ion-hide-xl-up" 
                         fill="outline" 
                         [disabled]="!game.canRerollBooks(town)"
                         (click)="rerollBooks(town)">Reroll for {{ game.bookRerollCost(town) | bignum }} gold</ion-button>

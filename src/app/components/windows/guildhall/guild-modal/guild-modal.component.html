@@ -5,6 +5,11 @@
       Guild Recruits
     </ion-title>
     <ion-buttons slot="end">
+      <ng-container *ngIf="currentTown$ | async as town">
+        <ion-button *ngIf="!viewingHero" class="ion-hide-xl-down" color="secondary" [disabled]="!game.canRerollHeroes(town)" (click)="rerollHeroes(town)">
+          Reroll for {{ game.heroRerollCost(town) | bignum }} gold
+        </ion-button>
+      </ng-container>
       <ion-button *ngIf="!viewingProspectiveHero && viewingHero && !viewingHero.queueDismissed && !viewingHero.queueRetired" color="danger" (click)="dismissCurrentHero()">
         Dismiss
       </ion-button>
@@ -39,7 +44,7 @@
         <ion-list>
           <ion-list-header>
             <ion-label>Potential Hero Recruits</ion-label>
-            <ion-button class="ion-margin-end thin-button" 
+            <ion-button class="ion-margin-end thin-button ion-hide-xl-up" 
                         fill="outline" 
                         [disabled]="!game.canRerollHeroes(town)"
                         (click)="rerollHeroes(town)">Reroll for {{ game.heroRerollCost(town) | bignum }} gold</ion-button>
