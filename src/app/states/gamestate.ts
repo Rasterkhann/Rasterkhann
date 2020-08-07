@@ -11,7 +11,8 @@ import {
   ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation,
   HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding,
   UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire, HeroQueueDismissCancel,
-  HeroQueueRetireCancel, JobCrystalUpgradeStat, RerollBooks, BookBuy, BookDestroy, HeroForgetSkill, HeroLearnSkill, ChangeWorkerAutoAllocationBuilding
+  HeroQueueRetireCancel, JobCrystalUpgradeStat, RerollBooks, BookBuy, BookDestroy,
+  HeroForgetSkill, HeroLearnSkill, ChangeWorkerAutoAllocationBuilding
 } from '../actions';
 import {
   GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem,
@@ -921,7 +922,6 @@ export class GameState {
   @ImmutableContext()
   changeAutoAllocateBuilding({ setState }: StateContext<IGameState>, { building }: ChangeWorkerAutoAllocationBuilding): void {
     setState((state: IGameState) => {
-      const town = getCurrentTownFromState(state);
       state.towns[state.currentTown].allocateWorkersToBuilding = building;
       return state;
     });
