@@ -89,7 +89,7 @@ export function generateWeapon(town: GameTown): HeroWeapon {
     boostStatRef.value += 1;
   }
 
-  let cost = calculateItemCost(town, boostStats, 1n) / 2n;
+  let cost = calculateItemCost(town, boostStats, 4n);
   if (cost < 0n) { cost = 1000n; }
 
   let durability = calculateItemDurability(town, boostStats);
