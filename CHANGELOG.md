@@ -1,3 +1,12 @@
+## [0.7.8](https://github.com/seiyria/Rasterkhann/compare/v0.7.7...v0.7.8) (2020-08-07)
+
+
+### Features
+
+* **ui:** move reroll buttons to modal headers on larger screens ([13e449f](https://github.com/seiyria/Rasterkhann/commit/13e449f64315d625ae5cead48ec4f8bb3b5ad967))
+
+
+
 ## [0.7.7](https://github.com/seiyria/Rasterkhann/compare/v0.7.6...v0.7.7) (2020-08-07)
 
 
