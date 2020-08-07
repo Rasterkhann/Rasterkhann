@@ -1,3 +1,12 @@
+## [0.7.7](https://github.com/seiyria/Rasterkhann/compare/v0.7.6...v0.7.7) (2020-08-07)
+
+
+### Features
+
+* **ui:** some modals are split in half to make digesting information much easier ([e614cfb](https://github.com/seiyria/Rasterkhann/commit/e614cfb2ce5ae08bfc751439285581152da28931))
+
+
+
 ## [0.7.6](https://github.com/seiyria/Rasterkhann/compare/v0.7.5...v0.7.6) (2020-08-07)
 
 
