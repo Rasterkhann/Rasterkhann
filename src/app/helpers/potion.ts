@@ -120,7 +120,7 @@ export function generatePotion(town: GameTown): HeroItem {
     type: ItemType.Potion,
     sprite: pickPotionSprite(chosenStatCombo, itemTier),
     boostStats,
-    cost: calculateItemCost(town, boostStats, 1n) / 2n,
+    cost: calculateItemCost(town, boostStats, 1n) / 5n,
     timesPassedOver: 0,
     curDurability: 1,
     maxDurability: 1
