@@ -34,10 +34,14 @@ jobs:
     - run: npm run changelog:generate:current
 
     - name: Store Changelog in ENV
-      run: echo "::set-env name=CHANGELOG_DATA::${cat CHANGELOG_current.md | sed 's/\n/%0A/g'}"
+      id: changelog
+      run: |
+        echo "::set-output name=changelog::${cat CHANGELOG_current.md | sed 's/\n/%0A/g'}"
 
     - name: Store Version in ENV
-      run: echo "::set-env name=VERSION_DATA::${git describe --abbrev=0}"
+      id: version
+      run: |
+        echo "::set-output name=version::${git describe --abbrev=0}"
 
     - name: Create Release
       id: create_release
@@ -47,7 +51,7 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
-        body: ${{ env.CHANGELOG_DATA }}
+        body: ${{ steps.changelog.outputs.changelog }}
         draft: false
         prerelease: false
 
@@ -58,8 +62,8 @@ jobs:
         password: ${{ secrets.REDDIT_PASSWORD }}
         app-id: ${{ secrets.REDDIT_APP_ID }}
         app-secret: ${{ secrets.REDDIT_APP_SECRET }}
-        subreddit: Rasterkhann ${{ env.VERSION_DATA }}
-        comment: ${{ env.CHANGELOG_DATA }}
+        subreddit: Rasterkhann ${{ steps.version.outputs.version }}
+        comment: ${{ steps.changelog.outputs.changelog }}
         url: ${{ github.event.release.html_url }}
       
     - name: Upload Release Asset (Github-Windows)
