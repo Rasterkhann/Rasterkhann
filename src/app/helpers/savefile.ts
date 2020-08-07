@@ -217,7 +217,8 @@ export function createBasicTown(name: string): GameTown {
 
     crystalBuffs: getZeroStatBlock(),
 
-    showStage2UI: false
+    showStage2UI: false,
+    allocateWorkersToBuilding: null
   };
 }
 

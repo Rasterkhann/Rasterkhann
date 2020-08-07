@@ -118,4 +118,8 @@ export class WorkerAllocationModalComponent implements OnInit, OnDestroy {
   allocateCurrent(): void {
     this.game.allocateSomeWorkersToBuilding(this.buildingId, this.currentAllocated);
   }
+
+  autoAllocateHere(shouldAllocateHere: boolean): void {
+    this.game.changeAutoAllocateBuilding(shouldAllocateHere ? this.buildingId : null);
+  }
 }

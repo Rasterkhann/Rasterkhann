@@ -11,7 +11,7 @@ import {
   ScrapItem, RushBuilding, RushBuildingFeature, HeroStartOddJob, HeroStopOddJob, HeroSetLocation,
   HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding,
   UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire, HeroQueueDismissCancel,
-  HeroQueueRetireCancel, JobCrystalUpgradeStat, RerollBooks, BookBuy, BookDestroy, HeroForgetSkill, HeroLearnSkill
+  HeroQueueRetireCancel, JobCrystalUpgradeStat, RerollBooks, BookBuy, BookDestroy, HeroForgetSkill, HeroLearnSkill, ChangeWorkerAutoAllocationBuilding
 } from '../actions';
 import {
   GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem,
@@ -626,6 +626,8 @@ export class GameState {
   @Action(HeroRetire)
   @ImmutableContext()
   heroRetire({ setState }: StateContext<IGameState>, { heroId }: HeroRetire): void {
+    let plusOneBuilding = null;
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
       const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
@@ -639,8 +641,14 @@ export class GameState {
 
       town.showStage2UI = true;
 
+      plusOneBuilding = town.allocateWorkersToBuilding;
+
       return state;
     });
+
+    if (plusOneBuilding) {
+      this.store.dispatch(new AllocateSomeToBuilding(plusOneBuilding, 1));
+    }
 
     this.store.dispatch(new HeroDismiss(heroId));
   }
@@ -905,6 +913,16 @@ export class GameState {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
       town.buildings[building].numRetiredAllocated = 0;
+      return state;
+    });
+  }
+
+  @Action(ChangeWorkerAutoAllocationBuilding)
+  @ImmutableContext()
+  changeAutoAllocateBuilding({ setState }: StateContext<IGameState>, { building }: ChangeWorkerAutoAllocationBuilding): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      state.towns[state.currentTown].allocateWorkersToBuilding = building;
       return state;
     });
   }

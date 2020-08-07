@@ -17,7 +17,8 @@ import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   BookBuy,
   HeroForgetSkill,
   HeroLearnSkill,
-  BookDestroy
+  BookDestroy,
+  ChangeWorkerAutoAllocationBuilding
 } from '../actions';
 import { Building, GameTown, IGameState, BuildingFeature, Hero,
   ProspectiveHero, Adventure, HeroStat, GameOption, HeroItem, HeroTrackedStat, HeroJob, TownStat, SkillBook } from '../interfaces';
@@ -358,6 +359,10 @@ export class GameService {
 
   public unallocateAllWorkersFromBuilding(building: Building): void {
     this.store.dispatch(new UnallocateAllFromBuilding(building));
+  }
+
+  public changeAutoAllocateBuilding(building: Building | null): void {
+    this.store.dispatch(new ChangeWorkerAutoAllocationBuilding(building));
   }
 
   // crystal allocation functions

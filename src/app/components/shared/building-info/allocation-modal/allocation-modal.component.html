@@ -24,6 +24,14 @@
     </ion-row>
   
     <ion-row class="ion-margin-top ion-margin-horizontal">
+      <ion-col size="12" class="ion-text-center">
+        <ion-button [color]="town.allocateWorkersToBuilding === buildingId ? 'success' : 'secondary'"
+                    fill="outline"
+                    (click)="autoAllocateHere(town.allocateWorkersToBuilding !== buildingId)">
+          <ion-icon slot="start" [icon]="town.allocateWorkersToBuilding === buildingId ? 'checkbox-outline' : 'square-outline'"></ion-icon>
+          Automatically Allocate New Workers Here
+        </ion-button>
+      </ion-col>
       <ion-col class="text-center">
         <ion-button expand="block" color="secondary" fill="outline" (click)="allocateAllIdle()" [disabled]="getTotalWorkersUnallocated() === 0">Allocate All Idle Here</ion-button>
       </ion-col>

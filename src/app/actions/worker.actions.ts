@@ -14,3 +14,8 @@ export class AllocateSomeToBuilding {
   static readonly type = '[Worker] Allocate Some To Building';
   constructor(public building: Building, public num: number) {}
 }
+
+export class ChangeWorkerAutoAllocationBuilding {
+  static readonly type = '[Worker] Change Auto-Allocate Building';
+  constructor(public building: Building | null) {}
+}

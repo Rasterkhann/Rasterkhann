@@ -48,4 +48,5 @@ export interface GameTown {
 
   crystalBuffs: Record<HeroStat, number>;
   showStage2UI: boolean;
+  allocateWorkersToBuilding: Building | null;
 }
