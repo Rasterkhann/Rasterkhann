@@ -1,3 +1,12 @@
+## [0.7.9](https://github.com/seiyria/Rasterkhann/compare/v0.7.8...v0.7.9) (2020-08-07)
+
+
+### Bug Fixes
+
+* **bazaar:** adjust price scaling to cost a bit more, but not as much as before ([0215e03](https://github.com/seiyria/Rasterkhann/commit/0215e03cc6de0815b22c95fb60c0af25ebf32e13))
+
+
+
 ## [0.7.8](https://github.com/seiyria/Rasterkhann/compare/v0.7.7...v0.7.8) (2020-08-07)
 
 
