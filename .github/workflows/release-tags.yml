@@ -36,7 +36,7 @@ jobs:
     - name: Store Changelog/Version in ENV
       id: changelog
       run: |
-        changelog="$(cat CHANGELOG-current.md)""
+        changelog="$(cat CHANGELOG-current.md)"
         changelog="${changelog//'%'/'%25'}"
         changelog="${changelog//$'\n'/'%0A'}"
         changelog="${changelog//$'\r'/'%0D'}"
