@@ -37,8 +37,8 @@ jobs:
       id: changelog
       run: |
         echo "::debug::Setting Changelog"
-        echo "::debug::$(cat CHANGELOG-current.md | sed -e ':a;N;$!ba;s/\n/<br>/g' | sed $'s/[^[:print:]\t]//g)'"
-        echo "::set-output name=changelog::$(cat CHANGELOG-current.md | sed -e ':a;N;$!ba;s/\n/<br>/g' | sed $'s/[^[:print:]\t]//g)'"
+        echo "::debug::$(cat CHANGELOG-current.md | sed -e ':a;N;$!ba;s/\n/<br>/g' | sed $'s/[^[:print:]\t]//g')"
+        echo "::set-output name=changelog::$(cat CHANGELOG-current.md | sed -e ':a;N;$!ba;s/\n/<br>/g' | sed $'s/[^[:print:]\t]//g')"
         echo "::set-output name=version::$(git describe --abbrev=0)"
 
     - name: Create Release
