@@ -95,12 +95,42 @@ ion-button:not(.in-toolbar) {
 
 }
 
-@media only screen and (min-height: 768px) and (min-width: 768px) {
+@media only screen and (min-width: 768px) {
   .sc-ion-modal-md-h {
     justify-content: flex-start;
     padding-left: 5%;
-      --width: 60%;
-      --height: calc(100% - 210px);
+    --width: 60%;
+    --height: calc(100% - 210px);
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .sc-ion-modal-md-h {
+    justify-content: flex-start;
+    padding-left: 5%;
+    padding-right: 5%;
+    --width: 100%;
+    --height: calc(100% - 210px);
+
+    ion-row.allow-splitter {
+
+      & > ion-col:nth-child(2n - 1) ion-list {
+        box-shadow: 1px 0px 0px 0px #530053;
+        
+        ion-list {
+          box-shadow: 1px 1px 0px 0px #530053;
+        }
+      }
+
+      & > ion-col:nth-child(2n) {
+        box-shadow: -1px 0px 0px 0px #530053;
+
+        ion-list {
+          box-shadow: 1px 1px 0px 0px #530053;
+        }
+                    
+      }
+    }
   }
 }
 

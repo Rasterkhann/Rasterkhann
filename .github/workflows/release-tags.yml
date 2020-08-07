@@ -74,7 +74,8 @@ jobs:
         password: ${{ secrets.REDDIT_PASSWORD }}
         app-id: ${{ secrets.REDDIT_APP_ID }}
         app-secret: ${{ secrets.REDDIT_APP_SECRET }}
-        subreddit: Rasterkhann ${{ steps.version.outputs.version }}
+        subreddit: Rasterkhann
+        title: Rasterkhann ${{ steps.version.outputs.version }} Updates
         comment: ${{ steps.changelog.outputs.changelog }}
         url: ${{ steps.create_release.outputs.html_url }}
 
