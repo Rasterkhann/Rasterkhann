@@ -45,7 +45,7 @@ jobs:
         echo "::debug::$changelog"
         echo "$changelog"
         echo "::set-output name=changelog::$changelog"
-        echo "::set-output name=version::$(echo $GITHUB_REF | cut -d / -f 3)"
+        echo "::set-output name=version::$(GITHUB_REF#refs/*/)"
 
     - name: Create Release
       id: create_release

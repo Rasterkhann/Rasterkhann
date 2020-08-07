@@ -32,12 +32,12 @@ jobs:
     - name: Display Tentative Changelog
       id: changelog
       run: |
-        changelog="$(cat CHANGELOG-current.md)"
-        changelog="${changelog//'%'/'%25'}"
-        changelog="${changelog//$'\n'/'%0A'}"
-        changelog="${changelog//$'\r'/'%0D'}"
-
-        echo "$changelog"
+        CHANGELOG="$(cat CHANGELOG-current.md)"
+        CHANGELOG="${CHANGELOG//'%'/'%25'}"
+        CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+        CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
+        echo "$CHANGELOG"
+        
         echo "::debug::Displaying Version/Changelog"
-        echo "::debug::$(echo $GITHUB_REF | cut -d / -f 3)"
-        echo "::debug::$changelog"
+        echo "::debug::$(GITHUB_REF#refs/*/)"
+        echo "::debug::$CHANGELOG"
