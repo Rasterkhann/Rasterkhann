@@ -23,8 +23,6 @@ jobs:
     
     - run: npm install
 
-    - run: npm run changelog:generate
-
     - uses: pCYSl5EDgo/cat@master
       id: test
       with:
