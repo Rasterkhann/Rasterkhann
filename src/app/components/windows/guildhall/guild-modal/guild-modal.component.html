@@ -139,7 +139,7 @@
 </ion-content>
 
 <ng-template #hero>
-  <ion-list>
+  <ion-list *ngIf="viewingHero">
     <ion-item>
       <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="viewingHero.sprite"></app-hero-sprite>
 
@@ -173,7 +173,7 @@
 </ng-template>
 
 <ng-template #stats>
-  <ion-list>
+  <ion-list *ngIf="viewingHero">
     <ion-list-header>Core Stats</ion-list-header>
 
     <ion-item>
@@ -191,7 +191,7 @@
 </ng-template>
 
 <ng-template #traits>
-  <ion-list>
+  <ion-list *ngIf="viewingHero">
     <ion-list-header>Traits</ion-list-header>
 
     <ion-item *ngFor="let trait of viewingHero.traits">
@@ -204,7 +204,7 @@
 </ng-template>
 
 <ng-template #items>
-  <ion-list *ngIf="!viewingProspectiveHero">
+  <ion-list *ngIf="viewingHero && !viewingProspectiveHero">
     <ng-container *ngFor="let type of itemTypes">
       <ion-list-header>{{ type }}s</ion-list-header>
       <ion-item *ngIf="getHeroGearTypeItems(viewingHero, type).length === 0">No {{ type.toLowerCase() }}s.</ion-item>
@@ -214,7 +214,7 @@
 </ng-template>
 
 <ng-template #skills>
-  <ion-list *ngIf="!viewingProspectiveHero">
+  <ion-list *ngIf="viewingHero && !viewingProspectiveHero">
     <ion-list-header>Learned Skills ({{ totalHeroLPAvailable(viewingHero) }}/{{ viewingHero.stats.lvl }} LP)</ion-list-header>
     <ion-item *ngIf="viewingHero.learnedSkills.length === 0">No learned skills.</ion-item>
     <app-book *ngFor="let book of viewingHero.learnedSkills" [book]="book" [hero]="viewingHero" [town]="town" showForget="true"></app-book>
@@ -226,7 +226,7 @@
 </ng-template>
 
 <ng-template #statistics>
-  <ion-list>
+  <ion-list *ngIf="viewingHero">
     <ion-list-header [class.ion-hide]="viewingProspectiveHero">Tracked Statistics</ion-list-header>
 
     <ion-item [class.ion-hide]="viewingProspectiveHero" *ngFor="let stat of viewingHero.trackedStats | keyvalue">
