@@ -1,3 +1,12 @@
+## [0.7.6](https://github.com/seiyria/Rasterkhann/compare/v0.7.5...v0.7.6) (2020-08-07)
+
+
+### Features
+
+* **bazaar:** lower prices mean more buying! ([aa2d53a](https://github.com/seiyria/Rasterkhann/commit/aa2d53a6fedb1a3e2498e440abc39a3ad3855d79))
+
+
+
 ## [0.7.5](https://github.com/seiyria/Rasterkhann/compare/v0.7.4...v0.7.5) (2020-08-07)
 
 
