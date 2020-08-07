@@ -36,12 +36,9 @@ jobs:
     - name: Store Changelog in ENV
       id: changelog
       run: |
+        echo "::debug::Setting Changelog"
+        echo "::debug::${cat CHANGELOG_current.md | sed 's/\n/%0A/g'}"
         echo "::set-output name=changelog::${cat CHANGELOG_current.md | sed 's/\n/%0A/g'}"
-
-    - name: Store Version in ENV
-      id: version
-      run: |
-        echo "::set-output name=version::${git describe --abbrev=0}"
 
     - name: Create Release
       id: create_release
@@ -75,7 +72,7 @@ jobs:
         app-id: ${{ secrets.REDDIT_APP_ID }}
         app-secret: ${{ secrets.REDDIT_APP_SECRET }}
         subreddit: Rasterkhann
-        title: Rasterkhann ${{ steps.version.outputs.version }} Updates
+        title: Rasterkhann ${{ github.ref }} Update
         comment: ${{ steps.changelog.outputs.changelog }}
         url: ${{ steps.create_release.outputs.html_url }}
 
