@@ -15,10 +15,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - uses: olegtarasov/get-tag@v2
-      id: tagName
-    
+  
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -28,11 +25,16 @@ jobs:
 
     - run: npm run changelog:generate:current
 
+    - uses: pCYSl5EDgo/cat@master
+      id: test
+      with:
+        path: CHANGELOG-current.md
+
     - name: Display Tentative Changelog
       id: changelog
+      env:
+        TEXT: ${{ steps.test.outputs.text }}
       run: |
-        echo "$(cat CHANGELOG-current.md)"
-
         CHANGELOG="$(cat CHANGELOG-current.md)"
         CHANGELOG="${CHANGELOG//'%'/'%25'}"
         CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
@@ -41,5 +43,7 @@ jobs:
         
         echo "::debug::Displaying Changelog"
         echo "::debug::$CHANGELOG"
+
+        echo "$TEXT"
 
         printenv
