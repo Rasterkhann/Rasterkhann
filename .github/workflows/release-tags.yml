@@ -33,12 +33,13 @@ jobs:
 
     - run: npm run changelog:generate:current
 
-    - name: Store Changelog in ENV
+    - name: Store Changelog/Version in ENV
       id: changelog
       run: |
         echo "::debug::Setting Changelog"
         echo "::debug::$(cat CHANGELOG-current.md | sed 's/\n/%0A/g')"
         echo "::set-output name=changelog::$(cat CHANGELOG-current.md | sed 's/\n/%0A/g')"
+        echo "::set-output name=version::$(git describe --abbrev=0)"
 
     - name: Create Release
       id: create_release
@@ -72,7 +73,7 @@ jobs:
         app-id: ${{ secrets.REDDIT_APP_ID }}
         app-secret: ${{ secrets.REDDIT_APP_SECRET }}
         subreddit: Rasterkhann
-        title: Rasterkhann ${{ github.ref }} Update
+        title: Rasterkhann ${{ steps.changelog.outputs.version }} Update
         comment: ${{ steps.changelog.outputs.changelog }}
         url: ${{ steps.create_release.outputs.html_url }}
 
