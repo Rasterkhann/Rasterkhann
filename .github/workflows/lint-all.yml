@@ -32,5 +32,11 @@ jobs:
     - name: Display Tentative Changelog
       id: changelog
       run: |
-        echo "::debug::Dumping Changelog"
-        echo "::debug::$(cat CHANGELOG-current.md | sed -e ':a;N;$!ba;s/\n/<br>/g' | sed $'s/[^[:print:]\t]//g')"
+        changelog=$(cat CHANGELOG-current.md)
+        changelog="${changelog//'%'/'%25'}"
+        changelog="${changelog//$'\n'/'%0A'}"
+        changelog="${changelog//$'\r'/'%0D'}"
+
+        echo "::debug::Setting Changelog"
+        echo "::debug::$changelog"
+        echo "::set-output name=changelog::$changelog"
