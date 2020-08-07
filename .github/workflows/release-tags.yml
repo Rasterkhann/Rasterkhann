@@ -60,6 +60,7 @@ jobs:
         app-secret: ${{ secrets.REDDIT_APP_SECRET }}
         subreddit: Rasterkhann ${{ env.VERSION_DATA }}
         comment: ${{ env.CHANGELOG_DATA }}
+        url: ${{ github.event.release.html_url }}
       
     - name: Upload Release Asset (Github-Windows)
       id: upload-release-asset-win
