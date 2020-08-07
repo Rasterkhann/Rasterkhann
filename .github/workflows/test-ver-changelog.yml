@@ -42,12 +42,12 @@ jobs:
         echo "::debug::${{ steps.tagName.outputs.tag }}"
         echo "::debug::$CHANGELOG"
 
-      - name: send custom message with args
-        uses: appleboy/discord-action@master
-        with:
-          webhook_id: ${{ secrets.WEBHOOK_ID }}
-          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-          args: |
-            ver ${{ steps.tagName.outputs.tag }}
+    - name: send custom message with args
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        args: |
+          ver ${{ steps.tagName.outputs.tag }}
 
-            ${{ env.CHANGELOG }}
+          ${{ env.CHANGELOG }}
