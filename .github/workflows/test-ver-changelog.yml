@@ -31,9 +31,9 @@ jobs:
     - name: Display Tentative Changelog
       id: changelog
       run: |
-        echo "$(cat CHANGELOG-current.md)"
+        echo "$(npm run changelog:generate:output)"
 
-        CHANGELOG="$(cat CHANGELOG-current.md)"
+        CHANGELOG="$(npm run changelog:generate:output)"
         CHANGELOG="${CHANGELOG//'%'/'%25'}"
         CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
         CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
