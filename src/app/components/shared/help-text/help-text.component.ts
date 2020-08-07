@@ -13,6 +13,7 @@ import { GameOption } from '../../../interfaces';
 export class HelpTextComponent implements OnInit {
 
   @Input() helpText: string;
+  @Input() showAlways?: boolean;
 
   @Select((state: any) => state.gamestate.options[GameOption.ShowHelpText]) showHelpText$: Observable<boolean>;
 

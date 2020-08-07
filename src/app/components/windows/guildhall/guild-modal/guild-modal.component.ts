@@ -26,6 +26,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   private canBuyHeroes: boolean;
   private activeHeroes$: Subscription;
+  public anyHeroesReadyToRetire: boolean;
 
   public town: GameTown;
 
@@ -62,6 +63,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
         }
 
         this.canBuyHeroes = d.length < calculateHeroMaxTotal(this.town);
+        this.anyHeroesReadyToRetire = d.some(h => this.game.canRetireHero(h));
 
         d.forEach(h => {
           if (!this.viewingHero || h.uuid !== this.viewingHero.uuid) { return; }

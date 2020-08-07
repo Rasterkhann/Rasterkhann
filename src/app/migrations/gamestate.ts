@@ -148,7 +148,7 @@ export const migrations = [
       });
 
       console.log('Setting default town stats records...');
-      state.towns.Rasterkhann.stats = state.towns.Rasterkhann.stats || {
+      const defaultStats = {
         [TownStat.Adventures]:    createStatBlock(),
         [TownStat.Encounters]:    createStatBlock(),
         [TownStat.Gold]:          createStatBlock(),
@@ -157,8 +157,15 @@ export const migrations = [
         [TownStat.CrystalsSpent]: createStatBlock()
       };
 
+      state.towns.Rasterkhann.stats = state.towns.Rasterkhann.stats || {};
+      Object.keys(defaultStats).forEach((stat: TownStat) => {
+        state.towns.Rasterkhann.stats[stat] = state.towns.Rasterkhann.stats[stat] || defaultStats[stat];
+      });
+
+      console.log(state.towns.Rasterkhann);
+
       console.log('Setting stage 2 UI if available...');
-      if (Object.values(state.towns.Rasterkhann.stats.retires).some(Boolean)) {
+      if (Object.values(state.towns.Rasterkhann.stats.retires || {}).some(Boolean)) {
         state.towns.Rasterkhann.showStage2UI = true;
       }
 

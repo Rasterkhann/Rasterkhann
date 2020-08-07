@@ -1,5 +1,5 @@
 
-<ng-container *ngIf="showHelpText$ | async">
+<ng-container *ngIf="showAlways || (showHelpText$ | async)">
   <ion-item>
     <ion-icon slot="start" name="help-circle"></ion-icon>
     <ion-label class="ion-text-wrap">

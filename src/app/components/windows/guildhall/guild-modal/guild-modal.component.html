@@ -21,6 +21,7 @@
 <ion-content padding>
   <ng-container *ngIf="currentTown$ | async as town">
     <app-help-text helpText="The Guild Hall is where you can recruit new heroes and view your current ones." *ngIf="!viewingHero"></app-help-text>
+    <app-help-text helpText="You have a hero ready for retirement! Retiring a hero will grant you new benefits such as being able to allocate it to a building to increase that buildings production and more. Heroes ready to retire have a green star on their portrait." *ngIf="!viewingHero && anyHeroesReadyToRetire && !town.stage2UI" showAlways="true"></app-help-text>
   
     <ion-list *ngIf="!viewingHero">
       <ion-list-header>Recruited Heroes ({{ (recruitedHeroes$ | async)?.length }}/{{ maxHeroes }})</ion-list-header>
