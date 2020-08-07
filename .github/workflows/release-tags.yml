@@ -20,6 +20,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - uses: olegtarasov/get-tag@v2
+      id: tagName
+    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -33,7 +36,7 @@ jobs:
 
     - run: npm run changelog:generate:current
 
-    - name: Store Changelog/Version in ENV
+    - name: Store Changelog in ENV
       id: changelog
       run: |
         changelog="$(cat CHANGELOG-current.md)"
@@ -45,7 +48,6 @@ jobs:
         echo "::debug::$changelog"
         echo "$changelog"
         echo "::set-output name=changelog::$changelog"
-        echo "::set-output name=version::$(GITHUB_REF#refs/*/)"
 
     - name: Create Release
       id: create_release
@@ -79,7 +81,7 @@ jobs:
         app-id: ${{ secrets.REDDIT_APP_ID }}
         app-secret: ${{ secrets.REDDIT_APP_SECRET }}
         subreddit: Rasterkhann
-        title: Rasterkhann ${{ steps.changelog.outputs.version }} Update
+        title: Rasterkhann ${{ steps.tagName.outputs.tag }} Update
         comment: ${{ steps.changelog.outputs.changelog }}
         url: ${{ steps.create_release.outputs.html_url }}
 

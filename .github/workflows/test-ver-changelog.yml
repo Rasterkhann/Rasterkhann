@@ -31,16 +31,15 @@ jobs:
     - name: Display Tentative Changelog
       id: changelog
       run: |
-        echo "$(npm run changelog:generate:output)"
+        echo "$(cat CHANGELOG-current.md)"
 
-        CHANGELOG="$(npm run changelog:generate:output)"
+        CHANGELOG="$(cat CHANGELOG-current.md)"
         CHANGELOG="${CHANGELOG//'%'/'%25'}"
         CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
         CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
         echo "$CHANGELOG"
-        echo "${{ env.GIT_TAG_NAME }}"
-        echo "$GIT_TAG_NAME"
         
-        echo "::debug::Displaying Version/Changelog"
-        echo "::debug::${{ steps.tagName.outputs.tag }}"
+        echo "::debug::Displaying Changelog"
         echo "::debug::$CHANGELOG"
+
+        printenv
