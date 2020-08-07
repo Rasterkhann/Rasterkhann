@@ -37,6 +37,7 @@ jobs:
         changelog="${changelog//$'\n'/'%0A'}"
         changelog="${changelog//$'\r'/'%0D'}"
 
-        echo "::debug::Setting Changelog"
+        echo "$changelog"
+        echo "::debug::Displaying Version/Changelog"
+        echo "::debug::$(echo $GITHUB_REF | cut -d / -f 3)"
         echo "::debug::$changelog"
-        echo "::set-output name=changelog::$changelog"
