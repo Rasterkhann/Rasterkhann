@@ -45,7 +45,7 @@ export function calculateItemDurability(town: GameTown, boostStats: Array<{ stat
   return Math.floor(sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat])));
 }
 
-export function calculateItemCost(town: GameTown, boostStats: Array<{ stat: HeroStat, value: number }>): bigint {
+export function calculateItemCost(town: GameTown, boostStats: Array<{ stat: HeroStat, value: number }>, typeMultiplier: bigint): bigint {
 
   const multiplier = calculateGlobalItemCostMultiplier(town);
 
@@ -60,7 +60,7 @@ export function calculateItemCost(town: GameTown, boostStats: Array<{ stat: Hero
     [HeroStat.STA]: 200
   };
 
-  return BigInt(Math.floor(multiplier * sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat]))));
+  return typeMultiplier * BigInt(Math.floor(multiplier * sum(boostStats.map(({ stat, value }) => value * statMultipliers[stat]))));
 }
 
 export function addCombatLogToTown(town: GameTown, log: CombatLog): void {
