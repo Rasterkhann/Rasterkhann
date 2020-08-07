@@ -1,3 +1,18 @@
+## [0.7.5](https://github.com/seiyria/Rasterkhann/compare/v0.7.4...v0.7.5) (2020-08-07)
+
+
+### Bug Fixes
+
+* **items:** lower overall item values so more can be bought ([2fd8760](https://github.com/seiyria/Rasterkhann/commit/2fd8760568feaf2b8a77e32b23430dd25cde0f1f)), closes [#95](https://github.com/seiyria/Rasterkhann/issues/95)
+
+
+### Features
+
+* **retire:** add 'allocate newly retired here' to the allocation menu ([54ed0e3](https://github.com/seiyria/Rasterkhann/commit/54ed0e3f9fc93e814175797387c48d0ae7420dc7)), closes [#92](https://github.com/seiyria/Rasterkhann/issues/92)
+* **ui:** hero retirement CTA is more clear ([b1e6ad2](https://github.com/seiyria/Rasterkhann/commit/b1e6ad280af339dbed75258da7f8ba90d36ed95d)), closes [#93](https://github.com/seiyria/Rasterkhann/issues/93)
+
+
+
 ## [0.7.4](https://github.com/seiyria/Rasterkhann/compare/v0.7.3...v0.7.4) (2020-08-06)
 
 
