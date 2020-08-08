@@ -30,8 +30,6 @@ jobs:
     - run: npm run lint
       
     - run: npm run build:electron:full:demo
-
-    - run: npm run changelog:generate:current
     
     - uses: olegtarasov/get-tag@v2
       id: loadTagName
