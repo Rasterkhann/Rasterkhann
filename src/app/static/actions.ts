@@ -52,8 +52,8 @@ export const Attack: (replacer: HeroActionStringReplacer, opts?: HeroActionOpts)
     return sampleSize(targetting.livingEnemies, numTargets) as Hero[];
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
-    const defMultiplier = opts.defMultiplier || 1;
-    const atkMultiplier = opts.atkMultiplier || 1;
+    const defMultiplier = 1 - (opts.defMultiplier || 0);
+    const atkMultiplier = 1 + (opts.atkMultiplier || 0);
     const times = opts.times || 1;
 
     for (let i = 0; i < times; i++) {
@@ -81,8 +81,8 @@ export const AttackSomeOrAll: (replacer: HeroActionStringReplacer, opts?: HeroAc
     return sampleSize(targetting.livingEnemies, numTargets) as Hero[];
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
-    const defMultiplier = opts.defMultiplier || 1;
-    const atkMultiplier = opts.atkMultiplier || 1;
+    const defMultiplier = 1 - (opts.defMultiplier || 0);
+    const atkMultiplier = 1 + (opts.atkMultiplier || 0);
     const times = opts.times || 1;
 
     for (let i = 0; i < times; i++) {
@@ -110,8 +110,8 @@ export const AttackSomeOrAllDiminishing: (replacer: HeroActionStringReplacer, op
     return sampleSize(targetting.livingEnemies, numTargets) as Hero[];
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
-    const defMultiplier = opts.defMultiplier || 1;
-    const atkMultiplier = opts.atkMultiplier || 1;
+    const defMultiplier = 1 - (opts.defMultiplier || 0);
+    const atkMultiplier = 1 + (opts.atkMultiplier || 0);
     const times = opts.times || 1;
 
     for (let i = 0; i < times; i++) {
@@ -187,7 +187,7 @@ export const Heal: (replacer: HeroActionStringReplacer, opts?: HeroActionOpts) =
     return sampleSize(targetting.livingAllies, numTargets) as Hero[];
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
-    const defMultiplier = opts.defMultiplier || 1;
+    const defMultiplier = 1 + (opts.defMultiplier || 0);
     const times = opts.times || 1;
 
     for (let i = 0; i < times; i++) {
@@ -234,7 +234,7 @@ export const HealSomeOrAll: (replacer: HeroActionStringReplacer, opts?: HeroActi
     return targetting.livingAllies;
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
-    const defMultiplier = opts.defMultiplier || 1;
+    const defMultiplier = 1 + (opts.defMultiplier || 0);
     const times = opts.times || 1;
 
     for (let i = 0; i < times; i++) {
@@ -305,8 +305,8 @@ export const Mug: (replacer: HeroActionStringReplacer, opts?: HeroActionOpts) =>
   },
   act: (combat: Combat, hero: Hero, targets: Hero[]) => {
     const gold = opts.gold || 1;
-    const defMultiplier = opts.defMultiplier || 1;
-    const atkMultiplier = opts.atkMultiplier || 1;
+    const defMultiplier = 1 - (opts.defMultiplier || 0);
+    const atkMultiplier = 1 + (opts.atkMultiplier || 0);
     const times = opts.times || 1;
 
     for (let i = 0; i < times; i++) {
