@@ -1,9 +1,9 @@
-## [0.7.10](https://github.com/seiyria/Rasterkhann/compare/v0.7.9...v0.7.10) (2020-08-07)
+## [0.7.11](https://github.com/seiyria/Rasterkhann/compare/v0.7.10...v0.7.11) (2020-08-08)
 
 
 ### Bug Fixes
 
-* **version:** fix version in changelog generation ([4fc8669](https://github.com/seiyria/Rasterkhann/commit/4fc86694265bd189e2a2e0ba068e8befae051101))
+* **skills:** multipliers from skills should be modified by +-1 instead of being raw to make them actually work correctly ([b446e6d](https://github.com/seiyria/Rasterkhann/commit/b446e6dbc52db323144a50f3ce9036d7f617209a))
 
 
 
