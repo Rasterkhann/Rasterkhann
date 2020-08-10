@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { AlertController } from '@ionic/angular';
 import { sum } from 'lodash';
 
 import { GameTown, Adventure, AdventureDifficulty } from '../../../interfaces';
@@ -21,7 +20,7 @@ export class AdventureComponent implements OnInit {
 
   public heroNames: string[] = [];
 
-  constructor(private alert: AlertController, private game: GameService) { }
+  constructor(private game: GameService) { }
 
   ngOnInit(): void {
     this.heroNames = this.adventure.activeHeroes
@@ -56,24 +55,15 @@ export class AdventureComponent implements OnInit {
 
   async go(): Promise<void> {
 
-    const alert = await this.alert.create({
+    const finalize = () => {
+      this.game.startAdventure(this.town, this.adventure);
+    };
+
+    this.game.doSimpleConfirmation({
       header: 'Embark On Adventure',
       message: `Are you sure you want to embark on this adventure?`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Embark',
-          handler: async () => {
-            this.game.startAdventure(this.town, this.adventure);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      confirmText: 'Yes, Embark'
+    }, finalize);
   }
 
 }

@@ -13,9 +13,6 @@ import { AlertController } from '@ionic/angular';
 })
 export class BookComponent implements OnInit {
 
-  // TODO: show button in slot=end for buy, learn, forget, destroy, and have popups for them all
-  // TODO: after all buttons work, make sure abilities are calculated correctly on adventures
-
   @Input() town: GameTown;
   @Input() hero?: Hero;
   @Input() book: SkillBook;
@@ -37,7 +34,7 @@ export class BookComponent implements OnInit {
     times: '#TIMES'
   };
 
-  constructor(private alert: AlertController, public game: GameService) { }
+  constructor(public game: GameService) { }
 
   ngOnInit(): void {}
 
@@ -67,92 +64,56 @@ export class BookComponent implements OnInit {
   }
 
   async buyBook(): Promise<void> {
-    const alert = await this.alert.create({
+    const finalize = () => {
+      this.game.buyBook(this.town, this.book);
+    };
+
+    this.game.doSimpleConfirmation({
       header: 'Buy Book',
       message: `Are you sure you want to buy this book of ${this.book.name}?`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Buy',
-          handler: async () => {
-            this.game.buyBook(this.town, this.book);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      confirmText: 'Yes, Buy'
+    }, finalize);
   }
 
   async destroyBook(): Promise<void> {
-    const alert = await this.alert.create({
+    const finalize = () => {
+      this.game.destroySkill(this.book);
+    };
+
+    this.game.doSimpleConfirmation({
       header: 'Destroy Book',
       message: `Are you sure you want to destroy this book of ${this.book.name}? You will never get it back!`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Destroy',
-          handler: async () => {
-            this.game.destroySkill(this.book);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      confirmText: 'Yes, Destroy'
+    }, finalize);
   }
 
   async learnSkill(): Promise<void> {
     const hero = this.hero;
     if (!hero) { return; }
 
-    const alert = await this.alert.create({
+    const finalize = () => {
+      this.game.learnSkill(hero, this.book);
+    };
+
+    this.game.doSimpleConfirmation({
       header: 'Learn Skill From Book',
       message: `Are you sure you want to teach ${this.book.name} to ${hero.name}? This is not reversible!`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Teach',
-          handler: async () => {
-            this.game.learnSkill(hero, this.book);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      confirmText: 'Yes, Teach'
+    }, finalize);
   }
 
   async forgetSkill(): Promise<void> {
     const hero = this.hero;
     if (!hero) { return; }
 
-    const alert = await this.alert.create({
+    const finalize = () => {
+      this.game.forgetSkill(hero, this.book);
+    };
+
+    this.game.doSimpleConfirmation({
       header: 'Forget Skill',
       message: `Are you sure you want to make ${hero.name} forget ${this.book.name}? This is not reversible!`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Forget',
-          handler: async () => {
-            this.game.forgetSkill(hero, this.book);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      confirmText: 'Yes, Forget'
+    }, finalize);
   }
 }

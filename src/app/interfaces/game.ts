@@ -6,7 +6,8 @@ export enum GameOption {
   AutomationBuildings = 'automationBuildings',
   AutomationAdventures = 'automationAdventures',
   AutomationScrap = 'automationScrap',
-  ShowHelpText = 'showHelpText'
+  ShowHelpText = 'showHelpText',
+  ShowConfirmationDialogs = 'showConfirmationDialogs'
 }
 
 export interface IGameState {

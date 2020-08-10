@@ -48,7 +48,6 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   constructor(
     private modal: ModalController,
-    private alert: AlertController,
     public game: GameService,
     public heroCreator: HeroService
   ) { }
@@ -136,107 +135,71 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   async trainHero(hero: Hero): Promise<void> {
     const cost = this.heroCreator.heroTrainCost(this.town, hero);
 
-    const alert = await this.alert.create({
+    const finalize = () => {
+      if (!this.game.canTrainHero(this.town, hero)) { return; }
+      this.game.trainHero(this.town, hero);
+    };
+
+    this.game.doSimpleConfirmation({
       header: 'Train Hero',
       message: `Are you sure you want to train ${hero.name} to the level ${hero.stats[HeroStat.LVL] + 1} ${hero.job}?
        It will cost ${formatNumber(cost)} gold.`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Train',
-          handler: async () => {
-            if (!this.game.canTrainHero(this.town, hero)) { return; }
-            this.game.trainHero(this.town, hero);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      confirmText: 'Yes, Train'
+    }, finalize);
   }
 
   async dismissHero(hero: Hero): Promise<void> {
-    const alert = await this.alert.create({
+    const finalize = () => {
+      if (hero.queueRetired || hero.queueDismissed) { return; }
+      this.game.dismissHero(this.town, hero);
+
+      // cancelable more easily
+      if (!hero.onAdventure) {
+        this.viewingHero = null;
+      }
+    };
+
+    this.game.doSimpleConfirmation({
       header: 'Dismiss Hero',
       message: `Are you sure you want to dismiss ${hero.name}, the level ${hero.stats[HeroStat.LVL]} ${hero.job}?
 
       ${hero.onAdventure ? 'This hero will be retired upon adventure completion.' : ''}`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Dismiss',
-          handler: async () => {
-            if (hero.queueRetired || hero.queueDismissed) { return; }
-            this.game.dismissHero(this.town, hero);
-
-            // cancelable more easily
-            if (!hero.onAdventure) {
-              this.viewingHero = null;
-            }
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      confirmText: 'Yes, Dismiss'
+    }, finalize);
   }
 
   async recruitHero(prosHero: ProspectiveHero): Promise<void> {
-    const alert = await this.alert.create({
+    const finalize = () => {
+      if (!prosHero.rating || !prosHero.cost) { return; }
+      this.game.recruitHero(this.town, prosHero);
+    };
+
+    this.game.doSimpleConfirmation({
       header: 'Recruit Hero',
       message: `Are you sure you want to recruit ${prosHero.hero.name}, the level ${prosHero.hero.stats[HeroStat.LVL]} ${prosHero.hero.job}?`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Recruit',
-          handler: async () => {
-            if (!prosHero.rating || !prosHero.cost) { return; }
-            this.game.recruitHero(this.town, prosHero);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      confirmText: 'Yes, Recruit'
+    }, finalize);
   }
 
   async retireHero(hero: Hero): Promise<void> {
-    const alert = await this.alert.create({
+    const finalize = () => {
+      if (hero.queueRetired || hero.queueDismissed) { return; }
+      this.game.retireHero(hero);
+
+      if (!hero.onAdventure) {
+        this.viewingHero = null;
+      }
+    };
+
+    this.game.doSimpleConfirmation({
       header: 'Retire Hero',
       message: `Are you sure you want to retire ${hero.name}, the level ${hero.stats[HeroStat.LVL]} ${hero.job}?
       You will gain the ability to allocate this hero to a building, increasing that buildings capabilities.
       You will also gain a Job Crystal to symbolize this heros adventure.
 
       ${hero.onAdventure ? 'This hero will be retired upon adventure completion.' : ''}`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Retire',
-          handler: async () => {
-            if (hero.queueRetired || hero.queueDismissed) { return; }
-            this.game.retireHero(hero);
-
-            if (!hero.onAdventure) {
-              this.viewingHero = null;
-            }
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      confirmText: 'Yes, Retire'
+    }, finalize);
   }
 
   unviewHero(): void {

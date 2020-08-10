@@ -23,7 +23,7 @@ export class ItemsModalComponent implements OnInit {
     return [ItemType.Weapon, ItemType.Armor, ItemType.Potion];
   }
 
-  constructor(private modal: ModalController, private alert: AlertController, public game: GameService) { }
+  constructor(private modal: ModalController, public game: GameService) { }
 
   ngOnInit(): void {}
 
@@ -36,24 +36,15 @@ export class ItemsModalComponent implements OnInit {
   }
 
   public async scrapItem(item: HeroItem): Promise<void> {
-    const alert = await this.alert.create({
+    const finalize = () => {
+      this.game.scrapItem(item);
+    };
+
+    this.game.doSimpleConfirmation({
       header: 'Scrap Item',
       message: `Are you sure you want to scrap ${item.name}? It will be gone forever and you will get no gold for this action.`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Yes, Scrap',
-          handler: async () => {
-            this.game.scrapItem(item);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      confirmText: 'Yes, Scrap'
+    }, finalize);
   }
 
   public getTypeTotal(type: ItemType): number {

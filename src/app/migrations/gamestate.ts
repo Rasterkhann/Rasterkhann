@@ -1,3 +1,6 @@
+
+import { isUndefined } from 'lodash';
+
 import { Building, IGameState, ItemType, TownStat, HeroJob, Version } from '../interfaces';
 import { createBuildingAtLevel, createStatBlock, getZeroStatBlock } from '../helpers';
 
@@ -219,6 +222,11 @@ export const migrations = [
       console.log('Setting up book arrays on heroes...');
       state.towns.Rasterkhann.recruitedHeroes.forEach(h => h.learnedSkills = h.learnedSkills || []);
       state.towns.Rasterkhann.prospectiveHeroes.forEach(h => h.hero.learnedSkills = h.hero.learnedSkills || []);
+
+      console.log('Setting confirmation dialog option to default...');
+      if (isUndefined(state.options.showConfirmationDialogs)) {
+        state.options.showConfirmationDialogs = true;
+      }
 
       return state;
     }

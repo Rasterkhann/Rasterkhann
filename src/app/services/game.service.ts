@@ -1,8 +1,10 @@
 
 import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { timer } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Store, Select } from '@ngxs/store';
+import { AlertController } from '@ionic/angular';
+
+import { timer, Observable } from 'rxjs';
+import { delay, first } from 'rxjs/operators';
 
 import { ChooseInfo, GameLoop, SpendGold, UpgradeBuilding, LoadSaveData,
   UpgradeBuildingFeature, RerollHeroes, HeroRecruit, HeroDismiss, RerollAdventures,
@@ -35,7 +37,10 @@ export class GameService {
 
   private isStartingAdventure: boolean;
 
+  @Select((state: any) => state.gamestate.options[GameOption.ShowConfirmationDialogs]) confirmationDialogs$: Observable<boolean>;
+
   constructor(
+    private alert: AlertController,
     private store: Store,
     private advCreator: AdventureService,
     private heroCreator: HeroService,
@@ -66,6 +71,43 @@ export class GameService {
 
   public toggleOption(option: GameOption): void {
     this.store.dispatch(new OptionToggle(option));
+  }
+
+  public doSimpleConfirmation(
+    { header, message, confirmText }: { header: string, message: string, confirmText: string },
+    finalize: () => void
+  ): void {
+    this.doConfirmation(
+      { header, message, buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: confirmText,
+          handler: async () => {
+            finalize();
+          }
+        }
+      ] },
+      finalize
+    );
+  }
+
+  public doConfirmation(
+    { header, message, buttons }: { header: string, message: string, buttons: any[] },
+    finalize: () => void
+  ): void {
+    this.confirmationDialogs$.pipe(first())
+      .subscribe(async showDialog => {
+        if (!showDialog) {
+          finalize();
+          return;
+        }
+
+        const alert = await this.alert.create({ header, message, buttons });
+        await alert.present();
+      });
   }
 
   // building functions

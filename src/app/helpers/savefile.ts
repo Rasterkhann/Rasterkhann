@@ -232,7 +232,8 @@ export function createDefaultSavefile(): IGameState {
       Rasterkhann: createBasicTown('Rasterkhann') as GameTown
     },
     options: {
-      [GameOption.ShowHelpText]: true
+      [GameOption.ShowHelpText]: true,
+      [GameOption.ShowConfirmationDialogs]: true
     }
   };
 }
