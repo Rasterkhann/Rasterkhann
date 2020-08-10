@@ -7,7 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import { GameState } from '../../../../states';
 import { GameTown, Building, TownStat } from '../../../../interfaces';
-import { GameService } from '../../../../services/game.service';
+import { GameService } from '../../../../services';
 import { BuildingData } from '../../../../static';
 import { numAllocatedToBuilding } from '../../../../helpers';
 

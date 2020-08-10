@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 import { sum } from 'lodash';
 
 import { GameTown, Adventure, AdventureDifficulty } from '../../../interfaces';
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../../services';
 import { formatDifficulty, getTownHeroByUUID } from '../../../helpers';
 
 @Component({

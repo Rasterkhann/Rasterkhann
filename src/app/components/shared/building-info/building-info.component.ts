@@ -3,7 +3,7 @@ import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
 import { GameTown, Building, GameOption } from '../../../interfaces';
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../../services';
 import { BuildingData } from '../../../static';
 import { ModalController } from '@ionic/angular';
 import { WorkerAllocationModalComponent } from './allocation-modal/allocation-modal.component';

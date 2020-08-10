@@ -4,7 +4,7 @@ import { Select } from '@ngxs/store';
 
 import { Observable } from 'rxjs';
 
-import { GameService } from '../../../../services/game.service';
+import { GameService } from '../../../../services';
 import { GameTown, Adventure } from '../../../../interfaces';
 import { GameState } from '../../../../states';
 import { calculateMaxActiveAdventures } from '../../../../helpers';

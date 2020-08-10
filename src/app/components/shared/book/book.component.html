@@ -17,7 +17,7 @@
         <ion-col *ngIf="showStat(statVal)" size="4">
           <span [class.has-info]="game.statTooltips$ | async" 
                 [display]="game.statTooltips$ | async" 
-                [tooltip]="statTooltips[statVal.key]" 
+                [tooltip]="getStatTooltip(statVal.key)" 
                 placement="top">
             {{ getStatName(statVal.key) }} {{ statValue(statVal) }}
           </span>

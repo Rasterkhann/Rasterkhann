@@ -6,7 +6,7 @@ import * as Pathfinding from 'pathfinding';
 import { visibleBuildingFeatures } from '../../helpers';
 
 import { GameTown, Building, Hero } from '../../interfaces';
-import { GameService } from '../../services/game.service';
+import { GameService } from '../../services';
 import { GameState } from '../../states';
 import { sample } from 'lodash';
 import { HeroSetDestination, HeroSetLocation } from '../../actions';

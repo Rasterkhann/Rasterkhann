@@ -2,7 +2,9 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext } from '@ngxs-labs/immer-adapter';
+
 import { sample, sum, random } from 'lodash';
+import { Subject } from 'rxjs';
 
 import {
   GainCurrentGold, GainGold, SpendGold, ChooseInfo, GameLoop, UpgradeBuilding,
@@ -41,10 +43,7 @@ import {
 
 import { environment } from '../../environments/environment';
 import { BuildingData } from '../static';
-import { HeroService } from '../services/hero.service';
-import { AdventureService } from '../services/adventure.service';
-import { Subject } from 'rxjs';
-import { BookService } from '../services/book.service';
+import { HeroService, AdventureService, BookService } from '../services';
 
 const GLOBAL_TIME_MULTIPLIER = environment.production ? 1000 : 10;
 const ADVENTURE_TIME_MULTIPLIER = environment.production ? 1 : 0.01;

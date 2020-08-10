@@ -5,7 +5,7 @@ import { Observable, forkJoin, combineLatest, interval } from 'rxjs';
 import { first, switchMap, throttle } from 'rxjs/operators';
 import { sample } from 'lodash';
 
-import { GameService } from '../../services/game.service';
+import { GameService } from '../../services';
 import { GameState } from '../../states';
 import { GameTown, ProspectiveHero, Adventure, GameOption, Building,
   IGameState, ItemType, ItemPassedOverThreshold, SkillBook } from '../../interfaces';

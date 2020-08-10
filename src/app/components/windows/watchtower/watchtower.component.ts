@@ -13,7 +13,7 @@ import { environment } from '../../../../environments/environment';
 
 import { GameTown, IGameState, GameOption } from '../../../interfaces';
 import { GameState } from '../../../states';
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../../services';
 import { afterDeserialize, beforeSerialize, createDefaultSavefile } from '../../../helpers';
 
 

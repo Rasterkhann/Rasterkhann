@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 import { Select } from '@ngxs/store';
 
@@ -8,10 +8,9 @@ import { Observable, Subscription, combineLatest } from 'rxjs';
 
 import { GameState } from '../../../../states';
 import { ProspectiveHero, Hero, GameTown, HeroStat, Trait, ItemType, HeroItem, SkillBook } from '../../../../interfaces';
-import { GameService } from '../../../../services/game.service';
+import { GameService, HeroService } from '../../../../services';
 import { allEquippableArmorClasses, allEquippableWeapons, calculateHeroMaxTotal, formatNumber, skillBookOptsPoints } from '../../../../helpers';
 import { JobEffects, TraitEffects } from '../../../../static';
-import { HeroService } from '../../../../services/hero.service';
 
 @Component({
   selector: 'app-guild-modal',

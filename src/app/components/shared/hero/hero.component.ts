@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 
 import { Hero, GameTown, HeroStat, Building } from '../../../interfaces';
 import { canHeroGoOnAdventure } from '../../../helpers';
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../../services';
 
 @Component({
   selector: 'app-hero',

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
-import { GameService } from '../../../../services/game.service';
+import { GameService } from '../../../../services';
 import { HeroItem, GameTown, ItemType } from '../../../../interfaces';
 import { calculateMaxCreatableItems } from '../../../../helpers';
 import { GameState } from '../../../../states';

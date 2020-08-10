@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { GameTown, SkillBook, HeroActionOpts, Hero } from '../../../interfaces';
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../../services';
 import { skillBookOptsPoints } from '../../../helpers';
-import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-book',
@@ -51,6 +50,10 @@ export class BookComponent implements OnInit {
 
   getStatName(name: keyof HeroActionOpts): string {
     return this.statNames[name];
+  }
+
+  getStatTooltip(name: keyof HeroActionOpts): string {
+    return this.statTooltips[name];
   }
 
   getActionOpts(book: SkillBook): any {

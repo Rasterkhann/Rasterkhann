@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { GameTown, GameOption } from '../../../interfaces';
 import { doesTownHaveFeature } from '../../../helpers';
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../../services';
 
 @Component({
   selector: 'app-workshop',

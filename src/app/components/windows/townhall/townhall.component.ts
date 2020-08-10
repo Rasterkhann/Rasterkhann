@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GameTown } from '../../../interfaces';
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../../services';
 import { BuildingData } from '../../../static';
 
 @Component({

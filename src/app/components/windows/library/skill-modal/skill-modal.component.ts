@@ -7,8 +7,7 @@ import { Observable } from 'rxjs';
 
 import { GameState } from '../../../../states';
 import { GameTown, SkillBook } from '../../../../interfaces';
-import { GameService } from '../../../../services/game.service';
-import { HeroService } from '../../../../services/hero.service';
+import { GameService, HeroService } from '../../../../services';
 import { calculateMaxOwnedBooks } from '../../../../helpers';
 
 @Component({

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 import { GameState } from '../../../../states';
 import { GameTown, HeroStat, HeroJob } from '../../../../interfaces';
-import { GameService } from '../../../../services/game.service';
+import { GameService } from '../../../../services';
 import { getBoostedStatsForJobType } from '../../../../helpers';
 
 @Component({

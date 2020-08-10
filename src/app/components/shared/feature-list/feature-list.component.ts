@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
-import { GameService } from '../../../services/game.service';
+import { GameService } from '../../../services';
 import { GameTown, Building, BuildingFeature } from '../../../interfaces';
 import { visibleBuildingFeatures, doesTownHaveFeature } from '../../../helpers';
 
