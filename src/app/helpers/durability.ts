@@ -21,6 +21,12 @@ export function increaseDurability(hero: Hero, item: HeroItem, gain: number = 1)
 
   item.curDurability = clamp(curDurability + gain, 0, item.maxDurability);
 
+  if (gain < 0) {
+    const costPercentLost = Math.ceil(Math.abs(gain) / item.maxDurability);
+    const lostValue = Math.max(1, (costPercentLost / 100) * Number(item.cost));
+    item.cost -= BigInt(Math.ceil(lostValue));
+  }
+
   // discard items with 0 durability
   if (curDurability === 0) {
     hero.gear[item.type].forEach((checkItem, idx) => {
