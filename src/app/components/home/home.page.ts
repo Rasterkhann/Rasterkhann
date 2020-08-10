@@ -79,7 +79,7 @@ export class HomePage implements OnInit {
 
     // check for a new version every half-hour
     interval(environment.production ? 1800000 : 5000)
-      .pipe(switchMap(() => this.http.get('https://api.github.com/repos/seiyria/Rasterkhann/commits/main')))
+      .pipe(switchMap(() => this.http.get('https://api.github.com/repos/Rasterkhann/Rasterkhann/commits/main')))
       .subscribe(data => {
         if ((data as any).sha.startsWith(environment.version.revision)) { return; }
         this.hasUpdate = true;
