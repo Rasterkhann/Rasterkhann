@@ -34,6 +34,17 @@ export class BookComponent implements OnInit {
     times: '#TIMES'
   };
 
+  public statTooltips: Record<keyof HeroActionOpts, string> = {
+    staCost: 'The amount of STA required to use this skill.',
+    spCost: 'The amount of SP required to use this skill.',
+    pct: 'Damage/healing dealt using this skill will apply based on a % of the targets health',
+    gold: 'Usage of this skill will earn this much gold.',
+    defMultiplier: 'This skill adds this percentage to relevant DEF rolls. Healing skills are +DEF, attack skills are -DEF.',
+    atkMultiplier: 'This skill adds this percentage to relevant ATK rolls.',
+    targets: 'This skill will hit this many targets.',
+    times: 'This skill will trigger this many times.'
+  };
+
   constructor(public game: GameService) { }
 
   ngOnInit(): void {}

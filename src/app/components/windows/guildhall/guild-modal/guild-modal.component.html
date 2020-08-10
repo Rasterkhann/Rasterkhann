@@ -182,15 +182,57 @@
     <ion-list-header>Core Stats</ion-list-header>
 
     <ion-item>
-      <ion-col class="ion-text-center">{{ viewingHero.currentStats.hp | bignum }} / {{ viewingHero.stats.hp | bignum }} HP</ion-col>
-      <ion-col class="ion-text-center">{{ viewingHero.currentStats.sp | bignum }} / {{ viewingHero.stats.sp | bignum }} SP</ion-col>
-      <ion-col class="ion-text-center">{{ viewingHero.currentStats.sta | bignum }} / {{ viewingHero.stats.sta | bignum }} STA</ion-col>
+      <ion-col class="ion-text-center">
+        <span [class.has-info]="game.statTooltips$ | async" 
+              [display]="game.statTooltips$ | async" 
+              tooltip="HP represents the health of this hero." 
+              placement="top">
+        {{ viewingHero.currentStats.hp | bignum }} / {{ viewingHero.stats.hp | bignum }} HP
+        </span>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <span [class.has-info]="game.statTooltips$ | async" 
+              [display]="game.statTooltips$ | async" 
+              tooltip="SP represents how skilled this hero is. More SP means more skill usage." 
+              placement="top">
+          {{ viewingHero.currentStats.sp | bignum }} / {{ viewingHero.stats.sp | bignum }} SP
+        </span>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <span [class.has-info]="game.statTooltips$ | async" 
+              [display]="game.statTooltips$ | async" 
+              tooltip="STA represents the stamina of this hero. More STA means longer adventures." 
+              placement="top">
+          {{ viewingHero.currentStats.sta | bignum }} / {{ viewingHero.stats.sta | bignum }} STA
+        </span>
+      </ion-col>
     </ion-item>
 
     <ion-item>
-      <ion-col class="ion-text-center">{{ viewingHero.stats.atk | bignum }} ATK</ion-col>
-      <ion-col class="ion-text-center">{{ viewingHero.stats.def | bignum }} DEF</ion-col>
-      <ion-col class="ion-text-center" *ngIf="viewingProspectiveHero">{{ viewingHero.stats.gold | bignum }} GOLD</ion-col>
+      <ion-col class="ion-text-center">
+        <span [class.has-info]="game.statTooltips$ | async" 
+              [display]="game.statTooltips$ | async" 
+              tooltip="ATK represents the maximum damage this hero can do with an attack." 
+              placement="bottom">
+          {{ viewingHero.stats.atk | bignum }} ATK
+        </span>
+      </ion-col>
+      <ion-col class="ion-text-center">
+        <span [class.has-info]="game.statTooltips$ | async" 
+              [display]="game.statTooltips$ | async" 
+              tooltip="DEF represents the likelihood of this hero lowering incoming damage from an attack. It also boosts outgoing healing." 
+              placement="bottom">
+          {{ viewingHero.stats.def | bignum }} DEF
+        </span>
+      </ion-col>
+      <ion-col class="ion-text-center" *ngIf="viewingProspectiveHero">
+        <span [class.has-info]="game.statTooltips$ | async" 
+              [display]="game.statTooltips$ | async" 
+              tooltip="GOLD represents how much gold this hero will have if you recruit them." 
+              placement="bottom">
+          {{ viewingHero.stats.gold | bignum }} GOLD
+        </span>
+      </ion-col>
     </ion-item>
   </ion-list>
 </ng-template>
@@ -220,7 +262,14 @@
 
 <ng-template #skills>
   <ion-list *ngIf="viewingHero && !viewingProspectiveHero">
-    <ion-list-header>Learned Skills ({{ totalHeroLPAvailable(viewingHero) }}/{{ viewingHero.stats.lvl }} LP)</ion-list-header>
+    <ion-list-header>
+      <span [class.has-info]="game.statTooltips$ | async" 
+            [display]="game.statTooltips$ | async" 
+            tooltip="LP is this heroes capacity to learn new skills. Heroes gain 1 LP per level." 
+            placement="top">
+        Learned Skills ({{ totalHeroLPAvailable(viewingHero) }}/{{ viewingHero.stats.lvl }} LP)
+      </span>
+    </ion-list-header>
     <ion-item *ngIf="viewingHero.learnedSkills.length === 0">No learned skills.</ion-item>
     <app-book *ngFor="let book of viewingHero.learnedSkills" [book]="book" [hero]="viewingHero" [town]="town" showForget="true"></app-book>
 

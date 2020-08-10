@@ -228,6 +228,11 @@ export const migrations = [
         state.options.showConfirmationDialogs = true;
       }
 
+      console.log('Setting stat tooltip option to default...');
+      if (isUndefined(state.options.showStatTooltips)) {
+        state.options.showStatTooltips = true;
+      }
+
       return state;
     }
   }

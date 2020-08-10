@@ -39,6 +39,8 @@ export class GameService {
 
   @Select((state: any) => state.gamestate.options[GameOption.ShowConfirmationDialogs]) confirmationDialogs$: Observable<boolean>;
 
+  @Select((state: any) => state.gamestate.options[GameOption.ShowStatTooltips]) statTooltips$: Observable<boolean>;
+
   constructor(
     private alert: AlertController,
     private store: Store,

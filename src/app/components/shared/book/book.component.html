@@ -15,7 +15,12 @@
     <ion-row>
       <ng-container *ngFor="let statVal of getActionOpts(book) | keyvalue">
         <ion-col *ngIf="showStat(statVal)" size="4">
-          {{ getStatName(statVal.key) }} {{ statValue(statVal) }}
+          <span [class.has-info]="game.statTooltips$ | async" 
+                [display]="game.statTooltips$ | async" 
+                [tooltip]="statTooltips[statVal.key]" 
+                placement="top">
+            {{ getStatName(statVal.key) }} {{ statValue(statVal) }}
+          </span>
         </ion-col>
       </ng-container>
     </ion-row>
