@@ -122,7 +122,8 @@ ion-button:not(.in-toolbar) {
         }
       }
 
-      & > ion-col:nth-child(2n) {
+      & > ion-col:nth-child(2n),
+      & > ion-col:nth-child(2n + 1) {
         box-shadow: -1px 0px 0px 0px #530053;
 
         ion-list {

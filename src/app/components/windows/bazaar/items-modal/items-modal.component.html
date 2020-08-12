@@ -14,17 +14,21 @@
 <ion-content padding>
   <app-help-text helpText="The Bazaar is a place for your heroes to come and buy items. You don't directly purchase anything here, but you can remove items you think are bad or items that just aren't getting bought. You'll need an Armory and an Alchemist to make use of the Bazaar's selling capabilities."></app-help-text>
 
-  <ion-list *ngIf="currentTownItemsForSale$ | async as itemsForSale">
+  <ion-row class="allow-splitter" *ngIf="currentTownItemsForSale$ | async as itemsForSale">
     <ng-container *ngFor="let type of itemTypes">
-      <ion-list-header>
-        {{ type }}s ({{ getItems(itemsForSale, type).length }}/{{ getTypeTotal(type) }})
-        
-        <span *ngIf="getItems(itemsForSale, type).length < getTypeTotal(type)">
-          &nbsp;&middot; Next {{ type }} in:&nbsp;<countdown [config]="{ stopTime: getConstructionType(type), format: 'mm:ss', prettyText: formatPreDuration }"></countdown>
-        </span>
-      </ion-list-header>
-      <ion-item *ngIf="itemsForSale[type].length === 0">No {{ type.toLowerCase() }}s for sale.</ion-item>
-      <app-item *ngFor="let item of itemsForSale[type]; trackBy: trackItemBy" [item]="item" showScrapIcon="true" showCost="true" showPassedOver="true" (click)="scrapItem(item)"></app-item>
+      <ion-col size="12" size-xs="4" class="ion-no-padding">
+        <ion-list>
+          <ion-list-header>
+            {{ type }}s ({{ getItems(itemsForSale, type).length }}/{{ getTypeTotal(type) }})
+            
+            <span *ngIf="getItems(itemsForSale, type).length < getTypeTotal(type)">
+              &nbsp;&middot; Next {{ type }} in:&nbsp;<countdown [config]="{ stopTime: getConstructionType(type), format: 'mm:ss', prettyText: formatPreDuration }"></countdown>
+            </span>
+          </ion-list-header>
+          <ion-item *ngIf="itemsForSale[type].length === 0">No {{ type.toLowerCase() }}s for sale.</ion-item>
+          <app-item *ngFor="let item of itemsForSale[type]; trackBy: trackItemBy" [item]="item" showScrapIcon="true" showCost="true" showPassedOver="true" (click)="scrapItem(item)"></app-item>
+        </ion-list>
+      </ion-col>
     </ng-container>
-  </ion-list>
+  </ion-row>
 </ion-content>
