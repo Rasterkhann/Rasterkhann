@@ -13,27 +13,29 @@
 
 <ion-content padding>
   <ng-container *ngIf="currentTown$ | async as town">
-    <ion-list>
-      <ng-container *ngFor="let stat of town.stats | keyvalue">
-        <ion-list-header class="item-header">
-          <ion-row>
-            <ion-col>{{ getHeader(stat.key) }}</ion-col>
-            <ion-col class="ion-text-right ion-padding-end">{{ (sumSection(stat.value) || 0) | bignum }}</ion-col>
-          </ion-row>
-        </ion-list-header>
-
-        <ng-container *ngFor="let substat of stat.value | keyvalue">
-          <ion-item>
-            <ion-label>
-              {{ substat.key }}
-            </ion-label>
-            <ion-label slot="end" class="ion-text-right">
-              {{ (substat.value || 0) | bignum }}
-            </ion-label>
-          </ion-item>
-        </ng-container>
-
-      </ng-container>
-    </ion-list>
+    <ion-row class="allow-splitter">
+      <ion-col size="12" size-xs="4" class="ion-no-padding" *ngFor="let stat of town.stats | keyvalue">
+        <ion-list>
+          <ion-list-header class="item-header">
+            <ion-row>
+              <ion-col>{{ getHeader(stat.key) }}</ion-col>
+              <ion-col class="ion-text-right ion-padding-end">{{ (sumSection(stat.value) || 0) | bignum }}</ion-col>
+            </ion-row>
+          </ion-list-header>
+  
+          <ng-container *ngFor="let substat of stat.value | keyvalue">
+            <ion-item>
+              <ion-label>
+                {{ substat.key }}
+              </ion-label>
+              <ion-label slot="end" class="ion-text-right">
+                {{ (substat.value || 0) | bignum }}
+              </ion-label>
+            </ion-item>
+          </ng-container>
+    
+        </ion-list>
+      </ion-col>
+    </ion-row>
   </ng-container>
 </ion-content>
