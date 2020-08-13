@@ -7,8 +7,8 @@ const exec = promisify(child.exec);
 const version = require('../package.json').version;
 
 async function rewriteVersion() {
-  await exec(`git tag -d ${version}`);
-  await exec(`git tag ${version}`);
+  await exec(`git tag -d v${version}`);
+  await exec(`git tag v${version}`);
 }
 
 rewriteVersion();
