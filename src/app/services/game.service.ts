@@ -8,16 +8,17 @@ import { first } from 'rxjs/operators';
 
 import {
   ChooseInfo, GameLoop, LoadSaveData,
-  OptionToggle, ScrapItem,
-  JobCrystalUpgradeStat
+  OptionToggle, ScrapItem
 } from '../actions';
 import { Building, GameTown, IGameState, BuildingFeature, Hero,
-  ProspectiveHero, Adventure, GameOption, HeroItem, HeroJob, TownStat, SkillBook } from '../interfaces';
+  ProspectiveHero, Adventure, GameOption, HeroItem, HeroJob, SkillBook } from '../interfaces';
 import { LoggerService } from './logger.service';
 import { BuildingService } from './building.service';
 import { GuildHallService } from './guildhall.service';
 import { CaveService } from './cave.service';
 import { LibraryService } from './library.service';
+import { AdventureService } from './adventure.service';
+import { CrystalService } from './crystal.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,10 @@ export class GameService {
     private alert: AlertController,
     private store: Store,
 
+    private adventureService: AdventureService,
     private buildingService: BuildingService,
     private caveService: CaveService,
+    private crystalService: CrystalService,
     private guildhallService: GuildHallService,
     private libraryService: LibraryService,
 
@@ -67,11 +70,11 @@ export class GameService {
   }
 
   public doSimpleConfirmation(
-    { header, message, confirmText }: { header: string, message: string, confirmText: string },
+    { header, message, confirmText, showAlways }: { header: string, message: string, confirmText: string, showAlways?: boolean },
     finalize: () => void
   ): void {
     this.doConfirmation(
-      { header, message, buttons: [
+      { header, message, showAlways, buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
@@ -88,12 +91,12 @@ export class GameService {
   }
 
   public doConfirmation(
-    { header, message, buttons }: { header: string, message: string, buttons: any[] },
+    { header, message, buttons, showAlways }: { header: string, message: string, buttons: any[], showAlways?: boolean },
     finalize: () => void
   ): void {
     this.confirmationDialogs$.pipe(first())
       .subscribe(async showDialog => {
-        if (!showDialog) {
+        if (!showAlways && !showDialog) {
           finalize();
           return;
         }
@@ -209,6 +212,10 @@ export class GameService {
     return this.guildhallService.dismissHero(town, hero);
   }
 
+  public heroStatus(hero: Hero): string {
+    return this.guildhallService.heroStatus(hero);
+  }
+
   // cave functions
   public canRerollAdventures(town: GameTown): boolean {
     return this.caveService.canRerollAdventures(town);
@@ -224,6 +231,22 @@ export class GameService {
 
   public startAdventure(town: GameTown, adventure: Adventure): void {
     return this.caveService.startAdventure(town, adventure);
+  }
+
+  public startAdventureWithHeroes(town: GameTown, adventure: Adventure, heroes: Hero[]): void {
+    return this.caveService.startAdventureWithHeroes(town, adventure, heroes);
+  }
+
+  public doesTownHaveEnoughCrystalsForLegendaryAdventure(town: GameTown): boolean {
+    return this.adventureService.doesTownHaveEnoughCrystalsForLegendaryAdventure(town);
+  }
+
+  public getLegendaryAdventureCost(town: GameTown): Record<HeroJob, number> {
+    return this.adventureService.getLegendaryAdventureCost(town);
+  }
+
+  public generateLegendaryAdventure(town: GameTown): void {
+    return this.caveService.generateLegendaryAdventure(town);
   }
 
   // item functions
@@ -263,12 +286,11 @@ export class GameService {
 
   // crystal allocation functions
   public getAvailableJobCrystals(town: GameTown, job: HeroJob): bigint {
-    return town.stats[TownStat.Retires][job] - town.stats[TownStat.CrystalsSpent][job];
+    return this.crystalService.getAvailableJobCrystals(town, job);
   }
 
   public upgradeJobCrystalStat(town: GameTown, job: HeroJob): void {
-    if (this.getAvailableJobCrystals(town, job) <= 0) { return; }
-    this.store.dispatch(new JobCrystalUpgradeStat(job));
+    return this.crystalService.upgradeJobCrystalStat(town, job);
   }
 
   // library functions

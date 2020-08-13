@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
 import { sum } from 'lodash';
 
-import { GameTown, Adventure, AdventureDifficulty } from '../../../interfaces';
+import { GameTown, Adventure, AdventureDifficulty, Hero } from '../../../interfaces';
 import { GameService } from '../../../services';
 import { formatDifficulty, getTownHeroByUUID } from '../../../helpers';
+import { LegendaryHeroModalComponent } from './legendary-hero-modal/legendary-hero-modal.component';
 
 @Component({
   selector: 'app-adventure',
@@ -20,7 +23,7 @@ export class AdventureComponent implements OnInit {
 
   public heroNames: string[] = [];
 
-  constructor(private game: GameService) { }
+  constructor(private modal: ModalController, private game: GameService) { }
 
   ngOnInit(): void {
     this.heroNames = this.adventure.activeHeroes
@@ -54,6 +57,30 @@ export class AdventureComponent implements OnInit {
   }
 
   async go(): Promise<void> {
+
+    if (this.adventure.difficulty >= AdventureDifficulty.LegendaryStart) {
+      const modal = await this.modal.create({
+        component: LegendaryHeroModalComponent
+      });
+
+      await modal.present();
+
+      const response: any = await modal.onDidDismiss();
+      const heroes: Hero[] = response.data;
+      if (!heroes || heroes.length === 0) { return; }
+
+      const finalizeLegendary = () => {
+        this.game.startAdventureWithHeroes(this.town, this.adventure, heroes);
+      };
+
+      this.game.doSimpleConfirmation({
+        header: 'Embark On Legendary Adventure',
+        message: `Are you sure you want to send ${heroes.map(x => x.name).join(', ')} on this adventure?`,
+        confirmText: 'Yes, Embark'
+      }, finalizeLegendary);
+
+      return;
+    }
 
     const finalize = () => {
       this.game.startAdventure(this.town, this.adventure);

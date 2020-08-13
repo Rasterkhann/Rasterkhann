@@ -144,13 +144,23 @@ export function createBuildingAtLevel(level: number, features = {}): BuildingInf
   return { level, features, featureConstruction: {}, currentWorkerId: '', numRetiredAllocated: 0 };
 }
 
-export function createStatBlock(): Record<HeroJob, bigint> {
+export function createZeroHeroBigintBlock(): Record<HeroJob, bigint> {
   return {
     [HeroJob.Adventurer]: 0n,
     [HeroJob.Mage]: 0n,
     [HeroJob.Thief]: 0n,
     [HeroJob.Cleric]: 0n,
     [HeroJob.Warrior]: 0n
+  };
+}
+
+export function createZeroHeroBlock(): Record<HeroJob, number> {
+  return {
+    [HeroJob.Adventurer]: 0,
+    [HeroJob.Mage]: 0,
+    [HeroJob.Thief]: 0,
+    [HeroJob.Cleric]: 0,
+    [HeroJob.Warrior]: 0
   };
 }
 
@@ -165,6 +175,7 @@ export function createBasicTown(name: string): GameTown {
 
     activeAdventures: [],
     potentialAdventures: [],
+    legendaryAdventures: [],
 
     ownedBooks: [],
     potentialBooks: [],
@@ -199,12 +210,15 @@ export function createBasicTown(name: string): GameTown {
     },
 
     stats: {
-      [TownStat.Adventures]:    createStatBlock(),
-      [TownStat.Encounters]:    createStatBlock(),
-      [TownStat.Gold]:          createStatBlock(),
-      [TownStat.Levels]:        createStatBlock(),
-      [TownStat.Retires]:       createStatBlock(),
-      [TownStat.CrystalsSpent]: createStatBlock()
+      [TownStat.Adventures]:    createZeroHeroBigintBlock(),
+      [TownStat.Encounters]:    createZeroHeroBigintBlock(),
+      [TownStat.Gold]:          createZeroHeroBigintBlock(),
+      [TownStat.Levels]:        createZeroHeroBigintBlock(),
+      [TownStat.Retires]:       createZeroHeroBigintBlock(),
+      [TownStat.CrystalsSpent]: createZeroHeroBigintBlock(),
+      [TownStat.Legendary]:     {
+        Adventures: 0n
+      }
     },
 
     crystalCurrency: {

@@ -77,6 +77,11 @@ export function getCurrentTownPotentialAdventures(state: IGameState): Adventure[
   return town.potentialAdventures;
 }
 
+export function getCurrentTownLEgendaryAdventures(state: IGameState): Adventure[] {
+  const town = getCurrentTownFromState(state);
+  return town.legendaryAdventures;
+}
+
 // heroes are only free if they're not on an adventure and have full STA
 export function getTownAllHeroesFree(town: GameTown): Hero[] {
   return town.recruitedHeroes.filter((h: Hero) => canHeroGoOnAdventure(h));

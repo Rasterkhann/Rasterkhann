@@ -78,7 +78,7 @@ ion-item {
 }
 
 ion-title, ion-title h2, 
-ion-list-header, ion-list-header h4, ion-list-header span,
+ion-list-header, ion-list-header h4, ion-list-header span, ion-list-header ion-label,
 ion-item-divider {
   font-size: 1.4rem !important;
   letter-spacing: 2px !important;
@@ -150,4 +150,8 @@ tooltip {
 
 .has-info {
   border-bottom: 1px dashed #fff;
+}
+
+ion-list ion-item:only-of-type {
+  padding-top: 10px;
 }

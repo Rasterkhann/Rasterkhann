@@ -14,11 +14,11 @@ import {
   HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding,
   UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire, HeroQueueDismissCancel,
   HeroQueueRetireCancel, JobCrystalUpgradeStat, RerollBooks, BookBuy, BookDestroy,
-  HeroForgetSkill, HeroLearnSkill, ChangeWorkerAutoAllocationBuilding
+  HeroForgetSkill, HeroLearnSkill, ChangeWorkerAutoAllocationBuilding, RollLegendaryAdventure
 } from '../actions';
 import {
   GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem,
-  ItemType, HeroItem, HeroTrackedStat, TownStat, SkillBook
+  ItemType, HeroItem, HeroTrackedStat, TownStat, SkillBook, AdventureDifficulty, HeroJob
 } from '../interfaces';
 import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
@@ -38,7 +38,8 @@ import {
   getCurrentTownItemsForSale, tickAdventure, checkHeroLevelUp,
   getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber, getBazaarLoanPercent,
   getBoostedStatsForJobType, getCurrentTownProspectiveBooks, getCurrentTownOwnedBooks,
-  calculateMaxPotentialBooks
+  calculateMaxPotentialBooks,
+  getCurrentTownLEgendaryAdventures
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -103,6 +104,11 @@ export class GameState {
   @Selector()
   public static currentTownPotentialAdventures(state: IGameState): Adventure[] {
     return getCurrentTownPotentialAdventures(state);
+  }
+
+  @Selector()
+  public static currentTownLegendaryAdventures(state: IGameState): Adventure[] {
+    return getCurrentTownLEgendaryAdventures(state);
   }
 
   @Selector()
@@ -776,10 +782,18 @@ export class GameState {
       modAdventure.encounterTicks = modAdventure.encounterTicks.map(x => Math.floor(Math.max(1, x * totalMultiplier)));
 
       state.towns[state.currentTown].activeAdventures.push(modAdventure);
-      state.towns[state.currentTown].potentialAdventures = state.towns[state.currentTown].potentialAdventures
-        .filter(x => x.uuid !== adventure.uuid);
 
-      state.towns[state.currentTown].potentialAdventures.push(this.advCreator.generateAdventure(town));
+      // legendary adventures are not replaced
+      if (modAdventure.difficulty >= AdventureDifficulty.LegendaryStart) {
+        state.towns[state.currentTown].legendaryAdventures = state.towns[state.currentTown].legendaryAdventures
+          .filter(x => x.uuid !== adventure.uuid);
+
+      } else {
+        state.towns[state.currentTown].potentialAdventures = state.towns[state.currentTown].potentialAdventures
+          .filter(x => x.uuid !== adventure.uuid);
+
+        state.towns[state.currentTown].potentialAdventures.push(this.advCreator.generateAdventure(town));
+      }
 
       messages.push(`${heroes.map(x => x.name).join(', ')} ${heroes.length === 1 ? 'has' : 'have'} embarked on an adventure.`);
 
@@ -800,6 +814,25 @@ export class GameState {
     }, 0);
   }
 
+  @Action(RollLegendaryAdventure)
+  @ImmutableContext()
+  rollLegendaryAdventure({ setState }: StateContext<IGameState>): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+
+      const adv = this.advCreator.generateLegendaryAdventure(town);
+      const cost = this.advCreator.getLegendaryAdventureCost(town);
+
+      Object.keys(cost).forEach((jobKey: HeroJob) => {
+        town.stats[TownStat.CrystalsSpent][jobKey] += BigInt(cost[jobKey]);
+      });
+
+      town.legendaryAdventures.push(adv);
+
+      return state;
+    });
+  }
+
   @Action(GameLoop)
   @ImmutableContext()
   adventureTick({ setState }: StateContext<IGameState>): void {
@@ -815,6 +848,11 @@ export class GameState {
         // adventure over
         if (result) {
           resMsg = result;
+
+          // we get legendary adventures back if we lose
+          if (adv.difficulty >= AdventureDifficulty.LegendaryStart && result.includes('failure')) {
+            town.legendaryAdventures.push(this.advCreator.generateLegendaryAdventure(town));
+          }
 
           adv.activeHeroes.forEach(heroId => bumpHeroIds.push(heroId));
         }

@@ -40,6 +40,7 @@ import { CombatLogModalComponent } from '../windows/cave/combat-log-modal/combat
 import { TownStatsModalComponent } from '../windows/archives/stats-modal/stats-modal.component';
 import { WorkerAllocationModalComponent } from '../shared/building-info/allocation-modal/allocation-modal.component';
 import { SkillBookModalComponent } from '../windows/library/skill-modal/skill-modal.component';
+import { LegendaryHeroModalComponent } from '../shared/adventure/legendary-hero-modal/legendary-hero-modal.component';
 
 import { HeroComponent } from '../shared/hero/hero.component';
 import { HeroSpriteComponent } from '../shared/hero-sprite/hero-sprite.component';
@@ -57,7 +58,8 @@ const modals = [
   TownStatsModalComponent,
   WorkerAllocationModalComponent,
   GuildCrystalModalComponent,
-  SkillBookModalComponent
+  SkillBookModalComponent,
+  LegendaryHeroModalComponent
 ];
 
 @NgModule({

@@ -16,7 +16,7 @@
 
   <ion-row class="allow-splitter" *ngIf="currentTownItemsForSale$ | async as itemsForSale">
     <ng-container *ngFor="let type of itemTypes">
-      <ion-col size="12" size-xs="4" class="ion-no-padding">
+      <ion-col size="12" size-lg="4" class="ion-no-padding">
         <ion-list>
           <ion-list-header>
             {{ type }}s ({{ getItems(itemsForSale, type).length }}/{{ getTypeTotal(type) }})

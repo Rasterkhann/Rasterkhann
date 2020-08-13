@@ -5,7 +5,7 @@ import { GameTown, Building, ProspectiveHero, Hero, HeroStat, HeroTrackedStat } 
 import { SpendGold, RerollHeroes, HeroRecruit, HeroGainEXP, HeroQueueDismissCancel,
   HeroQueueDismiss, HeroDismiss, HeroQueueRetire, HeroRetire, HeroQueueRetireCancel } from '../actions';
 import { HeroService } from './hero.service';
-import { getCurrentStat } from '../helpers';
+import { getCurrentStat, canHeroGoOnAdventure } from '../helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -100,5 +100,12 @@ export class GuildHallService {
 
   public cancelHeroRetire(hero: Hero): void {
     this.store.dispatch(new HeroQueueRetireCancel(hero.uuid));
+  }
+
+  public heroStatus(hero: Hero): string {
+    if (hero.currentlyWorkingAt)     { return `Working at the ${hero.currentlyWorkingAt}`; }
+    if (hero.onAdventure)            { return 'Adventuring'; }
+    if (!canHeroGoOnAdventure(hero)) { return 'Resting'; }
+    return 'Idle';
   }
 }

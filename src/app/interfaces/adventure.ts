@@ -8,7 +8,9 @@ export enum AdventureDifficulty {
   VeryHard = 5,
   Tough = 7,
   Challenging = 9,
-  Extreme = 11
+  Extreme = 11,
+
+  LegendaryStart = 20
 }
 
 export interface Adventure {
@@ -20,6 +22,7 @@ export interface Adventure {
   encounterCount: number;
   encounterTicks: number[];
   activeHeroes: string[];
+  bossName?: string;
 }
 
 export interface CombatLog {

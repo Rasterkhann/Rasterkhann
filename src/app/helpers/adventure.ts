@@ -15,8 +15,11 @@ export function formatDifficulty(difficulty: AdventureDifficulty): string {
     [AdventureDifficulty.VeryHard]:       'Very Hard',
     [AdventureDifficulty.Tough]:          'Tough',
     [AdventureDifficulty.Challenging]:    'Challenging',
-    [AdventureDifficulty.Extreme]:        'Extreme'
+    [AdventureDifficulty.Extreme]:        'Extreme',
+    [AdventureDifficulty.LegendaryStart]: 'Legendary'
   };
+
+  if (difficulty >= AdventureDifficulty.LegendaryStart) { return 'Legendary'; }
 
   return difficultyStrings[difficulty] || 'Unknown';
 }
@@ -191,7 +194,12 @@ export function finalizeAdventure(town: GameTown, adventure: Adventure): boolean
   const expMult = getTownExpMultiplier(town);
   const goldMult = getTownGoldMultiplier(town);
 
-  const baseReward = adventure.encounterCount * adventure.encounterLevel * adventure.difficulty;
+  let baseReward = adventure.encounterCount * adventure.encounterLevel * adventure.difficulty;
+
+  if (adventure.difficulty >= AdventureDifficulty.LegendaryStart) {
+    baseReward *= 100;
+  }
+
   const expReward = Math.floor(100 * baseReward * expMult);
   const goldReward = Math.floor(10 * baseReward * goldMult);
 
@@ -215,6 +223,15 @@ export function finalizeAdventure(town: GameTown, adventure: Adventure): boolean
       logs: [],
       wasSuccess: true
     };
+
+    if (adventure.difficulty >= AdventureDifficulty.LegendaryStart) {
+      town.stats[TownStat.Legendary].Adventures = town.stats[TownStat.Legendary].Adventures || 0n;
+      town.stats[TownStat.Legendary].Adventures++;
+
+      const goldEarned = ((adventure.difficulty - AdventureDifficulty.LegendaryStart) + 1) * 5_000_000;
+      town.gold += BigInt(goldEarned);
+      combatLog.logs.push(`Rasterkhann earned ${formatNumber(goldEarned)} GOLD for this legendary adventure!`);
+    }
 
     chosenHeroes.forEach(h => {
       increaseTrackedStat(h, HeroTrackedStat.AdventuresSucceeded, 1);

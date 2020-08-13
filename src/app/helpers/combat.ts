@@ -2,7 +2,7 @@
 import { random, sample, sum } from 'lodash';
 
 import { Hero, Adventure, GameTown, HeroStat, HeroActionTargetting,
-  HeroAction, TriggerType, ItemType, CombatLog, Combat, HeroTrackedStat, Building } from '../interfaces';
+  HeroAction, TriggerType, ItemType, CombatLog, Combat, HeroTrackedStat, Building, TownStat } from '../interfaces';
 import { generateMonster, checkHeroLevelUp, convertHeroLearnedSkillsToSkills } from './hero';
 import { JobEffects } from '../static';
 import { addCombatLogToTown, doesTownHaveFeature, formatNumber,
@@ -18,6 +18,8 @@ export function getTownExpMultiplier(town: GameTown): number {
 
   base += numAllocatedToBuilding(town, Building.Cave) * 0.01;
 
+  base += Number(town.stats[TownStat.Legendary].Adventures || 0) * 0.01;
+
   return base;
 }
 
@@ -29,6 +31,8 @@ export function getTownGoldMultiplier(town: GameTown): number {
   if (doesTownHaveFeature(town, 'Monster Gold III')) { base += 0.3; }
 
   base += numAllocatedToBuilding(town, Building.Cave) * 0.01;
+
+  base += Number(town.stats[TownStat.Legendary].Adventures || 0) * 0.01;
 
   return base;
 }
@@ -82,6 +86,10 @@ class CombatTracker implements Combat {
 
     // generate 1-2 monsters per hero
     const monsters = Array(heroes.length + random(0, heroes.length)).fill(null).map(() => generateMonster(town, adventure));
+
+    if (adventure.bossName) {
+      monsters[0].name = adventure.bossName;
+    }
 
     this.addLogEntry(`Heroes: ${heroes.map(h => this.getHeroTag(h)).join(', ')}`);
     this.addLogEntry(`Monsters: ${monsters.map(m => this.getHeroTag(m)).join(', ')}`);

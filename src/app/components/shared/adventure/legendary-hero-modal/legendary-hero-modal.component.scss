@@ -1,0 +1,11 @@
+
+.item-header {
+  ion-row {
+    width: 100%;
+
+    // not sure why this doesn't just work, but such is life
+    .ion-padding-end {
+      padding-right: 16px;
+    }
+  }
+}

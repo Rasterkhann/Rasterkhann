@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { Hero, GameTown, HeroStat, Building } from '../../../interfaces';
-import { canHeroGoOnAdventure } from '../../../helpers';
 import { GameService } from '../../../services';
 
 @Component({
@@ -28,10 +27,7 @@ export class HeroComponent implements OnInit {
   ];
 
   public get status(): string {
-    if (this.hero.currentlyWorkingAt)     { return `Working at the ${this.hero.currentlyWorkingAt}`; }
-    if (this.hero.onAdventure)            { return 'Adventuring'; }
-    if (!canHeroGoOnAdventure(this.hero)) { return 'Resting'; }
-    return 'Idle';
+    return this.game.heroStatus(this.hero);
   }
 
   public get workingExplanation(): string {

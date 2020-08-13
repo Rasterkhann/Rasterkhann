@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Choose Heroes For Adventure
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" *ngIf="town" (click)="confirm()" [disabled]="!canConfirm(town)">
+        Confirm
+      </ion-button>
+      <ion-button (click)="dismiss()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngIf="town">
+    <ion-list-header>Choose Up To {{ membersRemaining(town) }} Heroes</ion-list-header>
+    <ion-item *ngFor="let hero of town.recruitedHeroes; trackBy: trackHeroBy">
+      <ion-checkbox slot="start" [(ngModel)]="heroes[hero.uuid]" [disabled]="!canHeroBeSelected(hero) && !heroes[hero.uuid]"></ion-checkbox>
+
+      <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="hero.sprite"></app-hero-sprite>
+
+      <ion-label>
+        <h3>{{ hero.name }}</h3>
+        <p>{{ hero.job.substring(0, 3).toUpperCase() }} Lv.{{ hero.stats.lvl }}</p>
+        <p>Status: {{ game.heroStatus(hero) }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

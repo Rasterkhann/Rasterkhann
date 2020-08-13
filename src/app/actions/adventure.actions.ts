@@ -10,3 +10,8 @@ export class StartAdventure {
   static readonly type = '[Adventure] Start Adventure';
   constructor(public adventure: Adventure, public heroes: Hero[]) {}
 }
+
+export class RollLegendaryAdventure {
+  static readonly type = '[Adventure] Roll Legendary Adventure';
+  constructor() {}
+}

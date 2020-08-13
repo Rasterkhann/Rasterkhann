@@ -21,7 +21,8 @@ export class TownStatsModalComponent implements OnInit {
     [TownStat.Gold]:          'Gold Earned',
     [TownStat.Levels]:        'Retired Level Total',
     [TownStat.Retires]:       'Retirements',
-    [TownStat.CrystalsSpent]: 'Job Crystals Spent'
+    [TownStat.CrystalsSpent]: 'Job Crystals Spent',
+    [TownStat.Legendary]:     'Legendary Feats'
   };
 
   constructor(private modal: ModalController) { }

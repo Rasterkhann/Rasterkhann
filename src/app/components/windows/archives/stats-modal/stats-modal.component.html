@@ -14,7 +14,7 @@
 <ion-content padding>
   <ng-container *ngIf="currentTown$ | async as town">
     <ion-row class="allow-splitter">
-      <ion-col size="12" size-xs="4" class="ion-no-padding" *ngFor="let stat of town.stats | keyvalue">
+      <ion-col size="12" size-lg="4" class="ion-no-padding" *ngFor="let stat of town.stats | keyvalue">
         <ion-list>
           <ion-list-header class="item-header">
             <ion-row>

@@ -2,9 +2,16 @@
 import { isUndefined } from 'lodash';
 
 import { Building, IGameState, ItemType, TownStat, HeroJob, Version } from '../interfaces';
-import { createBuildingAtLevel, createStatBlock, getZeroStatBlock } from '../helpers';
+import { createBuildingAtLevel, createZeroHeroBigintBlock, getZeroStatBlock } from '../helpers';
 
-export const migrations = [
+interface Migration {
+  version: Version;
+  key: 'gamestate';
+  versionKey: 'version';
+  migrate: (state: IGameState) => IGameState;
+}
+
+export const migrations: Migration[] = [
   {
     version: Version.First,
     key: 'gamestate',
@@ -152,12 +159,15 @@ export const migrations = [
 
       console.log('Setting default town stats records...');
       const defaultStats = {
-        [TownStat.Adventures]:    createStatBlock(),
-        [TownStat.Encounters]:    createStatBlock(),
-        [TownStat.Gold]:          createStatBlock(),
-        [TownStat.Levels]:        createStatBlock(),
-        [TownStat.Retires]:       createStatBlock(),
-        [TownStat.CrystalsSpent]: createStatBlock()
+        [TownStat.Adventures]:    createZeroHeroBigintBlock(),
+        [TownStat.Encounters]:    createZeroHeroBigintBlock(),
+        [TownStat.Gold]:          createZeroHeroBigintBlock(),
+        [TownStat.Levels]:        createZeroHeroBigintBlock(),
+        [TownStat.Retires]:       createZeroHeroBigintBlock(),
+        [TownStat.CrystalsSpent]: createZeroHeroBigintBlock(),
+        [TownStat.Legendary]:     {
+          Adventures: 0
+        }
       };
 
       state.towns.Rasterkhann.stats = state.towns.Rasterkhann.stats || {};
@@ -173,7 +183,7 @@ export const migrations = [
       }
 
       console.log('Setting new town stat...');
-      state.towns.Rasterkhann.stats.crystals = state.towns.Rasterkhann.stats.crystals || createStatBlock();
+      state.towns.Rasterkhann.stats.crystals = state.towns.Rasterkhann.stats.crystals || createZeroHeroBigintBlock();
 
       console.log('Setting crystal currency...');
       state.towns.Rasterkhann.crystalCurrency = state.towns.Rasterkhann.crystalCurrency || {};
@@ -232,6 +242,25 @@ export const migrations = [
       if (isUndefined(state.options.showStatTooltips)) {
         state.options.showStatTooltips = true;
       }
+
+      console.log('Setting legendary adventures up...');
+      state.towns.Rasterkhann.legendaryAdventures = state.towns.Rasterkhann.legendaryAdventures || [];
+
+      console.log('Setting up new town stats...');
+      state.towns.Rasterkhann.stats.legendary = state.towns.Rasterkhann.stats.legendary || {};
+      state.towns.Rasterkhann.stats.legendary.Adventures = state.towns.Rasterkhann.stats.legendary.Adventures || 0n;
+
+      state.version = Version.Legendary;
+
+      return state;
+    }
+  },
+  {
+    version: Version.Legendary,
+    key: 'gamestate',
+    versionKey: 'version',
+    migrate: (state: IGameState) => {
+      console.log('Savefile version 7...');
 
       return state;
     }

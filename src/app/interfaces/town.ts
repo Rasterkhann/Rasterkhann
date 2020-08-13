@@ -11,7 +11,8 @@ export enum TownStat {
   Encounters = 'encounters',
   Levels = 'levels',
   Gold = 'gold',
-  CrystalsSpent = 'crystals'
+  CrystalsSpent = 'crystals',
+  Legendary = 'legendary'
 }
 
 export interface NewsItem {
@@ -34,6 +35,7 @@ export interface GameTown {
 
   activeAdventures: Adventure[];
   potentialAdventures: Adventure[];
+  legendaryAdventures: Adventure[];
 
   ownedBooks: SkillBook[];
   potentialBooks: SkillBook[];
@@ -44,7 +46,7 @@ export interface GameTown {
   nextItemCreation: Record<ItemType, number>;
 
   combatLogs: CombatLog[];
-  stats: Record<TownStat, Record<HeroJob, bigint>>;
+  stats: Record<TownStat, Record<HeroJob | string, bigint>>;
 
   crystalBuffs: Record<HeroStat, number>;
   showStage2UI: boolean;
