@@ -4,7 +4,7 @@
       Choose Heroes For Adventure
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button color="secondary" *ngIf="town" (click)="confirm()" [disabled]="!canConfirm(town)">
+      <ion-button color="secondary" *ngIf="town" (click)="confirm()" [disabled]="!canConfirm()">
         Confirm
       </ion-button>
       <ion-button (click)="dismiss()">
@@ -16,7 +16,7 @@
 
 <ion-content padding>
   <ion-list *ngIf="town">
-    <ion-list-header>Choose Up To {{ membersRemaining(town) }} Heroes</ion-list-header>
+    <ion-list-header>Choose Up To {{ membersRemaining() }} Heroes</ion-list-header>
     <ion-item *ngFor="let hero of town.recruitedHeroes; trackBy: trackHeroBy">
       <ion-checkbox slot="start" [(ngModel)]="heroes[hero.uuid]" [disabled]="!canHeroBeSelected(hero) && !heroes[hero.uuid]"></ion-checkbox>
 

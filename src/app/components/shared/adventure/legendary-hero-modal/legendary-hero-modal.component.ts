@@ -8,8 +8,6 @@ import { GameState } from '../../../../states';
 import { calculateMaxMembersPerTeam, canHeroGoOnAdventure } from '../../../../helpers';
 import { GameService } from '../../../../services';
 
-// TODO: ngoninit/destroy watch town and update hero uuids if they're unable to go
-
 @Component({
   selector: 'app-legendary-hero-modal',
   templateUrl: './legendary-hero-modal.component.html',
