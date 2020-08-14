@@ -52,8 +52,8 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activeHeroes$ = combineLatest([this.currentTown$, this.recruitedHeroes$])
-      .subscribe(([town, d]) => {
+    this.activeHeroes$ = combineLatest([this.currentTown$, this.recruitedHeroes$, this.prospectiveHeroes$])
+      .subscribe(([town, d, prospectives]) => {
         this.town = town;
 
         if (this.viewingProspectiveHero && this.viewingHero && d.map(h => h.uuid).includes(this.viewingHero.uuid)) {
@@ -66,6 +66,11 @@ export class GuildModalComponent implements OnDestroy, OnInit {
         d.forEach(h => {
           if (!this.viewingHero || h.uuid !== this.viewingHero.uuid) { return; }
           this.viewingHero = h;
+        });
+
+        prospectives.forEach(p => {
+          if (!this.viewingProspectiveHero || p.hero.uuid !== this.viewingProspectiveHero.hero.uuid) { return; }
+          this.viewingProspectiveHero = p;
         });
       });
   }
@@ -170,12 +175,21 @@ export class GuildModalComponent implements OnDestroy, OnInit {
   async recruitHero(prosHero: ProspectiveHero): Promise<void> {
     const finalize = () => {
       if (!prosHero.rating || !prosHero.cost) { return; }
+
+      if (!this.canBuyHeroes) {
+        this.game.queueRecruit(prosHero);
+        return;
+      }
+
       this.game.recruitHero(this.town, prosHero);
     };
 
     this.game.doSimpleConfirmation({
       header: 'Recruit Hero',
-      message: `Are you sure you want to recruit ${prosHero.hero.name}, the level ${prosHero.hero.stats[HeroStat.LVL]} ${prosHero.hero.job}?`,
+      message: `Are you sure you want to recruit ${prosHero.hero.name}, the level ${prosHero.hero.stats[HeroStat.LVL]} ${prosHero.hero.job}?
+
+      ${this.canBuyHeroes ? '' : '<br><br>This hero will be queued for recruitment, and will not be lost to rerolls.'}
+      `,
       confirmText: 'Yes, Recruit'
     }, finalize);
   }

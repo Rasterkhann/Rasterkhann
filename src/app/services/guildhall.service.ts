@@ -3,7 +3,7 @@ import { Store } from '@ngxs/store';
 
 import { GameTown, Building, ProspectiveHero, Hero, HeroStat, HeroTrackedStat } from '../interfaces';
 import { SpendGold, RerollHeroes, HeroRecruit, HeroGainEXP, HeroQueueDismissCancel,
-  HeroQueueDismiss, HeroDismiss, HeroQueueRetire, HeroRetire, HeroQueueRetireCancel } from '../actions';
+  HeroQueueDismiss, HeroDismiss, HeroQueueRetire, HeroRetire, HeroQueueRetireCancel, HeroQueueRecruit, HeroQueueRecruitCancel } from '../actions';
 import { HeroService } from './hero.service';
 import { getCurrentStat, canHeroGoOnAdventure } from '../helpers';
 
@@ -41,7 +41,7 @@ export class GuildHallService {
   public recruitHero(town: GameTown, prosHero: ProspectiveHero): void {
     if (!this.canRecruitHero(town, prosHero)) { return; }
 
-    this.store.dispatch(new HeroRecruit(prosHero)).subscribe(() => {
+    this.store.dispatch(new HeroRecruit(prosHero.hero.uuid)).subscribe(() => {
       this.store.dispatch(new SpendGold(prosHero.cost));
     });
   }
@@ -82,6 +82,14 @@ export class GuildHallService {
     }
 
     this.store.dispatch(new HeroDismiss(hero.uuid));
+  }
+
+  public queueRecruit(prosHero: ProspectiveHero): void {
+    this.store.dispatch(new HeroQueueRecruit(prosHero.hero.uuid));
+  }
+
+  public cancelQueueRecruit(prosHero: ProspectiveHero): void {
+    this.store.dispatch(new HeroQueueRecruitCancel(prosHero.hero.uuid));
   }
 
   // retire functions

@@ -127,4 +127,5 @@ export interface ProspectiveHero {
   cost: bigint;
   rating: number;
   hero: Hero;
+  queueRecruited: boolean;
 }

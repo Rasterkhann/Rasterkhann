@@ -14,7 +14,7 @@ import {
   HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding,
   UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire, HeroQueueDismissCancel,
   HeroQueueRetireCancel, JobCrystalUpgradeStat, RerollBooks, BookBuy, BookDestroy,
-  HeroForgetSkill, HeroLearnSkill, ChangeWorkerAutoAllocationBuilding, RollLegendaryAdventure
+  HeroForgetSkill, HeroLearnSkill, ChangeWorkerAutoAllocationBuilding, RollLegendaryAdventure, HeroQueueRecruit, HeroQueueRecruitCancel
 } from '../actions';
 import {
   GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem,
@@ -39,7 +39,8 @@ import {
   getCurrentTownFreeOddJobBuildings, increaseTrackedStat, formatNumber, getBazaarLoanPercent,
   getBoostedStatsForJobType, getCurrentTownProspectiveBooks, getCurrentTownOwnedBooks,
   calculateMaxPotentialBooks,
-  getCurrentTownLEgendaryAdventures
+  getCurrentTownLEgendaryAdventures,
+  calculateHeroMaxTotal
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -297,6 +298,9 @@ export class GameState {
     const dismissHeroes: string[] = [];
     const retireHeroes: string[] = [];
 
+    let recruitSpend = 0n;
+    const recruitHeroes: string[] = [];
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
@@ -307,6 +311,16 @@ export class GameState {
       const repairValue = calculateRepairRate(town);
       const repairCost = calculateRepairCost(town);
       */
+
+      // recruit queued
+      town.prospectiveHeroes.forEach(p => {
+        if (!p.queueRecruited) { return; }
+        if (town.gold < p.cost + recruitSpend) { return; }
+        if (town.recruitedHeroes.length >= calculateHeroMaxTotal(town)) { return; }
+
+        recruitSpend += p.cost;
+        recruitHeroes.push(p.hero.uuid);
+      });
 
       // rest
       town.recruitedHeroes.forEach(h => {
@@ -401,6 +415,11 @@ export class GameState {
 
     dismissHeroes.forEach(heroId => this.store.dispatch(new HeroDismiss(heroId)));
     retireHeroes.forEach(heroId => this.store.dispatch(new HeroRetire(heroId)));
+    recruitHeroes.forEach(heroId => this.store.dispatch(new HeroRecruit(heroId)));
+
+    if (recruitSpend > 0n) {
+      this.store.dispatch(new SpendGold(recruitSpend));
+    }
   }
 
   @Action(RerollHeroes)
@@ -410,12 +429,13 @@ export class GameState {
       const town = getCurrentTownFromState(state);
       const prospectiveHeroes: ProspectiveHero[] = [];
 
-      const totalProspects = calculateProspectiveHeroMaxTotal(town);
+      const currentQueued = town.prospectiveHeroes.filter(pros => pros.queueRecruited);
+      const totalProspects = calculateProspectiveHeroMaxTotal(town) - currentQueued.length;
       for (let i = 0; i < totalProspects; i++) {
         prospectiveHeroes.push(this.heroCreator.generateProspectiveHero(town));
       }
 
-      state.towns[state.currentTown].prospectiveHeroes = prospectiveHeroes;
+      state.towns[state.currentTown].prospectiveHeroes = currentQueued.concat(prospectiveHeroes);
 
       return state;
     });
@@ -423,8 +443,13 @@ export class GameState {
 
   @Action(HeroRecruit)
   @ImmutableContext()
-  recruitHero({ setState }: StateContext<IGameState>, { hero }: HeroRecruit): void {
+  recruitHero({ setState }: StateContext<IGameState>, { heroId }: HeroRecruit): void {
     setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+
+      const hero = town.prospectiveHeroes.find(h => h.hero.uuid === heroId);
+      if (!hero) { return state; }
+
       const heroRecruit = { ...hero.hero };
       heroRecruit.currentStats = { ...heroRecruit.currentStats };
       heroRecruit.currentStats.exp = 0;
@@ -437,6 +462,34 @@ export class GameState {
         .filter(x => x.hero.uuid !== heroRecruit.uuid);
 
       state.towns[state.currentTown].prospectiveHeroes.push(this.heroCreator.generateProspectiveHero(state.towns[state.currentTown]));
+
+      return state;
+    });
+  }
+
+  @Action(HeroQueueRecruit)
+  @ImmutableContext()
+  queueRecruitHero({ setState }: StateContext<IGameState>, { heroId }: HeroQueueRecruit): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.prospectiveHeroes.find(h => h.hero.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      heroRef.queueRecruited = true;
+
+      return state;
+    });
+  }
+
+  @Action(HeroQueueRecruitCancel)
+  @ImmutableContext()
+  cancelQueueRecruitHero({ setState }: StateContext<IGameState>, { heroId }: HeroQueueRecruitCancel): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+      const heroRef = town.prospectiveHeroes.find(h => h.hero.uuid === heroId);
+      if (!heroRef) { return state; }
+
+      heroRef.queueRecruited = false;
 
       return state;
     });

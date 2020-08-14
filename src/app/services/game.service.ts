@@ -217,6 +217,14 @@ export class GameService {
     return this.guildhallService.dismissHero(town, hero);
   }
 
+  public queueRecruit(prosHero: ProspectiveHero): void {
+    return this.guildhallService.queueRecruit(prosHero);
+  }
+
+  public cancelQueueRecruit(prosHero: ProspectiveHero): void {
+    return this.guildhallService.cancelQueueRecruit(prosHero);
+  }
+
   public heroStatus(hero: Hero): string {
     return this.guildhallService.heroStatus(hero);
   }

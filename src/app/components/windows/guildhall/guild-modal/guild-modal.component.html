@@ -65,6 +65,18 @@
     <ion-row *ngIf="viewingHero">
 
       <!-- top banner -->
+      <ion-col size="12" *ngIf="viewingProspectiveHero">
+        <ion-list>
+          <ion-item color="success" *ngIf="viewingProspectiveHero.queueRecruited">
+            <ion-label class="ion-text-wrap">
+              This hero is queued for recruitment!
+            </ion-label>
+    
+            <ion-button slot="end" color="warning" (click)="game.cancelQueueRecruit(viewingProspectiveHero)">Cancel</ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
       <ion-col size="12" *ngIf="!viewingProspectiveHero">
         <ion-list>
           <ion-item color="success" *ngIf="game.canRetireHero(viewingHero)">
@@ -166,7 +178,7 @@
         <p *ngIf="!viewingProspectiveHero">{{ viewingHero.currentStats.gold | bignum }} GOLD</p>
         <p class="exp-row" *ngIf="viewingProspectiveHero">
           Cost: {{ viewingProspectiveHero.cost | bignum }} GOLD
-          <ion-button class="inline-button" color="secondary" [disabled]="!canRecruitHero(town, viewingProspectiveHero)" (click)="recruitCurrentHero()">Recruit</ion-button>
+          <ion-button class="inline-button" color="secondary" (click)="recruitCurrentHero()" *ngIf="!viewingProspectiveHero.queueRecruited">Recruit</ion-button>
         </p>
       </ion-label>
     </ion-item>

@@ -48,7 +48,8 @@ export class HeroService {
     return {
       hero,
       cost: BigInt(Math.floor(baseCost)),
-      rating
+      rating,
+      queueRecruited: false
     };
   }
 
