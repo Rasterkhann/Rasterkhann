@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Select } from '@ngxs/store';
+
 import { Observable, Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { GameTown, Hero } from '../../../../interfaces';
 import { GameState } from '../../../../states';
-import { calculateMaxMembersPerTeam, canHeroGoOnAdventure } from '../../../../helpers';
+import { calculateMaxMembersPerTeam } from '../../../../helpers';
 import { GameService } from '../../../../services';
 
 @Component({
@@ -25,6 +27,16 @@ export class LegendaryHeroModalComponent implements OnInit, OnDestroy {
   constructor(private modal: ModalController, public game: GameService) { }
 
   ngOnInit(): void {
+
+    // ADVQUEUE: this won't work if hero queuing needs updating - it only supports one concurrent queue
+    this.currentTown$.pipe(first()).subscribe(t => {
+      t.recruitedHeroes.forEach(h => {
+        if (!h.queueAdventure) { return; }
+
+        this.heroes[h.uuid] = true;
+      });
+    });
+
     this.town$ = this.currentTown$.subscribe(t => {
       this.town = t;
 
@@ -32,10 +44,6 @@ export class LegendaryHeroModalComponent implements OnInit, OnDestroy {
 
       this.town.recruitedHeroes.forEach(h => {
         checked[h.uuid] = true;
-
-        if (!canHeroGoOnAdventure(h) && this.heroes[h.uuid]) {
-          this.heroes[h.uuid] = false;
-        }
       });
 
       // if, for some reason, someone queues a dismiss then pops this window up, the hero should be removed from the list
@@ -73,7 +81,7 @@ export class LegendaryHeroModalComponent implements OnInit, OnDestroy {
   }
 
   canHeroBeSelected(hero: Hero): boolean {
-    return canHeroGoOnAdventure(hero) && this.numSelectedHeroes() < this.maxMembers();
+    return this.numSelectedHeroes() < this.maxMembers();
   }
 
   maxMembers(): number {

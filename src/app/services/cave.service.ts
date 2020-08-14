@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { delay } from 'rxjs/operators';
 
 import { GameTown, Building, Adventure, Hero } from '../interfaces';
-import { SpendGold, RerollAdventures, StartAdventure, RollLegendaryAdventure } from '../actions';
+import { SpendGold, RerollAdventures, StartAdventure, RollLegendaryAdventure, QueueAdventure } from '../actions';
 import { AdventureService } from './adventure.service';
 
 @Injectable({
@@ -43,12 +43,16 @@ export class CaveService {
     this.startAdventureWithHeroes(town, adventure, heroes);
   }
 
+  public queueAdventureWithHeroes(town: GameTown, adventure: Adventure, heroes: Hero[]): void {
+    this.store.dispatch(new QueueAdventure(adventure, heroes));
+  }
+
   public startAdventureWithHeroes(town: GameTown, adventure: Adventure, heroes: Hero[]): void {
     if (this.isStartingAdventure) { return; }
 
     this.isStartingAdventure = true;
 
-    this.store.dispatch(new StartAdventure(adventure, heroes))
+    this.store.dispatch(new StartAdventure(adventure.uuid, heroes.map(h => h.uuid)))
       .pipe(delay(1000))
       .subscribe(() => {
         this.isStartingAdventure = false;

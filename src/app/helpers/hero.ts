@@ -201,13 +201,25 @@ export function calculateHeroTrainingGoldPerXP(town: GameTown): bigint {
   return base;
 }
 
+export function isHeroFullHealth(hero: Hero): boolean {
+  return getCurrentStat(hero, HeroStat.STA) === hero.stats[HeroStat.STA]
+      && getCurrentStat(hero, HeroStat.HP) === hero.stats[HeroStat.HP]
+      && getCurrentStat(hero, HeroStat.SP) === hero.stats[HeroStat.SP];
+}
+
+export function canHeroDoQueuedAdventure(hero: Hero): boolean {
+  return !hero.onAdventure
+      && !hero.queueDismissed
+      && !hero.queueRetired
+      && isHeroFullHealth(hero);
+}
+
 export function canHeroGoOnAdventure(hero: Hero): boolean {
   return !hero.onAdventure
       && !hero.queueDismissed
       && !hero.queueRetired
-      && getCurrentStat(hero, HeroStat.STA) === hero.stats[HeroStat.STA]
-      && getCurrentStat(hero, HeroStat.HP) === hero.stats[HeroStat.HP]
-      && getCurrentStat(hero, HeroStat.SP) === hero.stats[HeroStat.SP];
+      && !hero.queueAdventure
+      && isHeroFullHealth(hero);
 }
 
 export function getStatBoostFromCrystal(town: GameTown, stat: HeroStat): number {
@@ -315,6 +327,7 @@ export function generateHero(town: GameTown, level?: number): Hero {
     goingToBuilding: null,
     queueDismissed: false,
     queueRetired: false,
+    queueAdventure: '',
 
     learnedSkills: [],
 

@@ -13,7 +13,7 @@
     <p *ngIf="!isActive">Encounters: <span class="has-info" [tooltip]="difficultyExplanation(adventure.difficulty)" placement="right">{{ formatDifficulty(adventure.difficulty) }}</span> &middot; Lv. {{ adventure.encounterLevel }} &middot; Enc. x{{ adventure.encounterCount }}</p>
   </ion-label>
 
-  <ion-button *ngIf="!isActive" class="go" slot="end" (click)="go()" [disabled]="!canDoAdventure">
+  <ion-button *ngIf="!isActive" class="go" slot="end" (click)="go()" [disabled]="!canQueue && !canDoAdventure">
     Adventure, Ho!
   </ion-button>
 </ion-item>

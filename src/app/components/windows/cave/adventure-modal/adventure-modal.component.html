@@ -48,7 +48,8 @@
                         *ngIf="(legendaryAdventures$ | async)?.length === 0 && !hasActiveLegendaryAdventure(town)" 
                         (click)="generateLegendaryAdventure(town)">Seek One Out</ion-button>
           </ion-item>
-          <app-adventure *ngFor="let adv of legendaryAdventures$ | async" 
+          <app-adventure *ngFor="let adv of legendaryAdventures$ | async"
+                         canQueue="true" 
                          [town]="town" 
                          [adventure]="adv" 
                          [canDoAdventure]="canDoAdventures$ | async"></app-adventure>

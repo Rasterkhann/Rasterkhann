@@ -14,7 +14,8 @@ import {
   HeroSetDestination, HeroRetire, AllocateAllToBuilding, AllocateSomeToBuilding,
   UnallocateAllFromBuilding, HeroQueueDismiss, HeroQueueRetire, HeroQueueDismissCancel,
   HeroQueueRetireCancel, JobCrystalUpgradeStat, RerollBooks, BookBuy, BookDestroy,
-  HeroForgetSkill, HeroLearnSkill, ChangeWorkerAutoAllocationBuilding, RollLegendaryAdventure, HeroQueueRecruit, HeroQueueRecruitCancel
+  HeroForgetSkill, HeroLearnSkill, ChangeWorkerAutoAllocationBuilding, RollLegendaryAdventure,
+  HeroQueueRecruit, HeroQueueRecruitCancel, QueueAdventure
 } from '../actions';
 import {
   GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem,
@@ -40,7 +41,9 @@ import {
   getBoostedStatsForJobType, getCurrentTownProspectiveBooks, getCurrentTownOwnedBooks,
   calculateMaxPotentialBooks,
   getCurrentTownLEgendaryAdventures,
-  calculateHeroMaxTotal
+  calculateHeroMaxTotal,
+  isHeroFullHealth,
+  canHeroDoQueuedAdventure
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -301,6 +304,9 @@ export class GameState {
     let recruitSpend = 0n;
     const recruitHeroes: string[] = [];
 
+    let queuedAdventure = '';
+    const heroesForAdventure: string[] = [];
+
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
@@ -324,12 +330,12 @@ export class GameState {
 
       // rest
       town.recruitedHeroes.forEach(h => {
-        if (!h.onAdventure && h.queueDismissed) {
+        if (!h.queueAdventure && !h.onAdventure && h.queueDismissed) {
           dismissHeroes.push(h.uuid);
           return;
         }
 
-        if (!h.onAdventure && h.queueRetired) {
+        if (!h.queueAdventure && !h.onAdventure && h.queueRetired) {
           retireHeroes.push(h.uuid);
           return;
         }
@@ -401,6 +407,14 @@ export class GameState {
         oddJobEarned[h.uuid] = earnedGold;
       });
 
+      // ADVQUEUE: if there is ever multiple queued missions this won't work, but for now it's fine
+      const adventureQueueHeroes = town.recruitedHeroes.filter(h => h.queueAdventure);
+      const allHeroesCanGo = adventureQueueHeroes.every(h => canHeroDoQueuedAdventure(h));
+      if (adventureQueueHeroes.length > 0 && allHeroesCanGo) {
+        queuedAdventure = adventureQueueHeroes[0].queueAdventure;
+        heroesForAdventure.push(...adventureQueueHeroes.map(h => h.uuid));
+      }
+
       return state;
     });
 
@@ -419,6 +433,10 @@ export class GameState {
 
     if (recruitSpend > 0n) {
       this.store.dispatch(new SpendGold(recruitSpend));
+    }
+
+    if (queuedAdventure) {
+      this.store.dispatch(new StartAdventure(queuedAdventure, heroesForAdventure));
     }
   }
 
@@ -747,9 +765,34 @@ export class GameState {
     });
   }
 
+  @Action(QueueAdventure)
+  @ImmutableContext()
+  queueAdventure({ setState }: StateContext<IGameState>, { heroes, adventure }: QueueAdventure): void {
+    setState((state: IGameState) => {
+      const town = getCurrentTownFromState(state);
+
+      // reset existing adventure if it's the same
+      state.towns[state.currentTown].recruitedHeroes.forEach(rh => {
+        if (rh.queueAdventure !== adventure.uuid) { return; }
+        rh.queueAdventure = '';
+      });
+
+      // queue all heroes for this adventure
+      heroes
+        .map(h => town.recruitedHeroes.find(recH => recH.uuid === h.uuid))
+        .filter(Boolean)
+        .forEach(h => {
+          if (!h) { return; }
+          h.queueAdventure = adventure.uuid;
+        });
+
+      return state;
+    });
+  }
+
   @Action(StartAdventure)
   @ImmutableContext()
-  startAdventure({ setState }: StateContext<IGameState>, { heroes, adventure }: StartAdventure): void {
+  startAdventure({ setState }: StateContext<IGameState>, { heroIds, adventureId }: StartAdventure): void {
     const heroStops: string[] = [];
     const messages: string[] = [];
 
@@ -758,10 +801,17 @@ export class GameState {
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
 
+      // ADVQUEUE: this won't work if adventure queuing needs to do multiple and/or basic missions
+      const adventure = (town.potentialAdventures.concat(town.legendaryAdventures)).find(a => a.uuid === adventureId);
+      const heroes: Hero[] = heroIds.map(id => town.recruitedHeroes.find(h => h.uuid === id)).filter(Boolean) as Hero[];
+
+      if (!adventure || heroes.length === 0) { return state; }
+
       heroes.forEach(h => {
         town.recruitedHeroes.forEach((rh, i) => {
           if (h.uuid !== rh.uuid) { return; }
 
+          rh.queueAdventure = '';
           heroStops.push(rh.uuid);
           this.hideHero$.next(rh.uuid);
 
@@ -865,8 +915,8 @@ export class GameState {
     messages.forEach(msg => this.store.dispatch(new NotifyMessage(msg)));
 
     setTimeout(() => {
-      heroes.forEach(h => {
-        this.store.dispatch(new HeroSetLocation(h.uuid, Building.Cave));
+      heroIds.forEach(heroId => {
+        this.store.dispatch(new HeroSetLocation(heroId, Building.Cave));
       });
     }, 0);
   }

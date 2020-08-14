@@ -121,6 +121,7 @@ export interface Hero {
 
   queueDismissed: boolean;
   queueRetired: boolean;
+  queueAdventure: string;
 }
 
 export interface ProspectiveHero {

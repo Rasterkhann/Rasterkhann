@@ -20,6 +20,7 @@ export class AdventureComponent implements OnInit {
   @Input() adventure: Adventure;
   @Input() canDoAdventure: boolean;
   @Input() isActive: boolean;
+  @Input() canQueue: boolean;
 
   public heroNames: string[] = [];
 
@@ -70,12 +71,13 @@ export class AdventureComponent implements OnInit {
       if (!heroes || heroes.length === 0) { return; }
 
       const finalizeLegendary = () => {
-        this.game.startAdventureWithHeroes(this.town, this.adventure, heroes);
+        this.game.queueAdventureWithHeroes(this.town, this.adventure, heroes);
       };
 
       this.game.doSimpleConfirmation({
         header: 'Embark On Legendary Adventure',
-        message: `Are you sure you want to send ${heroes.map(x => x.name).join(', ')} on this adventure?`,
+        message: `Are you sure you want to send ${heroes.map(x => x.name).join(', ')} on this adventure?
+        All heroes will be queued for the mission and it will commence when all are available.`,
         confirmText: 'Yes, Embark'
       }, finalizeLegendary);
 

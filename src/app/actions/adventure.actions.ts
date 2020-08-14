@@ -8,6 +8,11 @@ export class RerollAdventures {
 
 export class StartAdventure {
   static readonly type = '[Adventure] Start Adventure';
+  constructor(public adventureId: string, public heroIds: string[]) {}
+}
+
+export class QueueAdventure {
+  static readonly type = '[Adventure] Queue Adventure';
   constructor(public adventure: Adventure, public heroes: Hero[]) {}
 }
 

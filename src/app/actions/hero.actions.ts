@@ -1,5 +1,5 @@
 
-import { Building, ProspectiveHero } from '../interfaces';
+import { Building } from '../interfaces';
 
 export class RerollHeroes {
   static readonly type = '[Hero] Reroll Heroes';

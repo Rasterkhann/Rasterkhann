@@ -265,6 +265,10 @@ export const migrations: Migration[] = [
         state.towns.Rasterkhann.showStage2UI = true;
       }
 
+      console.log('Setting up queue properties...');
+      state.towns.Rasterkhann.recruitedHeroes.forEach(h => h.queueAdventure = h.queueAdventure || '');
+      state.towns.Rasterkhann.prospectiveHeroes.forEach(p => p.queueRecruited = p.queueRecruited || false);
+
       return state;
     }
   }

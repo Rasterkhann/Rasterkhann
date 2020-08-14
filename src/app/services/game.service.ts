@@ -250,6 +250,10 @@ export class GameService {
     return this.caveService.startAdventureWithHeroes(town, adventure, heroes);
   }
 
+  public queueAdventureWithHeroes(town: GameTown, adventure: Adventure, heroes: Hero[]): void {
+    return this.caveService.queueAdventureWithHeroes(town, adventure, heroes);
+  }
+
   public doesTownHaveEnoughCrystalsForLegendaryAdventure(town: GameTown): boolean {
     return this.adventureService.doesTownHaveEnoughCrystalsForLegendaryAdventure(town);
   }

@@ -5,7 +5,7 @@ import { GameTown, Building, ProspectiveHero, Hero, HeroStat, HeroTrackedStat } 
 import { SpendGold, RerollHeroes, HeroRecruit, HeroGainEXP, HeroQueueDismissCancel,
   HeroQueueDismiss, HeroDismiss, HeroQueueRetire, HeroRetire, HeroQueueRetireCancel, HeroQueueRecruit, HeroQueueRecruitCancel } from '../actions';
 import { HeroService } from './hero.service';
-import { getCurrentStat, canHeroGoOnAdventure } from '../helpers';
+import { getCurrentStat, canHeroGoOnAdventure, isHeroFullHealth } from '../helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -111,9 +111,10 @@ export class GuildHallService {
   }
 
   public heroStatus(hero: Hero): string {
-    if (hero.currentlyWorkingAt)     { return `Working at the ${hero.currentlyWorkingAt}`; }
-    if (hero.onAdventure)            { return 'Adventuring'; }
-    if (!canHeroGoOnAdventure(hero)) { return 'Resting'; }
+    if (hero.currentlyWorkingAt)                        { return `Working at the ${hero.currentlyWorkingAt}`; }
+    if (hero.onAdventure)                               { return 'Adventuring'; }
+    if (hero.queueAdventure && isHeroFullHealth(hero))  { return 'Waiting for Quest'; }
+    if (!canHeroGoOnAdventure(hero))                    { return 'Resting'; }
     return 'Idle';
   }
 }
