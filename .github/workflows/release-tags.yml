@@ -74,6 +74,7 @@ jobs:
         title: Rasterkhann ${{ steps.loadTagName.outputs.tag }} Update
         comment: ${{ steps.loadChangelog.outputs.text }}
         url: ${{ steps.create_release.outputs.html_url }}
+        notification: true
 
     #- name: Upload Release Asset (Itch-Windows)
     #  uses: josephbmanley/butler-publish-itchio-action@master

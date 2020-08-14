@@ -175,8 +175,6 @@ export const migrations: Migration[] = [
         state.towns.Rasterkhann.stats[stat] = state.towns.Rasterkhann.stats[stat] || defaultStats[stat];
       });
 
-      console.log(state.towns.Rasterkhann);
-
       console.log('Setting stage 2 UI if available...');
       if (Object.values(state.towns.Rasterkhann.stats.retires || {}).some(Boolean)) {
         state.towns.Rasterkhann.showStage2UI = true;

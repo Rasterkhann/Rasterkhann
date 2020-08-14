@@ -62,7 +62,10 @@ export class GameService {
   }
 
   public loadState(state: IGameState): void {
-    this.store.dispatch(new LoadSaveData(state));
+    this.store.dispatch(new LoadSaveData(state))
+      .subscribe(() => {
+        window.location.reload();
+      });
   }
 
   public toggleOption(option: GameOption): void {
