@@ -167,7 +167,7 @@ export class GuildModalComponent implements OnDestroy, OnInit {
       header: 'Dismiss Hero',
       message: `Are you sure you want to dismiss ${hero.name}, the level ${hero.stats[HeroStat.LVL]} ${hero.job}?
 
-      ${hero.onAdventure ? 'This hero will be retired upon adventure completion.' : ''}`,
+      ${hero.onAdventure ? 'This hero will be dismissed upon adventure completion.' : ''}`,
       confirmText: 'Yes, Dismiss'
     }, finalize);
   }
