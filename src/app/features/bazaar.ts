@@ -53,6 +53,7 @@ export const BazaarFeatures: BuildingFeature[] = [
     description: 'Imagine a world where Thieves run your market - costs go up.',
     cost: 10000000n,
     upgradeTime: BuildingFeatureTime.Long,
+    requiresLevel: 55,
     requiresFeature: {
       'Stronger Prices': 1
     },

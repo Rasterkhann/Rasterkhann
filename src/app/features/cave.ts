@@ -128,6 +128,7 @@ export const CaveFeatures: BuildingFeature[] = [
     description: 'Unlock the "Tough" difficulty for adventures.',
     cost: 10000000n,
     upgradeTime: BuildingFeatureTime.Long,
+    requiresLevel: 45,
     requiresTownStat: {
       [TownStat.Retires]: 5
     }
@@ -137,6 +138,7 @@ export const CaveFeatures: BuildingFeature[] = [
     description: 'Unlock the "Challenging" difficulty for adventures.',
     cost: 20000000n,
     upgradeTime: BuildingFeatureTime.Long,
+    requiresLevel: 50,
     requiresTownStat: {
       [TownStat.Retires]: 25
     }
@@ -146,6 +148,7 @@ export const CaveFeatures: BuildingFeature[] = [
     description: 'Unlock the "Extreme" difficulty for adventures.',
     cost: 30000000n,
     upgradeTime: BuildingFeatureTime.Long,
+    requiresLevel: 55,
     requiresTownStat: {
       [TownStat.Retires]: 75
     }

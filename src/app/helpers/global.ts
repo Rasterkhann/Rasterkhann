@@ -137,12 +137,19 @@ export function canSeeBuildingFeature(town: GameTown, building: Building, featur
 }
 
 export function allBuildingFeatures(buildingId: Building): BuildingFeature[] {
-  return Object.values(getBuildingData(buildingId).features || {});
+  return Object.values(getBuildingData(buildingId).features || {})
+    .filter(f => !f.hide);
 }
 
 export function visibleBuildingFeatures(town: GameTown, buildingId: Building): BuildingFeature[] {
   return allBuildingFeatures(buildingId)
           .filter(feature => canSeeBuildingFeature(town, buildingId, feature.name));
+}
+
+export function upcomingBuildingFeatures(town: GameTown, buildingId: Building): BuildingFeature[] {
+  return allBuildingFeatures(buildingId)
+          .filter(feature => !doesTownHaveFeature(town, feature.name)
+                          && !canSeeBuildingFeature(town, buildingId, feature.name));
 }
 
 export function getCurrentStat(hero: Hero, stat: HeroStat): number {

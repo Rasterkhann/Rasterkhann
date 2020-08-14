@@ -1,12 +1,18 @@
 
-<ion-list *ngIf="areAllUpgradesOwned">
+<ion-list *ngIf="allVisibleFeatures.length === 0 && (areAllUpgradesOwned || nextUpgradeString)">
   <ion-list-header>
     <h4>Features</h4>
   </ion-list-header>
 
-  <ion-item>
-    <ion-label>
+  <ion-item *ngIf="areAllUpgradesOwned">
+    <ion-label class="ion-text-wrap">
       All features are built here!
+    </ion-label>
+  </ion-item>
+
+  <ion-item *ngIf="allVisibleFeatures.length === 0 && nextUpgradeString">
+    <ion-label class="ion-text-wrap">
+      {{ nextUpgradeString }}
     </ion-label>
   </ion-item>
 </ion-list>

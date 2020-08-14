@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
+import { sortBy, get } from 'lodash';
+
 import { GameService } from '../../../services';
 import { GameTown, Building, BuildingFeature } from '../../../interfaces';
-import { visibleBuildingFeatures, doesTownHaveFeature, allBuildingFeatures } from '../../../helpers';
+import { visibleBuildingFeatures, doesTownHaveFeature, allBuildingFeatures, upcomingBuildingFeatures } from '../../../helpers';
 
 @Component({
   selector: 'app-feature-list',
@@ -21,6 +23,28 @@ export class FeatureListComponent implements OnInit {
 
   public get areAllUpgradesOwned(): boolean {
     return allBuildingFeatures(this.buildingId).every(feat => doesTownHaveFeature(this.town, feat.name));
+  }
+
+  public get nextUpgradeString(): string {
+    const nextUpgrades = upcomingBuildingFeatures(this.town, this.buildingId);
+    if (nextUpgrades.length === 0) { return ''; }
+
+    const nextUpgrade = sortBy(nextUpgrades, 'requiresLevel')[0];
+    let upgradeString = `Next upgrade at level ${nextUpgrade.requiresLevel}`;
+
+    const featuresNeeded = Object.keys(nextUpgrade.requiresFeature || {}).filter(k => !doesTownHaveFeature(this.town, k));
+    if (featuresNeeded.length > 0) {
+      upgradeString = `${upgradeString}; requires ${featuresNeeded.join(', ')}`;
+    }
+
+    if (nextUpgrade.requiresTownStat) {
+      const statObj = nextUpgrade.requiresTownStat || {};
+      const stats = Object.keys(statObj).map(s => `${s} (${statObj[s]})`);
+
+      upgradeString = `${upgradeString}; requires ${stats.join(', ')}`;
+    }
+
+    return upgradeString;
   }
 
   constructor(public game: GameService) { }

@@ -33,6 +33,7 @@ export const HouseFeatures: BuildingFeature[] = [
     description: 'Each citizen "gathers" an additional 5 gold per tick.',
     cost: 10000000n,
     upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 55,
     requiresFeature: {
       'Grown Children': 1
     },

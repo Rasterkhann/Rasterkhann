@@ -23,6 +23,7 @@ export const InnFeatures: BuildingFeature[] = [
     description: 'Heroes rest super fast.',
     cost: 10000000n,
     upgradeTime: BuildingFeatureTime.Medium,
+    requiresLevel: 35,
     requiresFeature: {
       'Blissful Sleep': 1
     },
@@ -35,6 +36,7 @@ export const InnFeatures: BuildingFeature[] = [
     description: 'Heroes rest mega fast.',
     cost: 10000000n,
     upgradeTime: BuildingFeatureTime.Medium,
+    requiresLevel: 45,
     requiresFeature: {
       'Super Sleep': 1
     },
