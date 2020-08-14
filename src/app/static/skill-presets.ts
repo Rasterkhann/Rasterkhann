@@ -1,5 +1,8 @@
 import { SkillBookPreset, HeroJob } from '../interfaces';
 
+const BaseValue = (val: number) => val;
+const MultiplyBy = (mult: number) => (val: number) => Math.floor(val * mult);
+
 export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
   {
     name: 'Attack',
@@ -7,8 +10,6 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
     sprite: 63,
     action: 'Attack',
     message: 'AttackMessage',
-    staMult: 1,
-    spMult: 1,
     baseStats: {
       staCost: 3,
       spCost: 3,
@@ -18,6 +19,16 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
       pct: 0,
       gold: 0,
       targets: 1
+    },
+    statMults: {
+      staCost: BaseValue,
+      spCost: BaseValue,
+      defMultiplier: BaseValue,
+      atkMultiplier: BaseValue,
+      times: BaseValue,
+      pct: BaseValue,
+      gold: BaseValue,
+      targets: BaseValue
     }
   },
   {
@@ -27,8 +38,6 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
     jobs: [HeroJob.Cleric],
     action: 'HealSomeOrAll',
     message: 'HealMessage',
-    staMult: 0.8,
-    spMult: 1.5,
     baseStats: {
       staCost: 3,
       spCost: 3,
@@ -38,6 +47,16 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
       pct: 0,
       gold: 0,
       targets: 1
+    },
+    statMults: {
+      staCost: MultiplyBy(0.8),
+      spCost: MultiplyBy(1.5),
+      defMultiplier: BaseValue,
+      atkMultiplier: BaseValue,
+      times: BaseValue,
+      pct: BaseValue,
+      gold: BaseValue,
+      targets: BaseValue
     }
   },
   {
@@ -47,8 +66,6 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
     jobs: [HeroJob.Cleric],
     action: 'HealSomeOrAllPercent',
     message: 'HealMessage',
-    staMult: 1,
-    spMult: 2,
     baseStats: {
       staCost: 3,
       spCost: 3,
@@ -58,6 +75,16 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
       pct: 0,
       gold: 0,
       targets: 1
+    },
+    statMults: {
+      staCost: BaseValue,
+      spCost: MultiplyBy(2),
+      defMultiplier: BaseValue,
+      atkMultiplier: BaseValue,
+      times: BaseValue,
+      pct: BaseValue,
+      gold: BaseValue,
+      targets: BaseValue
     }
   },
   {
@@ -67,8 +94,6 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
     jobs: [HeroJob.Mage],
     action: 'AttackSomeOrAll',
     message: 'FireballMessage',
-    staMult: 0.7,
-    spMult: 2,
     baseStats: {
       staCost: 3,
       spCost: 3,
@@ -78,6 +103,16 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
       pct: 5,
       gold: 0,
       targets: 1
+    },
+    statMults: {
+      staCost: MultiplyBy(0.7),
+      spCost: MultiplyBy(2),
+      defMultiplier: BaseValue,
+      atkMultiplier: BaseValue,
+      times: BaseValue,
+      pct: BaseValue,
+      gold: BaseValue,
+      targets: BaseValue
     }
   },
   {
@@ -87,8 +122,6 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
     jobs: [HeroJob.Mage],
     action: 'AttackSomeOrAllDiminishing',
     message: 'MagicMissileMessage',
-    staMult: 1.1,
-    spMult: 1.6,
     baseStats: {
       staCost: 3,
       spCost: 3,
@@ -98,6 +131,16 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
       pct: 0,
       gold: 0,
       targets: 1
+    },
+    statMults: {
+      staCost: MultiplyBy(1.1),
+      spCost: MultiplyBy(1.6),
+      defMultiplier: BaseValue,
+      atkMultiplier: BaseValue,
+      times: BaseValue,
+      pct: BaseValue,
+      gold: BaseValue,
+      targets: BaseValue
     }
   },
   {
@@ -107,8 +150,6 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
     jobs: [HeroJob.Mage],
     action: 'AttackSomeOrAllPercent',
     message: 'MagicMissileMessage',
-    staMult: 1.7,
-    spMult: 2.5,
     baseStats: {
       staCost: 3,
       spCost: 3,
@@ -118,6 +159,16 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
       pct: 3,
       gold: 0,
       targets: 1
+    },
+    statMults: {
+      staCost: MultiplyBy(1.7),
+      spCost: MultiplyBy(2.5),
+      defMultiplier: BaseValue,
+      atkMultiplier: BaseValue,
+      times: BaseValue,
+      pct: BaseValue,
+      gold: BaseValue,
+      targets: BaseValue
     }
   },
   {
@@ -127,8 +178,6 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
     jobs: [HeroJob.Thief],
     action: 'Mug',
     message: 'MugMessage',
-    staMult: 2,
-    spMult: 1.5,
     baseStats: {
       staCost: 3,
       spCost: 3,
@@ -138,6 +187,16 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
       pct: 0,
       gold: 100,
       targets: 1
+    },
+    statMults: {
+      staCost: MultiplyBy(2),
+      spCost: MultiplyBy(1.5),
+      defMultiplier: BaseValue,
+      atkMultiplier: BaseValue,
+      times: BaseValue,
+      pct: BaseValue,
+      gold: BaseValue,
+      targets: BaseValue
     }
   },
   {
@@ -147,8 +206,6 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
     jobs: [HeroJob.Warrior],
     action: 'AttackSinglePercent',
     message: 'HamstringMessage',
-    staMult: 1.5,
-    spMult: 1.3,
     baseStats: {
       staCost: 3,
       spCost: 3,
@@ -158,6 +215,16 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
       pct: 5,
       gold: 0,
       targets: 1
+    },
+    statMults: {
+      staCost: MultiplyBy(1.5),
+      spCost: MultiplyBy(1.3),
+      defMultiplier: BaseValue,
+      atkMultiplier: BaseValue,
+      times: BaseValue,
+      pct: BaseValue,
+      gold: BaseValue,
+      targets: BaseValue
     }
   },
 ];

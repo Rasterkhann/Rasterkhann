@@ -177,8 +177,9 @@ export function generateSkillBook(town: GameTown): SkillBook {
     curLevelValue += OPT_VALUE_PER_POINT[stat];
   }
 
-  baseStats.staCost = Math.floor(preset.staMult * skillBookSTARequired(baseStats));
-  baseStats.spCost = Math.floor(preset.spMult * skillBookSPRequired(baseStats));
+  Object.keys(baseStats).forEach((stat: keyof HeroActionOpts) => {
+    baseStats[stat] = preset.statMults[stat](baseStats[stat]);
+  });
 
   const baseBook: SkillBook = {
     uuid: uuid(),

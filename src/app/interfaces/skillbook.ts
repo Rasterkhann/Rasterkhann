@@ -21,6 +21,5 @@ export type SkillBookPreset = {
   action: string;
   message: string;
   baseStats: Record<keyof HeroActionOpts, number>;
-  staMult: number;
-  spMult: number;
+  statMults: Record<keyof HeroActionOpts, (val: number) => number>;
 };
