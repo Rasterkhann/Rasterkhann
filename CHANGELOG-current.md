@@ -1,17 +1,17 @@
-## [0.8.1](https://github.com/Rasterkhann/Rasterkhann/compare/v0.8.0...v0.8.1) (2020-08-14)
+## [0.8.2](https://github.com/Rasterkhann/Rasterkhann/compare/v0.8.1...v0.8.2) (2020-08-14)
 
 
 ### Bug Fixes
 
-* **adventure:** legendary modifier 20 -> 15 ([3e01053](https://github.com/Rasterkhann/Rasterkhann/commit/3e01053e7a242d2fed86419db3bf08726da2e574))
-* **retire:** auto allocated workers should not set the number to 1, but to existing+1 ([5e4e827](https://github.com/Rasterkhann/Rasterkhann/commit/5e4e82725f5c95dab728d7e60a2c3218e701e536)), closes [#104](https://github.com/Rasterkhann/Rasterkhann/issues/104)
-* **ui:** actually set stage2ui on retire ([c34d4b8](https://github.com/Rasterkhann/Rasterkhann/commit/c34d4b84b476294b9958918dd0a4b1447067a8f0)), closes [#108](https://github.com/Rasterkhann/Rasterkhann/issues/108)
-* **ui:** reload after importing a savefile so it always runs migrations correctly ([c35864c](https://github.com/Rasterkhann/Rasterkhann/commit/c35864cf535da9a3bc1ece527a30d5c4eaed999f))
+* **ui:** 'all upgrades' popup should only happen when all features are, in fact, built - not just a few ([9de31f2](https://github.com/Rasterkhann/Rasterkhann/commit/9de31f201c0b35f029880a83d5e2ce830da1d9ff))
 
 
 ### Features
 
-* **skills:** internal skill creator now supports multipliers for all stats, not just sp and sta ([24c0f59](https://github.com/Rasterkhann/Rasterkhann/commit/24c0f596a5764245780b58cea8866b20e983d81a)), closes [#103](https://github.com/Rasterkhann/Rasterkhann/issues/103)
+* **guildhall:** can queue heroes for recruitment ([b8fa805](https://github.com/Rasterkhann/Rasterkhann/commit/b8fa8055e02d4af84d69be19888bed898bfaa198)), closes [#107](https://github.com/Rasterkhann/Rasterkhann/issues/107)
+* **ui:** allow for queuing heroes for legendary adventures ([c2811f9](https://github.com/Rasterkhann/Rasterkhann/commit/c2811f9c1879647d221796300d6eb356cc82ea21)), closes [#106](https://github.com/Rasterkhann/Rasterkhann/issues/106)
+* **ui:** show next upgrade ([7368e09](https://github.com/Rasterkhann/Rasterkhann/commit/7368e09511a7b54488dcb39de7acca068843b034)), closes [#102](https://github.com/Rasterkhann/Rasterkhann/issues/102)
+* **workshop:** auto scrap now will check if any heroes can use the item based on their class ([cf92330](https://github.com/Rasterkhann/Rasterkhann/commit/cf923307ed0b5eb60da1b1f6594143c1dc987656)), closes [#105](https://github.com/Rasterkhann/Rasterkhann/issues/105)
 
 
 
