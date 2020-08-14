@@ -633,6 +633,7 @@ export class GameState {
   @ImmutableContext()
   heroRetire({ setState }: StateContext<IGameState>, { heroId }: HeroRetire): void {
     let plusOneBuilding = null;
+    let plusOneAllocated = 0;
 
     setState((state: IGameState) => {
       const town = getCurrentTownFromState(state);
@@ -646,6 +647,9 @@ export class GameState {
       town.crystalCurrency[heroRef.job] += 1;
 
       plusOneBuilding = town.allocateWorkersToBuilding;
+      if (plusOneBuilding) {
+        plusOneAllocated = town.buildings[plusOneBuilding].numRetiredAllocated;
+      }
 
       state.towns[state.currentTown].showStage2UI = true;
 
@@ -653,7 +657,7 @@ export class GameState {
     });
 
     if (plusOneBuilding) {
-      this.store.dispatch(new AllocateSomeToBuilding(plusOneBuilding, 1));
+      this.store.dispatch(new AllocateSomeToBuilding(plusOneBuilding, plusOneAllocated + 1));
     }
 
     this.store.dispatch(new HeroDismiss(heroId));
