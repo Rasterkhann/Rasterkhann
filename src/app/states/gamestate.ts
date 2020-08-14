@@ -321,7 +321,7 @@ export class GameState {
       town.prospectiveHeroes.forEach(p => {
         if (!p.queueRecruited) { return; }
         if (town.gold < p.cost + recruitSpend) { return; }
-        if (town.recruitedHeroes.length >= calculateHeroMaxTotal(town)) { return; }
+        if (town.recruitedHeroes.length + recruitHeroes.length >= calculateHeroMaxTotal(town)) { return; }
 
         recruitSpend += p.cost;
         recruitHeroes.push(p.hero.uuid);
