@@ -8,7 +8,7 @@ import { first } from 'rxjs/operators';
 
 import {
   ChooseInfo, GameLoop, LoadSaveData,
-  OptionToggle, ScrapItem
+  OptionToggle
 } from '../actions';
 import { Building, GameTown, IGameState, BuildingFeature, Hero,
   ProspectiveHero, Adventure, GameOption, HeroItem, HeroJob, SkillBook } from '../interfaces';
@@ -19,6 +19,7 @@ import { CaveService } from './cave.service';
 import { LibraryService } from './library.service';
 import { AdventureService } from './adventure.service';
 import { CrystalService } from './crystal.service';
+import { ItemService } from './item.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,7 @@ export class GameService {
     private caveService: CaveService,
     private crystalService: CrystalService,
     private guildhallService: GuildHallService,
+    private itemService: ItemService,
     private libraryService: LibraryService,
 
     public logger: LoggerService
@@ -254,7 +256,11 @@ export class GameService {
 
   // item functions
   public scrapItem(item: HeroItem): void {
-    this.store.dispatch(new ScrapItem(item));
+    return this.itemService.scrapItem(item);
+  }
+
+  public canAnyHeroesUseItem(town: GameTown, item: HeroItem): boolean {
+    return this.itemService.canAnyHeroesUseItem(town, item);
   }
 
   // retire functions

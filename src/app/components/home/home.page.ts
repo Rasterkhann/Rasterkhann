@@ -140,7 +140,8 @@ export class HomePage implements OnInit {
     const armors = town.itemsForSale[ItemType.Armor] || [];
 
     const item = sample(weapons.concat(armors));
-    if (item && item.timesPassedOver > ItemPassedOverThreshold.AutoSellThreshold) {
+    if (item
+    && (item.timesPassedOver > ItemPassedOverThreshold.AutoSellThreshold || !this.game.canAnyHeroesUseItem(town, item))) {
       this.game.scrapItem(item);
     }
 
