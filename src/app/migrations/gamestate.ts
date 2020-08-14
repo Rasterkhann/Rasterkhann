@@ -260,6 +260,11 @@ export const migrations: Migration[] = [
     migrate: (state: IGameState) => {
       console.log('Savefile version 7...');
 
+      console.log('Setting stage 2 UI if available...');
+      if (Object.values(state.towns.Rasterkhann.stats.retires || {}).some(Boolean)) {
+        state.towns.Rasterkhann.showStage2UI = true;
+      }
+
       return state;
     }
   }

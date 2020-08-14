@@ -645,9 +645,9 @@ export class GameState {
       town.crystalCurrency[heroRef.job] = town.crystalCurrency[heroRef.job] || 0;
       town.crystalCurrency[heroRef.job] += 1;
 
-      town.showStage2UI = true;
-
       plusOneBuilding = town.allocateWorkersToBuilding;
+
+      state.towns[state.currentTown].showStage2UI = true;
 
       return state;
     });
