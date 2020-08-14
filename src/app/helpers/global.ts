@@ -136,8 +136,12 @@ export function canSeeBuildingFeature(town: GameTown, building: Building, featur
   return true;
 }
 
+export function allBuildingFeatures(buildingId: Building): BuildingFeature[] {
+  return Object.values(getBuildingData(buildingId).features || {});
+}
+
 export function visibleBuildingFeatures(town: GameTown, buildingId: Building): BuildingFeature[] {
-  return Object.values(getBuildingData(buildingId).features || {})
+  return allBuildingFeatures(buildingId)
           .filter(feature => canSeeBuildingFeature(town, buildingId, feature.name));
 }
 

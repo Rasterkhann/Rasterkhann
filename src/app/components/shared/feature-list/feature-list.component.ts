@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 
 import { GameService } from '../../../services';
 import { GameTown, Building, BuildingFeature } from '../../../interfaces';
-import { visibleBuildingFeatures, doesTownHaveFeature } from '../../../helpers';
+import { visibleBuildingFeatures, doesTownHaveFeature, allBuildingFeatures } from '../../../helpers';
 
 @Component({
   selector: 'app-feature-list',
@@ -20,7 +20,7 @@ export class FeatureListComponent implements OnInit {
   }
 
   public get areAllUpgradesOwned(): boolean {
-    return this.allVisibleFeatures.every(feat => doesTownHaveFeature(this.town, feat.name));
+    return allBuildingFeatures(this.buildingId).every(feat => doesTownHaveFeature(this.town, feat.name));
   }
 
   constructor(public game: GameService) { }
