@@ -42,7 +42,6 @@ import {
   calculateMaxPotentialBooks,
   getCurrentTownLEgendaryAdventures,
   calculateHeroMaxTotal,
-  isHeroFullHealth,
   canHeroDoQueuedAdventure
 } from '../helpers';
 

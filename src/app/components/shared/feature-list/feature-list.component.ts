@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
-import { sortBy, get } from 'lodash';
+import { sortBy } from 'lodash';
 
 import { GameService } from '../../../services';
 import { GameTown, Building, BuildingFeature } from '../../../interfaces';
