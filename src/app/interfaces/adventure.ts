@@ -10,7 +10,7 @@ export enum AdventureDifficulty {
   Challenging = 9,
   Extreme = 11,
 
-  LegendaryStart = 20
+  LegendaryStart = 15
 }
 
 export interface Adventure {
