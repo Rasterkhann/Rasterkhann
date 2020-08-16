@@ -1,8 +1,19 @@
 
 import { Trait, TraitEffect, HeroStat, TraitPriority, TraitValueProp, TriggerType, FirstTierGoodTrait,
-  BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait, WeaponUseTrait, HeroJob, ArmorUseTrait } from '../interfaces';
+  BadTrait, SimpleModifierPositiveTrait, SimpleModifierNegativeTrait, GearTrait, WeaponUseTrait,
+  HeroJob, ArmorUseTrait, PlainTrait } from '../interfaces';
 import { ensureHeroStatValue } from '../helpers/trait';
 import { giveHeroGold } from '../helpers/global';
+
+const PlainTraits: Record<PlainTrait, TraitEffect> = {
+  Plain: {
+    priority: TraitPriority.Any,
+    valueProp: TraitValueProp.Neutral,
+    description: 'Hero is plain, no special attributes.',
+    triggers: {
+    }
+  },
+};
 
 const BaseBadTraits: Record<BadTrait, TraitEffect> = {
   Weak: {
@@ -538,6 +549,7 @@ export const GearTraits: Record<GearTrait, TraitEffect> = {
 };
 
 export const TraitEffects: Record<Trait, TraitEffect> = {
+  ...PlainTraits,
   ...BaseBadTraits,
   ...SimplePositiveTraits,
   ...SimpleNegativeTraits,

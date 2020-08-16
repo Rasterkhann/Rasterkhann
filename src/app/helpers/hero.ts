@@ -256,6 +256,10 @@ export function generateHero(town: GameTown, level?: number): Hero {
     let trait: Trait | null = null;
     do {
       trait = sample(traitList.filter(t => canTraitBeAdded(t))) as Trait;
+
+      // if a hero has no available "any" traits but has dual trait, this can occur
+      if (!trait) { trait = 'Plain'; }
+
       if (TraitEffects[trait].valueProp < 0 && random(1, 100) <= ignoreChance) { trait = null; }
     } while (!trait);
 

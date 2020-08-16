@@ -24,6 +24,8 @@ export enum TriggerType {
   PreAdventure = 'onPreAdventure'
 }
 
+export type PlainTrait = 'Plain';
+
 export type BadTrait =
   'Weak' | 'Frail' | 'Ill' | 'Clumsy' | 'Reclusive' | 'Sedentary' | 'Poor' | 'Inexperienced';
 
@@ -47,7 +49,8 @@ export type GearTrait =
   'Multi-armed' | 'Tiny Body' | 'Big Satchel';
 
 export type Trait =
-  BadTrait | SimpleModifierPositiveTrait | SimpleModifierNegativeTrait
+  PlainTrait
+| BadTrait | SimpleModifierPositiveTrait | SimpleModifierNegativeTrait
 | FirstTierGoodTrait | ArmorUseTrait | WeaponUseTrait | GearTrait;
 
 export enum TraitPriority {
