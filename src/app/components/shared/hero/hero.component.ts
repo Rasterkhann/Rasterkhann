@@ -44,7 +44,7 @@ export class HeroComponent implements OnInit {
   public get stars(): string[] {
     if (!this.rating) { return []; }
 
-    const stars = 5 + Math.max(this.numStars, 0);
+    const stars = Math.max(this.numStars, 0);
 
     const base = Array(stars).fill('star');
     if (this.hasHalfStar) { base.push('star-half'); }
