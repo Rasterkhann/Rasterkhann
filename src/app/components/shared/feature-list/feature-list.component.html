@@ -4,13 +4,13 @@
     <h4>Features</h4>
   </ion-list-header>
 
-  <ion-item *ngIf="areAllUpgradesOwned">
+  <ion-item *ngIf="areAllUpgradesOwned" class="no-cursor">
     <ion-label class="ion-text-wrap">
       All features are built here!
     </ion-label>
   </ion-item>
 
-  <ion-item *ngIf="allVisibleFeatures.length === 0 && nextUpgradeString">
+  <ion-item *ngIf="allVisibleFeatures.length === 0 && nextUpgradeString" class="no-cursor">
     <ion-label class="ion-text-wrap">
       {{ nextUpgradeString }}
     </ion-label>
@@ -22,7 +22,7 @@
     <h4>Features</h4>
   </ion-list-header>
 
-  <ion-item *ngIf="allVisibleFeatures.length === 0">
+  <ion-item *ngIf="allVisibleFeatures.length === 0" class="no-cursor">
     No features available for purchase.
   </ion-item>
 

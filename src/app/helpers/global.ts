@@ -92,9 +92,7 @@ export function isBuildingFeatureHidden(town: GameTown, building: Building, feat
   const featureRef: BuildingFeature = featureByName(building, feature);
   if (!featureRef) { return false; }
 
-  if (featureRef.hide) { return false; }
-
-  return true;
+  return !!featureRef.hide;
 }
 
 export function canSeeBuildingFeature(town: GameTown, building: Building, feature: string): boolean {
