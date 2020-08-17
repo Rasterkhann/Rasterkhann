@@ -156,6 +156,10 @@ export class GameService {
     return this.buildingService.canRushBuilding(town, building);
   }
 
+  public canSeeRushBuilding(town: GameTown, building: Building): boolean {
+    return this.buildingService.canSeeRushBuilding(town, building);
+  }
+
   public canUpgradeBuildingFeature(town: GameTown, building: Building, feature: string): boolean {
     return this.buildingService.canUpgradeBuildingFeature(town, building, feature);
   }

@@ -7,7 +7,7 @@
     <p *ngIf="!town.buildings[buildingId]?.constructionDoneAt && game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) > 0">
       Next Level Cost: {{ game.buildingCost(buildingId, game.nextLevelForBuilding(town, buildingId)) | bignum }} gold
     </p>
-    <p *ngIf="town.buildings[buildingId].level > 0 && game.canRushBuilding(town, buildingId)">
+    <p *ngIf="town.buildings[buildingId].level > 0 && game.canSeeRushBuilding(town, buildingId)">
       Rush Cost: {{ game.buildingRushCost(town, buildingId, game.nextLevelForBuilding(town, buildingId)) | bignum }} gold
     </p>
     <p *ngIf="town.buildings[buildingId]?.constructionDoneAt > 1">

@@ -95,6 +95,18 @@ export class BuildingService {
     return town.gold >= nextLevelCost;
   }
 
+  public canSeeRushBuilding(town: GameTown, building: Building): boolean {
+    if (town.buildings[building]) {
+      const isConstructing = town.buildings[building].constructionDoneAt;
+      if (!isConstructing || isConstructing === 1) { return false; }
+    }
+
+    const nextLevelCost = this.buildingRushCost(town, building, this.nextLevelForBuilding(town, building));
+    if (nextLevelCost === 0n) { return false; }
+
+    return true;
+  }
+
   public canRushBuilding(town: GameTown, building: Building): boolean {
     if (town.buildings[building]) {
       const isConstructing = town.buildings[building].constructionDoneAt;
