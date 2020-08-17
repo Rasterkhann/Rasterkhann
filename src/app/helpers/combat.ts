@@ -87,7 +87,7 @@ class CombatTracker implements Combat {
     // generate 1-2 monsters per hero
     const monsters = Array(heroes.length + random(0, heroes.length)).fill(null).map(() => generateMonster(town, adventure));
 
-    if (adventure.bossName) {
+    if (adventure.bossName && this.combatLog.encNum === adventure.encounterCount) {
       monsters[0].name = adventure.bossName;
     }
 
