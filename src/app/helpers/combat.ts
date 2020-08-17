@@ -88,7 +88,7 @@ class CombatTracker implements Combat {
     const numMonsters = adventure.bossName ? random(1, heroes.length) : heroes.length + random(0, heroes.length);
     const monsters = Array(numMonsters).fill(null).map(() => generateMonster(town, adventure));
 
-    if (adventure.bossName && this.combatLog.encNum === adventure.encounterCount) {
+    if (adventure.bossName && this.combatLog.encNum === adventure.encounterCount - 1) {
       monsters[0].name = adventure.bossName;
     }
 
