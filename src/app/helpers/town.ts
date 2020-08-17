@@ -1,5 +1,5 @@
 
-import { IGameState, GameTown, Hero, ProspectiveHero, Building, Adventure, ItemType, HeroItem, SkillBook } from '../interfaces';
+import { IGameState, GameTown, Hero, ProspectiveHero, Building, Adventure, ItemType, HeroItem, SkillBook, TownStat } from '../interfaces';
 import { calculateMaxActiveAdventures, tickAdventure } from './adventure';
 import { canHeroGoOnAdventure } from './hero';
 import { doesTownHaveFeature, numAllocatedToBuilding } from './global';
@@ -109,4 +109,22 @@ export function getCurrentTownFreeOddJobBuildings(state: IGameState): Building[]
   ];
 
   return potentialBuildings.filter(b => town.buildings[b].level > 0 && !town.buildings[b].currentWorkerId);
+}
+
+export function formatTownStat(stat: string): string {
+  if (!stat.includes('.')) { return stat; }
+
+  const [main, sub] = stat.split('.');
+
+  switch (main) {
+    case TownStat.Legendary: return `${main} ${sub}`;
+    case TownStat.Adventures: return `${sub} Adventures`;
+    case TownStat.CrystalsSpent: return `${sub} Crystals Spent`;
+    case TownStat.Encounters: return `${sub} Encounters`;
+    case TownStat.Gold: return `${sub} Retire Gold`;
+    case TownStat.Levels: return `${sub} Retire Levels`;
+    case TownStat.Retires: return `${sub} Retires`;
+  }
+
+  return stat;
 }

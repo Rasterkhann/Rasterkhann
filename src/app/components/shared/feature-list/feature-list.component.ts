@@ -4,7 +4,8 @@ import { sortBy } from 'lodash';
 
 import { GameService } from '../../../services';
 import { GameTown, Building, BuildingFeature } from '../../../interfaces';
-import { visibleBuildingFeatures, doesTownHaveFeature, allBuildingFeatures, upcomingBuildingFeatures, isBuildingFeatureHidden } from '../../../helpers';
+import { visibleBuildingFeatures, doesTownHaveFeature, allBuildingFeatures,
+  upcomingBuildingFeatures, isBuildingFeatureHidden, formatTownStat } from '../../../helpers';
 
 @Component({
   selector: 'app-feature-list',
@@ -41,7 +42,7 @@ export class FeatureListComponent implements OnInit {
 
     if (nextUpgrade.requiresTownStat) {
       const statObj = nextUpgrade.requiresTownStat || {};
-      const stats = Object.keys(statObj).map(s => `${s} (${statObj[s]})`);
+      const stats = Object.keys(statObj).map(s => `${formatTownStat(s)} (${statObj[s]})`);
 
       upgradeString = `${upgradeString}; requires ${stats.join(', ')}`;
     }
