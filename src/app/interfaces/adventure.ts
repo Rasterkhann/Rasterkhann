@@ -4,11 +4,11 @@ export enum AdventureDifficulty {
   VeryEasy = 0.75,
   Easy = 1.25,
   Normal = 2,
-  Hard = 3,
-  VeryHard = 5,
-  Tough = 7,
-  Challenging = 9,
-  Extreme = 11,
+  Hard = 2.5,
+  VeryHard = 4,
+  Tough = 6,
+  Challenging = 8,
+  Extreme = 10,
 
   LegendaryStart = 15
 }

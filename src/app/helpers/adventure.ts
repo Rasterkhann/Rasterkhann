@@ -188,20 +188,39 @@ export function doAdventureEncounter(town: GameTown, adventure: Adventure): bool
   return didWin;
 }
 
+export function bonusMultiplierForAdventure(adventure: Adventure): number {
+  let bonusMultiplier = 1;
+
+  if (adventure.difficulty >= AdventureDifficulty.Tough) {
+    bonusMultiplier = 5;
+  }
+
+  if (adventure.difficulty >= AdventureDifficulty.Challenging) {
+    bonusMultiplier = 10;
+  }
+
+  if (adventure.difficulty >= AdventureDifficulty.Extreme) {
+    bonusMultiplier = 20;
+  }
+
+  if (adventure.difficulty >= AdventureDifficulty.LegendaryStart) {
+    bonusMultiplier = 100;
+  }
+
+  return bonusMultiplier;
+}
+
 export function finalizeAdventure(town: GameTown, adventure: Adventure): boolean {
   const chosenHeroes = adventure.activeHeroes.map(uuid => getTownHeroByUUID(town, uuid)).filter(Boolean) as Hero[];
 
   const expMult = getTownExpMultiplier(town);
   const goldMult = getTownGoldMultiplier(town);
 
-  let baseReward = adventure.encounterCount * adventure.encounterLevel * adventure.difficulty;
+  const baseReward = adventure.encounterCount * adventure.encounterLevel * adventure.difficulty;
+  const bonusMultiplier = bonusMultiplierForAdventure(adventure);
 
-  if (adventure.difficulty >= AdventureDifficulty.LegendaryStart) {
-    baseReward *= 100;
-  }
-
-  const expReward = Math.floor(100 * baseReward * expMult);
-  const goldReward = Math.floor(10 * baseReward * goldMult);
+  const expReward = Math.floor(100 * baseReward * bonusMultiplier * expMult);
+  const goldReward = Math.floor(10 * baseReward * bonusMultiplier * goldMult);
 
   const didSucceed = canTeamFight(chosenHeroes);
 
