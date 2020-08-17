@@ -117,13 +117,13 @@ export function formatTownStat(stat: string): string {
   const [main, sub] = stat.split('.');
 
   switch (main) {
-    case TownStat.Legendary: return `${main} ${sub}`;
-    case TownStat.Adventures: return `${sub} Adventures`;
-    case TownStat.CrystalsSpent: return `${sub} Crystals Spent`;
-    case TownStat.Encounters: return `${sub} Encounters`;
-    case TownStat.Gold: return `${sub} Retire Gold`;
-    case TownStat.Levels: return `${sub} Retire Levels`;
-    case TownStat.Retires: return `${sub} Retires`;
+    case TownStat.Legendary:      return `${main} ${sub}`;
+    case TownStat.Adventures:     return `${sub} Adventures`;
+    case TownStat.CrystalsSpent:  return `${sub} Crystals Spent`;
+    case TownStat.Encounters:     return `${sub} Encounters`;
+    case TownStat.Gold:           return `${sub} Retire Gold`;
+    case TownStat.Levels:         return `${sub} Retire Levels`;
+    case TownStat.Retires:        return `${sub} Retires`;
   }
 
   return stat;
