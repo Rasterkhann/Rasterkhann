@@ -32,7 +32,7 @@ ion-label {
 
   .icons {
     position: absolute;
-    top: 10px;
+    top: 0;
     right: 0;
   }
 }
@@ -58,4 +58,31 @@ ion-button {
     width: 15px;
     height: 15px;
   }
+}
+
+.star-red {
+  color: #f77c7c;
+}
+
+.star-green {
+  color: #2cd559;
+}
+
+.star-blue {
+  color: #63b5cf;
+}
+
+.star-rainbow {
+  animation: rainbow 3s linear infinite alternate;
+  color: #fff;
+}
+
+@keyframes rainbow { 
+    0%   { color: #ff2400 }
+    16%  { color: #e81d1d }
+    32%  { color: #e8b71d }
+    48%  { color: #e3e81d }
+    64%  { color: #1de840 }
+    80%  { color: #1ddde8 }
+    100% { color: #dd00f3 }
 }

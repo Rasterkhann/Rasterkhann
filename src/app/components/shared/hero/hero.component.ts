@@ -44,7 +44,7 @@ export class HeroComponent implements OnInit {
   public get stars(): string[] {
     if (!this.rating) { return []; }
 
-    const stars = Math.max(this.numStars, 0);
+    const stars = 5 + Math.max(this.numStars, 0);
 
     const base = Array(stars).fill('star');
     if (this.hasHalfStar) { base.push('star-half'); }
@@ -72,5 +72,14 @@ export class HeroComponent implements OnInit {
 
   public getStat(stat: HeroStat): number {
     return this.hero.currentStats[stat];
+  }
+
+  public starColor(idx: number): string {
+    if (idx < 2) { return ''; }
+    if (idx < 3) { return 'blue'; }
+    if (idx < 4) { return 'red'; }
+    if (idx < 5) { return 'green'; }
+
+    return 'rainbow';
   }
 }

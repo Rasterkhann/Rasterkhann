@@ -18,7 +18,7 @@
     <p *ngIf="cost">Recruitment Fee: {{ cost | bignum }} gold</p>
 
     <div class="icons" *ngIf="stars.length > 0">
-      <ion-icon [name]="icon" *ngFor="let icon of stars"></ion-icon>
+      <ion-icon [name]="icon" *ngFor="let icon of stars; let i = index" [ngClass]="['star-' + starColor(i)]"></ion-icon>
     </div>
 
     <ion-row class="stat-block">
