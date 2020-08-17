@@ -4,7 +4,7 @@ import { sortBy } from 'lodash';
 
 import { GameService } from '../../../services';
 import { GameTown, Building, BuildingFeature } from '../../../interfaces';
-import { visibleBuildingFeatures, doesTownHaveFeature, allBuildingFeatures, upcomingBuildingFeatures } from '../../../helpers';
+import { visibleBuildingFeatures, doesTownHaveFeature, allBuildingFeatures, upcomingBuildingFeatures, isBuildingFeatureHidden } from '../../../helpers';
 
 @Component({
   selector: 'app-feature-list',
@@ -32,7 +32,9 @@ export class FeatureListComponent implements OnInit {
     const nextUpgrade = sortBy(nextUpgrades, 'requiresLevel')[0];
     let upgradeString = `Next upgrade at level ${nextUpgrade.requiresLevel}`;
 
-    const featuresNeeded = Object.keys(nextUpgrade.requiresFeature || {}).filter(k => !doesTownHaveFeature(this.town, k));
+    const featuresNeeded = Object.keys(nextUpgrade.requiresFeature || {})
+      .filter(k => !doesTownHaveFeature(this.town, k) && !isBuildingFeatureHidden(this.town, this.buildingId, k));
+
     if (featuresNeeded.length > 0) {
       upgradeString = `${upgradeString}; requires ${featuresNeeded.join(', ')}`;
     }

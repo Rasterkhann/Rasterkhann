@@ -88,11 +88,20 @@ export function featureByName(building: Building, feature: string): BuildingFeat
   return getBuildingData(building).features[feature];
 }
 
-export function canSeeBuildingFeature(town: GameTown, building: Building, feature: string): boolean {
+export function isBuildingFeatureHidden(town: GameTown, building: Building, feature: string): boolean {
   const featureRef: BuildingFeature = featureByName(building, feature);
   if (!featureRef) { return false; }
 
   if (featureRef.hide) { return false; }
+
+  return true;
+}
+
+export function canSeeBuildingFeature(town: GameTown, building: Building, feature: string): boolean {
+  const featureRef: BuildingFeature = featureByName(building, feature);
+  if (!featureRef) { return false; }
+
+  if (isBuildingFeatureHidden(town, building, feature)) { return false; }
 
   if (doesTownHaveFeature(town, feature)) { return false; }
 
