@@ -41,6 +41,10 @@ export class FeatureListComponent implements OnInit {
     }
 
     if (nextUpgrade.requiresTownStat) {
+      if (!this.town.showStage2UI) {
+        return `The next upgrade requires at least one retired hero.`;
+      }
+
       const statObj = nextUpgrade.requiresTownStat || {};
       const stats = Object.keys(statObj).map(s => `${formatTownStat(s)} (${get(this.town.stats, s)}/${statObj[s]})`);
 
