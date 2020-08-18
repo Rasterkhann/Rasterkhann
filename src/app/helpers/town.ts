@@ -112,18 +112,18 @@ export function getCurrentTownFreeOddJobBuildings(state: IGameState): Building[]
 }
 
 export function formatTownStat(stat: string): string {
-  if (!stat.includes('.')) { return stat; }
+  if (!stat.includes('.')) { return `any ${stat}`; }
 
   const [main, sub] = stat.split('.');
 
   switch (main) {
     case TownStat.Legendary:      return `${main} ${sub}`;
-    case TownStat.Adventures:     return `${sub} Adventures`;
-    case TownStat.CrystalsSpent:  return `${sub} Crystals Spent`;
-    case TownStat.Encounters:     return `${sub} Encounters`;
-    case TownStat.Gold:           return `${sub} Retire Gold`;
-    case TownStat.Levels:         return `${sub} Retire Levels`;
-    case TownStat.Retires:        return `${sub} Retires`;
+    case TownStat.Adventures:     return `${sub || 'Any'} Adventures`;
+    case TownStat.CrystalsSpent:  return `${sub || 'Any'} Crystals Spent`;
+    case TownStat.Encounters:     return `${sub || 'Any'} Encounters`;
+    case TownStat.Gold:           return `${sub || 'Any'} Retire Gold`;
+    case TownStat.Levels:         return `${sub || 'Any'} Retire Levels`;
+    case TownStat.Retires:        return `${sub || 'Any'} Retires`;
   }
 
   return stat;
