@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
-import { sortBy } from 'lodash';
+import { sortBy, get } from 'lodash';
 
 import { GameService } from '../../../services';
 import { GameTown, Building, BuildingFeature } from '../../../interfaces';
@@ -42,7 +42,7 @@ export class FeatureListComponent implements OnInit {
 
     if (nextUpgrade.requiresTownStat) {
       const statObj = nextUpgrade.requiresTownStat || {};
-      const stats = Object.keys(statObj).map(s => `${formatTownStat(s)} (${statObj[s]})`);
+      const stats = Object.keys(statObj).map(s => `${formatTownStat(s)} (${get(this.town.stats, s)}/${statObj[s]})`);
 
       upgradeString = `${upgradeString}; requires ${stats.join(', ')}`;
     }
