@@ -221,6 +221,7 @@ export const LibraryFeatures: BuildingFeature[] = [
     cost: 100000n,
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
+    hide: true,
     requiresFeature: {
       'Fast Repair': 1,
       'Dual Trait': 1
