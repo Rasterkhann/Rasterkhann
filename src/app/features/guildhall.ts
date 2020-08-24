@@ -93,7 +93,7 @@ const OtherFeatures: BuildingFeature[] = [
     description: 'Hero training costs go down more.',
     cost: 200000n,
     upgradeTime: BuildingFeatureTime.XXShort,
-    requiresLevel: 30,
+    requiresLevel: 25,
     requiresFeature: {
       'Cheaper Training I': 1
     }
@@ -103,7 +103,7 @@ const OtherFeatures: BuildingFeature[] = [
     description: 'Hero training costs go down even more.',
     cost: 300000n,
     upgradeTime: BuildingFeatureTime.XShort,
-    requiresLevel: 45,
+    requiresLevel: 35,
     requiresFeature: {
       'Cheaper Training II': 1
     }
@@ -113,7 +113,7 @@ const OtherFeatures: BuildingFeature[] = [
     description: 'Hero training costs go down yet more.',
     cost: 500000n,
     upgradeTime: BuildingFeatureTime.Short,
-    requiresLevel: 60,
+    requiresLevel: 45,
     requiresFeature: {
       'Cheaper Training III': 1
     }
@@ -123,7 +123,7 @@ const OtherFeatures: BuildingFeature[] = [
     description: 'Hero training costs go down even yet more.',
     cost: 1000000n,
     upgradeTime: BuildingFeatureTime.Medium,
-    requiresLevel: 90,
+    requiresLevel: 55,
     requiresFeature: {
       'Cheaper Training IV': 1
     }
