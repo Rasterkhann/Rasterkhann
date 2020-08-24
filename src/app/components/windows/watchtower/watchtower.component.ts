@@ -114,4 +114,25 @@ export class WatchtowerComponent implements OnInit {
     }, 0);
   }
 
+  async offlineProgressHelp(): Promise<void> {
+    const alert = await this.alert.create({
+      header: 'About Offline Progress',
+      message: `Rasterkhann supports a few things for offline progress:
+      <br><br>
+      - Offline gold generation based on your House income
+      <br><br>
+      - Offline adventure ticks
+      <br><br>
+      Odd Jobs and other things not listed here are not handled at this time.`,
+      buttons: [
+        {
+          text: 'Okay',
+          role: 'cancel'
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 }
