@@ -872,7 +872,7 @@ export class GameState {
 
           if (allBoughtItems.length > 0) {
             const allItemNames = allBoughtItems.map(item => item.name);
-            messages.push(`${town.recruitedHeroes[i].name} purchased ${allItemNames.join(', ')}.`);
+            messages.push(`${town.recruitedHeroes[i].name} purchased ${allItemNames.join(', ')} (${formatNumber(totalEarned)} GOLD).`);
           }
 
         });
