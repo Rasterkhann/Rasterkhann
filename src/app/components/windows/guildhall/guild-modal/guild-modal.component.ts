@@ -7,7 +7,7 @@ import { sum } from 'lodash';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 
 import { GameState } from '../../../../states';
-import { ProspectiveHero, Hero, GameTown, HeroStat, Trait, ItemType, HeroItem, SkillBook } from '../../../../interfaces';
+import { ProspectiveHero, Hero, GameTown, HeroStat, Trait, ItemType, HeroItem, SkillBook, Adventure } from '../../../../interfaces';
 import { GameService, HeroService } from '../../../../services';
 import { allEquippableArmorClasses, allEquippableWeapons, calculateHeroMaxTotal, formatNumber, skillBookOptsPoints } from '../../../../helpers';
 import { JobEffects, TraitEffects } from '../../../../static';
@@ -239,6 +239,28 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   learnableSkills(hero: Hero, books: SkillBook[]): SkillBook[] {
     return books.filter(b => !b.requiredJobs || b.requiredJobs.includes(hero.job));
+  }
+
+
+  formatPreDuration(text: string): string {
+    const split = text.split(':');
+    if (split.length === 2) {
+      return `${split[0]}h ${split[1]}m`;
+    }
+
+    return `${split[0]}h ${split[1]}m ${split[2]}s`;
+  }
+
+  viewingHeroAdventureTimeRemaining(): number {
+    if (!this.viewingHero) { return 0; }
+    if (!this.viewingHero.onAdventure) { return 0; }
+
+    const advId = this.viewingHero.onAdventure;
+
+    const adv: Adventure = this.town.activeAdventures.find(a => advId === a.uuid) as Adventure;
+    if (!adv) { return 0; }
+
+    return sum(adv.encounterTicks);
   }
 
 }

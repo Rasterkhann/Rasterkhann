@@ -171,6 +171,8 @@
         <p>
           Usable Weapons: {{ getAllWeaponsForViewingHero().join(', ') }}
         </p>
+        
+        <p *ngIf="viewingHero.onAdventure">Adventure Ends In: <countdown [config]="{ leftTime: viewingHeroAdventureTimeRemaining(), format: 'HH:mm:ss', prettyText: formatPreDuration }"></countdown></p>
         <p class="exp-row" *ngIf="!viewingProspectiveHero">
           {{ viewingHero.currentStats.exp | bignum }} / {{ viewingHero.stats.exp | bignum }} EXP
           <ion-button class="inline-button" color="secondary" [disabled]="!game.canTrainHero(town, viewingHero)" (click)="trainCurrentHero()">Train</ion-button>
