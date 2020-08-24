@@ -94,7 +94,10 @@ export class GuildHallService {
 
   // retire functions
   public canRetireHero(hero: Hero): boolean {
-    return !hero.queueRetired && !hero.queueDismissed && hero.trackedStats[HeroTrackedStat.EncountersSucceeded] >= 100;
+    return !hero.queueRetired
+        && !hero.queueDismissed
+        && !hero.queueAdventure
+        && hero.trackedStats[HeroTrackedStat.EncountersSucceeded] >= 100;
   }
 
   public retireHero(hero: Hero): void {
