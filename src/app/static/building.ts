@@ -69,7 +69,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     This can also add new stats to the item.`,
     requires: {
       [Building.Bazaar]: 1,
-      [Building.GuildHall]: 10
+      [Building.GuildHall]: 1
     },
     upgradeTime: (level) => level * 20,
     levelCost: (x) => BigInt(Math.floor((250 * x) + (3 * (1.25 ** x)))),
@@ -82,7 +82,7 @@ export const BuildingData: Record<Building, BuildingStatic> = {
     workerHelp: 'Workers allocated to the Alchemist will increase potion stats by 1 per worker.',
     requires: {
       [Building.Bazaar]: 1,
-      [Building.GuildHall]: 20
+      [Building.GuildHall]: 1
     },
     upgradeTime: (level) => level * 15,
     levelCost: (x) => BigInt(Math.floor((350 * x) + (2 * (1.25 ** x)))),
