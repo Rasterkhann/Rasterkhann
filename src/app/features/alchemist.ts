@@ -1,17 +1,17 @@
-import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob, featureCost, BuildingFeatureCost } from '../interfaces';
 
 export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'More Potions I',
     description: 'More potions are available for sale at once.',
-    cost: 25000n,
+    cost: featureCost(BuildingFeatureCost.XSmall),
     upgradeTime: BuildingFeatureTime.XXXShort,
     requiresLevel: 3
   },
   {
     name: 'More Potions II',
     description: 'More potions are available for sale at once.',
-    cost: 125000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 15,
     requiresFeature: {
@@ -21,7 +21,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'More Potions III',
     description: 'More potions are available for sale at once.',
-    cost: 325000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 33,
     requiresFeature: {
@@ -31,14 +31,14 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Faster Potion Creation I',
     description: 'Potions are created more frequently.',
-    cost: 50000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 5
   },
   {
     name: 'Faster Potion Creation II',
     description: 'Potions are created more frequently.',
-    cost: 250000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 19,
     requiresFeature: {
@@ -48,7 +48,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Faster Potion Creation III',
     description: 'Potions are created more frequently.',
-    cost: 500000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 36,
     requiresFeature: {
@@ -65,14 +65,14 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Health Potions II',
     description: 'Better Health Potions are created.',
-    cost: 150000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 10
   },
   {
     name: 'Health Potions III',
     description: 'Better Health Potions are created.',
-    cost: 350000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 23,
     requiresFeature: {
@@ -82,7 +82,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Health Potions IV',
     description: 'Better Health Potions are created.',
-    cost: 750000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 35,
     requiresFeature: {
@@ -92,7 +92,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Health Potions V',
     description: 'Better Health Potions are created.',
-    cost: 1250000n,
+    cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 47,
     requiresFeature: {
@@ -102,14 +102,14 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Stamina Potions I',
     description: 'Stamina Potions can be created.',
-    cost: 75000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 7
   },
   {
     name: 'Stamina Potions II',
     description: 'Better Stamina Potions are created.',
-    cost: 250000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 15,
     requiresFeature: {
@@ -119,7 +119,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Stamina Potions III',
     description: 'Better Stamina Potions are created.',
-    cost: 650000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 27,
     requiresFeature: {
@@ -129,7 +129,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Stamina Potions IV',
     description: 'Better Stamina Potions are created.',
-    cost: 1150000n,
+    cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 39,
     requiresFeature: {
@@ -139,7 +139,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Stamina Potions V',
     description: 'Better Stamina Potions are created.',
-    cost: 1500000n,
+    cost: featureCost(BuildingFeatureCost.XXLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 51,
     requiresFeature: {
@@ -149,14 +149,14 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Skill Potions I',
     description: 'Skill Potions can be created.',
-    cost: 150000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 9
   },
   {
     name: 'Skill Potions II',
     description: 'Better Skill Potions are created.',
-    cost: 350000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 17,
     requiresFeature: {
@@ -166,7 +166,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Skill Potions III',
     description: 'Better Skill Potions are created.',
-    cost: 750000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 29,
     requiresFeature: {
@@ -176,7 +176,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Skill Potions IV',
     description: 'Better Skill Potions are created.',
-    cost: 1500000n,
+    cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 42,
     requiresFeature: {
@@ -186,7 +186,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Skill Potions V',
     description: 'Better Skill Potions are created.',
-    cost: 2500000n,
+    cost: featureCost(BuildingFeatureCost.XXLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 55,
     requiresFeature: {
@@ -196,7 +196,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Two-color Potions',
     description: 'Two-stat hybrid potions can be created.',
-    cost: 500000n,
+    cost: featureCost(BuildingFeatureCost.XXLarge),
     upgradeTime: BuildingFeatureTime.XLong,
     requiresLevel: 25,
     requiresFeature: {
@@ -211,7 +211,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'Three-color Potions',
     description: 'Three-stat hybrid potions can be created.',
-    cost: 1500000n,
+    cost: featureCost(BuildingFeatureCost.XXXLarge),
     upgradeTime: BuildingFeatureTime.XXLong,
     requiresLevel: 65,
     requiresFeature: {

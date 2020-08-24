@@ -29,6 +29,22 @@ export enum BuildingFeatureTime {
   XXXLong = 1800
 }
 
+export enum BuildingFeatureCost {
+  XXXSmall =  500,
+  XXSmall =   2500,
+  XSmall =    10000,
+  Small =     100_000,
+  Medium =    500_000,
+  Large =     1_000_000,
+  XLarge =    2_500_000,
+  XXLarge =   5_000_000,
+  XXXLarge =  10_000_000
+}
+
+export function featureCost(cost: BuildingFeatureCost): bigint {
+  return BigInt(cost);
+}
+
 export interface BuildingInfo {
   level: number;
   constructionStartedAt?: number;

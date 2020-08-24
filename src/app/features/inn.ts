@@ -1,17 +1,17 @@
-import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob, featureCost, BuildingFeatureCost } from '../interfaces';
 
 export const InnFeatures: BuildingFeature[] = [
   {
     name: 'Restful Sleep',
     description: 'Heroes rest faster.',
-    cost: 150000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 10
   },
   {
     name: 'Blissful Sleep',
     description: 'Heroes rest even faster.',
-    cost: 350000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 25,
     requiresFeature: {
@@ -21,7 +21,7 @@ export const InnFeatures: BuildingFeature[] = [
   {
     name: 'Super Sleep',
     description: 'Heroes rest super fast.',
-    cost: 10000000n,
+    cost: featureCost(BuildingFeatureCost.XXXLarge),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 35,
     requiresFeature: {

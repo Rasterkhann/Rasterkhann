@@ -1,17 +1,17 @@
-import { BuildingFeature, BuildingFeatureTime, TownStat } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat, featureCost, BuildingFeatureCost } from '../interfaces';
 
 export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Monster Gold I',
     description: 'Monsters give more gold.',
-    cost: 50000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15
   },
   {
     name: 'Monster Gold II',
     description: 'Monsters give more gold.',
-    cost: 150000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 35,
     requiresFeature: {
@@ -21,7 +21,7 @@ export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Monster Gold III',
     description: 'Monsters give more gold.',
-    cost: 350000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 60,
     requiresFeature: {
@@ -31,14 +31,14 @@ export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Monster Experience I',
     description: 'Monsters give more experience.',
-    cost: 50000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 30
   },
   {
     name: 'Monster Experience II',
     description: 'Monsters give more experience.',
-    cost: 250000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 50,
     requiresFeature: {
@@ -48,7 +48,7 @@ export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Monster Experience III',
     description: 'Monsters give more experience.',
-    cost: 450000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 75,
     requiresFeature: {
@@ -58,14 +58,14 @@ export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Tunnels I',
     description: 'Can be on another adventure simultaneously.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 5
   },
   {
     name: 'Tunnels II',
     description: 'Can be on another adventure simultaneously.',
-    cost: 300000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 25,
     requiresFeature: {
@@ -75,14 +75,14 @@ export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Infestation I',
     description: 'More adventure options are present.',
-    cost: 300000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 20
   },
   {
     name: 'Infestation II',
     description: 'More adventure options are present.',
-    cost: 500000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 50,
     requiresFeature: {
@@ -92,14 +92,14 @@ export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Deeper Cave I',
     description: 'More potential encounters in an adventure.',
-    cost: 400000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 30
   },
   {
     name: 'Deeper Cave II',
     description: 'More potential encounters in an adventure.',
-    cost: 600000n,
+    cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 60,
     requiresFeature: {
@@ -109,14 +109,14 @@ export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Teamwork I',
     description: 'Heroes can form a team of two in an adventure.',
-    cost: 400000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 10
   },
   {
     name: 'Teamwork II',
     description: 'Heroes can form a team of three in an adventure.',
-    cost: 600000n,
+    cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 40,
     requiresFeature: {
@@ -126,7 +126,7 @@ export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Tougher Adventures I',
     description: 'Unlock the "Tough" difficulty for adventures.',
-    cost: 10000000n,
+    cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 45,
     requiresTownStat: {
@@ -136,7 +136,7 @@ export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Tougher Adventures II',
     description: 'Unlock the "Challenging" difficulty for adventures.',
-    cost: 20000000n,
+    cost: featureCost(BuildingFeatureCost.XXLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 50,
     requiresTownStat: {
@@ -146,7 +146,7 @@ export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Tougher Adventures III',
     description: 'Unlock the "Extreme" difficulty for adventures.',
-    cost: 30000000n,
+    cost: featureCost(BuildingFeatureCost.XXXLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 55,
     requiresTownStat: {

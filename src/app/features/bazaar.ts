@@ -1,17 +1,17 @@
-import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob, BuildingFeatureCost, featureCost } from '../interfaces';
 
 export const BazaarFeatures: BuildingFeature[] = [
   {
     name: 'Better Prices',
     description: 'Your items cost more.',
-    cost: 50000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 5
   },
   {
     name: 'Even Better Prices',
     description: 'Your items cost more.',
-    cost: 150000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 15,
     requiresFeature: {
@@ -21,7 +21,7 @@ export const BazaarFeatures: BuildingFeature[] = [
   {
     name: 'Higher Prices',
     description: 'Your items cost more.',
-    cost: 350000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 25,
     requiresFeature: {
@@ -31,7 +31,7 @@ export const BazaarFeatures: BuildingFeature[] = [
   {
     name: 'Even Higher Prices',
     description: 'Your items cost more.',
-    cost: 650000n,
+    cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 35,
     requiresFeature: {
@@ -41,7 +41,7 @@ export const BazaarFeatures: BuildingFeature[] = [
   {
     name: 'Stronger Prices',
     description: 'Your items cost more.',
-    cost: 1050000n,
+    cost: featureCost(BuildingFeatureCost.XXLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 45,
     requiresFeature: {
@@ -51,7 +51,7 @@ export const BazaarFeatures: BuildingFeature[] = [
   {
     name: 'Highway Robbery',
     description: 'Imagine a world where Thieves run your market - costs go up.',
-    cost: 10000000n,
+    cost: featureCost(BuildingFeatureCost.XXXLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 55,
     requiresFeature: {

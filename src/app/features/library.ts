@@ -1,10 +1,10 @@
-import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob, featureCost, BuildingFeatureCost } from '../interfaces';
 
 export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: ATK+',
     description: 'Heroes get more ATK.',
-    cost: 50000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 2,
     requiresFeature: {
@@ -17,7 +17,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: DEF+',
     description: 'Heroes get more DEF.',
-    cost: 50000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 4,
     requiresFeature: {
@@ -30,7 +30,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: STA+',
     description: 'Heroes get more STA.',
-    cost: 50000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 6,
     requiresFeature: {
@@ -43,7 +43,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: HP+',
     description: 'Heroes get more HP.',
-    cost: 50000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 8,
     requiresFeature: {
@@ -56,7 +56,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: SP+',
     description: 'Heroes get more SP.',
-    cost: 50000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 12,
     requiresFeature: {
@@ -69,14 +69,14 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Dual Trait',
     description: 'Heroes can spawn with two traits.',
-    cost: 150000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 1
   },
   {
     name: 'Tri Trait',
     description: 'Heroes can spawn with three traits.',
-    cost: 350000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 35,
     requiresFeature: {
@@ -86,7 +86,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: ATK+',
     description: 'Heroes get more ATK.',
-    cost: 50000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 10,
     requiresFeature: {
@@ -99,7 +99,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Strong',
     description: 'Heroes get more ATK.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 20,
     unlocks: {
@@ -109,7 +109,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Fortified',
     description: 'Heroes get more DEF.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 17,
     unlocks: {
@@ -119,7 +119,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Healthy',
     description: 'Heroes get more HP.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 1,
     unlocks: {
@@ -129,7 +129,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Skilled',
     description: 'Heroes get more SP.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 5,
     unlocks: {
@@ -139,7 +139,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Advanced',
     description: 'Heroes get more LVL.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 10,
     unlocks: {
@@ -149,7 +149,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Active',
     description: 'Heroes get more STA.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 7,
     unlocks: {
@@ -159,7 +159,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Modest',
     description: 'Heroes get more GOLD.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 3,
     unlocks: {
@@ -169,7 +169,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Experienced',
     description: 'Heroes need less EXP to level up.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
     unlocks: {
@@ -179,7 +179,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Multi-armed',
     description: 'Heroes can hold an additional weapon.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 35,
     requiresFeature: {
@@ -192,7 +192,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Tiny Body',
     description: 'Heroes can wear an additional armor.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 25,
     requiresFeature: {
@@ -205,7 +205,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Big Satchel',
     description: 'Heroes can hold an additional potion.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
     requiresFeature: {
@@ -218,7 +218,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Careful',
     description: 'Heroes use their armor more wisely.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
     hide: true,
@@ -233,7 +233,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Small Weapon Proficiency',
     description: 'Heroes can also use small weapons.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 7,
     requiresFeature: {
@@ -247,7 +247,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Martial Weapon Proficiency',
     description: 'Heroes can also use martial weapons.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 10,
     requiresFeature: {
@@ -261,7 +261,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Ranged Weapon Proficiency',
     description: 'Heroes can also use ranged weapons.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 19,
     requiresFeature: {
@@ -275,7 +275,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Trait: Magical Weapon Proficiency',
     description: 'Heroes can also use magical weapons.',
-    cost: 100000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
     requiresFeature: {
@@ -289,7 +289,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Item Traits II',
     description: 'Unlock basic tier II item traits.',
-    cost: 250000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 5,
     unlocks: {
@@ -302,7 +302,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Item Traits III',
     description: 'Unlock advanced tier III item traits.',
-    cost: 500000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 15,
     requiresFeature: {
@@ -318,7 +318,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Item Traits IV',
     description: 'Unlock powerful tier IV item traits.',
-    cost: 1000000n,
+    cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 35,
     requiresFeature: {
@@ -336,7 +336,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Item Traits Hybrids',
     description: 'Unlock hybrid item traits.',
-    cost: 500000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 25,
     requiresFeature: {
@@ -357,7 +357,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Item Traits Hybrids II',
     description: 'Unlock stronger hybrid item traits.',
-    cost: 1000000n,
+    cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 45,
     requiresFeature: {
@@ -376,14 +376,14 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Shelf Space I',
     description: 'You can hold onto more skill books at once.',
-    cost: 125000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXXShort,
     requiresLevel: 15
   },
   {
     name: 'Shelf Space II',
     description: 'You can hold onto more skill books at once.',
-    cost: 325000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 25,
     requiresFeature: {
@@ -393,14 +393,14 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Library Loan I',
     description: 'You can peruse more skill books at once.',
-    cost: 125000n,
+    cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XXXShort,
     requiresLevel: 20
   },
   {
     name: 'Library Loan II',
     description: 'You can peruse more skill books at once.',
-    cost: 325000n,
+    cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 35,
     requiresFeature: {
@@ -410,7 +410,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Mage Books',
     description: 'You can import books for Mages.',
-    cost: 125000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 10,
     requiresFeature: {
@@ -420,7 +420,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Thief Books',
     description: 'You can import books for Thieves.',
-    cost: 125000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 10,
     requiresFeature: {
@@ -430,7 +430,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Cleric Books',
     description: 'You can import books for Clerics.',
-    cost: 125000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 10,
     requiresFeature: {
@@ -440,7 +440,7 @@ export const LibraryFeatures: BuildingFeature[] = [
   {
     name: 'Warrior Books',
     description: 'You can import books for Warriors.',
-    cost: 125000n,
+    cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 10,
     requiresFeature: {
