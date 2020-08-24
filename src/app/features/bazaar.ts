@@ -3,14 +3,14 @@ import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob, BuildingFeatur
 export const BazaarFeatures: BuildingFeature[] = [
   {
     name: 'Better Prices',
-    description: 'Your items cost more.',
+    description: 'Your items cost 10% more.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 5
   },
   {
     name: 'Even Better Prices',
-    description: 'Your items cost more.',
+    description: 'Your items cost 10% more.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 15,
@@ -20,7 +20,7 @@ export const BazaarFeatures: BuildingFeature[] = [
   },
   {
     name: 'Higher Prices',
-    description: 'Your items cost more.',
+    description: 'Your items cost 10% more.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 25,
@@ -30,7 +30,7 @@ export const BazaarFeatures: BuildingFeature[] = [
   },
   {
     name: 'Even Higher Prices',
-    description: 'Your items cost more.',
+    description: 'Your items cost 10% more.',
     cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 35,
@@ -40,7 +40,7 @@ export const BazaarFeatures: BuildingFeature[] = [
   },
   {
     name: 'Stronger Prices',
-    description: 'Your items cost more.',
+    description: 'Your items cost 10% more.',
     cost: featureCost(BuildingFeatureCost.XXLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 45,
@@ -50,7 +50,7 @@ export const BazaarFeatures: BuildingFeature[] = [
   },
   {
     name: 'Highway Robbery',
-    description: 'Imagine a world where Thieves run your market - costs go up.',
+    description: 'Imagine a world where Thieves run your market - costs go up by 25%.',
     cost: featureCost(BuildingFeatureCost.XXXLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 55,

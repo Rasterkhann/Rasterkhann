@@ -3,14 +3,14 @@ import { BuildingFeature, BuildingFeatureTime, HeroJob, TownStat, BuildingFeatur
 export const ArmoryFeatures: BuildingFeature[] = [
   {
     name: 'More Armors I',
-    description: 'More armors are available for sale at once.',
+    description: '+2 armors for sale at the Bazaar.',
     cost: featureCost(BuildingFeatureCost.XSmall),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 3
   },
   {
     name: 'More Armors II',
-    description: 'More armors are available for sale at once.',
+    description: '+2 armors for sale at the Bazaar.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
@@ -20,7 +20,7 @@ export const ArmoryFeatures: BuildingFeature[] = [
   },
   {
     name: 'More Armors III',
-    description: 'More armors are available for sale at once.',
+    description: '+2 armors for sale at the Bazaar.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 33,
@@ -30,14 +30,14 @@ export const ArmoryFeatures: BuildingFeature[] = [
   },
   {
     name: 'Faster Armor Creation I',
-    description: 'Armors are created more frequently.',
+    description: 'Armors are created 2.5min faster.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 5
   },
   {
     name: 'Faster Armor Creation II',
-    description: 'Armors are created more frequently.',
+    description: 'Armors are created 2.5min faster.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 19,
@@ -47,7 +47,7 @@ export const ArmoryFeatures: BuildingFeature[] = [
   },
   {
     name: 'Faster Armor Creation III',
-    description: 'Armors are created more frequently.',
+    description: 'Armors are created 2.5min faster.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 36,
@@ -57,14 +57,14 @@ export const ArmoryFeatures: BuildingFeature[] = [
   },
   {
     name: 'More Weapons I',
-    description: 'More weapons are available for sale at once.',
+    description: '+2 weapons for sale at the Bazaar.',
     cost: featureCost(BuildingFeatureCost.XSmall),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 3
   },
   {
     name: 'More Weapons II',
-    description: 'More weapons are available for sale at once.',
+    description: '+2 weapons for sale at the Bazaar.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15,
@@ -74,7 +74,7 @@ export const ArmoryFeatures: BuildingFeature[] = [
   },
   {
     name: 'More Weapons III',
-    description: 'More weapons are available for sale at once.',
+    description: '+2 weapons for sale at the Bazaar.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 33,
@@ -84,14 +84,14 @@ export const ArmoryFeatures: BuildingFeature[] = [
   },
   {
     name: 'Faster Weapon Creation I',
-    description: 'Weapons are created more frequently.',
+    description: 'Weapons are created 2.5min faster.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 5
   },
   {
     name: 'Faster Weapon Creation II',
-    description: 'Weapons are created more frequently.',
+    description: 'Weapons are created 2.5min faster.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 19,
@@ -101,7 +101,7 @@ export const ArmoryFeatures: BuildingFeature[] = [
   },
   {
     name: 'Faster Weapon Creation III',
-    description: 'Weapons are created more frequently.',
+    description: 'Weapons are created 2.5min faster.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 36,

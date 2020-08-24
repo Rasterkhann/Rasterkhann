@@ -3,14 +3,14 @@ import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob, featureCost, B
 export const InnFeatures: BuildingFeature[] = [
   {
     name: 'Restful Sleep',
-    description: 'Heroes rest faster.',
+    description: 'Heroes rest twice as fast.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 10
   },
   {
     name: 'Blissful Sleep',
-    description: 'Heroes rest even faster.',
+    description: 'Heroes rest four times as fast.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 25,
@@ -20,8 +20,8 @@ export const InnFeatures: BuildingFeature[] = [
   },
   {
     name: 'Super Sleep',
-    description: 'Heroes rest super fast.',
-    cost: featureCost(BuildingFeatureCost.XXXLarge),
+    description: 'Heroes rest eight times as fast.',
+    cost: featureCost(BuildingFeatureCost.XXLarge),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 35,
     requiresFeature: {
@@ -33,8 +33,8 @@ export const InnFeatures: BuildingFeature[] = [
   },
   {
     name: 'Mega Sleep',
-    description: 'Heroes rest mega fast.',
-    cost: 10000000n,
+    description: 'Heroes rest twelve times as fast.',
+    cost: featureCost(BuildingFeatureCost.XXXLarge),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 45,
     requiresFeature: {

@@ -3,14 +3,14 @@ import { BuildingFeature, BuildingFeatureTime, TownStat, featureCost, BuildingFe
 export const CaveFeatures: BuildingFeature[] = [
   {
     name: 'Monster Gold I',
-    description: 'Monsters give more gold.',
+    description: 'Monsters give 30% more gold.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 15
   },
   {
     name: 'Monster Gold II',
-    description: 'Monsters give more gold.',
+    description: 'Monsters give 30% more gold.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 35,
@@ -20,7 +20,7 @@ export const CaveFeatures: BuildingFeature[] = [
   },
   {
     name: 'Monster Gold III',
-    description: 'Monsters give more gold.',
+    description: 'Monsters give 30% more gold.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 60,
@@ -30,14 +30,14 @@ export const CaveFeatures: BuildingFeature[] = [
   },
   {
     name: 'Monster Experience I',
-    description: 'Monsters give more experience.',
+    description: 'Monsters give 30% more experience.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 30
   },
   {
     name: 'Monster Experience II',
-    description: 'Monsters give more experience.',
+    description: 'Monsters give 30% more experience.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 50,
@@ -47,7 +47,7 @@ export const CaveFeatures: BuildingFeature[] = [
   },
   {
     name: 'Monster Experience III',
-    description: 'Monsters give more experience.',
+    description: 'Monsters give 30% more experience.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 75,
@@ -57,14 +57,14 @@ export const CaveFeatures: BuildingFeature[] = [
   },
   {
     name: 'Tunnels I',
-    description: 'Can be on another adventure simultaneously.',
+    description: 'Can be on +1 adventure simultaneously.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 5
   },
   {
     name: 'Tunnels II',
-    description: 'Can be on another adventure simultaneously.',
+    description: 'Can be on +1 adventure simultaneously.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 25,
@@ -74,14 +74,14 @@ export const CaveFeatures: BuildingFeature[] = [
   },
   {
     name: 'Infestation I',
-    description: 'More adventure options are present.',
+    description: '+1 adventure options are present.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 20
   },
   {
     name: 'Infestation II',
-    description: 'More adventure options are present.',
+    description: '+1 adventure options are present.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 50,

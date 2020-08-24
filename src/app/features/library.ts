@@ -375,14 +375,14 @@ export const LibraryFeatures: BuildingFeature[] = [
   },
   {
     name: 'Shelf Space I',
-    description: 'You can hold onto more skill books at once.',
+    description: 'You can hold onto +1 skill books.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXXShort,
     requiresLevel: 15
   },
   {
     name: 'Shelf Space II',
-    description: 'You can hold onto more skill books at once.',
+    description: 'You can hold onto +1 skill books.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 25,
@@ -392,14 +392,14 @@ export const LibraryFeatures: BuildingFeature[] = [
   },
   {
     name: 'Library Loan I',
-    description: 'You can peruse more skill books at once.',
+    description: 'You can peruse +1 skill books.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XXXShort,
     requiresLevel: 20
   },
   {
     name: 'Library Loan II',
-    description: 'You can peruse more skill books at once.',
+    description: 'You can peruse +1 skill books.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 35,

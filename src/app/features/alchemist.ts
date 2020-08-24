@@ -3,14 +3,14 @@ import { BuildingFeature, BuildingFeatureTime, TownStat, HeroJob, featureCost, B
 export const AlchemistFeatures: BuildingFeature[] = [
   {
     name: 'More Potions I',
-    description: 'More potions are available for sale at once.',
+    description: '+2 potions for sale at the Bazaar.',
     cost: featureCost(BuildingFeatureCost.XSmall),
     upgradeTime: BuildingFeatureTime.XXXShort,
     requiresLevel: 3
   },
   {
     name: 'More Potions II',
-    description: 'More potions are available for sale at once.',
+    description: '+2 potions for sale at the Bazaar.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 15,
@@ -20,7 +20,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   },
   {
     name: 'More Potions III',
-    description: 'More potions are available for sale at once.',
+    description: '+2 potions for sale at the Bazaar.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 33,
@@ -30,14 +30,14 @@ export const AlchemistFeatures: BuildingFeature[] = [
   },
   {
     name: 'Faster Potion Creation I',
-    description: 'Potions are created more frequently.',
+    description: 'Potions are created 2.5min faster.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 5
   },
   {
     name: 'Faster Potion Creation II',
-    description: 'Potions are created more frequently.',
+    description: 'Potions are created 2.5min faster.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 19,
@@ -47,7 +47,7 @@ export const AlchemistFeatures: BuildingFeature[] = [
   },
   {
     name: 'Faster Potion Creation III',
-    description: 'Potions are created more frequently.',
+    description: 'Potions are created 2.5min faster.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 36,

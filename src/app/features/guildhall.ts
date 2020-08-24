@@ -46,14 +46,14 @@ const JobFeatures: BuildingFeature[] = [
 const HeroFeatures: BuildingFeature[] = [
   {
     name: 'Bigger Barracks I',
-    description: 'House an additional hero.',
+    description: 'House +1 hero.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 10
   },
   {
     name: 'Bigger Barracks II',
-    description: 'House an additional hero.',
+    description: 'House +1 hero.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 30,
@@ -63,14 +63,14 @@ const HeroFeatures: BuildingFeature[] = [
   },
   {
     name: 'Enticing Army I',
-    description: 'Show an additional potential hero.',
+    description: 'Show +1 potential hero to recruit.',
     cost: featureCost(BuildingFeatureCost.Medium),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 5
   },
   {
     name: 'Enticing Army II',
-    description: 'Show an additional potential hero.',
+    description: 'Show +1 potential hero to recruit.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 25,
@@ -83,14 +83,14 @@ const HeroFeatures: BuildingFeature[] = [
 const OtherFeatures: BuildingFeature[] = [
   {
     name: 'Cheaper Training I',
-    description: 'Hero training costs go down.',
+    description: 'Hero training costs go down by 10%.',
     cost: featureCost(BuildingFeatureCost.XSmall),
     upgradeTime: BuildingFeatureTime.XXXShort,
     requiresLevel: 15
   },
   {
     name: 'Cheaper Training II',
-    description: 'Hero training costs go down more.',
+    description: 'Hero training costs go down 10% more.',
     cost: featureCost(BuildingFeatureCost.Small),
     upgradeTime: BuildingFeatureTime.XXShort,
     requiresLevel: 25,
@@ -100,7 +100,7 @@ const OtherFeatures: BuildingFeature[] = [
   },
   {
     name: 'Cheaper Training III',
-    description: 'Hero training costs go down even more.',
+    description: 'Hero training costs go down 10% more.',
     cost: featureCost(BuildingFeatureCost.Large),
     upgradeTime: BuildingFeatureTime.XShort,
     requiresLevel: 35,
@@ -110,7 +110,7 @@ const OtherFeatures: BuildingFeature[] = [
   },
   {
     name: 'Cheaper Training IV',
-    description: 'Hero training costs go down yet more.',
+    description: 'Hero training costs go down 10% more.',
     cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 45,
@@ -120,7 +120,7 @@ const OtherFeatures: BuildingFeature[] = [
   },
   {
     name: 'Cheaper Training V',
-    description: 'Hero training costs go down even yet more.',
+    description: 'Hero training costs go down 10% more.',
     cost: featureCost(BuildingFeatureCost.XXLarge),
     upgradeTime: BuildingFeatureTime.Medium,
     requiresLevel: 55,
