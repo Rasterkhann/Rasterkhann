@@ -192,5 +192,5 @@ export function doesHeroHaveTrait(hero: Hero, trait: Trait): boolean {
 export function increaseTownStat(town: GameTown, stat: TownStat, hero: Hero, value: bigint | number = 1n): void {
   town.stats[stat] = town.stats[stat] || {};
   town.stats[stat][hero.job] = town.stats[stat][hero.job] || 0n;
-  town.stats[stat][hero.job] += BigInt(value);
+  town.stats[stat][hero.job] = BigInt(town.stats[stat][hero.job]) + BigInt(value);
 }
