@@ -62,6 +62,5 @@ export class CaveService {
   public generateLegendaryAdventure(town: GameTown): void {
     if (town.legendaryAdventures.length > 0) { return; }
     this.store.dispatch(new RollLegendaryAdventure());
-    this.advCreator.getLegendaryAdventureCost(town);
   }
 }

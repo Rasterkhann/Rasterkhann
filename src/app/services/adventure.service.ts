@@ -27,9 +27,9 @@ export class AdventureService {
     return Number(1n + (town.stats[TownStat.Legendary].Adventures || 0n));
   }
 
-  private pickFromArrayWithTownSeed(town: GameTown, arr: string[]): string {
+  private pickFromArrayWithTownSeed(town: GameTown, arr: string[], seedmod: string): string {
     const seed = this.calculateNumLegendaryAdventureNext(town);
-    const rng = seedrandom(seed.toString());
+    const rng = seedrandom(seed.toString() + seedmod);
     const entryIdx = Math.floor(rng() * arr.length);
     return arr[entryIdx];
   }
@@ -54,7 +54,7 @@ export class AdventureService {
       'Lamia', 'Níðhöggr', 'Tarasque', 'Hydra', 'Minotaur', 'Ushi-oni', 'Satyr', 'Centaur', 'Pegasus', 'Unicorn',
       'Sleipnir', 'Zhu Bajie', 'Nephele', 'Banshee',
       'Gingerbread Man', 'Evil Clown'
-    ]) as string;
+    ], '') as string;
   }
 
   doesTownHaveEnoughCrystalsForLegendaryAdventure(town: GameTown): boolean {
@@ -76,7 +76,7 @@ export class AdventureService {
     const hash: Record<HeroJob, number> = createZeroHeroBlock();
 
     for (let i = 0; i < numNeeded; i++) {
-      const choice: HeroJob = this.pickFromArrayWithTownSeed(town, baseJobs) as HeroJob;
+      const choice: HeroJob = this.pickFromArrayWithTownSeed(town, baseJobs, i.toString()) as HeroJob;
       hash[choice] = hash[choice] || 0;
       hash[choice]++;
     }
