@@ -15,6 +15,10 @@ export class TownStatsModalComponent implements OnInit {
 
   @Select(GameState.currentTown) currentTown$: Observable<GameTown>;
 
+  public tooltips: Record<string, (val: number) => string> = {
+    [`${TownStat.Legendary}.Adventures`]: (val) => `+${val}% EXP/GOLD`
+  };
+
   public headers: Record<TownStat, string> = {
     [TownStat.Adventures]:    'Adventures Won',
     [TownStat.Encounters]:    'Encounters Won',
@@ -39,6 +43,15 @@ export class TownStatsModalComponent implements OnInit {
 
   sumSection(section: Record<string, bigint>): bigint {
     return Object.values(section).reduce((prev, cur) => prev + cur, 0n);
+  }
+
+  hasTooltip(header: string, subheader: string): boolean {
+    return !!this.tooltips[`${header}.${subheader}`];
+  }
+
+  getTooltip(header: string, subheader: string, value: number): string {
+    if (!this.hasTooltip(header, subheader)) { return ''; }
+    return this.tooltips[`${header}.${subheader}`](value);
   }
 
 }

@@ -25,9 +25,11 @@
   
           <ng-container *ngFor="let substat of stat.value | keyvalue">
             <ion-item>
-              <ion-label>
-                {{ substat.key }}
-              </ion-label>
+              <ion-col>
+                <span [class.has-info]="hasTooltip(stat.key, substat.key)"
+                      [display]="hasTooltip(stat.key, substat.key)" 
+                      [tooltip]="getTooltip(stat.key, substat.key, substat.value || 0)">{{ substat.key }}</span>
+              </ion-col>
               <ion-label slot="end" class="ion-text-right">
                 {{ (substat.value || 0) | bignum }}
               </ion-label>
