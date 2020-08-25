@@ -4,7 +4,7 @@
 
   <ion-label class="ion-text-wrap">
     <h3>
-      {{ book.name }} ({{ calculateBookLP(book) }} LP)
+      <span class="has-info" [tooltip]="book.description">{{ book.name }}</span>&nbsp;({{ calculateBookLP(book) }} LP)
     </h3>
 
     <p>Usable By: {{ book.requiredJobs ? book.requiredJobs.join(', ') : 'Anyone' }}</p>

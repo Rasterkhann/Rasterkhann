@@ -184,6 +184,7 @@ export function generateSkillBook(town: GameTown): SkillBook {
   const baseBook: SkillBook = {
     uuid: uuid(),
     name: preset.name,
+    description: preset.description,
     cost: calculateBookCost(town, baseStats),
     sprite: preset.sprite,
     actionCaller: preset.action,

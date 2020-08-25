@@ -6,6 +6,7 @@ const MultiplyBy = (mult: number) => (val: number) => Math.floor(val * mult);
 export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
   {
     name: 'Attack',
+    description: 'A basic attack based on users ATK.',
     changeableStats: ['defMultiplier', 'atkMultiplier', 'times'],
     sprite: 63,
     action: 'Attack',
@@ -33,6 +34,7 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
   },
   {
     name: 'Heal',
+    description: 'A heal based on users DEF.',
     changeableStats: ['defMultiplier', 'times', 'targets'],
     sprite: 37,
     jobs: [HeroJob.Cleric],
@@ -61,7 +63,8 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
   },
   {
     name: 'Restore',
-    changeableStats: ['defMultiplier', 'times', 'targets'],
+    description: 'A percentage-based heal.',
+    changeableStats: ['pct', 'times', 'targets'],
     sprite: 118,
     jobs: [HeroJob.Cleric],
     action: 'HealSomeOrAllPercent',
@@ -89,7 +92,8 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
   },
   {
     name: 'Fireball',
-    changeableStats: ['pct', 'times', 'targets'],
+    description: 'A magic attack based on users ATK.',
+    changeableStats: ['atkMultiplier', 'defMultiplier', 'times', 'targets'],
     sprite: 0,
     jobs: [HeroJob.Mage],
     action: 'AttackSomeOrAll',
@@ -117,6 +121,7 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
   },
   {
     name: 'Magic Missile',
+    description: 'A diminishing magic attack based on users ATK.',
     changeableStats: ['atkMultiplier', 'defMultiplier', 'times', 'targets'],
     sprite: 32,
     jobs: [HeroJob.Mage],
@@ -145,6 +150,7 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
   },
   {
     name: 'Acid Spray',
+    description: 'A percentage-based magic attack.',
     changeableStats: ['pct', 'times', 'targets'],
     sprite: 24,
     jobs: [HeroJob.Mage],
@@ -173,6 +179,7 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
   },
   {
     name: 'Mug',
+    description: 'An attack and steal.',
     changeableStats: ['gold', 'targets', 'times', 'atkMultiplier', 'defMultiplier'],
     sprite: 153,
     jobs: [HeroJob.Thief],
@@ -201,6 +208,7 @@ export const SKILL_BOOK_PRESETS: SkillBookPreset[] = [
   },
   {
     name: 'Hamstring',
+    description: 'A percentage-based attack.',
     changeableStats: ['pct', 'times'],
     sprite: 61,
     jobs: [HeroJob.Warrior],

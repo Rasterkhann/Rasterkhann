@@ -3,6 +3,7 @@ import { HeroJob, HeroActionOpts } from './hero';
 export interface SkillBook {
   uuid: string;
   name: string;
+  description: string;
   cost: bigint;
   sprite: number;
 
@@ -15,6 +16,7 @@ export interface SkillBook {
 
 export type SkillBookPreset = {
   name: string;
+  description: string;
   sprite: number;
   jobs?: HeroJob[];
   changeableStats: Array<keyof HeroActionOpts>;
