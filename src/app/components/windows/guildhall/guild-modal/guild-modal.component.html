@@ -113,6 +113,11 @@
         <ng-container *ngTemplateOutlet="hero"></ng-container>
       </ion-col>
 
+      <!-- retirement -->
+      <ion-col size="12" size-xl="6" class="ion-no-padding">
+        <ng-container *ngTemplateOutlet="retirement"></ng-container>
+      </ion-col>
+
       <!-- core stats block -->
       <ion-col size="12" size-xl="6" class="ion-no-padding">
         <ng-container *ngTemplateOutlet="stats"></ng-container>
@@ -304,6 +309,22 @@
       <ion-label slot="end">
         {{ stat.value | bignum }}
       </ion-label>
+    </ion-item>
+  </ion-list>
+</ng-template>
+
+<ng-template #retirement>
+  <ion-list *ngIf="viewingHero && !viewingProspectiveHero">
+    <ion-list-header *ngIf="!game.canRetireHero(town, viewingHero)">Retirement Progress</ion-list-header>
+    <ion-item *ngIf="!game.canRetireHero(town, viewingHero)">
+      <ion-range min="0" 
+                 [max]="game.requiredWonEncountersForRetire(town, viewingHero)" 
+                 disabled="true"
+                 [value]="getNumEncounters(viewingHero)"
+                 color="secondary">
+        <ion-label slot="start">{{ getNumEncounters(viewingHero) }}</ion-label>
+        <ion-label slot="end">{{ game.requiredWonEncountersForRetire(town, viewingHero) }}</ion-label>
+      </ion-range>
     </ion-item>
   </ion-list>
 </ng-template>

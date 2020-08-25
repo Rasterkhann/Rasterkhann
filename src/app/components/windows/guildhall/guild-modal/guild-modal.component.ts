@@ -7,7 +7,7 @@ import { sum } from 'lodash';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 
 import { GameState } from '../../../../states';
-import { ProspectiveHero, Hero, GameTown, HeroStat, Trait, ItemType, HeroItem, SkillBook, Adventure } from '../../../../interfaces';
+import { ProspectiveHero, Hero, GameTown, HeroStat, Trait, ItemType, HeroItem, SkillBook, Adventure, HeroTrackedStat } from '../../../../interfaces';
 import { GameService, HeroService } from '../../../../services';
 import { allEquippableArmorClasses, allEquippableWeapons, calculateHeroMaxTotal, formatNumber, skillBookOptsPoints } from '../../../../helpers';
 import { JobEffects, TraitEffects } from '../../../../static';
@@ -261,6 +261,10 @@ export class GuildModalComponent implements OnDestroy, OnInit {
     if (!adv) { return 0; }
 
     return sum(adv.encounterTicks);
+  }
+
+  getNumEncounters(hero: Hero): number {
+    return hero.trackedStats[HeroTrackedStat.EncountersSucceeded];
   }
 
 }
