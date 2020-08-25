@@ -280,8 +280,12 @@ export class GameService {
   }
 
   // retire functions
-  public canRetireHero(hero: Hero): boolean {
-    return this.guildhallService.canRetireHero(hero);
+  public canRetireHero(town: GameTown, hero: Hero): boolean {
+    return this.guildhallService.canRetireHero(town, hero);
+  }
+
+  public requiredWonEncountersForRetire(town: GameTown, hero: Hero): number {
+    return this.guildhallService.requiredWonEncountersForRetire(town, hero);
   }
 
   public retireHero(hero: Hero): void {

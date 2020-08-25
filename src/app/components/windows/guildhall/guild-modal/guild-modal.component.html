@@ -79,7 +79,7 @@
 
       <ion-col size="12" *ngIf="!viewingProspectiveHero">
         <ion-list>
-          <ion-item color="success" *ngIf="game.canRetireHero(viewingHero)">
+          <ion-item color="success" *ngIf="game.canRetireHero(town, viewingHero)">
             <ion-label class="ion-text-wrap">
               This hero is eligible for retirement!
             </ion-label>

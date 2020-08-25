@@ -5,7 +5,7 @@ import { GameTown, Building, ProspectiveHero, Hero, HeroStat, HeroTrackedStat } 
 import { SpendGold, RerollHeroes, HeroRecruit, HeroGainEXP, HeroQueueDismissCancel,
   HeroQueueDismiss, HeroDismiss, HeroQueueRetire, HeroRetire, HeroQueueRetireCancel, HeroQueueRecruit, HeroQueueRecruitCancel } from '../actions';
 import { HeroService } from './hero.service';
-import { getCurrentStat, canHeroGoOnAdventure, isHeroFullHealth } from '../helpers';
+import { getCurrentStat, canHeroGoOnAdventure, isHeroFullHealth, nextRetirementValue } from '../helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -92,12 +92,16 @@ export class GuildHallService {
     this.store.dispatch(new HeroQueueRecruitCancel(prosHero.hero.uuid));
   }
 
+  public requiredWonEncountersForRetire(town: GameTown, hero: Hero): number {
+    return nextRetirementValue(town);
+  }
+
   // retire functions
-  public canRetireHero(hero: Hero): boolean {
+  public canRetireHero(town: GameTown, hero: Hero): boolean {
     return !hero.queueRetired
         && !hero.queueDismissed
         && !hero.queueAdventure
-        && hero.trackedStats[HeroTrackedStat.EncountersSucceeded] >= 100;
+        && hero.trackedStats[HeroTrackedStat.EncountersSucceeded] >= this.requiredWonEncountersForRetire(town, hero);
   }
 
   public retireHero(hero: Hero): void {

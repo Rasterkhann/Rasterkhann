@@ -97,7 +97,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
         this.featureMap[buildingName].visible = visibleBuildingFeatures(this.town, buildingName).length > 0;
 
         if (buildingName === Building.GuildHall) {
-          this.secondaryFeatureMap[buildingName].visible = this.town.recruitedHeroes.some(h => this.game.canRetireHero(h));
+          this.secondaryFeatureMap[buildingName].visible = this.town.recruitedHeroes.some(h => this.game.canRetireHero(this.town, h));
         }
       });
     }

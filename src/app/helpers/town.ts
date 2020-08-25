@@ -1,4 +1,6 @@
 
+import { sum } from 'lodash';
+
 import { IGameState, GameTown, Hero, ProspectiveHero, Building, Adventure, ItemType, HeroItem, SkillBook, TownStat } from '../interfaces';
 import { calculateMaxActiveAdventures, tickAdventure } from './adventure';
 import { canHeroGoOnAdventure } from './hero';
@@ -127,4 +129,11 @@ export function formatTownStat(stat: string): string {
   }
 
   return stat;
+}
+
+export function nextRetirementValue(town: GameTown): number {
+  let numRetires = sum(Object.values(town.stats[TownStat.Retires]).map(Number));
+  if (isNaN(numRetires) || !numRetires) { numRetires = 0; }
+
+  return 5 + (numRetires * 3);
 }
