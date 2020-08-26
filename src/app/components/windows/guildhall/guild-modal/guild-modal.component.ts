@@ -274,4 +274,30 @@ export class GuildModalComponent implements OnDestroy, OnInit {
     return this.game.canRerollHeroes(town) && !this.areAllProspectiveHeroesQueued(town);
   }
 
+  nextHero(town: GameTown): void {
+    if (!this.viewingHero) { return; }
+    const uuid = this.viewingHero.uuid;
+
+    const idx = town.recruitedHeroes.findIndex(h => h.uuid === uuid);
+    let nextHero = town.recruitedHeroes[idx + 1];
+    if (!nextHero) {
+      nextHero = town.recruitedHeroes[0];
+    }
+
+    this.viewHero(nextHero);
+  }
+
+  prevHero(town: GameTown): void {
+    if (!this.viewingHero) { return; }
+    const uuid = this.viewingHero.uuid;
+
+    const idx = town.recruitedHeroes.findIndex(h => h.uuid === uuid);
+    let prevHero = town.recruitedHeroes[idx - 1];
+    if (!prevHero) {
+      prevHero = town.recruitedHeroes[town.recruitedHeroes.length - 1];
+    }
+
+    this.viewHero(prevHero);
+  }
+
 }
