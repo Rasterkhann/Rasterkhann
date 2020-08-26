@@ -93,7 +93,7 @@ export class GuildHallService {
   }
 
   public requiredWonEncountersForRetire(town: GameTown, hero: Hero): number {
-    return nextRetirementValue(town);
+    return nextRetirementValue(town, hero);
   }
 
   // retire functions

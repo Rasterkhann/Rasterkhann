@@ -27,10 +27,10 @@ export enum TriggerType {
 export type PlainTrait = 'Plain';
 
 export type BadTrait =
-  'Weak' | 'Frail' | 'Ill' | 'Clumsy' | 'Reclusive' | 'Sedentary' | 'Poor' | 'Inexperienced';
+  'Weak' | 'Frail' | 'Ill' | 'Clumsy' | 'Reclusive' | 'Sedentary' | 'Poor' | 'Inexperienced' | 'Youthful';
 
 export type SimpleModifierPositiveTrait =
-  'ATK+' | 'DEF+' | 'STA+' | 'HP+' | 'SP+' | 'Careful';
+  'ATK+' | 'DEF+' | 'STA+' | 'HP+' | 'SP+' | 'Careful' | 'Aged';
 
 export type SimpleModifierNegativeTrait =
   'ATK-' | 'DEF-' | 'STA-' | 'Reckless';

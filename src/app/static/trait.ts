@@ -143,6 +143,13 @@ const BaseBadTraits: Record<BadTrait, TraitEffect> = {
       }
     }
   },
+
+  Youthful: {
+    priority: TraitPriority.Last,
+    valueProp: TraitValueProp.VeryBad,
+    description: 'Hero is young, +50% retirement requirement.',
+    triggers: {}
+  },
 };
 
 const SimplePositiveTraits: Record<SimpleModifierPositiveTrait, TraitEffect> = {
@@ -230,7 +237,14 @@ const SimplePositiveTraits: Record<SimpleModifierPositiveTrait, TraitEffect> = {
     description: 'Hero takes 50% less durability damage',
     cantAttachWithTrait: ['Reckless'],
     triggers: {}
-  }
+  },
+
+  Aged: {
+    priority: TraitPriority.Last,
+    valueProp: TraitValueProp.VeryBad,
+    description: 'Hero is old, -50% retirement requirement.',
+    triggers: {}
+  },
 };
 
 const SimpleNegativeTraits: Record<SimpleModifierNegativeTrait, TraitEffect> = {

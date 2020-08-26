@@ -4,7 +4,7 @@ import { sum } from 'lodash';
 import { IGameState, GameTown, Hero, ProspectiveHero, Building, Adventure, ItemType, HeroItem, SkillBook, TownStat } from '../interfaces';
 import { calculateMaxActiveAdventures, tickAdventure } from './adventure';
 import { canHeroGoOnAdventure } from './hero';
-import { doesTownHaveFeature, numAllocatedToBuilding } from './global';
+import { doesTownHaveFeature, numAllocatedToBuilding, doesHeroHaveTrait } from './global';
 
 export function getCurrentTownFromState(state: IGameState): GameTown {
   return { name: state.currentTown, ...state.towns[state.currentTown] };
@@ -131,9 +131,14 @@ export function formatTownStat(stat: string): string {
   return stat;
 }
 
-export function nextRetirementValue(town: GameTown): number {
+export function nextRetirementValue(town: GameTown, hero: Hero): number {
   let numRetires = sum(Object.values(town.stats[TownStat.Retires]).map(Number));
   if (isNaN(numRetires) || !numRetires) { numRetires = 0; }
 
-  return 5 + (numRetires * 3);
+  let base = 5 + (numRetires * 3);
+
+  if (doesHeroHaveTrait(hero, 'Aged')) { base /= 2; }
+  if (doesHeroHaveTrait(hero, 'Youthful')) { base *= 1.5; }
+
+  return Math.floor(base);
 }

@@ -447,4 +447,17 @@ export const LibraryFeatures: BuildingFeature[] = [
       'Job: Warrior': 1
     }
   },
+  {
+    name: 'Trait: Aged',
+    description: 'Heroes can retire 50% sooner.',
+    cost: featureCost(BuildingFeatureCost.Large),
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 60,
+    requiresTownStat: {
+      [TownStat.Retires]: 15
+    },
+    unlocks: {
+      trait: ['Aged', 'Youthful']
+    }
+  },
 ];
