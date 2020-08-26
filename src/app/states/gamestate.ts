@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { ImmutableContext } from '@ngxs-labs/immer-adapter';
 
-import { sample, sum, random } from 'lodash';
+import { sample, sum, random, sortBy } from 'lodash';
 import { Subject } from 'rxjs';
 
 import {
@@ -452,7 +452,7 @@ export class GameState {
         prospectiveHeroes.push(this.heroCreator.generateProspectiveHero(town));
       }
 
-      state.towns[state.currentTown].prospectiveHeroes = currentQueued.concat(prospectiveHeroes);
+      state.towns[state.currentTown].prospectiveHeroes = sortBy(currentQueued.concat(prospectiveHeroes), p => -p.rating);
 
       return state;
     });
