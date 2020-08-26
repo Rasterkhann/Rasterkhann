@@ -67,9 +67,11 @@ export function calculateAvailableDifficulties(town: GameTown): AdventureDifficu
     AdventureDifficulty.Hard, AdventureDifficulty.VeryHard
   ];
 
+  /*
   if (doesTownHaveFeature(town, 'Tougher Adventures I'))   { base.push(AdventureDifficulty.Tough); }
   if (doesTownHaveFeature(town, 'Tougher Adventures II'))  { base.push(AdventureDifficulty.Challenging); }
   if (doesTownHaveFeature(town, 'Tougher Adventures III')) { base.push(AdventureDifficulty.Extreme); }
+  */
 
   return base;
 }
