@@ -164,11 +164,11 @@
 
 <ng-template #hero>
 
-  <ion-button class="info left" icon-only color="primary" (click)="prevHero(town)">
+  <ion-button class="info left" icon-only color="primary" (click)="prevHero(town)" *ngIf="!viewingProspectiveHero">
     <ion-icon name="arrow-back-circle-outline"></ion-icon>
   </ion-button>
 
-  <ion-button class="info right" icon-only color="primary" (click)="nextHero(town)">
+  <ion-button class="info right" icon-only color="primary" (click)="nextHero(town)" *ngIf="!viewingProspectiveHero">
     <ion-icon name="arrow-forward-circle-outline"></ion-icon>
   </ion-button>
 
