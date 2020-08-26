@@ -241,7 +241,6 @@ export class GuildModalComponent implements OnDestroy, OnInit {
     return books.filter(b => !b.requiredJobs || b.requiredJobs.includes(hero.job));
   }
 
-
   formatPreDuration(text: string): string {
     const split = text.split(':');
     if (split.length === 2) {
@@ -265,6 +264,14 @@ export class GuildModalComponent implements OnDestroy, OnInit {
 
   getNumEncounters(hero: Hero): number {
     return hero.trackedStats[HeroTrackedStat.EncountersSucceeded];
+  }
+
+  areAllProspectiveHeroesQueued(town: GameTown): boolean {
+    return town.prospectiveHeroes.every(p => p.queueRecruited);
+  }
+
+  canRerollHeroes(town: GameTown): boolean {
+    return this.game.canRerollHeroes(town) && !this.areAllProspectiveHeroesQueued(town);
   }
 
 }

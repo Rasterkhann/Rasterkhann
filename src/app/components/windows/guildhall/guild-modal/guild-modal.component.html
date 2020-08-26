@@ -6,7 +6,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ng-container *ngIf="currentTown$ | async as town">
-        <ion-button *ngIf="!viewingHero" class="ion-hide-xl-down" color="secondary" [disabled]="!game.canRerollHeroes(town)" (click)="rerollHeroes(town)">
+        <ion-button *ngIf="!viewingHero" class="ion-hide-xl-down" color="secondary" [disabled]="!canRerollHeroes(town)" (click)="rerollHeroes(town)">
           Reroll for {{ game.heroRerollCost(town) | bignum }} gold
         </ion-button>
       </ng-container>
@@ -27,6 +27,7 @@
   <ng-container *ngIf="currentTown$ | async as town">
     <app-help-text helpText="The Guild Hall is where you can recruit new heroes and view your current ones." *ngIf="!viewingHero"></app-help-text>
     <app-help-text helpText="You have a hero ready for retirement! Retiring a hero will grant you new benefits such as being able to allocate it to a building to increase that buildings production and more. Heroes ready to retire have a green star on their portrait." *ngIf="!viewingHero && anyHeroesReadyToRetire && !town.showStage2UI" showAlways="true"></app-help-text>
+    <app-help-text helpText="You cannot reroll heroes as all of your prospective heroes are queued for recruitment." *ngIf="!viewingHero && areAllProspectiveHeroesQueued(town)" showAlways="true"></app-help-text>
   
     <ion-row *ngIf="!viewingHero" class="allow-splitter">
       <!-- owned heroes -->
