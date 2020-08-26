@@ -201,6 +201,18 @@ export function calculateHeroTrainingGoldPerXP(town: GameTown): bigint {
   return base;
 }
 
+export function calculateHeroLowerStatMultiplier(town: GameTown): number {
+  let base = 0;
+
+  if (doesTownHaveFeature(town, 'Stronger Recruits I'))   { base += 0.05; }
+  if (doesTownHaveFeature(town, 'Stronger Recruits II'))  { base += 0.05; }
+  if (doesTownHaveFeature(town, 'Stronger Recruits III')) { base += 0.05; }
+  if (doesTownHaveFeature(town, 'Stronger Recruits IV'))  { base += 0.05; }
+  if (doesTownHaveFeature(town, 'Stronger Recruits V'))   { base += 0.05; }
+
+  return base;
+}
+
 export function isHeroFullHealth(hero: Hero): boolean {
   return getCurrentStat(hero, HeroStat.STA) === hero.stats[HeroStat.STA]
       && getCurrentStat(hero, HeroStat.HP) === hero.stats[HeroStat.HP]
@@ -307,7 +319,15 @@ export function generateHero(town: GameTown, level?: number): Hero {
     if (stats[stat]) { return; }
 
     const statBoost = getStatBoostFromCrystal(town, stat);
-    stats[stat] = random(1, heroLevel * jobStatic.statGrowth[stat](heroLevel) * jobStatic.statBaseMultiplier[stat]) + statBoost;
+    const baseMax = heroLevel * jobStatic.statGrowth[stat](heroLevel) * jobStatic.statBaseMultiplier[stat];
+    let base = 1;
+
+    const baseMult = calculateHeroLowerStatMultiplier(town);
+    if (baseMult > 0) {
+      base = Math.floor(baseMax * baseMult);
+    }
+
+    stats[stat] = random(baseMult, baseMax) + statBoost;
   });
 
   // boost stats with workers

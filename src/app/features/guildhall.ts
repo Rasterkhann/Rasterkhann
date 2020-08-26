@@ -128,6 +128,53 @@ const OtherFeatures: BuildingFeature[] = [
       'Cheaper Training IV': 1
     }
   },
+  {
+    name: 'Stronger Recruits I',
+    description: 'Prospective recruits lower stat bounds increase by 5%.',
+    cost: featureCost(BuildingFeatureCost.XSmall),
+    upgradeTime: BuildingFeatureTime.XXXShort,
+    requiresLevel: 20
+  },
+  {
+    name: 'Stronger Recruits II',
+    description: 'Prospective recruits lower stat bounds increase by 5% more.',
+    cost: featureCost(BuildingFeatureCost.Small),
+    upgradeTime: BuildingFeatureTime.XXShort,
+    requiresLevel: 30,
+    requiresFeature: {
+      'Stronger Recruits I': 1
+    }
+  },
+  {
+    name: 'Stronger Recruits III',
+    description: 'Prospective recruits lower stat bounds increase by 5% more.',
+    cost: featureCost(BuildingFeatureCost.Large),
+    upgradeTime: BuildingFeatureTime.XShort,
+    requiresLevel: 40,
+    requiresFeature: {
+      'Stronger Recruits II': 1
+    }
+  },
+  {
+    name: 'Stronger Recruits IV',
+    description: 'Prospective recruits lower stat bounds increase by 5% more.',
+    cost: featureCost(BuildingFeatureCost.XLarge),
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 50,
+    requiresFeature: {
+      'Stronger Recruits III': 1
+    }
+  },
+  {
+    name: 'Stronger Recruits V',
+    description: 'Prospective recruits lower stat bounds increase by 5% more.',
+    cost: featureCost(BuildingFeatureCost.XXLarge),
+    upgradeTime: BuildingFeatureTime.Medium,
+    requiresLevel: 60,
+    requiresFeature: {
+      'Stronger Recruits IV': 1
+    }
+  },
 ];
 
 export const GuildHallFeatures: BuildingFeature[] = [
