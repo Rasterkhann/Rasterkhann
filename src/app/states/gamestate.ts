@@ -494,6 +494,8 @@ export class GameState {
 
       heroRef.queueRecruited = true;
 
+      state.towns[state.currentTown].prospectiveHeroes = sortBy(state.towns[state.currentTown].prospectiveHeroes, h => !h.queueRecruited);
+
       return state;
     });
   }
@@ -507,6 +509,8 @@ export class GameState {
       if (!heroRef) { return state; }
 
       heroRef.queueRecruited = false;
+
+      state.towns[state.currentTown].prospectiveHeroes = sortBy(state.towns[state.currentTown].prospectiveHeroes, h => !h.queueRecruited);
 
       return state;
     });

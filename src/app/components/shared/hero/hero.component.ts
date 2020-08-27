@@ -17,6 +17,7 @@ export class HeroComponent implements OnInit {
   @Input() cost?: bigint;
   @Input() canBuyHero?: boolean;
   @Input() showTraits?: boolean;
+  @Input() isQueued?: boolean;
 
   public readonly topStats: HeroStat[] = [
     HeroStat.HP, HeroStat.SP, HeroStat.STA

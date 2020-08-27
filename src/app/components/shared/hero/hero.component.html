@@ -2,8 +2,12 @@
 <ion-item>
   <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="hero.sprite"></app-hero-sprite>
   
-  <ion-button class="info" icon-only [color]="game.canRetireHero(town, hero) ? 'success' : 'secondary'" slot="start">
+  <ion-button class="info" icon-only [color]="game.canRetireHero(town, hero) ? 'success' : 'secondary'" slot="start" *ngIf="!isQueued">
     <ion-icon [name]="game.canRetireHero(town, hero) ? 'star' : 'information-circle-outline'"></ion-icon>
+  </ion-button>
+  
+  <ion-button class="info" icon-only color="tertiary" slot="start" *ngIf="isQueued">
+    <ion-icon name="ellipsis-horizontal"></ion-icon>
   </ion-button>
 
   <ion-label class="ion-text-wrap">
