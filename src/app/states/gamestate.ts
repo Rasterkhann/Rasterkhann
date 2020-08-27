@@ -452,7 +452,11 @@ export class GameState {
         prospectiveHeroes.push(this.heroCreator.generateProspectiveHero(town));
       }
 
-      state.towns[state.currentTown].prospectiveHeroes = sortBy(currentQueued.concat(prospectiveHeroes), p => -p.rating);
+      state.towns[state.currentTown].prospectiveHeroes = sortBy(
+        currentQueued.concat(prospectiveHeroes), [
+          p => !p.queueRecruited,
+          p => -p.rating
+      ]);
 
       return state;
     });
