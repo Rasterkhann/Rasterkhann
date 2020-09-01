@@ -60,18 +60,16 @@ export function calculateMaxNumberAdventureEncounters(town: GameTown): number {
   return base;
 }
 
-export function calculateAvailableDifficulties(town: GameTown): AdventureDifficulty[] {
+export function calculateAvailableDifficulties(town: GameTown, canBeDifficult = false): AdventureDifficulty[] {
   const base = [
     AdventureDifficulty.VeryEasy, AdventureDifficulty.Easy,
     AdventureDifficulty.Normal,
     AdventureDifficulty.Hard, AdventureDifficulty.VeryHard
   ];
 
-  /*
-  if (doesTownHaveFeature(town, 'Tougher Adventures I'))   { base.push(AdventureDifficulty.Tough); }
-  if (doesTownHaveFeature(town, 'Tougher Adventures II'))  { base.push(AdventureDifficulty.Challenging); }
-  if (doesTownHaveFeature(town, 'Tougher Adventures III')) { base.push(AdventureDifficulty.Extreme); }
-  */
+  if (canBeDifficult && doesTownHaveFeature(town, 'Tougher Adventures I'))   { base.push(AdventureDifficulty.Tough); }
+  if (canBeDifficult && doesTownHaveFeature(town, 'Tougher Adventures II'))  { base.push(AdventureDifficulty.Challenging); }
+  if (canBeDifficult && doesTownHaveFeature(town, 'Tougher Adventures III')) { base.push(AdventureDifficulty.Extreme); }
 
   return base;
 }

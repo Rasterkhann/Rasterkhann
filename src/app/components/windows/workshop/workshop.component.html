@@ -49,6 +49,11 @@
     <ion-label>Retire Heroes</ion-label>
     <ion-toggle [(ngModel)]="optionValues.automationRetire" (click)="toggleOption('automationRetire')"></ion-toggle>
   </ion-item>
+
+  <ion-item *ngIf="hasSpecificAutomation('Automation: Reject Difficult Adventures')">
+    <ion-label>Reject Tough+</ion-label>
+    <ion-toggle [(ngModel)]="optionValues.automationAdvDifficulty" (click)="toggleOption('automationAdvDifficulty')"></ion-toggle>
+  </ion-item>
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="workshop"></app-feature-list>

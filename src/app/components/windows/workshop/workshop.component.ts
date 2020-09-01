@@ -22,6 +22,7 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
   @Select((state: any) => state.gamestate.options[GameOption.AutomationScrap]) autoScrap$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationRecruit]) autoRecruit$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationRetire]) autoRetire$: Observable<boolean>;
+  @Select((state: any) => state.gamestate.options[GameOption.AutomationAdvDifficulty]) autoRejectDiff$: Observable<boolean>;
 
   public optionValues: Partial<Record<GameOption, boolean>> = {
     [GameOption.AutomationHeroes]: false,
@@ -30,7 +31,8 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
     [GameOption.AutomationScrap]: false,
     [GameOption.AutomationFeatures]: false,
     [GameOption.AutomationRecruit]: false,
-    [GameOption.AutomationRetire]: false
+    [GameOption.AutomationRetire]: false,
+    [GameOption.AutomationAdvDifficulty]: false
   };
 
   private option$: Subscription;
@@ -45,11 +47,12 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
       this.autoScrap$,
       this.autoFeatures$,
       this.autoRecruit$,
-      this.autoRetire$
+      this.autoRetire$,
+      this.autoRejectDiff$
     ])
     .pipe(first())
     .subscribe(
-      ([heroes, buildings, adventures, scrap, features, recruit, retire]) => {
+      ([heroes, buildings, adventures, scrap, features, recruit, retire, rejDiff]) => {
         setTimeout(() => {
           this.optionValues = {
             [GameOption.AutomationHeroes]: heroes,
@@ -58,7 +61,8 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
             [GameOption.AutomationScrap]: scrap,
             [GameOption.AutomationFeatures]: features,
             [GameOption.AutomationRecruit]: recruit,
-            [GameOption.AutomationRetire]: retire
+            [GameOption.AutomationRetire]: retire,
+            [GameOption.AutomationAdvDifficulty]: rejDiff
           };
         }, 0);
     });
@@ -83,7 +87,8 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
         || this.hasSpecificAutomation('Automation: Scrap Items')
         || this.hasSpecificAutomation('Automation: Building Features')
         || this.hasSpecificAutomation('Automation: Recruit Heroes')
-        || this.hasSpecificAutomation('Automation: Retire Heroes');
+        || this.hasSpecificAutomation('Automation: Retire Heroes')
+        || this.hasSpecificAutomation('Automation: Reject Difficult Adventures');
   }
 
 }

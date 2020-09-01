@@ -19,7 +19,7 @@ import {
 } from '../actions';
 import {
   GameTown, IGameState, ProspectiveHero, Hero, Building, Adventure, HeroStat, NewsItem,
-  ItemType, HeroItem, HeroTrackedStat, TownStat, SkillBook, AdventureDifficulty, HeroJob
+  ItemType, HeroItem, HeroTrackedStat, TownStat, SkillBook, AdventureDifficulty, HeroJob, GameOption
 } from '../interfaces';
 import {
   createDefaultSavefile, getCurrentTownFromState, calculateGoldGain,
@@ -765,7 +765,9 @@ export class GameState {
 
       const totalProspects = calculateMaxPotentialAdventures(town);
       for (let i = 0; i < totalProspects; i++) {
-        potentialAdventures.push(this.advCreator.generateAdventure(town));
+        potentialAdventures.push(this.advCreator.generateAdventure(town, {
+          canBeDifficult: !state.options[GameOption.AutomationAdvDifficulty]
+        }));
       }
       state.towns[state.currentTown].potentialAdventures = potentialAdventures;
       return state;
@@ -906,7 +908,9 @@ export class GameState {
         state.towns[state.currentTown].potentialAdventures = state.towns[state.currentTown].potentialAdventures
           .filter(x => x.uuid !== adventure.uuid);
 
-        state.towns[state.currentTown].potentialAdventures.push(this.advCreator.generateAdventure(town));
+        state.towns[state.currentTown].potentialAdventures.push(this.advCreator.generateAdventure(town, {
+          canBeDifficult: !state.options[GameOption.AutomationAdvDifficulty]
+        }));
       }
 
       messages.push(`${heroes.map(x => x.name).join(', ')} ${heroes.length === 1 ? 'has' : 'have'} embarked on an adventure.`);

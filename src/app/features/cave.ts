@@ -129,7 +129,6 @@ export const CaveFeatures: BuildingFeature[] = [
     cost: featureCost(BuildingFeatureCost.XLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 45,
-    hide: true,
     requiresTownStat: {
       [TownStat.Retires]: 5
     }
@@ -140,7 +139,6 @@ export const CaveFeatures: BuildingFeature[] = [
     cost: featureCost(BuildingFeatureCost.XXLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 50,
-    hide: true,
     requiresTownStat: {
       [TownStat.Retires]: 25
     }
@@ -151,7 +149,6 @@ export const CaveFeatures: BuildingFeature[] = [
     cost: featureCost(BuildingFeatureCost.XXXLarge),
     upgradeTime: BuildingFeatureTime.Long,
     requiresLevel: 55,
-    hide: true,
     requiresTownStat: {
       [TownStat.Retires]: 75
     }

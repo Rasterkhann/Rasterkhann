@@ -14,6 +14,7 @@ interface AdventureOpts {
   startDifficulty?: AdventureDifficulty | number;
   numEncounters?: number;
   setDuration?: number;
+  canBeDifficult?: boolean;
 }
 
 @Injectable({
@@ -99,11 +100,11 @@ export class AdventureService {
 
   generateAdventure(
     town: GameTown,
-    { startDifficulty, numEncounters, setDuration }: AdventureOpts = {}
+    { startDifficulty, numEncounters, setDuration, canBeDifficult }: AdventureOpts = {}
   ): Adventure {
 
     const encounterCount = numEncounters || random(1, calculateMaxNumberAdventureEncounters(town));
-    const difficulty = startDifficulty || sample(calculateAvailableDifficulties(town)) as AdventureDifficulty;
+    const difficulty = startDifficulty || sample(calculateAvailableDifficulties(town, canBeDifficult)) as AdventureDifficulty;
 
     const ticks = Array(encounterCount).fill(600).map(() => setDuration || sample([75, 150, 300, 600, 1200])) as number[];
 

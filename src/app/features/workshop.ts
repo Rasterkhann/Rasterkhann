@@ -1,4 +1,4 @@
-import { BuildingFeature, BuildingFeatureTime } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime, TownStat } from '../interfaces';
 
 export const WorkshopFeatures: BuildingFeature[] = [
   {
@@ -52,5 +52,15 @@ export const WorkshopFeatures: BuildingFeature[] = [
     cost: 5000n,
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 1
+  },
+  {
+    name: 'Automation: Reject Difficult Adventures',
+    description: 'Unlock an option to automatically reject Tough+ adventures.',
+    cost: 5000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 1,
+    requiresFeature: {
+      'Tougher Adventures I': 1
+    }
   },
 ];
