@@ -5,7 +5,7 @@ import { GameTown, Building, ProspectiveHero, Hero, HeroStat, HeroTrackedStat } 
 import { SpendGold, RerollHeroes, HeroRecruit, HeroGainEXP, HeroQueueDismissCancel,
   HeroQueueDismiss, HeroDismiss, HeroQueueRetire, HeroRetire, HeroQueueRetireCancel, HeroQueueRecruit, HeroQueueRecruitCancel } from '../actions';
 import { HeroService } from './hero.service';
-import { getCurrentStat, canHeroGoOnAdventure, isHeroFullHealth, nextRetirementValue } from '../helpers';
+import { getCurrentStat, canHeroGoOnAdventure, isHeroFullHealth, nextRetirementValue, calculateHeroMaxTotal } from '../helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class GuildHallService {
   }
 
   public canRecruitHero(town: GameTown, prosHero: ProspectiveHero): boolean {
-    return town.gold >= prosHero.cost;
+    return town.gold >= prosHero.cost && town.recruitedHeroes.length < calculateHeroMaxTotal(town);
   }
 
   public recruitHero(town: GameTown, prosHero: ProspectiveHero): void {
