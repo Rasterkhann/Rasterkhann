@@ -30,6 +30,8 @@ export class HomePage implements OnInit {
   @Select((state: any) => state.gamestate.options[GameOption.AutomationAdventures]) autoAdventures$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationScrap]) autoScrap$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationFeatures]) autoFeatures$: Observable<boolean>;
+  @Select((state: any) => state.gamestate.options[GameOption.AutomationRecruit]) autoRecruit$: Observable<boolean>;
+  @Select((state: any) => state.gamestate.options[GameOption.AutomationRetire]) autoRetire$: Observable<boolean>;
 
   public hasUpdate: boolean;
 
@@ -95,15 +97,19 @@ export class HomePage implements OnInit {
       this.autoBuildings$,
       this.autoAdventures$,
       this.autoScrap$,
-      this.autoFeatures$
+      this.autoFeatures$,
+      this.autoRecruit$,
+      this.autoRetire$
     ]).pipe(throttle(() => interval(5000))).subscribe(async ([_, ...opts]) => {
-      const [heroes, buildings, adventures, scrap, features] = opts;
+      const [heroes, buildings, adventures, scrap, features, recruit, retire] = opts;
       const state = await this.state$.pipe(first()).toPromise();
       if (features)   { this.checkAutoFeatures(state); }
       if (heroes)     { this.checkAutoHeroes(state); }
       if (buildings)  { this.checkAutoBuildings(state); }
       if (adventures) { this.checkAutoAdventures(state); }
       if (scrap)      { this.checkAutoScrap(state); }
+      if (retire)     { this.checkAutoRetire(state); }
+      if (recruit)    { this.checkAutoRecruit(state); }
     });
   }
 
@@ -159,7 +165,26 @@ export class HomePage implements OnInit {
     && (item.timesPassedOver > ItemPassedOverThreshold.AutoSellThreshold || !this.game.canAnyHeroesUseItem(town, item))) {
       this.game.scrapItem(item);
     }
+  }
 
+  private checkAutoRecruit(state: IGameState): void {
+    const town = getCurrentTownFromState(state);
+
+    const prospectiveHeroes = town.prospectiveHeroes;
+    const recruitHero = sample(prospectiveHeroes);
+    if (!recruitHero) { return; }
+
+    this.game.recruitHero(town, recruitHero);
+  }
+
+  private checkAutoRetire(state: IGameState): void {
+    const town = getCurrentTownFromState(state);
+
+    const retireableHeroes = town.recruitedHeroes.filter(h => this.game.canRetireHero(town, h));
+    const retireHero = sample(retireableHeroes);
+    if (!retireHero) { return; }
+
+    this.game.retireHero(retireHero);
   }
 
 }

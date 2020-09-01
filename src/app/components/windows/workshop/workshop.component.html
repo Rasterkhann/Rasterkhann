@@ -39,6 +39,16 @@
     <ion-label>Scrap Items</ion-label>
     <ion-toggle [(ngModel)]="optionValues.automationScrap" (click)="toggleOption('automationScrap')"></ion-toggle>
   </ion-item>
+
+  <ion-item *ngIf="hasSpecificAutomation('Automation: Recruit Heroes')">
+    <ion-label>Recruit Heroes</ion-label>
+    <ion-toggle [(ngModel)]="optionValues.automationRecruit" (click)="toggleOption('automationRecruit')"></ion-toggle>
+  </ion-item>
+
+  <ion-item *ngIf="hasSpecificAutomation('Automation: Retire Heroes')">
+    <ion-label>Retire Heroes</ion-label>
+    <ion-toggle [(ngModel)]="optionValues.automationRetire" (click)="toggleOption('automationRetire')"></ion-toggle>
+  </ion-item>
 </ion-list>
 
 <app-feature-list [town]="town" buildingId="workshop"></app-feature-list>

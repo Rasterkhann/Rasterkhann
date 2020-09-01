@@ -39,4 +39,18 @@ export const WorkshopFeatures: BuildingFeature[] = [
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 1
   },
+  {
+    name: 'Automation: Recruit Heroes',
+    description: 'Unlock an option to automatically recruit heroes when there is space to do so.',
+    cost: 5000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 1
+  },
+  {
+    name: 'Automation: Retire Heroes',
+    description: 'Unlock an option to automatically retire heroes when they are ready.',
+    cost: 5000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 1
+  },
 ];

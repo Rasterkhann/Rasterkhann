@@ -18,13 +18,19 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
   @Select((state: any) => state.gamestate.options[GameOption.AutomationHeroes]) autoHeroes$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationBuildings]) autoBuildings$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationAdventures]) autoAdventures$: Observable<boolean>;
+  @Select((state: any) => state.gamestate.options[GameOption.AutomationFeatures]) autoFeatures$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationScrap]) autoScrap$: Observable<boolean>;
+  @Select((state: any) => state.gamestate.options[GameOption.AutomationRecruit]) autoRecruit$: Observable<boolean>;
+  @Select((state: any) => state.gamestate.options[GameOption.AutomationRetire]) autoRetire$: Observable<boolean>;
 
   public optionValues: Partial<Record<GameOption, boolean>> = {
     [GameOption.AutomationHeroes]: false,
     [GameOption.AutomationBuildings]: false,
     [GameOption.AutomationAdventures]: false,
-    [GameOption.AutomationScrap]: false
+    [GameOption.AutomationScrap]: false,
+    [GameOption.AutomationFeatures]: false,
+    [GameOption.AutomationRecruit]: false,
+    [GameOption.AutomationRetire]: false
   };
 
   private option$: Subscription;
@@ -36,17 +42,23 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
       this.autoHeroes$,
       this.autoBuildings$,
       this.autoAdventures$,
-      this.autoScrap$
+      this.autoScrap$,
+      this.autoFeatures$,
+      this.autoRecruit$,
+      this.autoRetire$
     ])
     .pipe(first())
     .subscribe(
-      ([heroes, buildings, adventures, scrap]) => {
+      ([heroes, buildings, adventures, scrap, features, recruit, retire]) => {
         setTimeout(() => {
           this.optionValues = {
             [GameOption.AutomationHeroes]: heroes,
             [GameOption.AutomationBuildings]: buildings,
             [GameOption.AutomationAdventures]: adventures,
-            [GameOption.AutomationScrap]: scrap
+            [GameOption.AutomationScrap]: scrap,
+            [GameOption.AutomationFeatures]: features,
+            [GameOption.AutomationRecruit]: recruit,
+            [GameOption.AutomationRetire]: retire
           };
         }, 0);
     });
@@ -68,7 +80,10 @@ export class WorkshopComponent implements AfterViewInit, OnDestroy {
     return this.hasSpecificAutomation('Automation: Upgrade Buildings')
         || this.hasSpecificAutomation('Automation: Train Heroes')
         || this.hasSpecificAutomation('Automation: Adventure')
-        || this.hasSpecificAutomation('Automation: Scrap Items');
+        || this.hasSpecificAutomation('Automation: Scrap Items')
+        || this.hasSpecificAutomation('Automation: Building Features')
+        || this.hasSpecificAutomation('Automation: Recruit Heroes')
+        || this.hasSpecificAutomation('Automation: Retire Heroes');
   }
 
 }

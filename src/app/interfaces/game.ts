@@ -7,6 +7,8 @@ export enum GameOption {
   AutomationAdventures = 'automationAdventures',
   AutomationScrap = 'automationScrap',
   AutomationFeatures = 'automationFeatures',
+  AutomationRecruit = 'automationRecruit',
+  AutomationRetire = 'automationRetire',
   ShowHelpText = 'showHelpText',
   ShowStatTooltips = 'showStatTooltips',
   ShowConfirmationDialogs = 'showConfirmationDialogs'
