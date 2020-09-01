@@ -1,4 +1,4 @@
-import { BuildingFeature, BuildingFeatureTime, TownStat } from '../interfaces';
+import { BuildingFeature, BuildingFeatureTime } from '../interfaces';
 
 export const WorkshopFeatures: BuildingFeature[] = [
   {
