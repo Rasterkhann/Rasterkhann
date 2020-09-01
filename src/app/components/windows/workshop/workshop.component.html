@@ -25,6 +25,11 @@
     <ion-toggle [(ngModel)]="optionValues.automationBuildings" (click)="toggleOption('automationBuildings')"></ion-toggle>
   </ion-item>
 
+  <ion-item *ngIf="hasSpecificAutomation('Automation: Building Features')">
+    <ion-label>Building Features</ion-label>
+    <ion-toggle [(ngModel)]="optionValues.automationFeatures" (click)="toggleOption('automationFeatures')"></ion-toggle>
+  </ion-item>
+
   <ion-item *ngIf="hasSpecificAutomation('Automation: Adventure')">
     <ion-label>Adventure</ion-label>
     <ion-toggle [(ngModel)]="optionValues.automationAdventures" (click)="toggleOption('automationAdventures')"></ion-toggle>

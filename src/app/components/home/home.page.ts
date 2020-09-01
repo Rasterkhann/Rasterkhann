@@ -9,7 +9,8 @@ import { GameService } from '../../services';
 import { GameState } from '../../states';
 import { GameTown, ProspectiveHero, Adventure, GameOption, Building,
   IGameState, ItemType, ItemPassedOverThreshold, SkillBook } from '../../interfaces';
-import { getCurrentTownFromState, getCurrentTownCanDoAnyAdventures } from '../../helpers';
+import { getCurrentTownFromState, getCurrentTownCanDoAnyAdventures,
+  featureNameToBuildingHash, doesTownHaveFeature, canSeeBuildingFeature } from '../../helpers';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -28,6 +29,7 @@ export class HomePage implements OnInit {
   @Select((state: any) => state.gamestate.options[GameOption.AutomationBuildings]) autoBuildings$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationAdventures]) autoAdventures$: Observable<boolean>;
   @Select((state: any) => state.gamestate.options[GameOption.AutomationScrap]) autoScrap$: Observable<boolean>;
+  @Select((state: any) => state.gamestate.options[GameOption.AutomationFeatures]) autoFeatures$: Observable<boolean>;
 
   public hasUpdate: boolean;
 
@@ -92,15 +94,28 @@ export class HomePage implements OnInit {
       this.autoHeroes$,
       this.autoBuildings$,
       this.autoAdventures$,
-      this.autoScrap$
+      this.autoScrap$,
+      this.autoFeatures$
     ]).pipe(throttle(() => interval(5000))).subscribe(async ([_, ...opts]) => {
-      const [heroes, buildings, adventures, scrap] = opts;
+      const [heroes, buildings, adventures, scrap, features] = opts;
       const state = await this.state$.pipe(first()).toPromise();
+      if (features)   { this.checkAutoFeatures(state); }
       if (heroes)     { this.checkAutoHeroes(state); }
       if (buildings)  { this.checkAutoBuildings(state); }
       if (adventures) { this.checkAutoAdventures(state); }
       if (scrap)      { this.checkAutoScrap(state); }
     });
+  }
+
+  private checkAutoFeatures(state: IGameState): void {
+    const town = getCurrentTownFromState(state);
+    const possibleFeatures = Object.keys(featureNameToBuildingHash)
+      .filter(k => !doesTownHaveFeature(town, k)
+                && canSeeBuildingFeature(town, featureNameToBuildingHash[k], k));
+    const chosenFeature = sample(possibleFeatures);
+    if (!chosenFeature) { return; }
+
+    this.game.upgradeBuildingFeature(town, featureNameToBuildingHash[chosenFeature], chosenFeature);
   }
 
   private checkAutoHeroes(state: IGameState): void {

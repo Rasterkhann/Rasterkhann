@@ -24,12 +24,19 @@ export const WorkshopFeatures: BuildingFeature[] = [
   },
   {
     name: 'Automation: Scrap Items',
-    description: 'Unlock an option to automatically scrap items that are passed over',
+    description: 'Unlock an option to automatically scrap items that are passed over.',
     cost: 5000n,
     upgradeTime: BuildingFeatureTime.Short,
     requiresLevel: 1,
     requiresFeature: {
       'Better Prices': 1
     }
+  },
+  {
+    name: 'Automation: Building Features',
+    description: 'Unlock an option to automatically purchase building features.',
+    cost: 5000n,
+    upgradeTime: BuildingFeatureTime.Short,
+    requiresLevel: 1
   },
 ];
