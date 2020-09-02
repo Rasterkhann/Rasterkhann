@@ -2,8 +2,8 @@
 import { sample, sampleSize, random } from 'lodash';
 
 import { Combat, Hero, HeroAction, HeroActionTargetting, HeroStat,
-  HeroActionStringReplacer, HeroActionOpts, ItemType } from '../interfaces';
-import { getCurrentStat, giveHeroGold, doesHeroHaveTrait } from '../helpers/global';
+  HeroActionStringReplacer, HeroActionOpts, ItemType, HeroTrackedStat } from '../interfaces';
+import { getCurrentStat, giveHeroGold, doesHeroHaveTrait, increaseTrackedStat } from '../helpers/global';
 import { decreaseDurability } from '../helpers/durability';
 
 function heal(creature: Hero, healed: number): void {
@@ -14,6 +14,9 @@ function takeDamage(attacker: Hero, defender: Hero, damage: number): void {
   defender.currentStats[HeroStat.HP] = Math.max(0, defender.currentStats[HeroStat.HP] - damage);
   takeRandomArmorDamage(defender);
   takeRandomWeaponDamage(attacker);
+
+  increaseTrackedStat(attacker, HeroTrackedStat.DamageDealt, damage);
+  increaseTrackedStat(defender, HeroTrackedStat.DamageTaken, damage);
 }
 
 function calculateDamage(atk: number, def: number): number {

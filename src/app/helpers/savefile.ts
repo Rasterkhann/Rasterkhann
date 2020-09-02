@@ -1,6 +1,6 @@
 
 import { Building, GameTown, IGameState, BuildingInfo,
-  ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob, LatestVersion, SkillBook } from '../interfaces';
+  ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob, LatestVersion, SkillBook, HallOfFameHero, HallOfFameStat } from '../interfaces';
 import { calculateOfflineAdventureProgress, calculateOfflineGold } from './town';
 import { getZeroStatBlock } from './hero';
 
@@ -164,6 +164,17 @@ export function createZeroHeroBlock(): Record<HeroJob, number> {
   };
 }
 
+export function createZeroHallOfFame(): Record<HallOfFameStat, any[]> {
+  return {
+    [HallOfFameStat.HighestLevel]: [],
+    [HallOfFameStat.MostAdventuresWon]: [],
+    [HallOfFameStat.MostDamageDealt]: [],
+    [HallOfFameStat.MostDamageTaken]: [],
+    [HallOfFameStat.MostItemsBought]: [],
+    [HallOfFameStat.MostPotionsUsed]: []
+  };
+}
+
 export function createBasicTown(name: string): GameTown {
   return {
     name,
@@ -230,9 +241,10 @@ export function createBasicTown(name: string): GameTown {
     },
 
     crystalBuffs: getZeroStatBlock(),
+    hallOfFame: createZeroHallOfFame(),
 
     showStage2UI: false,
-    allocateWorkersToBuilding: null
+    allocateWorkersToBuilding: null,
   };
 }
 

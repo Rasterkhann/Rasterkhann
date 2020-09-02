@@ -15,6 +15,25 @@ export enum TownStat {
   Legendary = 'legendary'
 }
 
+export enum HallOfFameStat {
+  HighestLevel = 'highestLevel',
+  MostDamageDealt = 'mostDamageDealt',
+  MostDamageTaken = 'mostDamageTaken',
+  MostAdventuresWon = 'mostAdventuresWon',
+  MostItemsBought = 'mostItemsBought',
+  MostPotionsUsed = 'mostPotionsUsed'
+}
+
+export interface HallOfFameHero {
+  uuid: string;
+  name: string;
+  level: number;
+  job: string;
+  jobSprite: string;
+
+  value: number;
+}
+
 export interface NewsItem {
   timestamp: number;
   message: string;
@@ -47,6 +66,7 @@ export interface GameTown {
 
   combatLogs: CombatLog[];
   stats: Record<TownStat, Record<HeroJob | string, bigint>>;
+  hallOfFame: Record<HallOfFameStat, HallOfFameHero[]>;
 
   crystalBuffs: Record<HeroStat, number>;
   showStage2UI: boolean;

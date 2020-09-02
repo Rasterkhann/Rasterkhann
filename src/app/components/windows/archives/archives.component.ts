@@ -7,6 +7,7 @@ import { GameTown, NewsItem, Building } from '../../../interfaces';
 import { GameState } from '../../../states';
 import { TownStatsModalComponent } from './stats-modal/stats-modal.component';
 import { ChooseInfo } from '../../../actions';
+import { HallOfFameModalComponent } from './fame-modal/fame-modal.component';
 
 @Component({
   selector: 'app-archives',
@@ -48,4 +49,11 @@ export class ArchivesComponent implements OnInit, OnChanges {
     await modal.present();
   }
 
+  async openFameWindow(): Promise<void> {
+    const modal = await this.modal.create({
+      component: HallOfFameModalComponent
+    });
+
+    await modal.present();
+  }
 }

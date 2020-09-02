@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Hall of Fame
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ng-container *ngIf="currentTown$ | async as town">
+    <ion-row class="allow-splitter">
+      <ion-col size="12" size-lg="4" class="ion-no-padding" *ngFor="let stat of town.hallOfFame | keyvalue">
+        <ion-list>
+          <ion-list-header class="item-header">
+            <ion-row>
+              <ion-col>{{ getHeader(stat.key) }}</ion-col>
+            </ion-row>
+          </ion-list-header>
+  
+          <ng-container *ngFor="let hero of stat.value">
+            <ion-item>
+              <app-hero-sprite slot="start" class="ion-margin-start" [sprite]="hero.jobSprite"></app-hero-sprite>
+
+              <ion-label class="ion-text-wrap">
+                <h3>{{ hero.name }}</h3>
+                <p>{{ hero.job.substring(0, 3).toUpperCase() }} Lv.{{ hero.level }}</p>
+              </ion-label>
+
+              <ion-label slot="end" class="ion-text-right">
+                {{ hero.value | bignum }}
+              </ion-label>
+            </ion-item>
+          </ng-container>
+    
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+</ion-content>

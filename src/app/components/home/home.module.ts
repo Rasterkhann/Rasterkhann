@@ -38,6 +38,7 @@ import { AdventureModalComponent } from '../windows/cave/adventure-modal/adventu
 import { ItemsModalComponent } from '../windows/bazaar/items-modal/items-modal.component';
 import { CombatLogModalComponent } from '../windows/cave/combat-log-modal/combat-log-modal.component';
 import { TownStatsModalComponent } from '../windows/archives/stats-modal/stats-modal.component';
+import { HallOfFameModalComponent } from '../windows/archives/fame-modal/fame-modal.component';
 import { WorkerAllocationModalComponent } from '../shared/building-info/allocation-modal/allocation-modal.component';
 import { SkillBookModalComponent } from '../windows/library/skill-modal/skill-modal.component';
 import { LegendaryHeroModalComponent } from '../shared/adventure/legendary-hero-modal/legendary-hero-modal.component';
@@ -56,6 +57,7 @@ const modals = [
   ItemsModalComponent,
   CombatLogModalComponent,
   TownStatsModalComponent,
+  HallOfFameModalComponent,
   WorkerAllocationModalComponent,
   GuildCrystalModalComponent,
   SkillBookModalComponent,

@@ -42,7 +42,8 @@ import {
   calculateMaxPotentialBooks,
   getCurrentTownLEgendaryAdventures,
   calculateHeroMaxTotal,
-  canHeroDoQueuedAdventure
+  canHeroDoQueuedAdventure,
+  getTownFameStats
 } from '../helpers';
 
 import { environment } from '../../environments/environment';
@@ -63,6 +64,8 @@ export class GameState {
   public hideHero$ = new Subject<string>();
   public showHero$ = new Subject<string>();
   public walkHero$ = new Subject<string>();
+
+  private ticks = 0;
 
   @Selector()
   public static entireSavefile(state: IGameState): IGameState {
@@ -140,6 +143,22 @@ export class GameState {
     private advCreator: AdventureService,
     private bookCreator: BookService
   ) {}
+
+  @Action(GameLoop)
+  updateGlobalStats({ setState }: StateContext<IGameState>): void {
+    setState((state: IGameState) => {
+      if (!environment.production || this.ticks++ > 200) {
+        this.ticks = 0;
+
+        const town = getCurrentTownFromState(state);
+        const townHallOfFame = getTownFameStats(town);
+
+        town.hallOfFame = townHallOfFame;
+      }
+
+      return state;
+    });
+  }
 
   // misc functions
   @Action(GameLoop)
@@ -717,6 +736,10 @@ export class GameState {
       const town = getCurrentTownFromState(state);
       const heroRef = town.recruitedHeroes.find(h => h.uuid === heroId);
       if (!heroRef) { return state; }
+
+      // update stats before retirement in case this hero ~broke any records~
+      const townHallOfFame = getTownFameStats(town);
+      town.hallOfFame = townHallOfFame;
 
       town.stats[TownStat.Levels][heroRef.job] += BigInt(getCurrentStat(heroRef, HeroStat.LVL));
       town.stats[TownStat.Retires][heroRef.job] += 1n;

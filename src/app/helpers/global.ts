@@ -4,7 +4,7 @@ import { sum, get, isUndefined, isObject } from 'lodash';
 import * as NumberFormat from 'swarm-numberformat';
 
 // this file cannot import any helpers or statics
-import { GameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog, Hero, HeroTrackedStat, Trait, TownStat } from '../interfaces';
+import { GameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog, Hero, HeroTrackedStat, Trait, TownStat, HallOfFameStat, HallOfFameHero } from '../interfaces';
 import { featureNameToBuildingHash, featureNameToUnlockHash, getBuildingData } from './building';
 
 export function formatNumber(value: bigint | number): string {
@@ -161,6 +161,57 @@ export function upcomingBuildingFeatures(town: GameTown, buildingId: Building): 
 
 export function getCurrentStat(hero: Hero, stat: HeroStat): number {
   return hero.currentStats[stat];
+}
+
+export function heroToHallOfFameHero(hero: Hero, value: number): HallOfFameHero {
+  return {
+    uuid: hero.uuid,
+    name: hero.name,
+    level: hero.currentStats[HeroStat.LVL],
+    job: hero.job,
+    jobSprite: hero.sprite,
+    value
+  };
+}
+
+export function getTownFameStats(town: GameTown): Record<HallOfFameStat, HallOfFameHero[]> {
+
+  const stats: Record<HallOfFameStat, (hero: Hero) => number> = {
+    [HallOfFameStat.HighestLevel]:      (hero) => hero.currentStats[HeroStat.LVL],
+    [HallOfFameStat.MostAdventuresWon]: (hero) => hero.trackedStats[HeroTrackedStat.AdventuresSucceeded],
+    [HallOfFameStat.MostDamageDealt]:   (hero) => hero.trackedStats[HeroTrackedStat.DamageDealt],
+    [HallOfFameStat.MostDamageTaken]:   (hero) => hero.trackedStats[HeroTrackedStat.DamageTaken],
+    [HallOfFameStat.MostItemsBought]:   (hero) => hero.trackedStats[HeroTrackedStat.ItemsBought],
+    [HallOfFameStat.MostPotionsUsed]:   (hero) => hero.trackedStats[HeroTrackedStat.PotionsUsed]
+  };
+
+  const newHallOfFame: any = {};
+
+  Object.keys(stats).forEach((stat: HallOfFameStat) => {
+    const arr = [...town.hallOfFame[stat]];
+
+    town.recruitedHeroes.forEach(hero => {
+      for (let i = 0; i < 3; i++) {
+        const value = stats[stat](hero);
+        if (arr[i] && value < arr[i].value) { continue; }
+
+        const existingHeroIdx = arr.findIndex(h => h.uuid === hero.uuid);
+        if (existingHeroIdx !== -1) {
+          arr.splice(existingHeroIdx, 1);
+        }
+
+        const newHero = heroToHallOfFameHero(hero, value);
+        arr.splice(i, 0, newHero);
+
+        break;
+      }
+    });
+
+    arr.length = 3;
+    newHallOfFame[stat] = arr;
+  });
+
+  return newHallOfFame;
 }
 
 export function increaseTrackedStat(hero: Hero, stat: HeroTrackedStat, value = 1): void {

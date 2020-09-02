@@ -1,8 +1,8 @@
 
 import { isUndefined } from 'lodash';
 
-import { Building, IGameState, ItemType, TownStat, HeroJob, Version } from '../interfaces';
-import { createBuildingAtLevel, createZeroHeroBigintBlock, getZeroStatBlock } from '../helpers';
+import { Building, IGameState, ItemType, TownStat, HeroJob, Version, HeroTrackedStat } from '../interfaces';
+import { createBuildingAtLevel, createZeroHeroBigintBlock, getZeroStatBlock, createZeroHallOfFame } from '../helpers';
 
 interface Migration {
   version: Version;
@@ -268,6 +268,19 @@ export const migrations: Migration[] = [
       console.log('Setting up queue properties...');
       state.towns.Rasterkhann.recruitedHeroes.forEach(h => h.queueAdventure = h.queueAdventure || '');
       state.towns.Rasterkhann.prospectiveHeroes.forEach(p => p.queueRecruited = p.queueRecruited || false);
+
+      console.log('Setting up recruited/prospective hero new stats...');
+      state.towns.Rasterkhann.recruitedHeroes.forEach(h => {
+        h.trackedStats[HeroTrackedStat.DamageDealt] = h.trackedStats[HeroTrackedStat.DamageDealt] || 0;
+        h.trackedStats[HeroTrackedStat.DamageTaken] = h.trackedStats[HeroTrackedStat.DamageTaken] || 0;
+      });
+
+      state.towns.Rasterkhann.prospectiveHeroes.forEach(p => {
+        p.hero.trackedStats[HeroTrackedStat.DamageDealt] = p.hero.trackedStats[HeroTrackedStat.DamageDealt] || 0;
+        p.hero.trackedStats[HeroTrackedStat.DamageTaken] = p.hero.trackedStats[HeroTrackedStat.DamageTaken] || 0;
+      });
+
+      state.towns.Rasterkhann.hallOfFame = state.towns.Rasterkhann.hallOfFame || createZeroHallOfFame();
 
       return state;
     }

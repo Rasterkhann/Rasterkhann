@@ -34,7 +34,9 @@ export enum HeroTrackedStat {
   GoldEarned = 'GOLD Earned',
   EXPEarned = 'EXP Earned',
   OddJobsDone = 'Odd Jobs',
-  OddJobsMoney = 'Odd Jobs Earnings'
+  OddJobsMoney = 'Odd Jobs Earnings',
+  DamageDealt = 'Damage (Dealt)',
+  DamageTaken = 'Damage (Taken)'
 }
 
 export interface HeroJobStatic {

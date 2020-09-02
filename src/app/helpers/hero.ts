@@ -375,7 +375,9 @@ export function generateHero(town: GameTown, level?: number): Hero {
       [HeroTrackedStat.TotalAdventures]: 0,
       [HeroTrackedStat.TotalEncounters]: 0,
       [HeroTrackedStat.OddJobsDone]: 0,
-      [HeroTrackedStat.OddJobsMoney]: 0
+      [HeroTrackedStat.OddJobsMoney]: 0,
+      [HeroTrackedStat.DamageDealt]: 0,
+      [HeroTrackedStat.DamageTaken]: 0
     }
   };
 
