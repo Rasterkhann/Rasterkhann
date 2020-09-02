@@ -1,16 +1,14 @@
-## [0.8.10](https://github.com/Rasterkhann/Rasterkhann/compare/v0.8.9...v0.8.10) (2020-09-01)
+## [0.8.11](https://github.com/Rasterkhann/Rasterkhann/compare/v0.8.10...v0.8.11) (2020-09-02)
 
 
 ### Bug Fixes
 
-* **workshop:** auto recruit heroes should factor in hero cap ([82c3b45](https://github.com/Rasterkhann/Rasterkhann/commit/82c3b45f33961206d13b4805192012199fd28de9))
+* **guildhall:** do not show retirement progress for unrecruited heroes ([e6d56fc](https://github.com/Rasterkhann/Rasterkhann/commit/e6d56fca8904dced0f2021603f57987669b4cc72))
 
 
 ### Features
 
-* **workshop:** add feature automation option ([995c7de](https://github.com/Rasterkhann/Rasterkhann/commit/995c7de813ec28900acb1267e2a56dcff315dcbd)), closes [#123](https://github.com/Rasterkhann/Rasterkhann/issues/123)
-* **workshop:** allow for rejecting of tough+ adventures ([44c57e5](https://github.com/Rasterkhann/Rasterkhann/commit/44c57e595eef3d4bea9efed95526b20e9ae72dfa)), closes [#143](https://github.com/Rasterkhann/Rasterkhann/issues/143)
-* **workshop:** allow workshop to auto retire and recruit heroes ([90892c0](https://github.com/Rasterkhann/Rasterkhann/commit/90892c0b77e3d0d6c65fa1f3573f29fdb2126201)), closes [#141](https://github.com/Rasterkhann/Rasterkhann/issues/141)
+* **archives:** add new hall of fame for heroes that have achieved records ([a8f4377](https://github.com/Rasterkhann/Rasterkhann/commit/a8f43777633eb0dbff53ec0476704f601585cd50)), closes [#145](https://github.com/Rasterkhann/Rasterkhann/issues/145)
 
 
 
