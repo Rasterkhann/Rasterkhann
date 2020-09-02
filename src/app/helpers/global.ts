@@ -4,7 +4,8 @@ import { sum, get, isUndefined, isObject } from 'lodash';
 import * as NumberFormat from 'swarm-numberformat';
 
 // this file cannot import any helpers or statics
-import { GameTown, BuildingUnlock, HeroStat, Building, BuildingFeature, CombatLog, Hero, HeroTrackedStat, Trait, TownStat, HallOfFameStat, HallOfFameHero } from '../interfaces';
+import { GameTown, BuildingUnlock, HeroStat, Building, BuildingFeature,
+  CombatLog, Hero, HeroTrackedStat, Trait, TownStat, HallOfFameStat, HallOfFameHero } from '../interfaces';
 import { featureNameToBuildingHash, featureNameToUnlockHash, getBuildingData } from './building';
 
 export function formatNumber(value: bigint | number): string {

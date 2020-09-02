@@ -1,6 +1,6 @@
 
 import { Building, GameTown, IGameState, BuildingInfo,
-  ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob, LatestVersion, SkillBook, HallOfFameHero, HallOfFameStat } from '../interfaces';
+  ProspectiveHero, ItemType, HeroItem, GameOption, Hero, TownStat, HeroJob, LatestVersion, SkillBook, HallOfFameStat } from '../interfaces';
 import { calculateOfflineAdventureProgress, calculateOfflineGold } from './town';
 import { getZeroStatBlock } from './hero';
 
