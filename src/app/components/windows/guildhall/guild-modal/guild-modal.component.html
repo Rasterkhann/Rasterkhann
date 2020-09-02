@@ -326,7 +326,7 @@
 </ng-template>
 
 <ng-template #retirement>
-  <ion-list *ngIf="viewingHero">
+  <ion-list *ngIf="viewingHero && !viewingProspectiveHero">
     <ion-list-header>Retirement Progress ({{ getNumEncounters(viewingHero) / game.requiredWonEncountersForRetire(town, viewingHero) | percent }})</ion-list-header>
     <app-help-text helpText="Heroes can eventually retire by winning enough encounters. Retiring a hero will give you a worker, and a job crystal. Workers can be allocated to buildings, and job crystals can be spent to unlock various upgrades."></app-help-text>
     <ion-item>
