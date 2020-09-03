@@ -257,7 +257,7 @@ export function finalizeAdventure(town: GameTown, adventure: Adventure): boolean
       increaseTownStat(town, TownStat.Adventures, h, 1);
 
       giveHeroEXP(h, expReward);
-      checkHeroLevelUp(h);
+      checkHeroLevelUp(town, h);
       giveHeroGold(h, goldReward);
 
       increaseTownStat(town, TownStat.Gold, h, goldReward);

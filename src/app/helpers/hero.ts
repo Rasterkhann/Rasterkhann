@@ -6,7 +6,7 @@ import * as JobActionMessages from '../static/action-messages';
 
 import { Trait, HeroJob, GameTown, Hero, HeroStat, TriggerType, TraitEffect,
   Building, HeroJobStatic, TraitPriority, Adventure, ItemType, HeroItem, HeroWeapon,
-  WeaponSubType, HeroTrackedStat, ArmorWeight, HeroArmor, ArmorSubTypeWeight, HeroAction, HeroActionStringReplacer } from '../interfaces';
+  WeaponSubType, HeroTrackedStat, ArmorWeight, HeroArmor, ArmorSubTypeWeight, HeroAction, HeroActionStringReplacer, TownStat } from '../interfaces';
 import { JobEffects } from '../static/job';
 import { TraitEffects } from '../static/trait';
 import { ensureHeroStatValue } from './trait';
@@ -259,6 +259,10 @@ export function generateHero(town: GameTown, level?: number): Hero {
   const earlyTraits = allTraits.filter(t => TraitEffects[t].priority !== TraitPriority.Last);
   const lastTraits = allTraits.filter(t => TraitEffects[t].priority === TraitPriority.Last);
 
+  const getLevelUpMultiplier = (stat: HeroStat) => {
+    return JobEffects[job].retireGrowth[stat](town.stats[TownStat.Retires][job]);
+  };
+
   const canTraitBeAdded = (trait: Trait) => {
     return !traits.includes(trait) && (TraitEffects[trait].cantAttachWithTrait || []).every(t => !traits.includes(t));
   };
@@ -318,7 +322,7 @@ export function generateHero(town: GameTown, level?: number): Hero {
   Object.values(HeroStat).forEach(stat => {
     if (stats[stat]) { return; }
 
-    const statBoost = getStatBoostFromCrystal(town, stat);
+    const statBoostPercent = getStatBoostFromCrystal(town, stat);
     const baseMax = heroLevel * jobStatic.statGrowth[stat](heroLevel) * jobStatic.statBaseMultiplier[stat];
     let base = 1;
 
@@ -327,7 +331,11 @@ export function generateHero(town: GameTown, level?: number): Hero {
       base = Math.floor(baseMax * baseMult);
     }
 
-    stats[stat] = random(baseMult, baseMax) + statBoost;
+    stats[stat] = random(baseMult, baseMax);
+    stats[stat] += Math.floor(stats[stat] * (statBoostPercent / 100));
+
+    const bonusMultiplier = getLevelUpMultiplier(stat);
+    stats[stat] += Math.floor(stats[stat] * bonusMultiplier);
   });
 
   // boost stats with workers
@@ -475,11 +483,15 @@ export function generateMonster(town: GameTown, adventure: Adventure): Hero {
   return baseHero;
 }
 
-export function checkHeroLevelUp(hero: Hero): void {
+export function checkHeroLevelUp(town: GameTown, hero: Hero): void {
   if (getCurrentStat(hero, HeroStat.EXP) < hero.stats[HeroStat.EXP]) { return; }
 
   const getLevelupStat = (stat: HeroStat, nextLevel: number) => {
     return Math.floor(JobEffects[hero.job].statGrowth[stat](nextLevel));
+  };
+
+  const getLevelUpMultiplier = (stat: HeroStat) => {
+    return JobEffects[hero.job].retireGrowth[stat](town.stats[TownStat.Retires][hero.job]);
   };
 
   const curLevel = hero.stats[HeroStat.LVL];
@@ -510,7 +522,8 @@ export function checkHeroLevelUp(hero: Hero): void {
     });
 
     Object.keys(levelupStats).forEach((stat: HeroStat) => {
-      levelupStats[stat] = Math.max(0, Math.floor(levelupStats[stat]));
+      const bonus = levelupStats[stat] * getLevelUpMultiplier(stat);
+      levelupStats[stat] = Math.max(0, Math.ceil(levelupStats[stat] + bonus));
 
       hero.currentStats[stat] += levelupStats[stat];
       hero.stats[stat] += levelupStats[stat];

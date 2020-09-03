@@ -604,7 +604,7 @@ export class GameState {
       if (!heroRef) { return state; }
 
       giveHeroEXP(heroRef, exp);
-      checkHeroLevelUp(heroRef);
+      checkHeroLevelUp(town, heroRef);
 
       return state;
     });

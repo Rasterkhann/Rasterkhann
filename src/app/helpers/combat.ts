@@ -136,7 +136,7 @@ class CombatTracker implements Combat {
       heroes.forEach(hero => {
         this.addLogEntry(`${this.getHeroTag(hero)} won combat and earned ${formatNumber(earnedExp)} EXP and ${formatNumber(earnedGold)} GOLD!`);
         giveHeroEXP(hero, earnedExp);
-        checkHeroLevelUp(hero);
+        checkHeroLevelUp(town, hero);
         giveHeroGold(hero, earnedGold);
       });
 

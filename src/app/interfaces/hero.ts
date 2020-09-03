@@ -46,6 +46,7 @@ export interface HeroJobStatic {
   costMultiplier: number;
   statBaseMultiplier: Record<HeroStat, number>;
   statGrowth: Record<HeroStat, (level: number) => number>;
+  retireGrowth: Record<HeroStat, (retirees: bigint) => number>;
   triggers: Partial<Record<TriggerType, TraitTriggerFunction>>;
   combatTriggers: Partial<Record<TriggerType, HeroAction[]>>;
   actions: (hero: Hero) => HeroAction[];
