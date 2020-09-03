@@ -950,7 +950,7 @@ export class GameState {
 
     setTimeout(() => {
       heroIds.forEach(heroId => {
-        this.store.dispatch(new HeroSetLocation(heroId, Building.Cave));
+        this.store.dispatch(new HeroSetLocation(heroId, Building.Inn));
       });
     }, 0);
   }

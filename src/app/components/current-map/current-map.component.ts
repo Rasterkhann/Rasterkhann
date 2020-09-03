@@ -338,7 +338,7 @@ export class CurrentMapComponent implements AfterViewInit, OnChanges {
     });
 
     this.state.removeHero$.subscribe(heroId => this.removeHero(heroId));
-    this.state.showHero$.subscribe(heroId => this.setVisible(heroId, true));
+    // this.state.showHero$.subscribe(heroId => this.setVisible(heroId, true));
     this.state.hideHero$.subscribe(heroId => this.setVisible(heroId, false));
     this.state.walkHero$.subscribe(heroId => this.pickPathForHero(heroId));
   }
