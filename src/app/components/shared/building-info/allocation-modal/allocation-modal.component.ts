@@ -108,7 +108,7 @@ export class WorkerAllocationModalComponent implements OnInit, OnDestroy {
   }
 
   allocateAllIdle(): void {
-    this.game.allocateSomeWorkersToBuilding(this.buildingId, this.currentAllocated + this.getTotalWorkersUnallocated());
+    this.game.allocateSomeWorkersToBuilding(this.buildingId, this.originalCurrentAllocated + this.getTotalWorkersUnallocated());
   }
 
   unallocateAll(): void {
